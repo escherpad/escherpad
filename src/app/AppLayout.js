@@ -4,6 +4,7 @@ import Radium from 'radium';
 import ArticleView from '../article-view/ArticleView';
 import EditorView from '../editor-view/EditorView';
 
+
 const styles = {
   base: {
     position: "absolute",
@@ -11,6 +12,10 @@ const styles = {
     bottom: '0',
     left: '0',
     right: '0'
+  },
+  styling: {
+    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontSmoothing: "antialiased"
   },
   flexContainer: {
     display: "flex",
@@ -22,51 +27,40 @@ const styles = {
   }
 };
 
-let {PropTypes} = React;
-
 @Radium
 export default class AppLayout extends React.Component {
   constructor() {
     super();
   }
 
+  componentDidMount() {
+    //this.store = this.props.store;
+  }
+
   static defaultProps = {
     items: []
   };
 
-  store = {
-    zenMode: true,
-    editor: {
-      title: "A New Markdown Editor",
-      source: "# First Level Header can be used inside <article> tags.",
-      placeholder: "# Untitled\n What is your story?",
-      cursor: {},
-      others: [{id: "Jason", color: "red", start: [0, 0], end: [1, 1], isFocused: true}],
-    },
-    renderView: {},
-    listView: {
-      others: []
-    },
-  };
-
-  actions = {
-    createNote: () => {
-    },
-    updateNote: (id, update) => {
-    },
-    deleteNote: () => {
-    },
-  };
-
+  //store = {
+  //  zenMode: true,
+  //  editor: {
+  //    title: "A New Markdown Editor",
+  //    source: "# First Level Header can be used inside <article> tags.",
+  //    placeholder: "# Untitled\n What is your story?",
+  //    cursor: {},
+  //    others: [{id: "Jason", color: "red", start: [0, 0], end: [1, 1], isFocused: true}],
+  //  },
+  //};
 
   render() {
+    console.log(this.props);
     return (
-      <div className="layout-container" style={[styles.base, styles.flexContainer]}>
-        <div className="side-panel" show={this.store.zenMode}>
+      <div className="layout-container" style={[styles.base, styles.styling, styles.flexContainer]}>
+        <div className="side-panel" show={false}>
           <div className="nav-column"></div>
           <div className="list-view"></div>
         </div>
-        <ArticleView format="markdown" style={styles.flexColumn} source=""></ArticleView>
+        <ArticleView format="markdown" style={styles.flexColumn} data={'haha'}></ArticleView>
         <EditorView mimeType="markdown" title="" setter="" getter="" style={styles.flexColumn}></EditorView>
       </div>
     )

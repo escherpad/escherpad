@@ -1,6 +1,9 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
 import Radium from 'radium';
+import EditorHeader from "./EditorHeader";
+import TitleBar from "./TitleBar";
+import CodeEditor from "./CodeEditor";
 
 @Radium
 export default class EditorView extends React.Component {
@@ -8,16 +11,11 @@ export default class EditorView extends React.Component {
     style: React.PropTypes.any.isRequired
   };
 
-  defaultStyle = {
-    backgroundColor: 'blue'
+  styles = {
+    editor: {
+    }
   };
 
-  get style() {
-    if (this.props) return [this.defaultStyle, this.props.style];
-    return this.defaultStyle;
-  }
-
-  set style(value) {}
 
   constructor() {
     super();
@@ -25,7 +23,11 @@ export default class EditorView extends React.Component {
 
   render() {
     return (
-      <div className="editor-view" style={this.style}></div>
+      <div className="editor-view" style={[this.props.style, this.styles.editor]}>
+        <EditorHeader></EditorHeader>
+        <TitleBar></TitleBar>
+        <CodeEditor></CodeEditor>
+      </div>
     )
   }
 }

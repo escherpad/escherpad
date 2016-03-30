@@ -5,19 +5,13 @@ import Radium from 'radium';
 @Radium
 export default class ArticleView extends React.Component {
   static propTypes = {
-    style: React.PropTypes.any.isRequired
+    //html: React.PropTypes.string,
+    //style: React.PropTypes.any.isRequired
   };
 
   defaultStyle = {
     backgroundColor: "gray"
   };
-
-  get style() {
-    if (this.props) return [this.defaultStyle, this.props.style];
-    return this.defaultStyle;
-  }
-
-  set style(value) {}
 
   constructor() {
     super();
@@ -25,7 +19,8 @@ export default class ArticleView extends React.Component {
 
   render() {
     return (
-      <div className="article-view" style={this.style}></div>
+      <div className="article-view" style={[this.defaultStyle, this.props.style]}
+           dangerouslySetInnerHTML={{__html: "<h1>some title</h1>"}}></div>
     );
   }
 }

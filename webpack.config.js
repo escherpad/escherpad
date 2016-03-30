@@ -7,6 +7,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:' + port, // WebpackDevServer host and port
     'webpack/hot/only-dev-server',
+    './node_modules/regenerator/runtime.js', // required for using regenerator.
     './src/index.js', // Your appʼs entry point
     './src/index.html',
     "./src/index.scss"
@@ -27,9 +28,14 @@ module.exports = {
         loader: "file?[name].[ext]"
       },
       {
+        // remove the source-map urls from the rxjs library.
+        test: /rxjs\/(.*)\.js$/,
+        loaders: ['source-map']
+      },
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['react-hot', 'babel-loader']
+        loaders: ['regenerator', 'react-hot', 'babel-loader']
       },
       {
         test: /\.s?css$/,
