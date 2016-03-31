@@ -12,7 +12,15 @@ export default class EditorView extends React.Component {
   };
 
   styles = {
-    editor: {
+    container: {
+      display: 'flex',
+      flexDirection: "column"
+    },
+    fixed: {
+      flex: "0 0 auto"
+    },
+    fluid: {
+      flex: "1 1 auto"
     }
   };
 
@@ -23,10 +31,10 @@ export default class EditorView extends React.Component {
 
   render() {
     return (
-      <div className="editor-view" style={[this.props.style, this.styles.editor]}>
-        <EditorHeader></EditorHeader>
-        <TitleBar></TitleBar>
-        <CodeEditor></CodeEditor>
+      <div className="editor-view" style={[this.props.style, this.styles.container]}>
+        <EditorHeader style={this.styles.fixed}></EditorHeader>
+        <TitleBar style={this.styles.fixed}></TitleBar>
+        <CodeEditor style={this.styles.fluid}></CodeEditor>
       </div>
     )
   }

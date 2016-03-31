@@ -1,16 +1,21 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
+import ReactDOM from "react-dom";
 import Radium from 'radium';
 import EditorHeader from "./EditorHeader";
-import * as CodeMirror from "codemirror";
-import Codemirror from "react-codemirror";
-require("../../node_modules/codemirror/lib/codemirror.css");
+
+import brace from "brace";
+import AceEditor from "react-ace";
+
+import 'brace/mode/markdown';
+import 'brace/keybinding/vim';
+import 'brace/theme/github';
 
 // app modules
 import {rootStore} from "../app/rootStore";
 import {setSource} from "../article-view/preview";
 
-rootStore.select("preview").subscribe((_)=>console.log("preview data: ", _));
+//rootStore.select("preview").subscribe((_)=>console.log("preview data: ", _));
 
 import {PATCH_PREVIEW} from "../article-view/preview";
 
@@ -20,12 +25,26 @@ export default class CodeEditor extends React.Component {
     //style: React.PropTypes.any.isRequired
   };
 
-  styles = {};
+  styles = {
+    container: {
+      position: "relative"
+    },
+    editor: {
+      display: "block",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+    }
+  };
 
   options = {
-    lineNumbers: true,
-    readOnly: false,
-    mode: "markdown" //"javascript"
+    //wrap: true,
+    //wrapBehavioursEnabled:true,
+    $blockScrolling: true
+    //lineNumbers: true,
+    //readOnly: false,
+    //mode: "markdown" //"javascript"
   };
 
   onCodeChange(source) {
@@ -37,27 +56,52 @@ export default class CodeEditor extends React.Component {
   }
 
   componentDidMount() {
-    console.log('editor instance', this.editorNode);
-    this.editor = this.editorNode.getCodeMirror();
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
+    this.editor.container.style.lineHeight = 2;
     console.log(this.editor);
-    console.log(CodeMirror);
-
-    var charWidth = this.editor.defaultCharWidth(), basePadding = 4;
-    var _that = this;
-    this.editor.on("renderLine", function (cm, line, elt) {
-      console.log('rendering line');
-      var off = CodeMirror.countColumn(line.text, null, cm.getOption("tabSize")) * charWidth;
-      elt.style.textIndent = "-" + off + "px";
-      elt.style.paddingLeft = (basePadding + off) + "px";
-    });
-    this.editor.refresh();
+    setTimeout(()=>{
+      this.editor.resize();
+    }, 1000);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize)
+  }
+
+  resize() {
+    let node = ReactDOM.findDOMNode(this);
+    let {height, width} = {height: node.clientHeight, width: node.clientWidth};
+    this.parentHeight = height;
+    this.parentWidth = width;
+  }
+
+  onResize = () => {
+    this.resize();
+    this.forceUpdate();
+  };
+
+  getEditor (e) {
+    if (e && e.editor) this.editor = e.editor;
+  }
   render() {
     return (
-      <Codemirror
-        ref={(_)=> this.editorNode = _ }
-        value={"example code"} onChange={this.onCodeChange} options={this.options}/>
+      <div className="editor-container" style={[this.props.style, this.styles.container]}>
+        <AceEditor
+          ref={(e)=>this.getEditor(e)}
+          mode="markdown"
+          value={(rootStore.getValue().preview.source || "")}
+          theme="github"
+          width={`${this.parentWidth}px`}
+          height={`${this.parentHeight}px`}
+          enableBasicAutocompletion={true}
+          onChange={this.onCodeChange}
+          name="UNIQUE_ID_OF_DIV"
+          wrapEnabled={true}
+          editorProps={this.options}
+          keyboardHandler="vim"
+        />
+      </div>
     )
   }
 }

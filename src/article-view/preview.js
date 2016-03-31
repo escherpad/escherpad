@@ -3,7 +3,7 @@ export const PATCH_PREVIEW = "PATCH_PREVIEW";
 export const SET_SOURCE = "SET_SOURCE";
 export const SET_RENDERED = "SET_RENDERED";
 
-const initialState = {
+var initialState = {
   source: "",
   rendered: ""
 };
@@ -25,17 +25,73 @@ export function setSource(source) {
     source: source
   }
 }
-export function renderPreview(rendered) {
+export function setRendered(rendered) {
   return {
     type: SET_RENDERED,
-    source: rendered
+    rendered: rendered
   }
 }
+
+import {take, dispatch} from "luna-saga";
+//var marked = require("marked");
+
+var MarkdownIt = require('markdown-it');
+var MarkdownItTaskLists = require('markdown-it-task-lists');
+//var MarkdownItCheckbox = require('markdown-it-checkbox');
+var MarkdownItFlowdock = require('markdown-it-flowdock');
+var MarkdownItFootnote = require('markdown-it-footnote');
+var MarkdownItMark = require('markdown-it-mark');
+//var MarkdownItInsDel = require('markdown-it-ins-del');
+var MarkdownItEmoji = require('markdown-it-emoji');
+var MarkdownItAbbr = require('markdown-it-abbr');
+var MarkdownItMath = require('markdown-it-math');
+var MarkdownItHighlightjs = require('markdown-it-highlightjs');
+var MarkdownItToc = require('markdown-it-toc');
+var MarkdownItDeflist = require('markdown-it-deflist');
+
+var katex = require('katex');
+
+let markdown = new MarkdownIt({
+  html: true
+});
+markdown
+  .use(MarkdownItAbbr)
+  .use(MarkdownItToc)
+  .use(MarkdownItDeflist)
+  .use(MarkdownItTaskLists)
+  .use(MarkdownItEmoji)
+  //.use(MarkdownItCheckbox)
+  //.use(MarkdownItFlowdock) // bug with nested image/link
+  .use(MarkdownItMark)
+  //.use(MarkdownItInsDel)
+  .use(MarkdownItFootnote)
+  .use(MarkdownItHighlightjs)
+  .use(MarkdownItMath, {
+    inlineOpen: '\\(',
+    inlineClose: '\\)',
+    blockOpen: '\\[',
+    blockClose: '\\]',
+    renderingOptions: {},
+    inlineRenderer: (string)=> {
+      let rendered = katex.renderToString(string);
+      return rendered;
+    },
+    blockRenderer: (string)=> {
+      let rendered = katex.renderToString(string, {displayMode: true});
+      return rendered;
+    }
+  })
 
 export function* previewProc() {
   while (true) {
     let {action} = yield take(SET_SOURCE);
-    let rendered = marked(action.source);
-    yield renderPreview(rendered);
+    var rendered;
+    try {
+      rendered = markdown.render(action.source);
+    } catch (e) {
+      console.log("rendering error", e);
+    }
+    yield dispatch(setRendered(rendered));
   }
 }
+

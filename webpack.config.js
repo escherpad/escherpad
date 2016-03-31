@@ -33,9 +33,18 @@ module.exports = {
         loaders: ['source-map']
       },
       {
+        // ES6 modules
+        test: /luna\-saga\/(.*)\.js$/,
+        loaders: ['react-hot', 'babel-loader']
+      },
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['regenerator', 'react-hot', 'babel-loader']
+      },
+      {
+        test: /\.json$/,
+        loader: "json"
       },
       {
         test: /\.s?css$/,

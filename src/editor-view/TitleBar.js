@@ -37,7 +37,7 @@ export default class TitleBar extends React.Component {
 
   render() {
     return (
-      <div className="title-bar" style={this.styles.editor}>
+      <div className="title-bar" style={this.styles.container}>
         <div className="title" style={[this.styles.inlineBlocks, this.styles.flexFixed]}>A New Title</div>
         <button className="dropdown" style={[this.styles.inlineBlocks, this.styles.flexFixed]}>﹀</button>
         <div className="spacer" style={[this.styles.inlineBlocks, this.styles.flexFluid]}></div>

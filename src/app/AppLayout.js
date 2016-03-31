@@ -18,12 +18,15 @@ const styles = {
     fontSmoothing: "antialiased"
   },
   flexContainer: {
+    height: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center"
   },
   flexColumn: {
-    flex: "1 1 auto"
+    width: "50%",
+    overflowY: "auto",
+    //flex: "1 1 auto"
   }
 };
 
@@ -40,17 +43,6 @@ export default class AppLayout extends React.Component {
   static defaultProps = {
     items: []
   };
-
-  //store = {
-  //  zenMode: true,
-  //  editor: {
-  //    title: "A New Markdown Editor",
-  //    source: "# First Level Header can be used inside <article> tags.",
-  //    placeholder: "# Untitled\n What is your story?",
-  //    cursor: {},
-  //    others: [{id: "Jason", color: "red", start: [0, 0], end: [1, 1], isFocused: true}],
-  //  },
-  //};
 
   render() {
     console.log(this.props);
