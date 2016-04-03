@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "codemirror": "^5.13.2",
+    "front-matter": "^2.0.6",
     "github-markdown-css": "^2.2.1",
     "katex": "^0.5.1",
     "luna": "^1.0.1",

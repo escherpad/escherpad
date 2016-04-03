@@ -67,10 +67,10 @@ markdown
   .use(MarkdownItFootnote)
   .use(MarkdownItHighlightjs)
   .use(MarkdownItMath, {
-    inlineOpen: '\\(',
-    inlineClose: '\\)',
-    blockOpen: '\\[',
-    blockClose: '\\]',
+    inlineOpen: '$',//'\\(',
+    inlineClose: '$',//'\\)',
+    blockOpen: '$$',//'\\[',
+    blockClose: '$$',//'\\]',
     renderingOptions: {},
     inlineRenderer: (string)=> {
       let rendered = katex.renderToString(string);
@@ -80,8 +80,17 @@ markdown
       let rendered = katex.renderToString(string, {displayMode: true});
       return rendered;
     }
-  })
+  });
 
+/* so what does preview do?
+ * preview takes in a source, convert it, and then outputs a rendered markdown.
+ * What about if you want to turn off a rendering engine? so maybe it is better to
+ * put this markdown rendering engine inside a preview/markdown rendering element.
+ * The element should take:
+ * - markdown source
+ * - markdown preview
+ * - onChange function => rendered markdown as a parameter
+ * */
 export function* previewProc() {
   while (true) {
     let {action} = yield take(SET_SOURCE);
