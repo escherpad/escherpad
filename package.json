@@ -27,10 +27,11 @@
     "markdown-it-task-lists": "^1.1.1",
     "markdown-it-toc": "^1.1.0",
     "marked": "^0.3.5",
-    "react": "0.14.7",
+    "react": "^0.14.8",
     "react-codemirror": "^0.2.5",
-    "react-dom": "0.14.7",
-    "rxjs": "^5.0.0-beta.3"
+    "react-dom": "^0.14.8",
+    "rxjs": "^5.0.0-beta.3",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -41,6 +42,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
     "babel-preset-survivejs-kanban": "^0.3.3",
     "body-parser": "^1.4.3",
     "brace": "^0.7.0",

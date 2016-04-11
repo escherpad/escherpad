@@ -5,37 +5,89 @@ import Radium from 'radium';
 
 require("github-markdown-css/github-markdown.css");
 
+var MarkdownIt = require('markdown-it');
+var MarkdownItTaskLists = require('markdown-it-task-lists');
+//var MarkdownItCheckbox = require('markdown-it-checkbox');
+var MarkdownItFlowdock = require('markdown-it-flowdock');
+var MarkdownItFootnote = require('markdown-it-footnote');
+var MarkdownItMark = require('markdown-it-mark');
+//var MarkdownItInsDel = require('markdown-it-ins-del');
+var MarkdownItEmoji = require('markdown-it-emoji');
+var MarkdownItAbbr = require('markdown-it-abbr');
+var MarkdownItMath = require('markdown-it-math');
+var MarkdownItHighlightjs = require('markdown-it-highlightjs');
+var MarkdownItToc = require('markdown-it-toc');
+var MarkdownItDeflist = require('markdown-it-deflist');
+
 require('highlight.js/styles/github.css');
 var highlight = require("highlight.js");
+
+var katex = require('katex');
+
+var marked = new MarkdownIt({
+  html: true// avoid xxs attacks
+});
+marked
+  .use(MarkdownItAbbr)
+  .use(MarkdownItToc)
+  .use(MarkdownItDeflist)
+  .use(MarkdownItTaskLists)
+  .use(MarkdownItEmoji)
+  //.use(MarkdownItCheckbox)
+  //.use(MarkdownItFlowdock) // bug with nested image/link
+  .use(MarkdownItMark)
+  //.use(MarkdownItInsDel)
+  .use(MarkdownItFootnote)
+  .use(MarkdownItHighlightjs)
+  .use(MarkdownItMath, {
+    inlineOpen: '$',//'\\(',
+    inlineClose: '$',//'\\)',
+    blockOpen: '$$',//'\\[',
+    blockClose: '$$',//'\\]',
+    renderingOptions: {},
+    inlineRenderer: (string)=> {
+      let rendered = katex.renderToString(string);
+      return rendered;
+    },
+    blockRenderer: (string)=> {
+      let rendered = katex.renderToString(string, {displayMode: true});
+      return rendered;
+    }
+  });
 
 @Radium
 export default class Markdown extends React.Component {
   static propTypes = {
-    html: React.PropTypes.string
-    //style: React.PropTypes.any.isRequired
+    src: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    style: React.PropTypes.any
   };
 
   defaultStyle = {
+    // width: "100%",
+    // minHeight: "100%"
   };
 
-  //markdown-it markdown-it-abbr markdown-it-checkbox markdown-it-deflist markdown-it-footnote markdown-it-ins markdown-it-mark markdown-it-math markdown-it-sub markdown-it-sup markdown-it-toc
   constructor() {
     super();
   }
 
   componentDidUpdate() {
-    //let node = ReactDOM.findDOMNode(this);
-    //if (node) {
-    //  let blocks = node.querySelectorAll('pre code');
-    //  let list = Array.prototype.slice.call(blocks);
-    //  list.forEach((block)=>highlight.highlightBlock(block));
-    //}
   }
 
   render() {
+    var source = this.props.src || this.props.placeholder || "";
+    var html;
+    try {
+      html = marked.render(source);
+    } catch (e) {
+      console.log("markdown error: ", e);
+      html = source;
+    }
+    var style = [this.defaultStyle, this.props.style];
     return (
-      <article className="markdown-view markdown-body" style={[this.defaultStyle, this.props.style]}
-           dangerouslySetInnerHTML={{__html: this.props.html}}></article>
+      <article className="markdown-view markdown-body" style={style}
+               dangerouslySetInnerHTML={{__html: html}}></article>
     );
   }
 }

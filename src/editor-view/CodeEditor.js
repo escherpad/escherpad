@@ -11,63 +11,64 @@ import 'brace/mode/markdown';
 import 'brace/keybinding/vim';
 import 'brace/theme/github';
 
-// app modules
-import {rootStore} from "../app/rootStore";
-import {setSource} from "../article-view/preview";
+const styles = {
+  container: {
+    position: "relative"
+  },
+  editor: {
+    display: "block",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  }
+};
 
-//rootStore.select("preview").subscribe((_)=>console.log("preview data: ", _));
-
-import {PATCH_PREVIEW} from "../article-view/preview";
-
+const options = {
+  $blockScrolling: Infinity,
+  animatedScroll: true
+};
 @Radium
 export default class CodeEditor extends React.Component {
   static propTypes = {
-    //style: React.PropTypes.any.isRequired
+    style: React.PropTypes.any,
+    value: React.PropTypes.string,
+    onChange: React.PropTypes.func,
+    onCursorChange: React.PropTypes.func,
+    onSelectionChange: React.PropTypes.func,
   };
-
-  styles = {
-    container: {
-      position: "relative"
-    },
-    editor: {
-      display: "block",
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-    }
-  };
-
-  options = {
-    //wrap: true,
-    //wrapBehavioursEnabled:true,
-    $blockScrolling: true
-    //lineNumbers: true,
-    //readOnly: false,
-    //mode: "markdown" //"javascript"
-  };
-
-  onCodeChange(source) {
-    rootStore.dispatch(setSource(source))
-  }
-
-  constructor() {
-    super();
-  }
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
+    window.addEventListener('reflow', this.onResize);
     this.onResize();
     this.editor.container.style.lineHeight = 2;
-    console.log(this.editor);
-    setTimeout(()=>{
+    setTimeout(()=> {
       this.editor.resize();
-    }, 1000);
+    }, 100);
+    this.editor.selection.on('changeCursor', this.onCursorChange);
+    this.editor.selection.on('changeSelection', this.onSelectionChange);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize)
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('reflow', this.onResize);
+    this.editor.selection.off('changeCursor', this.onCursorChange);
+    this.editor.selection.off('changeSelection', this.onSelectionChange);
   }
+
+
+  onCursorChange = ()=> {
+    if (!this.props.onCursorChange) return;
+    let cursor = this.editor.selection.getCursor();
+    this.props.onCursorChange(cursor)
+  };
+
+  onSelectionChange = () => {
+    if (!this.props.onSelectionChange) return;
+    let selection = this.editor.getSelection();
+    this.props.onSelectionChange(selection);
+  };
 
   resize() {
     let node = ReactDOM.findDOMNode(this);
@@ -81,24 +82,28 @@ export default class CodeEditor extends React.Component {
     this.forceUpdate();
   };
 
-  getEditor (e) {
+  getEditor(e) {
     if (e && e.editor) this.editor = e.editor;
   }
+
   render() {
+    let value = this.props.value || this.props.placeholder || "//placeholder";
+    let style = [this.props.style, styles.container];
+    let onChange = this.props.onChange;
     return (
-      <div className="editor-container" style={[this.props.style, this.styles.container]}>
+      <div className="editor-container" style={style}>
         <AceEditor
-          ref={(e)=>this.getEditor(e)}
+          ref={this.getEditor.bind(this)}
           mode="markdown"
-          value={(rootStore.getValue().preview.source || "")}
+          value={value}
           theme="github"
           width={`${this.parentWidth}px`}
           height={`${this.parentHeight}px`}
           enableBasicAutocompletion={true}
-          onChange={this.onCodeChange}
+          onChange={onChange}
           name="UNIQUE_ID_OF_DIV"
           wrapEnabled={true}
-          editorProps={this.options}
+          editorProps={options}
           keyboardHandler="vim"
         />
       </div>

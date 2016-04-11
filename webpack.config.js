@@ -3,24 +3,41 @@ var path = require('path');
 
 const port = 3000;
 
+const development_entry = [
+  'webpack-dev-server/client?http://0.0.0.0:' + port, // WebpackDevServer host and port
+  'webpack/hot/only-dev-server',
+  './node_modules/regenerator/runtime.js', // required for using regenerator.
+  './src/index.js', // Your appʼs entry point
+  './src/index.html',
+  "./src/index.scss"
+];
+const build_entry = {
+  app: "./src/index.js",
+  vendor: [
+    "react",
+    "react-dom",
+    "./node_modules/regenerator/runtime.js",
+    "markdown-it", "markdown-it-highlightjs", "markdown-it-task-lists",
+    "rxjs",
+    "luna", "luna-saga",
+    "brace", "react-ace"
+  ]
+};
+
 module.exports = {
-  entry: [
-    'webpack-dev-server/client?http://0.0.0.0:' + port, // WebpackDevServer host and port
-    'webpack/hot/only-dev-server',
-    './node_modules/regenerator/runtime.js', // required for using regenerator.
-    './src/index.js', // Your appʼs entry point
-    './src/index.html',
-    "./src/index.scss"
-  ],
+  entry: build_entry,
   devtool: process.env.WEBPACK_DEVTOOL || 'source-map',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
   module: {
+    noParse: [
+      /autoit\.js$/
+    ],
     loaders: [
       {
         test: /\.html$/,
@@ -86,8 +103,9 @@ module.exports = {
     noInfo: true, //  --no-info option
     hot: true,
     inline: true
-  }
-  //plugins: [
-  //  new webpack.NoErrorsPlugin()
-  //]
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
+    new webpack.NoErrorsPlugin()
+  ]
 };

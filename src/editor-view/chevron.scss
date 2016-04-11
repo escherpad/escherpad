@@ -1,0 +1,34 @@
+.chevron-bottom {
+    width: 1em;
+    position: relative;
+    // styling
+    &:before, &:after {
+        background-color: #cccccc;
+    }
+    &:hover, &:active, &focus {
+        &:before, &:after {
+            background-color: #23aaff;
+        }
+    }
+    $width: 2px;
+    &:before, &:after {
+        content: "";
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: $width;
+        height: 0.4em;
+        transform-origin: $width/2 0.2em;
+    }
+    $shift: 0.09em;
+    &:before {
+        transform: rotate(-45deg) translate(-$shift, -$shift);
+    }
+    &:after {
+        transform: rotate(45deg) translate($shift, -$shift);
+    }
+}
+

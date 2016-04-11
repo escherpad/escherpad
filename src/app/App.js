@@ -1,9 +1,7 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
 import Radium from 'radium';
-import ArticleView from '../article-view/ArticleView';
-import EditorView from '../editor-view/EditorView';
-
+import PostView from "../post-view/PostView";
 
 const styles = {
   base: {
@@ -31,29 +29,38 @@ const styles = {
 };
 
 @Radium
-export default class AppLayout extends React.Component {
+export default class App extends React.Component {
+  static propTypes = {
+    store: React.PropTypes.any.isRequired
+  };
+
   constructor() {
     super();
   }
 
-  componentDidMount() {
-    //this.store = this.props.store;
+  componentWillMount() {
   }
 
   static defaultProps = {
     items: []
   };
+  // what does post view do?
+  // post view takes in the posts from the store,
+  // and the post stream,
+  // to show the current post. Should really be called editor view.
+  // editor view mostly take in the post object and a dispatch function
 
   render() {
-    console.log(this.props);
+    let store = this.props.store;
+    let dispatch = store.dispatch.bind(store);
     return (
       <div className="layout-container" style={[styles.base, styles.styling, styles.flexContainer]}>
-        <div className="side-panel" show={false}>
-          <div className="nav-column"></div>
-          <div className="list-view"></div>
+        <div className="TeamNavBar"></div>
+        <div className="ListPanel" store={store} dispatch={dispatch}>
+          <div className="PostList"></div>
+          <div className="FilesListView"></div>
         </div>
-        <ArticleView format="markdown" style={styles.flexColumn} data={'haha'}></ArticleView>
-        <EditorView mimeType="markdown" title="" setter="" getter="" style={styles.flexColumn}></EditorView>
+        <PostView store={store} dispatch={dispatch}></PostView>
       </div>
     )
   }

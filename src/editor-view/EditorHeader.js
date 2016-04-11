@@ -34,13 +34,8 @@ export default class EditorHeader extends React.Component {
   render() {
     return (
       <div className="editor-header" style={[this.props.style, this.styles.header]}>
-        <Tag className="tag" style={this.styles.child}>update this</Tag>
-        <Tag className="tag" style={this.styles.child}>escherpad</Tag>
-        <Tag className="tag" style={this.styles.child}>escherpad</Tag>
-        <Input style={this.styles.child}/>
       </div>
     )
   }
 }
-
 

@@ -1,27 +1,33 @@
 /** Created by ge on 3/24/16. */
-import {preview} from "../article-view/preview";
 import {Store} from "luna";
 
+import {session} from "../app/session";
+import {editor} from "../editor-view/editor";
+import {posts} from "../posts/posts";
+import {demoInitialState} from "./demoInitialState";
+
 const reducer = {
-  preview: preview
+  session: session,
+  editor: editor,
+  posts: posts
 };
 export const GITTOR_STORE = '@@gittor-store';
 
-// 1. todo: load from localStorage
-// 2. done: load from window
 import lz from "lz-string";
 var cachedStore;
 try {
   cachedStore = JSON.parse(lz.decompress(window.localStorage.getItem(GITTOR_STORE)));
-} catch (e) {}
-console.log(cachedStore);
-let initialState = (window.__INITIAL_STATE__ || cachedStore || {});
+} catch (e) {
+}
+
+let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
+
+console.log(initialState);
 
 export const rootStore = new Store(reducer, initialState);
-rootStore.subscribe((state)=>{
-
+rootStore.subscribe((state)=> {
   var serialized = JSON.stringify(state);
   var compressed = lz.compress(serialized);
-  console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
+  // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
   window.localStorage.setItem(GITTOR_STORE, compressed);
 });
