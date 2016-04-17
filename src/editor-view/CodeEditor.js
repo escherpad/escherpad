@@ -5,7 +5,7 @@ import Radium from 'radium';
 import EditorHeader from "./EditorHeader";
 
 import brace from "brace";
-import AceEditor from "react-ace";
+import AceEditor from "../AceEditor/AceEditor";
 
 import 'brace/mode/markdown';
 import 'brace/keybinding/vim';
@@ -26,81 +26,43 @@ const styles = {
 
 const options = {
   $blockScrolling: Infinity,
-  animatedScroll: true
+  animatedScroll: true,
+  autoScrollEditorIntoView: true
 };
 @Radium
 export default class CodeEditor extends React.Component {
   static propTypes = {
     style: React.PropTypes.any,
     value: React.PropTypes.string,
+    cursorPosition: React.PropTypes.any,
     onChange: React.PropTypes.func,
-    onCursorChange: React.PropTypes.func,
-    onSelectionChange: React.PropTypes.func,
+    onChangeCursor: React.PropTypes.func,
+    onChangeSelection: React.PropTypes.func,
+    onChangeScrollTop: React.PropTypes.func
   };
-
-  componentDidMount() {
-    window.addEventListener('resize', this.onResize);
-    window.addEventListener('reflow', this.onResize);
-    this.onResize();
-    this.editor.container.style.lineHeight = 2;
-    setTimeout(()=> {
-      this.editor.resize();
-    }, 100);
-    this.editor.selection.on('changeCursor', this.onCursorChange);
-    this.editor.selection.on('changeSelection', this.onSelectionChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-    window.removeEventListener('reflow', this.onResize);
-    this.editor.selection.off('changeCursor', this.onCursorChange);
-    this.editor.selection.off('changeSelection', this.onSelectionChange);
-  }
-
-
-  onCursorChange = ()=> {
-    if (!this.props.onCursorChange) return;
-    let cursor = this.editor.selection.getCursor();
-    this.props.onCursorChange(cursor)
-  };
-
-  onSelectionChange = () => {
-    if (!this.props.onSelectionChange) return;
-    let selection = this.editor.getSelection();
-    this.props.onSelectionChange(selection);
-  };
-
-  resize() {
-    let node = ReactDOM.findDOMNode(this);
-    let {height, width} = {height: node.clientHeight, width: node.clientWidth};
-    this.parentHeight = height;
-    this.parentWidth = width;
-  }
-
-  onResize = () => {
-    this.resize();
-    this.forceUpdate();
-  };
-
-  getEditor(e) {
-    if (e && e.editor) this.editor = e.editor;
-  }
+  // static defaultProps = {
+  // };
 
   render() {
-    let value = this.props.value || this.props.placeholder || "//placeholder";
+    let value = this.props.value;
+    let cursorPosition = this.props.cursorPosition;
     let style = [this.props.style, styles.container];
-    let onChange = this.props.onChange;
     return (
       <div className="editor-container" style={style}>
         <AceEditor
-          ref={this.getEditor.bind(this)}
+          ref={(_)=>this.Editor=_}
           mode="markdown"
           value={value}
+          cursorPosition={cursorPosition}
           theme="github"
-          width={`${this.parentWidth}px`}
-          height={`${this.parentHeight}px`}
+          width={`${this.state.parentWidth}px`}
+          height={`${this.state.parentHeight}px`}
+          lineHeight={2}
           enableBasicAutocompletion={true}
-          onChange={onChange}
+          onChange={this.props.onChange}
+          onChangeCursor={this.props.onChangeCursor}
+          onChangeSelection={this.props.onChangeSelection}
+          onChangeScrollTop={this.props.onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
           wrapEnabled={true}
           editorProps={options}
@@ -109,4 +71,36 @@ export default class CodeEditor extends React.Component {
       </div>
     )
   }
+
+  shouldComponentUpdate(newProps) {
+    // we can always return true with this one because the aceEditor component behaves well.
+    // return false;
+    return true;
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('reflow', this.onResize);
+    this.resize()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('reflow', this.onResize);
+  }
+
+  resize() {
+    let node = ReactDOM.findDOMNode(this);
+    this.setState({parentHeight: node.clientHeight, parentWidth: node.clientWidth});
+  }
+
+  onResize = () => {
+    this.resize();
+  };
+
+  setCursor(position) {
+    this.Editor.setCursor(position, false);
+  }
+
+
 }

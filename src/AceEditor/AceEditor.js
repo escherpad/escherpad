@@ -1,0 +1,319 @@
+/** Created by ge on 4/15/16. */
+import ace from 'brace';
+import React, {Component, PropTypes} from 'react';
+
+const editorOptions = [
+  'minLines',
+  'maxLines',
+  'readOnly',
+  'highlightActiveLine',
+  'tabSize',
+  'enableBasicAutocompletion',
+  'enableLiveAutocompletion',
+  'enableSnippets '
+];
+
+export default class ReactAce extends Component {
+  constructor(props) {
+    super(props);
+    [
+      'onChange',
+      'onFocus',
+      'onBlur',
+      'onCopy',
+      'onPaste',
+      'onChangeCursor',
+      'onChangeSelection',
+      'onChangeScrollTop'
+    ]
+      .forEach(method => {
+        this[method] = this[method].bind(this);
+      });
+  }
+
+  componentDidMount() {
+
+    const {
+      name,
+      onBeforeLoad,
+      mode,
+      theme,
+      fontSize,
+      lineHeight,
+      value,
+      cursorPosition,
+      showGutter,
+      wrapEnabled,
+      showPrintMargin,
+      keyboardHandler,
+      onLoad,
+      commands,
+    } = this.props;
+
+    this.editor = ace.edit(name);
+
+    if (onBeforeLoad) {
+      onBeforeLoad(ace);
+    }
+
+    const editorProps = Object.keys(this.props.editorProps);
+    for (let i = 0; i < editorProps.length; i++) {
+      this.editor[editorProps[i]] = this.props.editorProps[editorProps[i]];
+    }
+
+    this.editor.getSession().setMode(`ace/mode/${mode}`);
+    this.editor.setTheme(`ace/theme/${theme}`);
+    this.editor.setFontSize(fontSize);
+    this.setValue(value, cursorPosition);
+    // editor.session.doc.positionToIndex(editor.selection.getCursor())
+    this.editor.renderer.setShowGutter(showGutter);
+    this.editor.getSession().setUseWrapMode(wrapEnabled);
+    this.editor.setShowPrintMargin(showPrintMargin);
+    this.editor.on('focus', this.onFocus);
+    this.editor.on('blur', this.onBlur);
+    this.editor.on('copy', this.onCopy);
+    this.editor.on('paste', this.onPaste);
+    this.editor.on('change', this.onChange);
+    this.editor.selection.on('changeCursor', this.onChangeCursor);
+    this.editor.selection.on('changeSelection', this.onChangeSelection);
+    this.editor.getSession().on('changeScrollTop', this.onChangeScrollTop);
+
+    for (let i = 0; i < editorOptions.length; i++) {
+      const option = editorOptions[i];
+      this.editor.setOption(option, this.props[option]);
+    }
+
+    if (Array.isArray(commands)) {
+      commands.forEach((command) => {
+        this.editor.commands.addCommand(command);
+      });
+    }
+
+    if (keyboardHandler) {
+      this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
+    }
+    if (lineHeight) {
+      this.updateLineHeight(lineHeight);
+    }
+
+    if (onLoad) {
+      onLoad(this.editor);
+    }
+  }
+
+  // shouldComponentUpdate() {
+  //   return false;
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    var oldProps = this.props;
+
+    for (let i = 0; i < editorOptions.length; i++) {
+      const option = editorOptions[i];
+      if (nextProps[option] !== oldProps[option]) {
+        this.editor.setOption(option, nextProps[option]);
+      }
+    }
+    if (nextProps.lineHeight !== oldProps.lineHeight)
+      this.updateLineHeight(nextProps.lineHeight);
+    if (nextProps.width !== oldProps.width || nextProps.height !== oldProps.height)
+      this.editor.resize();
+
+    if (nextProps.mode !== oldProps.mode) {
+      this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
+    }
+    if (nextProps.theme !== oldProps.theme) {
+      this.editor.setTheme('ace/theme/' + nextProps.theme);
+    }
+    if (nextProps.fontSize !== oldProps.fontSize) {
+      this.editor.setFontSize(nextProps.fontSize);
+    }
+    if (nextProps.wrapEnabled !== oldProps.wrapEnabled) {
+      this.editor.getSession().setUseWrapMode(nextProps.wrapEnabled);
+    }
+    if (nextProps.showPrintMargin !== oldProps.showPrintMargin) {
+      this.editor.setShowPrintMargin(nextProps.showPrintMargin);
+    }
+    if (nextProps.showGutter !== oldProps.showGutter) {
+      this.editor.renderer.setShowGutter(nextProps.showGutter);
+    }
+    if (this.editor.getValue() !== nextProps.value) {
+      if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition);
+      else this.setValue(nextProps.value, this.editor.selection.getCursor());
+    } else if (nextProps.cursorPosition) {
+      let old = oldProps.cursorPosition;
+      let next = nextProps.cursorPosition;
+      if (!old || old.row + ',' + old.column !== next.row + ',' + next.column) {
+        this.setCursor(next);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.editor.off('focus', this.onFocus);
+    this.editor.off('blur', this.onBlur);
+    this.editor.off('copy', this.onCopy);
+    this.editor.off('paste', this.onPaste);
+    this.editor.off('change', this.onChange);
+    this.editor.selection.off('changeCursor', this.onChangeCursor);
+    this.editor.selection.off('changeSelection', this.onChangeSelection);
+    this.editor.getSession().off('changeScrollTop', this.onChangeScrollTop);
+    this.editor.destroy();
+    this.editor = null;
+  }
+
+  setValue(value, cursorPosition, silent = true) {
+    // editor.setValue is a synchronous function call, change event is emitted before setValue return. This way we can prevent the changeCursor event from firing.
+    var old = this._silent;
+    this._silent = silent;
+    this.editor.setValue(value, 1); //this sets the start to beginning of the document.
+    // moveCursor... is also a synchronous call. Change event is emitted before it returns.
+    this.setCursor(cursorPosition);
+    this.editor.focus();
+    this._silent = old;
+  }
+
+  setCursor({row=0, column=0}, silent = true) {
+    var old = this._silent;
+    this._silent = silent;
+    this.editor.moveCursorToPosition({row, column});
+    this._silent = old;
+  }
+
+  updateLineHeight(height) {
+    this.editor.container.style.lineHeight = height;
+    this.editor.resize();
+  }
+
+  onFocus() {
+    if (!this.props.onFocus || this._silent) return;
+    this.props.onFocus();
+  }
+
+  onBlur() {
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+  }
+
+  onCopy(text) {
+    if (!this.props.onCopy) return;
+    this.props.onCopy(text);
+  }
+
+  onPaste(text) {
+    if (!this.props.onPaste) return;
+    this.props.onPaste(text);
+  }
+
+  onChange(e) {
+    var cursor;
+    if (e.action === "insert") {
+      cursor = e.end;
+    } else if (e.action === "remove") {
+      cursor = e.start;
+    } else {
+      cursor = this.editor.selection.getCursor();
+    }
+    if (!this.props.onChange || this._silent) return;
+    const value = this.editor.getValue();
+    // const position = this.editor.selection.getCursor();
+    this.props.onChange(value, cursor);
+  }
+
+  onChangeCursor(e) {
+    if (!this.props.onChange || this._silent) return;
+    var value = this.editor.getValue();
+    var cursor = this.editor.selection.getCursor();
+    this.props.onChange(value, cursor);
+  }
+
+  onChangeSelection() {
+    if (!this.props.onChangeSelection || this._silent) return;
+    var selection = this.editor.getSelection();
+    this.props.onChangeSelection(selection);
+  }
+
+  onChangeScrollTop(scrollTop) {
+    if (!this.props.onChangeScrollTop || this._silent) return;
+    this.props.onChangeScrollTop(scrollTop);
+  }
+
+  render() {
+    const {name, className, width, height} = this.props;
+    const divStyle = {width, height};
+    return (
+      <div
+        id={name}
+        className={className}
+        style={divStyle}
+      ></div>
+    );
+  }
+}
+
+ReactAce
+  .propTypes = {
+  mode: PropTypes.string,
+  theme: PropTypes.string,
+  name: PropTypes.string,
+  className: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
+  fontSize: PropTypes.number,
+  showGutter: PropTypes.bool,
+  onChange: PropTypes.func, // both `change` and `changeCursor` event go through this.
+  onCopy: PropTypes.func,
+  onPaste: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  value: PropTypes.string,
+  cursorPosition: PropTypes.any,
+  onLoad: PropTypes.func,
+  onBeforeLoad: PropTypes.func,
+  minLines: PropTypes.number,
+  maxLines: PropTypes.number,
+  readOnly: PropTypes.bool,
+  highlightActiveLine: PropTypes.bool,
+  tabSize: PropTypes.number,
+  showPrintMargin: PropTypes.bool,
+  editorProps: PropTypes.object,
+  keyboardHandler: PropTypes.string,
+  wrapEnabled: PropTypes.bool,
+  enableBasicAutocompletion: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
+  enableLiveAutocompletion: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
+  commands: PropTypes.array,
+};
+
+ReactAce
+  .defaultProps = {
+  name: 'brace-editor',
+  mode: '',
+  theme: '',
+  height: '500px',
+  width: '500px',
+  value: '',
+  fontSize: 12,
+  lineHeight: 1,
+  showGutter: true,
+  onChange: null,
+  onPaste: null,
+  onLoad: null,
+  minLines: null,
+  maxLines: null,
+  readOnly: false,
+  highlightActiveLine: true,
+  showPrintMargin: true,
+  tabSize: 4,
+  editorProps: {},
+  wrapEnabled: false,
+  enableBasicAutocompletion: false,
+  enableLiveAutocompletion: false,
+};
+

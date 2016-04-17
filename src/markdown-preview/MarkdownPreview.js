@@ -1,24 +1,33 @@
 /** Created by ge on 4/9/16. */
-/** Created by ge on 4/8/16. */
 import React from 'react';
-import Radium from 'radium';
+import ReactDOM from "react-dom";
+import {getSelection} from "./dom/getSelection";
 
 import Markdown from '../markdown/Markdown';
-require('./cursor.scss');
+import SmoothScroll from "./SmoothScroll";
+import Cursor from "./Cursor";
 
-import {insertCursor} from "./insertCursor";
+import {insertCursor, getCursorStringPosition, getCursorVerticalHeightDifference} from "./dom/cursorHelpers";
 
-const defaultStyle = {};
-@Radium
+const defaultStyle = {
+  scrollContainer: {
+    overflowY: "auto",
+  },
+  article: {
+    padding: "100px 50px 100% 50px",
+    boxSizing: "border-box",
+    margin: "0 auto",
+    width: "100%",
+    maxWidth: "788px",
+    left: 0, right: 0,
+  }
+};
 export default class MarkdownPreview extends React.Component {
   static propTypes = {
     style: React.PropTypes.any,
     agent: React.PropTypes.any.isRequired,
     post: React.PropTypes.any.isRequired,
-  };
-
-  static defaultProps = {
-    items: []
+    onSelect: React.PropTypes.func
   };
 
   render() {
@@ -32,10 +41,87 @@ export default class MarkdownPreview extends React.Component {
       console.log('error: ', e);
       sourceWithCursor = post.source;
     }
+    let cursor = {};
+    if (this && this.state) cursor = this.state.cursor || {};
     return (
-      <Markdown style={[defaultStyle, style]} src={sourceWithCursor}
-                placeholder={"this is a placeholder"}></Markdown>
+      <div className="markdown-preview scroll-container" style={{...defaultStyle.scrollContainer, ...style}}
+           onScroll={this.onScroll.bind(this)}>
+        <div className="markdown-and-cursor-container" style={{position: "relative"}}>
+          <Markdown style={defaultStyle.article}
+                    src={sourceWithCursor}
+                    async={true}
+                    afterRender={this.afterRender.bind(this)}
+                    placeholder={"this is a placeholder"} onMouseUp={this.onMouseUp.bind(this)}></Markdown>
+          <Cursor className="blinking" {...cursor}></Cursor>
+        </div>
+      </div>
     )
   }
+
+  componentDidMount() {
+    this.scrollContainer = ReactDOM.findDOMNode(this);
+    this.smoothScroll = new SmoothScroll(this.scrollContainer, {});
+  }
+
+  setCursorTarget(target) {
+    if (typeof target === "undefined") return;
+    this.setState({cursorTarget: target});
+    // scroll to only with valid offset
+    if (typeof this.state.cursorScrollOffset !== "undefined") this.scrollCursorTo(this.state.cursorTarget);
+  }
+
+
+  afterRender(markdownElement) {
+    this.findCursorString(markdownElement);
+    // scroll to only with valid target
+    if (typeof this.state.cursorTarget !== "undefined") this.scrollCursorTo(this.state.cursorTarget);
+  }
+
+  scrollCursorTo(target) {
+    if (typeof target === 'undefined' || !this.state || typeof this.state.cursorScrollOffset === "undefined") return;
+    this.smoothScroll.scrollTo(this.state.cursorScrollOffset - target);
+  }
+
+  onMouseUp(e) {
+    var onSelect = this.props.onSelect;
+    if (!onSelect) return;
+    var {anchorNode, anchorOffset} = getSelection();
+    var content = anchorNode.textContent;
+    var source = this.props.post.source; //post is required so this is fine.
+    var lines = source.split("\n");
+    lines.forEach((text, index)=> {
+      var row = index;
+      var textStart = text.indexOf(content);
+      if (textStart !== -1) return onSelect({row, column: textStart + anchorOffset});
+
+      if (text.length == 0) return; //avoid this corner case for now.
+      try {
+        var isSegment = text.indexOf(content);
+        if (isSegment !== -1) return onSelect({row, column: isSegment - anchorOffset});
+      } catch (e) {
+      }
+    })
+  }
+
+  onScroll(e) {
+  }
+
+  findCursorString(markdownElement) {
+    var rect = getCursorStringPosition(markdownElement);
+    var scrollTop = this.scrollContainer.scrollTop;
+    if (typeof rect === "undefined") return;
+    this.setState({
+      cursor: {
+        top: rect.top,
+        left: rect.left,
+        width: 5,
+        height: rect.height
+      }
+    });
+    let cursorScrollOffset = scrollTop + rect.top;
+    this.setState({cursorScrollOffset});
+  }
+
+
 }
 

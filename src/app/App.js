@@ -38,12 +38,6 @@ export default class App extends React.Component {
     super();
   }
 
-  componentWillMount() {
-  }
-
-  static defaultProps = {
-    items: []
-  };
   // what does post view do?
   // post view takes in the posts from the store,
   // and the post stream,

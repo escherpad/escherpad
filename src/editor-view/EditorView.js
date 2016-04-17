@@ -24,18 +24,55 @@ const styles = {
   }
 };
 
+import * as _ from "lodash";
 @Radium
 export default class EditorView extends React.Component {
   static propTypes = {
     agent: React.PropTypes.any.isRequired,
     post: React.PropTypes.any.isRequired,
     dispatch: React.PropTypes.func.isRequired,
+    onEditorScroll: React.PropTypes.func,
+    onEditorChange: React.PropTypes.func,
     style: React.PropTypes.any
   };
+
+  render() {
+    let agent = this.props.agent;
+    let post = this.props.post;
+    let presence = post.presence[agent];
+    var cursorPosition = presence ? presence.cursor : undefined;
+    let onChange = this.onChange.bind(this);
+    let onChangeScrollTop = this.props.onEditorScrollTop;
+    let dispatch = this.props.dispatch;
+    return (
+      <div className="editor-view" style={[this.props.style, styles.container]}>
+        <EditorHeader style={styles.fixed}></EditorHeader>
+        <TitleBar style={styles.fixed}
+                  post={post}
+                  dispatch={dispatch}
+        ></TitleBar>
+        <CodeEditor ref={(_)=>this.CodeEditor=_}
+                    style={[styles.fluid, styles.editor]}
+                    value={post.source}
+                    cursorPosition={cursorPosition}
+                    mimeType={post.type}
+                    onChange={onChange}
+                    onChangeScrollTop={onChangeScrollTop}
+        ></CodeEditor>
+      </div>
+    )
+  }
+
+  setCursor(position) {
+    /* should not access the ace editor low-level api.
+     * Accessing via the CodeEditor Child Component */
+    this.CodeEditor.setCursor(position);
+  }
 
   componentDidMount() {
     this.nativeElem = ReactDOM.findDOMNode(this);
     this.nativeElem.addEventListener("reflow", this.onReflow, true);
+    this.dispatch = this.props.dispatch;
   }
 
   componentWillUnmount() {
@@ -46,60 +83,22 @@ export default class EditorView extends React.Component {
     window.dispatchEvent(new CustomEvent("reflow"));
   }
 
-  onChange(source) {
-    let post = this.props.post;
-    let agent = this.props.agent;
-    let dispatch = this.props.dispatch;
-    dispatch({
-      type: "UPDATE_POST",
-      $agent: agent,
-      post: {
-        id: post.id,
-        source: source
-      }
-    })
-  }
-
-  onSelectionChange(selection) {
-    // console.log('-------------------', selection);
-  }
-  onCursorChange(cursor) {
+  onChange(source, cursor) {
     let user = this.props.user;
     let post = this.props.post;
     let agent = this.props.agent;
     let action = {
-      type: "UPDATE_POST_PRESENCE",
+      type: "UPDATE_POST",
+      $agent: agent,
       post: {
         id: post.id,
+        source: source,
         presence: {}
       }
     };
     action.post.presence[agent] = {user, agent, cursor};
-    let dispatch = this.props.dispatch;
-    dispatch(action)
+    this.dispatch(action);
+    if (this.props.onEditorChange) this.props.onEditorChange(source, cursor);
   }
 
-  render() {
-    let post = this.props.post;
-    let onChange = this.onChange.bind(this);
-    let onCursorChange = this.onCursorChange.bind(this);
-    let onSelectionChange = this.onSelectionChange.bind(this);
-    let dispatch = this.props.dispatch;
-    return (
-      <div className="editor-view" style={[this.props.style, styles.container]}>
-        <EditorHeader style={styles.fixed}></EditorHeader>
-        <TitleBar style={styles.fixed}
-                  post={post}
-                  dispatch={dispatch}
-        ></TitleBar>
-        <CodeEditor style={[styles.fluid, styles.editor]}
-                    value={post.source}
-                    mimeType={post.type}
-                    onChange={onChange}
-                    onCursorChange={onCursorChange}
-                    onSelectionChange={onSelectionChange}
-        ></CodeEditor>
-      </div>
-    )
-  }
 }

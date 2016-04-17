@@ -19,8 +19,8 @@ export default class InlineEditable extends React.Component {
     readOnly: React.PropTypes.bool,
     value: React.PropTypes.string,
     onChange: React.PropTypes.func,
-    // onCursorChange: React.PropTypes.func,
-    // onSelectionChange: React.PropTypes.func,
+    // onChangeCursor: React.PropTypes.func,
+    // onChangeSelection: React.PropTypes.func,
   };
 
   render() {

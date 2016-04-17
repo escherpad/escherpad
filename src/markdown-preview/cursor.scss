@@ -1,12 +1,12 @@
 // Created by ge on 4/11/16.
-.cursor-blinking {
-    display: inline-block;
-    position: relative;
+cursor.blinking {
+    position: absolute;
+    display: block;
     margin-right: -5px;
     width: 5px;
     height: 1em;
     background-color: deeppink;
-    animation: blink-animation 0.8s steps(5, start) infinite;
+    animation: blink-animation 1s steps(5, start) infinite;
 }
 
 @keyframes blink-animation {

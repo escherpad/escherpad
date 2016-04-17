@@ -3,6 +3,5 @@ export function getAceCursorPosition() {
   let cursor = document.querySelector('.ace_cursor'); // possibly .ace_cursor_hidden
   if (!cursor) return;
   let rect = cursor.getBoundingClientRect();
-  // console.log(rect);
-  return (rect.top + rect.bottom) / 2;
+  return rect;
 }

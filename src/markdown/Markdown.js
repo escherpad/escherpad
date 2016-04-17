@@ -27,6 +27,7 @@ var katex = require('katex');
 var marked = new MarkdownIt({
   html: true// avoid xxs attacks
 });
+
 marked
   .use(MarkdownItAbbr)
   .use(MarkdownItToc)
@@ -55,27 +56,38 @@ marked
     }
   });
 
+import * as _ from "lodash";
+
 @Radium
 export default class Markdown extends React.Component {
   static propTypes = {
     src: React.PropTypes.string,
     placeholder: React.PropTypes.string,
-    style: React.PropTypes.any
+    style: React.PropTypes.any,
+    onMouseUp: React.PropTypes.func,
+    async: React.PropTypes.any,
+    afterRender: React.PropTypes.func
   };
 
-  defaultStyle = {
-    // width: "100%",
-    // minHeight: "100%"
+  shouldComponentUpdate(newProps) {
+    return (this.props.src !== newProps.src);
+  }
+
+  componentDidMount() {
+    this.nativeElement = ReactDOM.findDOMNode(this);
+    this.nativeElement.addEventListener('mouseup', this.onMouseUp);
+    this.asyncMarkdown = _.throttle(this.asyncMarkdown, 200);
+  }
+
+  componentWillUnmount() {
+    this.nativeElement.removeEventListener('mouseup', this.onMouseUp);
+  }
+
+  onMouseUp = (e)=> {
+    if (this.props && this.props.onMouseUp) this.props.onMouseUp(e);
   };
 
-  constructor() {
-    super();
-  }
-
-  componentDidUpdate() {
-  }
-
-  render() {
+  asyncMarkdown = ()=> {
     var source = this.props.src || this.props.placeholder || "";
     var html;
     try {
@@ -84,11 +96,30 @@ export default class Markdown extends React.Component {
       console.log("markdown error: ", e);
       html = source;
     }
-    var style = [this.defaultStyle, this.props.style];
+    this.nativeElement.innerHTML = html;
+    if (this.props.afterRender) this.props.afterRender(this.nativeElement);
+  };
+
+  renderAsync() {
+    setImmediate(this.asyncMarkdown);
+    var style = this.props.style;
     return (
-      <article className="markdown-view markdown-body" style={style}
-               dangerouslySetInnerHTML={{__html: html}}></article>
-    );
+      <article className="markdown-view markdown-body" style={style}></article>
+    )
+  }
+
+  render() {
+    if (this.props.async) return this.renderAsync();
+    var source = this.props.src || this.props.placeholder || "";
+    var html;
+    try {
+      html = marked.render(source);
+    } catch (e) {
+      console.log("markdown error: ", e);
+      html = source;
+    }
+    var style = this.props.style;
+    return (<article className="markdown-view markdown-body" style={style}
+                     dangerouslySetInnerHTML={{__html: html}}></article>);
   }
 }
-

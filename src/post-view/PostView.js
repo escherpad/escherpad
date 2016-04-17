@@ -4,7 +4,9 @@ import Radium from 'radium';
 
 import MarkdownPreview from '../markdown-preview/MarkdownPreview';
 import EditorView from "../editor-view/EditorView";
+import * as _ from "lodash";
 
+import {getAceCursorPosition} from "./getAceCursorPosition";
 
 const styles = {
   postContainer: {
@@ -12,18 +14,7 @@ const styles = {
     left: 0, right: 0, top: 0, bottom: 0,
     display: "flex",
     flexDirection: "row",
-    alighItems: "stretch",
-  },
-  scrollContainer: {
-    overflowY: "auto",
-  },
-  article: {
-    padding: "100px 50px 500px 50px",
-    boxSizing: "border-box",
-    margin: "0 auto",
-    width: "100%",
-    maxWidth: "788px",
-    left: 0, right: 0,
+    alighItems: "stretch"
   },
   fixed: {
     flex: "0 0 auto"
@@ -42,25 +33,8 @@ export default class PostView extends React.Component {
 
   constructor() {
     super();
+    this._setCursorTarget = _.debounce(this.setCursorTarget.bind(this), 20);
   }
-
-  componentDidMount() {
-  }
-
-  componentWillMount() {
-    let store = this.props.store;
-    store.subscribe((state)=> {
-      let post = state.posts[state.editor.post];
-      let agent = state.session.agent;
-      let user = state.session.user;
-      this.setState({post, agent, user})
-    })
-  }
-
-  static defaultProps = {
-    items: []
-  };
-
 
   render() {
     let dispatch = this.props.dispatch;
@@ -73,16 +47,52 @@ export default class PostView extends React.Component {
     } else {
       return (
         <div className="PostView" style={styles.postContainer}>
-          <div className="scroll-container" style={[styles.fluid, styles.scrollContainer]}>
-            <MarkdownPreview agent={this.state.agent} post={this.state.post} style={styles.article}></MarkdownPreview>
-          </div>
-          <EditorView style={styles.fluid}
+          <MarkdownPreview agent={this.state.agent}
+                           post={this.state.post}
+                           style={styles.fluid}
+                           ref={(prev)=>this.markdownPreview=prev}
+                           onSelect={this.onMarkdownSelect.bind(this)}
+          ></MarkdownPreview>
+          <EditorView ref={(_)=>this.editorView=_}
+                      style={styles.fluid}
                       user={this.state.user}
                       agent={this.state.agent}
                       post={this.state.post}
-                      dispatch={dispatch}></EditorView>
+                      dispatch={dispatch}
+                      onEditorScrollTop={this.setCursorTarget.bind(this)}
+                      onEditorChange={this._setCursorTarget}
+          ></EditorView>
         </div>
       )
     }
   }
+
+
+  componentWillMount() {
+    let store = this.props.store;
+    store
+      // .throttleTime(10)
+      .subscribe((state)=> {
+        let post = state.posts[state.editor.post];
+        let agent = state.session.agent;
+        let user = state.session.user;
+        setImmediate(()=>this.setState({post, agent, user}))
+      })
+  }
+
+  setCursorTarget() {
+    let cursorPosition = this.getEditorCursorPosition();
+    this.markdownPreview.setCursorTarget(cursorPosition);
+  }
+
+  getEditorCursorPosition() {
+    let rect = getAceCursorPosition();
+    if (!rect) return;
+    return rect.top
+  }
+
+  onMarkdownSelect(position) {
+    this.editorView.setCursor(position);
+  }
+
 }

@@ -1,4 +1,5 @@
 /** Created by ge on 4/7/16. */
+import {combineReducers} from "luna";
 
 export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
@@ -7,12 +8,11 @@ export const UPSERT_POST = "UPSERT_POST";
 export const DELETE_POST = "DELETE_POST";
 export const MERGE_POST = "MERGE_POST";
 
-export function presence(state, action) {
-  if (action.type === UPDATE_POST_PRESENCE) {
-    return {...state, ...action.post.presence};
-  }
-  return state;
+export function presence(state = {}, action) {
+  if (action.post && action.post.presence) return {...state, ...action.post.presence};
+  else return state;
 }
+
 export function post(state, action) {
   if (!action.type) {
     return state;
@@ -24,9 +24,9 @@ export function post(state, action) {
   } else if (action.type === UPDATE_POST) {
     if (state.id !== action.post.id) return state;
     return {
-      ... state, ...(action.post), _v: (state._v + 1)
+      ... state, ...(action.post), presence: presence(state.presence, action), _v: (state._v + 1)
     }
-  } else if (action.type === UPDATE_POST_PRESENCE) {
+  } else if (action.type === UPDATE_POST_PRESENCE) { // does not update the version number
     if (state.id !== action.post.id) return state;
     return {
       ... state, presence: presence(state.presence, action)
