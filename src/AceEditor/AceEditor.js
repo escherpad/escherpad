@@ -179,11 +179,27 @@ export default class ReactAce extends Component {
     this._silent = old;
   }
 
+  // never needed
+  getCursor() {
+    return this.editor.session.getCursor();
+  }
+
   setCursor({row=0, column=0}, silent = true) {
     var old = this._silent;
     this._silent = silent;
     this.editor.moveCursorToPosition({row, column});
     this._silent = old;
+  }
+  clearSelection() {
+    this.editor.session.selection.clearSelection();
+  }
+
+  getScrollTop() {
+    return this.editor.session.getScrollTop();
+  }
+
+  getScrollerHeight () {
+    return
   }
 
   setScrollTop(scrollTop, silent = true) {

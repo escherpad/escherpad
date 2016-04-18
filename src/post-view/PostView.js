@@ -34,6 +34,7 @@ export default class PostView extends React.Component {
   constructor() {
     super();
     this._setCursorTarget = _.debounce(this.setCursorTarget.bind(this), 20);
+    this._setEditorCursorScrollTarget = _.throttle(this.setEditorCursorScrollTarget.bind(this), 20);
   }
 
   render() {
@@ -52,7 +53,7 @@ export default class PostView extends React.Component {
                            style={styles.fluid}
                            ref={(prev)=>this.markdownPreview=prev}
                            onSelect={this.onMarkdownSelect.bind(this)}
-                           onScroll={this.setEditorCursorScrollTarget.bind(this)}
+                           onScroll={this._setEditorCursorScrollTarget}
           ></MarkdownPreview>
           <EditorView ref={(_)=>this.editorView=_}
                       style={styles.fluid}
@@ -81,8 +82,13 @@ export default class PostView extends React.Component {
       })
   }
 
+  // this really need to be throttled because the `setScrollTop`
   setEditorCursorScrollTarget(scrollTop) {
-    console.log(scrollTop);
+    var cursorPosition = this.getEditorCursorPosition();
+    var st = this.editorView.getScrollTop();
+    var previewCursorScrollOffset = this.markdownPreview.state.cursorScrollOffset;
+    var targetScrollTop = scrollTop - previewCursorScrollOffset + cursorPosition + st;
+    this.editorView.setScrollTop(Math.max(0, targetScrollTop));
   }
 
   setCursorTarget() {
@@ -98,6 +104,7 @@ export default class PostView extends React.Component {
 
   onMarkdownSelect(position) {
     this.editorView.setCursor(position);
+    this.editorView.clearSelection();
   }
 
 }

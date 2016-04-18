@@ -18,9 +18,7 @@ export default class InlineEditable extends React.Component {
     style: React.PropTypes.any,
     readOnly: React.PropTypes.bool,
     value: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    // onChangeCursor: React.PropTypes.func,
-    // onChangeSelection: React.PropTypes.func,
+    onChange: React.PropTypes.func
   };
 
   render() {
@@ -29,9 +27,6 @@ export default class InlineEditable extends React.Component {
     let className = this.props.className;
     let isEditable = !(this.props.readOnly);
     let placeholder = this.props.placeholder || "placeholder";
-    let value = this.props.value || "<br/>";
-    // some processing should happen here.
-    let content = this.isEmpty() ? "<br>" : value;
     let props = {
       style: style,
       className: className,
@@ -48,24 +43,42 @@ export default class InlineEditable extends React.Component {
       onPaste: this.onPaste.bind(this),
       onDrag: this.onDrag.bind(this),
       onDrop: this.onDrop.bind(this),
-      autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
-      dangerouslySetInnerHTML: {
-        __html: content
-      }
+      autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false"
     };
     return React.createElement(tagName, props)
   }
 
-  isEmpty() {
-    let value = this.props.value;
-    if (!value || value == "<br>" || value === "<br/>" || value === "<br><br>" || value === "<br/><br/>" || value === "\n" || value === "\n\n") {
-      return true
-    }
-    return false;
-  }
-
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
+    this.value = this.props.value;
+    // console.log(this.value);
+  }
+
+  set value(value) {
+    this._value = value;
+    // processing should happen here.
+    let content = this.isEmpty() ? "<br>" : value;
+    if (this.nativeElement) this.nativeElement.innerHTML = content;
+    this.onChangeValue(this.value);
+  }
+
+  get value() {
+    // get processing
+    return this._value
+  }
+
+  // return both value and cursor position together.
+  onChangeValue() {
+    let handler = this.props.onChange;
+    if (!handler) return;
+    handler(value, cursor);
+  }
+
+  isEmpty() {
+    let value = this.value;
+    if (!value || value == "<br>" || value === "<br/>" || value === "<br><br>" || value === "<br/><br/>" || value === "\n" || value === "\n\n") {
+      return true
+    } else return false;
   }
 
   resize() {

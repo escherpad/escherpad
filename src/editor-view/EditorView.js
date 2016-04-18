@@ -68,6 +68,17 @@ export default class EditorView extends React.Component {
      * Accessing via the CodeEditor Child Component */
     this.CodeEditor.setCursor(position);
   }
+  clearSelection() {
+    this.CodeEditor.clearSelection();
+  }
+
+  getScrollTop(){
+    return this.CodeEditor.getScrollTop();
+  }
+  setScrollTop(scrollTop){
+    this.CodeEditor.setScrollTop(scrollTop);
+    return this;
+  }
 
   componentDidMount() {
     this.nativeElem = ReactDOM.findDOMNode(this);

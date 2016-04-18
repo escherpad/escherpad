@@ -26,6 +26,7 @@ const styles = {
 
 const options = {
   $blockScrolling: Infinity,
+  $wrapLimit: 80,
   animatedScroll: true,
   autoScrollEditorIntoView: true
 };
@@ -60,14 +61,15 @@ export default class CodeEditor extends React.Component {
           lineHeight={2}
           scrollMargin={{bottom: "400"}}
           enableBasicAutocompletion={true}
+          enableLiveAutocompletion={true}
           onChange={this.props.onChange}
           onChangeCursor={this.props.onChangeCursor}
           onChangeSelection={this.props.onChangeSelection}
           onChangeScrollTop={this.props.onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
-          wrapEnabled={true}
           editorProps={options}
           keyboardHandler="vim"
+          wrapEnabled={true}
         />
       </div>
     )
@@ -102,6 +104,18 @@ export default class CodeEditor extends React.Component {
   setCursor(position) {
     this.Editor.setCursor(position, false);
   }
+  
+  clearSelection() {
+    this.Editor.clearSelection();
+  }
 
+  getScrollTop() {
+    return this.Editor.getScrollTop()
+  }
+
+  setScrollTop(scrollTop) {
+    this.Editor.setScrollTop(scrollTop);
+    return this;
+  }
 
 }
