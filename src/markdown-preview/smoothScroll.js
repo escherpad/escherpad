@@ -16,8 +16,8 @@ export default class SmoothScroll {
   }
 
   startScroll() {
-    if (this.removeInterval) return;
-    this.removeInterval = setInterval(this.scroll, 1000 / 60)
+    if (this.running) return;
+    this.running = setInterval(this.scroll, 1000 / 60)
   }
 
   scroll = ()=> {
@@ -43,9 +43,9 @@ export default class SmoothScroll {
   };
 
   finishScroll() {
-    clearInterval(this.removeInterval);
+    clearInterval(this.running);
     // console.log("finished =========== ", this.target, this.element.scrollTop);
     this.speed = 0;
-    this.removeInterval = null;
+    this.running = null;
   }
 }

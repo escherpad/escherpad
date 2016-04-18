@@ -16,12 +16,13 @@ export function insertCursor(source, {row, column}) {
   return lines.join('\n');
 }
 
-function getPositionOfTextNode(textNode) {
-  let range, rects;
-  range = document.createRange();
+function getTextNodeBoundingRect(textNode) {
+  var height = 0;
+  if (!document.createRange) return;
+  var range = document.createRange();
   range.selectNodeContents(textNode);
-  rects = range.getClientRects();
-  return rects[0];
+  if (!range.getBoundingClientRect) return;
+  return range.getClientRects()[0];
 }
 
 function matchText(text, pattern) {
@@ -63,7 +64,7 @@ export function getCursorStringPosition(previewElement) {
   if (!match) return;
   let {start, end}=  match;
   let {before, middle, after} = spliceTextNode(textNode, start, end);
-  let rect = getPositionOfTextNode(middle);
+  let rect = getTextNodeBoundingRect(middle);
   middle.nodeValue = textNode.nodeValue.replace(cursorString, '');
   removeNode(before);
   removeNode(after);

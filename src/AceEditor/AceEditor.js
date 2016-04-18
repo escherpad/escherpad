@@ -40,6 +40,7 @@ export default class ReactAce extends Component {
       theme,
       fontSize,
       lineHeight,
+      scrollMargin,
       value,
       cursorPosition,
       showGutter,
@@ -92,8 +93,11 @@ export default class ReactAce extends Component {
     if (keyboardHandler) {
       this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
     }
-    if (lineHeight) {
+    if (typeof lineHeight !== 'undefined') {
       this.updateLineHeight(lineHeight);
+    }
+    if (typeof scrollMargin !== 'undefined') {
+      this.updateScrollMargin(scrollMargin);
     }
 
     if (onLoad) {
@@ -116,6 +120,8 @@ export default class ReactAce extends Component {
     }
     if (nextProps.lineHeight !== oldProps.lineHeight)
       this.updateLineHeight(nextProps.lineHeight);
+    if (nextProps.scrollMargin !== oldProps.scrollMargin)
+      this.updateScrollMargin(nextProps.scrollMargin);
     if (nextProps.width !== oldProps.width || nextProps.height !== oldProps.height)
       this.editor.resize();
 
@@ -180,8 +186,20 @@ export default class ReactAce extends Component {
     this._silent = old;
   }
 
+  setScrollTop(scrollTop, silent = true) {
+    var old = this._silent;
+    this._silent = silent;
+    this.editor.getSession().setScrollTop(scrollTop);
+    this._silent = old;
+  }
+
   updateLineHeight(height) {
     this.editor.container.style.lineHeight = height;
+    this.editor.resize();
+  }
+
+  updateScrollMargin({top, bottom, left, right}) {
+    this.editor.renderer.setScrollMargin(top, bottom, left, right);
     this.editor.resize();
   }
 
@@ -300,7 +318,6 @@ ReactAce
   width: '500px',
   value: '',
   fontSize: 12,
-  lineHeight: 1,
   showGutter: true,
   onChange: null,
   onPaste: null,

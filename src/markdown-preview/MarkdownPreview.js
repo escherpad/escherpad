@@ -14,7 +14,7 @@ const defaultStyle = {
     overflowY: "auto",
   },
   article: {
-    padding: "100px 50px 100% 50px",
+    padding: "100px 50px 400px 50px",
     boxSizing: "border-box",
     margin: "0 auto",
     width: "100%",
@@ -77,9 +77,12 @@ export default class MarkdownPreview extends React.Component {
     if (typeof this.state.cursorTarget !== "undefined") this.scrollCursorTo(this.state.cursorTarget);
   }
 
-  scrollCursorTo(target) {
+  scrollCursorTo(target, silent = true) {
+    var old = this._silent;
+    this._silent = silent;
     if (typeof target === 'undefined' || !this.state || typeof this.state.cursorScrollOffset === "undefined") return;
     this.smoothScroll.scrollTo(this.state.cursorScrollOffset - target);
+    this._silent = old;
   }
 
   onMouseUp(e) {
@@ -103,7 +106,17 @@ export default class MarkdownPreview extends React.Component {
     })
   }
 
+  /**
+   * emits filtered scroll events when:
+   * 1. not silenced by scroll to
+   * 2. smoothScroll is not running (perfectly still)
+   * 3. currentScrollTop is more than 0.5 pixel away from smoothScroll target.
+   * 4. when onScroll prop is available.
+   */
   onScroll(e) {
+    let scrollTop = e.target.scrollTop;
+    if (this._silent || this.smoothScroll.running || Math.abs(scrollTop - this.smoothScroll.target) <= 0.5 || !this.props.onScroll) return;
+    this.props.onScroll(scrollTop);
   }
 
   findCursorString(markdownElement) {
@@ -118,7 +131,7 @@ export default class MarkdownPreview extends React.Component {
         height: rect.height
       }
     });
-    let cursorScrollOffset = scrollTop + rect.top;
+    let cursorScrollOffset = scrollTop + (rect.top + rect.bottom) / 2;
     this.setState({cursorScrollOffset});
   }
 

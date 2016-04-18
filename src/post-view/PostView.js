@@ -52,6 +52,7 @@ export default class PostView extends React.Component {
                            style={styles.fluid}
                            ref={(prev)=>this.markdownPreview=prev}
                            onSelect={this.onMarkdownSelect.bind(this)}
+                           onScroll={this.setEditorCursorScrollTarget.bind(this)}
           ></MarkdownPreview>
           <EditorView ref={(_)=>this.editorView=_}
                       style={styles.fluid}
@@ -71,13 +72,17 @@ export default class PostView extends React.Component {
   componentWillMount() {
     let store = this.props.store;
     store
-      // .throttleTime(10)
+    // .throttleTime(10)
       .subscribe((state)=> {
         let post = state.posts[state.editor.post];
         let agent = state.session.agent;
         let user = state.session.user;
         setImmediate(()=>this.setState({post, agent, user}))
       })
+  }
+
+  setEditorCursorScrollTarget(scrollTop) {
+    console.log(scrollTop);
   }
 
   setCursorTarget() {
@@ -88,7 +93,7 @@ export default class PostView extends React.Component {
   getEditorCursorPosition() {
     let rect = getAceCursorPosition();
     if (!rect) return;
-    return rect.top
+    return (rect.top + rect.bottom) / 2
   }
 
   onMarkdownSelect(position) {

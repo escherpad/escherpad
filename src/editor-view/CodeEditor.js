@@ -58,6 +58,7 @@ export default class CodeEditor extends React.Component {
           width={`${this.state.parentWidth}px`}
           height={`${this.state.parentHeight}px`}
           lineHeight={2}
+          scrollMargin={{bottom: "400"}}
           enableBasicAutocompletion={true}
           onChange={this.props.onChange}
           onChangeCursor={this.props.onChangeCursor}
