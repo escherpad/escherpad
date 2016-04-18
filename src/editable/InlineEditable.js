@@ -68,10 +68,10 @@ export default class InlineEditable extends React.Component {
   }
 
   // return both value and cursor position together.
-  onChangeValue() {
-    let handler = this.props.onChange;
-    if (!handler) return;
-    handler(value, cursor);
+  onChangeValue(value) {
+    if (!this.props || !this.props.onChange) return;
+    let cursor;
+    this.props.onChange(value, cursor);
   }
 
   isEmpty() {
