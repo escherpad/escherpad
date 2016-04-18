@@ -44,14 +44,17 @@ export default class MarkdownPreview extends React.Component {
     let cursor = {};
     if (this && this.state) cursor = this.state.cursor || {};
     return (
-      <div className="markdown-preview scroll-container" style={{...defaultStyle.scrollContainer, ...style}}
+      <div className="markdown-preview scroll-container"
+           style={{...defaultStyle.scrollContainer, ...style}}
            onScroll={this.onScroll.bind(this)}>
         <div className="markdown-and-cursor-container" style={{position: "relative"}}>
           <Markdown style={defaultStyle.article}
                     src={sourceWithCursor}
                     async={true}
                     afterRender={this.afterRender.bind(this)}
-                    placeholder={"this is a placeholder"} onMouseUp={this.onMouseUp.bind(this)}></Markdown>
+                    placeholder={"this is a placeholder"}
+                    onMouseUp={this.onMouseUp.bind(this)}
+          ></Markdown>
           <Cursor className="blinking" {...cursor}></Cursor>
         </div>
       </div>
