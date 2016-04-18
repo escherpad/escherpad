@@ -101,10 +101,14 @@ export default class CodeEditor extends React.Component {
     this.resize();
   };
 
+  focus(){
+    this.Editor.focus();
+  }
+
   setCursor(position) {
     this.Editor.setCursor(position, false);
   }
-  
+
   clearSelection() {
     this.Editor.clearSelection();
   }

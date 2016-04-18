@@ -179,6 +179,11 @@ export default class ReactAce extends Component {
     this._silent = old;
   }
 
+  focus() {
+    this.editor.focus();
+    return this;
+  }
+
   // never needed
   getCursor() {
     return this.editor.session.getCursor();
@@ -190,6 +195,7 @@ export default class ReactAce extends Component {
     this.editor.moveCursorToPosition({row, column});
     this._silent = old;
   }
+
   clearSelection() {
     this.editor.session.selection.clearSelection();
   }
@@ -198,7 +204,7 @@ export default class ReactAce extends Component {
     return this.editor.session.getScrollTop();
   }
 
-  getScrollerHeight () {
+  getScrollerHeight() {
     return
   }
 

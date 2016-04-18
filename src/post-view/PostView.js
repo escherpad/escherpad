@@ -105,6 +105,7 @@ export default class PostView extends React.Component {
   onMarkdownSelect(position) {
     this.editorView.setCursor(position);
     this.editorView.clearSelection();
+    this.editorView.CodeEditor.focus();
   }
 
 }
