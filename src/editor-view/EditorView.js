@@ -15,7 +15,7 @@ const styles = {
   fixed: {
     flex: "0 0 auto"
   },
-  fluid: {
+  twoColumn: {
     flex: "1 1 auto"
   },
   editor: {
@@ -52,9 +52,10 @@ export default class EditorView extends React.Component {
                   dispatch={dispatch}
         ></TitleBar>
         <CodeEditor ref={(_)=>this.CodeEditor=_}
-                    style={[styles.fluid, styles.editor]}
+                    style={[styles.twoColumn, styles.editor]}
                     value={post.source}
                     cursorPosition={cursorPosition}
+                    version={post._sourceVersion}
                     mimeType={post.type}
                     onChange={onChange}
                     onChangeScrollTop={onChangeScrollTop}
@@ -94,7 +95,7 @@ export default class EditorView extends React.Component {
     window.dispatchEvent(new CustomEvent("reflow"));
   }
 
-  onChange(source, cursor) {
+  onChange(source, cursor, version) {
     let user = this.props.user;
     let post = this.props.post;
     let agent = this.props.agent;
@@ -104,7 +105,8 @@ export default class EditorView extends React.Component {
       post: {
         id: post.id,
         source: source,
-        presence: {}
+        presence: {},
+        _sourceVersion: version
       }
     };
     action.post.presence[agent] = {user, agent, cursor};

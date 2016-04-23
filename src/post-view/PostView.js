@@ -7,21 +7,16 @@ import EditorView from "../editor-view/EditorView";
 import * as _ from "lodash";
 
 import {getAceCursorPosition} from "./getAceCursorPosition";
+import {flexRow, flexFluid} from "../style-globals";
 
 const styles = {
   postContainer: {
-    position: "absolute",
-    left: 0, right: 0, top: 0, bottom: 0,
-    display: "flex",
-    flexDirection: "row",
+    // position: "absolute",
+    // left: 0, right: 0, top: 0, bottom: 0,
     alighItems: "stretch"
   },
-  fixed: {
-    flex: "0 0 auto"
-  },
-  fluid: {
-    width: "50%",
-    flex: "1 1 auto"
+  twoColumn: {
+    width: "50%"
   }
 };
 @Radium
@@ -34,10 +29,11 @@ export default class PostView extends React.Component {
   constructor() {
     super();
     this._setCursorTarget = _.debounce(this.setCursorTarget.bind(this), 20);
-    this._setEditorCursorScrollTarget = _.throttle(this.setEditorCursorScrollTarget.bind(this), 20);
+    this._setEditorCursorScrollTarget = _.throttle(this.setEditorCursorScrollTarget.bind(this), 7, {rising: true});
   }
 
   render() {
+    let style = this.props.style;
     let dispatch = this.props.dispatch;
     if (!this.state.post) {
       return (
@@ -47,16 +43,16 @@ export default class PostView extends React.Component {
       )
     } else {
       return (
-        <div className="PostView" style={styles.postContainer}>
+        <div className="PostView" style={[styles.postContainer, flexRow, style]}>
           <MarkdownPreview agent={this.state.agent}
                            post={this.state.post}
-                           style={styles.fluid}
+                           style={[styles.twoColumn, flexFluid]}
                            ref={(prev)=>this.markdownPreview=prev}
                            onSelect={this.onMarkdownSelect.bind(this)}
                            onScroll={this._setEditorCursorScrollTarget}
           ></MarkdownPreview>
           <EditorView ref={(_)=>this.editorView=_}
-                      style={styles.fluid}
+                      style={[styles.twoColumn, flexFluid]}
                       user={this.state.user}
                       agent={this.state.agent}
                       post={this.state.post}
@@ -83,17 +79,19 @@ export default class PostView extends React.Component {
   }
 
   // this really need to be throttled because the `setScrollTop`
-  setEditorCursorScrollTarget(scrollTop) {
-    var cursorPosition = this.getEditorCursorPosition();
-    var st = this.editorView.getScrollTop();
+  setEditorCursorScrollTarget() {
+    let scrollTop = this.markdownPreview.getScrollTop();
+    if (!this.editorCursorPosition) this.editorCursorPosition = this.getEditorCursorPosition();
+    if (!this.editorScrollTop) this.editorScrollTop = this.editorView.getScrollTop();
     var previewCursorScrollOffset = this.markdownPreview.state.cursorScrollOffset;
-    var targetScrollTop = scrollTop - previewCursorScrollOffset + cursorPosition + st;
-    this.editorView.setScrollTop(Math.max(0, targetScrollTop));
+    let targetScrollTop = Math.max(0, scrollTop - previewCursorScrollOffset + this.editorCursorPosition + this.editorScrollTop);
+    this.editorView.setScrollTop(targetScrollTop);
   }
 
   setCursorTarget() {
-    let cursorPosition = this.getEditorCursorPosition();
-    this.markdownPreview.setCursorTarget(cursorPosition);
+    this.editorCursorPosition = this.getEditorCursorPosition();
+    this.editorScrollTop = this.editorView.getScrollTop();
+    this.markdownPreview.setCursorTarget(this.editorCursorPosition);
   }
 
   getEditorCursorPosition() {
@@ -104,6 +102,7 @@ export default class PostView extends React.Component {
 
   onMarkdownSelect(position) {
     this.editorView.setCursor(position);
+    this.editorCursorPosition = this.getEditorCursorPosition();
     this.editorView.clearSelection();
     this.editorView.CodeEditor.focus();
   }

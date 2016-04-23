@@ -76,3 +76,14 @@ export function posts(state = {}, action) {
     return state;
   }
 }
+
+import {$uuid} from  '../utils/$uuid';
+export function createPost() {
+  return {
+    type: ADD_POST,
+    post: {
+      id: $uuid()
+
+    }
+  }
+}

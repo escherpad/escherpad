@@ -9,7 +9,7 @@ export const demoPost = {
 };
 export var demoInitialState = {
   editor: {},
-  posts: {}
+  posts: {},
 };
 
 demoInitialState.editor.post = demoPost.id;

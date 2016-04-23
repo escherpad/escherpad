@@ -1,4 +1,10 @@
-/** Created by ge on 4/15/16. */
+/** Created by ge on 4/15/16.
+ *
+ * options:
+ *  - `value`, `cursorPosition`, and `version` are set simultaneously when there is a change.
+ *  - `onChange` handler receives `value`, `cursor`, and `version` as the input.
+ *  -
+ * */
 import ace from 'brace';
 import React, {Component, PropTypes} from 'react';
 
@@ -37,6 +43,7 @@ export default class ReactAce extends Component {
       name,
       onBeforeLoad,
       mode,
+      version,
       theme,
       fontSize,
       lineHeight,
@@ -51,6 +58,7 @@ export default class ReactAce extends Component {
       commands,
     } = this.props;
 
+    this.setVersion(version);
     this.editor = ace.edit(name);
 
     if (onBeforeLoad) {
@@ -100,6 +108,7 @@ export default class ReactAce extends Component {
       this.updateScrollMargin(scrollMargin);
     }
 
+
     if (onLoad) {
       onLoad(this.editor);
     }
@@ -111,6 +120,7 @@ export default class ReactAce extends Component {
 
   componentWillReceiveProps(nextProps) {
     var oldProps = this.props;
+    let {version} = nextProps;
 
     for (let i = 0; i < editorOptions.length; i++) {
       const option = editorOptions[i];
@@ -143,14 +153,19 @@ export default class ReactAce extends Component {
     if (nextProps.showGutter !== oldProps.showGutter) {
       this.editor.renderer.setShowGutter(nextProps.showGutter);
     }
-    if (this.editor.getValue() !== nextProps.value) {
-      if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition);
-      else this.setValue(nextProps.value, this.editor.selection.getCursor());
+    // if (version is not a number), just do the usual thing. If is, use for comparison.
+    if (typeof version === "number" && version <= this.version) {
+      // use this version number to avoid oscillation.
+    } else if (this.editor.getValue() !== nextProps.value) {
+      if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition, version);
+      else this.setValue(nextProps.value, this.editor.selection.getCursor(), version);
     } else if (nextProps.cursorPosition) {
-      let old = oldProps.cursorPosition;
+      // let old = oldProps.cursorPosition;
+      let old = this.editor.selection.getCursor();
       let next = nextProps.cursorPosition;
       if (!old || old.row + ',' + old.column !== next.row + ',' + next.column) {
         this.setCursor(next);
+        this.setVersion(version);
       }
     }
   }
@@ -168,13 +183,19 @@ export default class ReactAce extends Component {
     this.editor = null;
   }
 
-  setValue(value, cursorPosition, silent = true) {
+  setVersion(version) {
+    if (typeof version !== "number") version = 0;
+    this.version = version;
+  }
+
+  setValue(value, cursorPosition, silent = true, version) {
     // editor.setValue is a synchronous function call, change event is emitted before setValue return. This way we can prevent the changeCursor event from firing.
     var old = this._silent;
     this._silent = silent;
     this.editor.setValue(value, 1); //this sets the start to beginning of the document.
     // moveCursor... is also a synchronous call. Change event is emitted before it returns.
     this.setCursor(cursorPosition);
+    this.setVersion(version);
     this.editor.focus();
     this._silent = old;
   }
@@ -205,13 +226,13 @@ export default class ReactAce extends Component {
   }
 
   getScrollerHeight() {
-    return
+    return;
   }
 
   setScrollTop(scrollTop, silent = true) {
     var old = this._silent;
     this._silent = silent;
-    this.editor.getSession().setScrollTop(scrollTop);
+    this.editor.session.setScrollTop(scrollTop);
     this._silent = old;
   }
 
@@ -257,15 +278,16 @@ export default class ReactAce extends Component {
     }
     if (!this.props.onChange || this._silent) return;
     const value = this.editor.getValue();
-    // const position = this.editor.selection.getCursor();
-    this.props.onChange(value, cursor);
+    this.setVersion(this.version + 1);
+    this.props.onChange(value, cursor, this.version);
   }
 
   onChangeCursor(e) {
     if (!this.props.onChange || this._silent) return;
     var value = this.editor.getValue();
     var cursor = this.editor.selection.getCursor();
-    this.props.onChange(value, cursor);
+    this.setVersion(this.version + 1);
+    this.props.onChange(value, cursor, this.version);
   }
 
   onChangeSelection() {
@@ -287,6 +309,7 @@ export default class ReactAce extends Component {
         id={name}
         className={className}
         style={divStyle}
+        ref={(_)=>this.nativeElement=_}
       ></div>
     );
   }
@@ -309,6 +332,7 @@ ReactAce
   onBlur: PropTypes.func,
   value: PropTypes.string,
   cursorPosition: PropTypes.any,
+  version: PropTypes.number,
   onLoad: PropTypes.func,
   onBeforeLoad: PropTypes.func,
   minLines: PropTypes.number,

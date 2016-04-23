@@ -3,11 +3,10 @@ import React from 'react';
 import Radium from 'radium';
 import InlineEditable from "../editable/InlineEditable";
 require('./chevron.scss');
+import {flexRow, flexFluid, flexFixed} from '../style-globals';
 const styles = {
   container: {
     borderBottom: "1px solid #eeeeee",
-    display: "flex",
-    flexDirection: "row",
     alignItems: "bottom",
     position: "relative", // to allow expansion with child
     marginRight: "100px"
@@ -50,13 +49,11 @@ const styles = {
     paddingBottom: "10px",
     fontSize: "14px",
     hint: {
-      flex: "0 0 auto",
       color: "#888888",
       marginRight: "4px",
       fontWeight: "500"
     },
     info: {
-      flex: "0 0 auto",
       color: "#23aaff",
       ":hover": {
         textShadow: "0 0 2px #23aaff"
@@ -72,12 +69,6 @@ const styles = {
   },
   blocks: {
     display: "block"
-  },
-  flexFixed: {
-    flex: "0 0 auto",
-  },
-  flexFluid: {
-    flex: "1 1 auto",
   },
   dropdownButton: {}
 };
@@ -107,19 +98,19 @@ export default class TitleBar extends React.Component {
     let post = this.props.post;
     let onTitleChange = this.onTitleChange.bind(this);
     return (
-      <div className="title-bar" style={[styles.container, style]}>
+      <div className="title-bar" style={[styles.container, flexRow, style]}>
         <InlineEditable
           value={post.title || ""}
           className="h1"
-          style={[styles.blocks, styles.flexFixed, styles.title]}
+          style={[styles.blocks, flexFixed, styles.title]}
           placeholder="Untitled..."
           onChange={onTitleChange}
         ></InlineEditable>
-        <button className="dropdown chevron-bottom" style={[styles.blocks, styles.flexFixed, styles.button]}></button>
-        <div className="spacer" style={[styles.blocks, styles.flexFluid]}></div>
-        <div className="status" style={[styles.blocks, styles.flexFixed, styles.status]}>
-          <div className="hint" style={styles.status.hint}>Type:</div>
-          <div className="info" style={[styles.status.info, styles.clickable]}>{"md"}
+        <button className="dropdown chevron-bottom" style={[styles.blocks, flexFixed, styles.button]}></button>
+        <div className="spacer" style={[styles.blocks, flexFluid]}></div>
+        <div className="status" style={[styles.blocks, flexFixed, styles.status]}>
+          <div className="hint" style={[styles.status.hint, flexFixed]}>Type:</div>
+          <div className="info" style={[styles.status.info, styles.clickable, flexFixed]}>{"md"}
             <span className="dropdown chevron-bottom" style={[styles.status.button]}> </span>
           </div>
         </div>

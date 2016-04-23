@@ -25,6 +25,7 @@ const styles = {
 };
 
 const options = {
+  maxLines: Infinity,
   $blockScrolling: Infinity,
   $wrapLimit: 80,
   animatedScroll: true,
@@ -36,6 +37,7 @@ export default class CodeEditor extends React.Component {
     style: React.PropTypes.any,
     value: React.PropTypes.string,
     cursorPosition: React.PropTypes.any,
+    version:  React.PropTypes.number,
     onChange: React.PropTypes.func,
     onChangeCursor: React.PropTypes.func,
     onChangeSelection: React.PropTypes.func,
@@ -47,6 +49,7 @@ export default class CodeEditor extends React.Component {
   render() {
     let value = this.props.value;
     let cursorPosition = this.props.cursorPosition;
+    let version = this.props.version;
     let style = [this.props.style, styles.container];
     return (
       <div className="editor-container" style={style}>
@@ -55,6 +58,7 @@ export default class CodeEditor extends React.Component {
           mode="markdown"
           value={value}
           cursorPosition={cursorPosition}
+          version={version}
           theme="github"
           width={`${this.state.parentWidth}px`}
           height={`${this.state.parentHeight}px`}

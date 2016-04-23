@@ -2,6 +2,10 @@
 import React from 'react';
 import Radium from 'radium';
 import PostView from "../post-view/PostView";
+import TeamNavBar from "../team-nav/TeamNavBar";
+import ListPanel from "../list-view/ListPanel";
+
+import {flexRow, flexFluid, flexFixed} from "../style-globals";
 
 const styles = {
   base: {
@@ -17,14 +21,7 @@ const styles = {
   },
   flexContainer: {
     height: "100%",
-    display: "flex",
-    flexDirection: "row",
     justifyContent: "center"
-  },
-  flexColumn: {
-    width: "50%",
-    overflowY: "auto",
-    //flex: "1 1 auto"
   }
 };
 
@@ -48,14 +45,19 @@ export default class App extends React.Component {
     let store = this.props.store;
     let dispatch = store.dispatch.bind(store);
     return (
-      <div className="layout-container" style={[styles.base, styles.styling, styles.flexContainer]}>
-        <div className="TeamNavBar"></div>
-        <div className="ListPanel" store={store} dispatch={dispatch}>
-          <div className="PostList"></div>
-          <div className="FilesListView"></div>
-        </div>
-        <PostView store={store} dispatch={dispatch}></PostView>
+      <div className="layout-container" style={[styles.base, styles.styling, flexRow]}>
+        <PostView
+          style={flexFluid}
+          store={store}
+          dispatch={dispatch}></PostView>
       </div>
     )
   }
 }
+// <TeamNavBar style={flexFixed}
+// ></TeamNavBar>
+// <ListPanel className="ListPanel"
+// style={flexFixed}
+// store={store}
+// dispatch={dispatch}
+//   ></ListPanel>
