@@ -111,7 +111,7 @@ module.exports = {
     inline: true
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: true}}),
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
