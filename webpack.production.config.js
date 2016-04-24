@@ -12,9 +12,8 @@ const development_entry = [
   "./src/index.scss"
 ];
 const build_entry = {
-  index: "./src/index.html",
-  app: "./src/index.js",
-  vendor: [
+  "app.js": "./src/index.js",
+  "vendor.js": [
     "react",
     "react-dom",
     "./node_modules/regenerator/runtime.js",
@@ -30,12 +29,13 @@ const build_entry = {
 
 var path = require('path');
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: build_entry,
   output: {
     path: path.join(__dirname, 'build'),
-    filename: '[name].js'
+    filename: '[name]'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -111,6 +111,7 @@ module.exports = {
     inline: true
   },
   plugins: [
+    new CopyWebpackPlugin([{from: 'src/index.html'}]),
     new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
