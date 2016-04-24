@@ -40,7 +40,7 @@ export default class MarkdownPreview extends React.Component {
     try {
       sourceWithCursor = insertCursor(post.source, post.presence[agent].cursor);
     } catch (e) {
-      console.log('error: ', e);
+      // console.log('error: ', e);
       sourceWithCursor = post.source;
     }
     let cursor = {};
