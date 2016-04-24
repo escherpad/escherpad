@@ -55723,7 +55723,7 @@ webpackJsonp([1],[
 	      try {
 	        sourceWithCursor = (0, _cursorHelpers.insertCursor)(post.source, post.presence[agent].cursor);
 	      } catch (e) {
-	        console.log('error: ', e);
+	        // console.log('error: ', e);
 	        sourceWithCursor = post.source;
 	      }
 	      var cursor = {};
