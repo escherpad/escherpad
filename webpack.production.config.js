@@ -1,19 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
-
-const port = 3000;
-
-const development_entry = [
-  'webpack-dev-server/client?http://0.0.0.0:' + port, // WebpackDevServer host and port
-  'webpack/hot/only-dev-server',
-  './node_modules/regenerator/runtime.js', // required for using regenerator.
-  './src/index.js', // Your appʼs entry point
-  './src/index.html',
-  "./src/index.scss"
-];
 const build_entry = {
-  "app.js": "./src/index.js",
-  "vendor.js": [
+  app: "./src/index.js",
+  vendor: [
     "react",
     "react-dom",
     "./node_modules/regenerator/runtime.js",
@@ -35,7 +22,7 @@ module.exports = {
   entry: build_entry,
   output: {
     path: path.join(__dirname, 'build'),
-    filename: '[name]'
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -103,21 +90,12 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    port: port,
-    contentBase: "./src",
-    noInfo: true, //  --no-info option
-    hot: true,
-    inline: true
-  },
   plugins: [
+    new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('production')}),
     new CopyWebpackPlugin([{from: 'src/index.html'}]),
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    // new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js")
   ]
 };

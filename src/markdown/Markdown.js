@@ -96,7 +96,7 @@ export default class Markdown extends React.Component {
       console.log("markdown error: ", e);
       html = source;
     }
-    this.nativeElement.innerHTML = html;
+    this.nativeElement.innerHTML = html || "";
     if (this.props.afterRender) this.props.afterRender(this.nativeElement);
   };
 

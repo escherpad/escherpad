@@ -39,7 +39,7 @@ export default class EditorView extends React.Component {
   render() {
     let agent = this.props.agent;
     let post = this.props.post;
-    let presence = post.presence[agent];
+    let presence = post.presence ? post.presence[agent] : null;
     var cursorPosition = presence ? presence.cursor : undefined;
     let onChange = this.onChange.bind(this);
     let onChangeScrollTop = this.props.onEditorScrollTop;
@@ -69,14 +69,16 @@ export default class EditorView extends React.Component {
      * Accessing via the CodeEditor Child Component */
     this.CodeEditor.setCursor(position);
   }
+
   clearSelection() {
     this.CodeEditor.clearSelection();
   }
 
-  getScrollTop(){
+  getScrollTop() {
     return this.CodeEditor.getScrollTop();
   }
-  setScrollTop(scrollTop){
+
+  setScrollTop(scrollTop) {
     this.CodeEditor.setScrollTop(scrollTop);
     return this;
   }
