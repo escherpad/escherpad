@@ -10,6 +10,7 @@
     "github-markdown-css": "^2.2.1",
     "katex": "^0.5.1",
     "luna": "^1.0.1",
+    "luna-saga": "^1.1.5",
     "lz-string": "^1.4.4",
     "markdown-it": "^6.0.0",
     "markdown-it-abbr": "^1.0.3",
@@ -73,8 +74,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "webpack --progress --profile --colors",
-    "start": "webpack-dev-server --progress --profile --colors --hot"
+    "dist": "webpack --profile --colors --config webpack.production.config.js",
+    "start": "webpack-dev-server --progress --profile --colors --hot --config webpack.develop.config.js"
   },
   "repository": {
     "type": "git",

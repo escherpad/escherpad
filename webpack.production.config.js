@@ -12,6 +12,7 @@ const development_entry = [
   "./src/index.scss"
 ];
 const build_entry = {
+  index: "./src/index.html",
   app: "./src/index.js",
   vendor: [
     "react",
@@ -25,9 +26,13 @@ const build_entry = {
   ]
 };
 
+'use strict';
+
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
   entry: build_entry,
-  devtool: process.env.WEBPACK_DEVTOOL || 'source-map',
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].js'
@@ -106,7 +111,12 @@ module.exports = {
     inline: true
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: true}}),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
-    new webpack.NoErrorsPlugin()
   ]
 };
