@@ -76,7 +76,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --progress --profile --colors --config webpack.production.config.js",
-        "gh-deploy": "git subtree push --prefix build origin gh-pages",
+        "gh-deploy": "git subtree push --prefix gittor origin gh-pages",
         "start": "webpack-dev-server --progress --profile --colors --hot --config webpack.develop.config.js"
     },
     "repository": {

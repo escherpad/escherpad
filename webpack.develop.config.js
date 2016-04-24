@@ -21,7 +21,7 @@ module.exports = {
   entry: build_entry,
   devtool: process.env.WEBPACK_DEVTOOL || 'source-map',
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'gittor'),
     filename: '[name].js'
   },
   resolve: {

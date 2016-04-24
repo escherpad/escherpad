@@ -21,7 +21,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: build_entry,
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'gittor'),
     filename: '[name].js'
   },
   resolve: {

@@ -76,7 +76,7 @@ export default class Markdown extends React.Component {
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
     this.nativeElement.addEventListener('mouseup', this.onMouseUp);
-    this.asyncMarkdown = _.throttle(this.asyncMarkdown, 200);
+    this.asyncMarkdown = _.throttle(this.asyncMarkdown, 100);
   }
 
   componentWillUnmount() {
