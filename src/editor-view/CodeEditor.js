@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import Radium from 'radium';
-import EditorHeader from "./EditorHeader";
+import EditorHeader from "./PostHeader";
 
 import brace from "brace";
 import AceEditor from "../AceEditor/AceEditor";
@@ -12,16 +12,11 @@ import 'brace/keybinding/vim';
 import 'brace/theme/github';
 
 const styles = {
-  container: {
-    position: "relative"
-  },
-  editor: {
-    display: "block",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-  }
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0
 };
 
 const options = {
@@ -37,20 +32,16 @@ export default class CodeEditor extends React.Component {
     style: React.PropTypes.any,
     value: React.PropTypes.string,
     cursorPosition: React.PropTypes.any,
-    version:  React.PropTypes.number,
+    version: React.PropTypes.number,
     onChange: React.PropTypes.func,
-    onChangeCursor: React.PropTypes.func,
-    onChangeSelection: React.PropTypes.func,
     onChangeScrollTop: React.PropTypes.func
   };
-  // static defaultProps = {
-  // };
 
   render() {
     let value = this.props.value;
     let cursorPosition = this.props.cursorPosition;
     let version = this.props.version;
-    let style = [this.props.style, styles.container];
+    let style = [this.props.style, styles];
     return (
       <div className="editor-container" style={style}>
         <AceEditor
@@ -63,12 +54,10 @@ export default class CodeEditor extends React.Component {
           width={`${this.state.parentWidth}px`}
           height={`${this.state.parentHeight}px`}
           lineHeight={2}
-          scrollMargin={{bottom: "400"}}
+          scrollMargin={{bottom: "900"}}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
           onChange={this.props.onChange}
-          onChangeCursor={this.props.onChangeCursor}
-          onChangeSelection={this.props.onChangeSelection}
           onChangeScrollTop={this.props.onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
           editorProps={options}
@@ -77,12 +66,6 @@ export default class CodeEditor extends React.Component {
         />
       </div>
     )
-  }
-
-  shouldComponentUpdate(newProps) {
-    // we can always return true with this one because the aceEditor component behaves well.
-    // return false;
-    return true;
   }
 
   componentDidMount() {
@@ -105,7 +88,7 @@ export default class CodeEditor extends React.Component {
     this.resize();
   };
 
-  focus(){
+  focus() {
     this.Editor.focus();
   }
 

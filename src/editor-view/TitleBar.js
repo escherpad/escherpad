@@ -3,7 +3,7 @@ import React from 'react';
 import Radium from 'radium';
 import InlineEditable from "../editable/InlineEditable";
 require('./chevron.scss');
-import {flexRow, flexFluid, flexFixed} from '../style-globals';
+import {flexRow, flexFluid, flexFixed} from '../layout/style-globals';
 const styles = {
   container: {
     borderBottom: "1px solid #eeeeee",

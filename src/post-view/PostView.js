@@ -2,23 +2,16 @@
 import React from 'react';
 import Radium from 'radium';
 
+// <EditorHeader style={styles.fixed}></EditorHeader>
+// import EditorHeader from "./EditorHeader";
 import MarkdownPreview from '../markdown-preview/MarkdownPreview';
 import EditorView from "../editor-view/EditorView";
-import * as _ from "lodash";
+import debounce from "lodash.debounce";
+import throttle from "lodash.throttle";
 
-import {getAceCursorPosition} from "./getAceCursorPosition";
-import {flexRow, flexFluid} from "../style-globals";
+import {getAceCursorPosition} from "./../markdown-editor/getAceCursorPosition";
+import {flexRow, flexFluid} from "../layout/style-globals";
 
-const styles = {
-  postContainer: {
-    // position: "absolute",
-    // left: 0, right: 0, top: 0, bottom: 0,
-    alighItems: "stretch"
-  },
-  twoColumn: {
-    width: "50%"
-  }
-};
 @Radium
 export default class PostView extends React.Component {
   static propTypes = {
@@ -28,12 +21,11 @@ export default class PostView extends React.Component {
 
   constructor() {
     super();
-    this._setCursorTarget = _.debounce(this.setCursorTarget.bind(this), 20);
-    this._setEditorCursorScrollTarget = _.throttle(this.setEditorCursorScrollTarget.bind(this), 7, {rising: true});
+    this._setCursorTarget = debounce(this.setCursorTarget.bind(this), 20);
+    this._setEditorCursorScrollTarget = throttle(this.setEditorCursorScrollTarget.bind(this), 7, {rising: true});
   }
 
   render() {
-    let style = this.props.style;
     let dispatch = this.props.dispatch;
     if (!this.state.post) {
       return (
@@ -64,7 +56,6 @@ export default class PostView extends React.Component {
       )
     }
   }
-
 
   componentWillMount() {
     let store = this.props.store;
@@ -106,5 +97,15 @@ export default class PostView extends React.Component {
     this.editorView.clearSelection();
     this.editorView.CodeEditor.focus();
   }
-
 }
+
+const styles = {
+  postContainer: {
+    position: "absolute",
+    left: 0, right: 0, top: 0, bottom: 0,
+    alighItems: "stretch"
+  },
+  twoColumn: {
+    width: "50%"
+  }
+};

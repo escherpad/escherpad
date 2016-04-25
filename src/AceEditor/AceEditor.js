@@ -210,7 +210,7 @@ export default class ReactAce extends Component {
     return this.editor.session.getCursor();
   }
 
-  setCursor({row=0, column=0} = {}, silent = true) {
+  setCursor({row=0, column=0}={}, silent = true) {
     var old = this._silent;
     this._silent = silent;
     this.editor.moveCursorToPosition({row, column});

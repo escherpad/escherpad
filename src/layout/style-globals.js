@@ -8,8 +8,10 @@ export const flexColumn = {
   flexDirection: "column",
 };
 export const flexFixed = {
+  position: "relative", // so that children can fill
   flex: "0 0 auto"
 };
 export const flexFluid = {
+  position: "relative", // so that children can fill
   flex: "1 1 auto"
 };

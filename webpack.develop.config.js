@@ -8,12 +8,12 @@ const build_entry = {
   vendor: [
     "react",
     "react-dom",
+    "radium",
     "./node_modules/regenerator/runtime.js",
     "markdown-it", "markdown-it-highlightjs", "markdown-it-task-lists",
     "rxjs",
     "luna", "luna-saga",
-    "brace", "react-ace",
-    "lodash"
+    "brace", "react-ace", "lodash.debounce", "lodash.throttle"
   ]
 };
 

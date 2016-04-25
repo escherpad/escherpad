@@ -1,31 +1,17 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
-import EditorHeader from "./EditorHeader";
 import TitleBar from "./TitleBar";
 import CodeEditor from "./CodeEditor";
+import Flex from "../layout/Flex";
+import FlexItem from "../layout/FlexItem";
 
 require('./ace-gutter.scss');
 const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: "column"
-  },
-  fixed: {
-    flex: "0 0 auto"
-  },
-  twoColumn: {
-    flex: "1 1 auto"
-  },
-  editor: {
-    marginTop: "20px",
-    boxSizing: "border-box"
-  }
+  marginTop: "20px",
+  boxSizing: "border-box"
 };
 
-import * as _ from "lodash";
-@Radium
 export default class EditorView extends React.Component {
   static propTypes = {
     agent: React.PropTypes.any.isRequired,
@@ -45,22 +31,24 @@ export default class EditorView extends React.Component {
     let onChangeScrollTop = this.props.onEditorScrollTop;
     let dispatch = this.props.dispatch;
     return (
-      <div className="editor-view" style={[this.props.style, styles.container]}>
-        <EditorHeader style={styles.fixed}></EditorHeader>
-        <TitleBar style={styles.fixed}
-                  post={post}
-                  dispatch={dispatch}
-        ></TitleBar>
-        <CodeEditor ref={(_)=>this.CodeEditor=_}
-                    style={[styles.twoColumn, styles.editor]}
-                    value={post.source}
-                    cursorPosition={cursorPosition}
-                    version={post._sourceVersion}
-                    mimeType={post.type}
-                    onChange={onChange}
-                    onChangeScrollTop={onChangeScrollTop}
-        ></CodeEditor>
-      </div>
+      <Flex column fill>
+        <FlexItem fixed>
+          <TitleBar post={post}
+                    dispatch={dispatch}
+          ></TitleBar>
+        </FlexItem>
+        <FlexItem fluid>
+          <CodeEditor ref={(_)=>this.CodeEditor=_}
+                      style={styles}
+                      value={post.source}
+                      cursorPosition={cursorPosition}
+                      version={post._sourceVersion}
+                      mimeType={post.type}
+                      onChange={onChange}
+                      onChangeScrollTop={onChangeScrollTop}
+          ></CodeEditor>
+        </FlexItem>
+      </Flex>
     )
   }
 
@@ -115,5 +103,4 @@ export default class EditorView extends React.Component {
     this.dispatch(action);
     if (this.props.onEditorChange) this.props.onEditorChange(source, cursor);
   }
-
 }

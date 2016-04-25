@@ -1,7 +1,6 @@
 /** Created by ge on 4/9/16. */
 import React from 'react';
 import ReactDOM from "react-dom";
-import Radium from "radium";
 import {getSelection} from "./dom/getSelection";
 
 import Markdown from '../markdown/Markdown';
@@ -12,10 +11,13 @@ import {insertCursor, getCursorStringPosition, getCursorVerticalHeightDifference
 
 const defaultStyle = {
   scrollContainer: {
-    overflowY: "auto",
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    overflowY: "auto"
   },
   article: {
-    padding: "100px 50px 400px 50px",
+    padding: "100px 50px 100% 50px",
     boxSizing: "border-box",
     margin: "0 auto",
     width: "100%",
@@ -23,7 +25,6 @@ const defaultStyle = {
     left: 0, right: 0,
   }
 };
-@Radium
 export default class MarkdownPreview extends React.Component {
   static propTypes = {
     style: React.PropTypes.any,
@@ -47,7 +48,7 @@ export default class MarkdownPreview extends React.Component {
     if (this && this.state) cursor = this.state.cursor || {};
     return (
       <div className="markdown-preview scroll-container"
-           style={[defaultStyle.scrollContainer, style]}
+           style={{...defaultStyle.scrollContainer, ...style}}
            onScroll={this.onScroll.bind(this)}>
         <div className="markdown-and-cursor-container" style={{position: "relative"}}>
           <Markdown style={defaultStyle.article}
@@ -67,6 +68,7 @@ export default class MarkdownPreview extends React.Component {
     this.scrollContainer = ReactDOM.findDOMNode(this);
     this.smoothScroll = new SmoothScroll(this.scrollContainer, {});
   }
+
   getScrollTop() {
     return this.scrollContainer.scrollTop;
   }
