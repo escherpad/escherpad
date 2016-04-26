@@ -11,12 +11,17 @@ import getAceCursorPosition from "./getAceCursorPosition";
 import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
 
+var {any, string} = React.PropTypes;
 export default class MarkdownEditor extends React.Component {
   static propTypes = {
-    agent: React.PropTypes.any,
-    user: React.PropTypes.any,
-    post: React.PropTypes.any,
-    dispatch: React.PropTypes.any.isRequired
+    agent: any,
+    user: any,
+    post: any,
+    dispatch: any.isRequired,
+    view: string
+  };
+  static defaultProps = {
+    view: "two-column"
   };
 
   constructor() {
@@ -26,35 +31,96 @@ export default class MarkdownEditor extends React.Component {
   }
 
   render() {
-    return (
-      <Flex column fill align="stretch">
-        <FlexItem fixed>
-          <PostHeader {...this.props}></PostHeader>
-        </FlexItem>
-        <FlexItem fluid>
-          <Flex row align="stretch" fill>
-            <FlexItem fluid>
-              <MarkdownPreview {...this.props}
-                ref={(prev)=>this.markdownPreview=prev}
-                onSelect={this.onMarkdownSelect.bind(this)}
-                onScroll={this._setEditorCursorScrollTarget}
-              ></MarkdownPreview>
-            </FlexItem>
-            <FlexItem fluid>
-              <EditorView {...this.props}
-                ref={(_)=>this.editorView=_}
-                onEditorScrollTop={this.setCursorTarget.bind(this)}
-                onEditorChange={this._setCursorTarget}
-              ></EditorView>
-            </FlexItem>
-          </Flex>
-        </FlexItem>
-      </Flex>
-    )
+    var {view} = this.props;
+    if (view === "two-column") {
+      return (
+        <Flex column fill align="stretch">
+          <FlexItem fixed>
+            <PostHeader {...this.props}></PostHeader>
+          </FlexItem>
+          <FlexItem fluid>
+            <Flex row align="stretch" fill>
+              <FlexItem fluid>
+                <MarkdownPreview {...this.props}
+                  ref={(prev)=>this.markdownPreview=prev}
+                  onSelect={this.onMarkdownSelect.bind(this)}
+                  onScroll={this._setEditorCursorScrollTarget}
+                ></MarkdownPreview>
+              </FlexItem>
+              <FlexItem fluid>
+                <EditorView {...this.props}
+                  ref={(_)=>this.editorView=_}
+                  onScroll={this.setCursorTarget.bind(this)}
+                  onEditorChange={this._setCursorTarget}
+                ></EditorView>
+              </FlexItem>
+            </Flex>
+          </FlexItem>
+        </Flex>
+      )
+    } else if (view === "two-row") {
+      return (
+        <Flex column fill align="stretch">
+          <FlexItem fixed>
+            <PostHeader {...this.props}></PostHeader>
+          </FlexItem>
+          <FlexItem fluid>
+            <Flex column align="stretch" fill>
+              <FlexItem fluid>
+                <MarkdownPreview {...this.props}
+                  ref={(prev)=>this.markdownPreview=prev}
+                  onSelect={this.onMarkdownSelect.bind(this)}
+                  onScroll={this._setEditorCursorScrollTarget}
+                ></MarkdownPreview>
+              </FlexItem>
+              <FlexItem fluid>
+                <EditorView {...this.props}
+                  ref={(_)=>this.editorView=_}
+                  onScroll={this.setCursorTarget.bind(this)}
+                  onEditorChange={this._setCursorTarget}
+                ></EditorView>
+              </FlexItem>
+            </Flex>
+          </FlexItem>
+        </Flex>
+      )
+    } else if (view === "preview") {
+      return (
+        <Flex column fill align="stretch">
+          <FlexItem fixed>
+            <PostHeader {...this.props}></PostHeader>
+          </FlexItem>
+          <FlexItem fluid>
+            <MarkdownPreview {...this.props}
+              ref={(prev)=>this.markdownPreview=prev}
+              onSelect={this.onMarkdownSelect.bind(this)}
+              onScroll={this._setEditorCursorScrollTarget}
+            ></MarkdownPreview>
+          </FlexItem>
+        </Flex>
+      )
+    } else if (view === "code") {
+      return (
+        <Flex column fill align="stretch">
+          <FlexItem fixed>
+            <PostHeader {...this.props}></PostHeader>
+          </FlexItem>
+          <FlexItem fluid>
+            <EditorView {...this.props}
+              ref={(_)=>this.editorView=_}
+              style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}
+              onScroll={this.setCursorTarget.bind(this)}
+              onEditorChange={this._setCursorTarget}
+            ></EditorView>
+          </FlexItem>
+        </Flex>
+      )
+    }
   }
 
   // this really need to be throttled because the `setScrollTop`
   setEditorCursorScrollTarget() {
+    if (!this.markdownPreview || !this.editorView) return;
     let scrollTop = this.markdownPreview.getScrollTop();
     if (!this.editorCursorPosition) this.editorCursorPosition = this.getEditorCursorPosition();
     if (!this.editorScrollTop) this.editorScrollTop = this.editorView.getScrollTop();
@@ -64,6 +130,7 @@ export default class MarkdownEditor extends React.Component {
   }
 
   setCursorTarget() {
+    if (!this.markdownPreview || !this.editorView) return;
     this.editorCursorPosition = this.getEditorCursorPosition();
     this.editorScrollTop = this.editorView.getScrollTop();
     this.markdownPreview.setCursorTarget(this.editorCursorPosition);
@@ -76,6 +143,7 @@ export default class MarkdownEditor extends React.Component {
   }
 
   onMarkdownSelect(position) {
+    if (!this.editorView) return;
     this.editorView.setCursor(position);
     this.editorCursorPosition = this.getEditorCursorPosition();
     this.editorView.clearSelection();

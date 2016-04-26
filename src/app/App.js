@@ -31,8 +31,9 @@ export default class App extends React.Component {
     return (
       <Flex row fill align="stretch" style={style}>
         <FlexItem fluid>
-          <Post store={store} dispatch={dispatch} component={MarkdownEditor}>
-          </Post>
+          <Post store={store} dispatch={dispatch} component={MarkdownEditor}
+                view="code"
+          ></Post>
         </FlexItem>
       </Flex>
     )

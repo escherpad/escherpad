@@ -12,26 +12,24 @@ const styles = {
   boxSizing: "border-box"
 };
 
+var {any, func} = React.PropTypes;
 export default class EditorView extends React.Component {
   static propTypes = {
-    agent: React.PropTypes.any.isRequired,
-    post: React.PropTypes.any.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
-    onEditorScroll: React.PropTypes.func,
-    onEditorChange: React.PropTypes.func,
-    style: React.PropTypes.any
+    agent: any.isRequired,
+    post: any.isRequired,
+    dispatch: func.isRequired,
+    onChange: func,
+    onScroll: func,
+    style: any
   };
 
   render() {
-    let agent = this.props.agent;
-    let post = this.props.post;
+    var {agent, user, post, dispatch, onScroll, style, ...props} = this.props;
     let presence = post.presence ? post.presence[agent] : null;
     var cursorPosition = presence ? presence.cursor : undefined;
     let onChange = this.onChange.bind(this);
-    let onChangeScrollTop = this.props.onEditorScrollTop;
-    let dispatch = this.props.dispatch;
     return (
-      <Flex column fill>
+      <Flex column fill style={style}>
         <FlexItem fixed>
           <TitleBar post={post}
                     dispatch={dispatch}
@@ -45,7 +43,7 @@ export default class EditorView extends React.Component {
                       version={post._sourceVersion}
                       mimeType={post.type}
                       onChange={onChange}
-                      onChangeScrollTop={onChangeScrollTop}
+                      onChangeScrollTop={onScroll}
           ></CodeEditor>
         </FlexItem>
       </Flex>

@@ -49,7 +49,7 @@ export default class PostView extends React.Component {
                       agent={this.state.agent}
                       post={this.state.post}
                       dispatch={dispatch}
-                      onEditorScrollTop={this.setCursorTarget.bind(this)}
+                      onScroll={this.setCursorTarget.bind(this)}
                       onEditorChange={this._setCursorTarget}
           ></EditorView>
         </div>

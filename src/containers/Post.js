@@ -25,19 +25,22 @@ export default class Post extends React.Component {
   render() {
     if (!this.state || (!this.props.children && !this.props.component))
       return (<div></div>);
+    var {store, dispatch, children, component, ...props} = this.props;
     var newChild;
-    if (this.props.children) {
+    if (children) {
       newChild = React.cloneElement(
         this.props.children, {
-          ...this.props,
+          dispatch,
+          ...props,
           agent: this.state.agent,
           user: this.state.user,
           post: this.state.post
         });
-    } else if (this.props.component) {
+    } else if (component) {
       newChild = React.createElement(
         this.props.component, {
-          ...this.props,
+          dispatch,
+          ...props,
           agent: this.state.agent,
           user: this.state.user,
           post: this.state.post
