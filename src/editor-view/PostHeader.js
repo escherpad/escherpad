@@ -2,13 +2,13 @@
 import React from 'react';
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
-
 import FullScreenToggleButton from "./FullScreenToggleButton";
-
-
 import Tag from "./Tag";
 import Input from "./Input";
 import Button from "../button/Button";
+
+import {createPost} from "../posts/posts";
+
 const containerStyle = {
   position: "relative",
   left: 0,
@@ -24,7 +24,8 @@ const child = {
 var {any, func} = React.PropTypes;
 export default class PostHeader extends React.Component {
   static propTypes = {
-    style: any
+    style: any,
+    dispatch: func.isRequired
   };
 
   constructor() {
@@ -32,7 +33,7 @@ export default class PostHeader extends React.Component {
   }
 
   createNewNote(e) {
-    console.log('create new note', e);
+    this.props.dispatch(createPost());
   }
 
   render() {
@@ -45,6 +46,7 @@ export default class PostHeader extends React.Component {
             backgroundColor="rgba(240, 173, 50, 0)"
             hoverColor="white"
             hoverBackground="rgb(240, 173, 50)"
+            activeBackground="rgba(240, 173, 50, 0.5)"
             onClick={this.createNewNote.bind(this)}
             padding="0 28px 0 12px">New Post<
             i className="material-icons"

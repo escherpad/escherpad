@@ -1,53 +1,62 @@
 /** Created by ge on 4/18/16. */
 import React from "react";
-import ReactDOM from "react-dom";
+import Flex from "../layout/Flex";
+import FlexItem from "../layout/FlexItem";
 
 import PostListView from "./PostListView";
-
+var {func, array, any} = React.PropTypes;
 export default class ListPanel extends React.Component {
   static propTypes = {
-    store: React.PropTypes.any.isRequired,
-    dispatch: React.PropTypes.func.isRequired
+    agent: any,
+    user: any,
+    users: any,
+    posts: any,
+    dispatch: func.isRequired
   };
 
-  willReceiveProps(newProps) {
+  componentDidMount() {
+    var {posts, postList} = this.props;
+    this.updatePosts(posts, postList);
   }
 
-  componentWillMount() {
-    console.log(this.props);
-    let store = this.props.store;
-    store.subscribe((state)=> {
-      let posts = Object.keys(state.posts).map((_)=>state.posts[_]).sort((a, b)=>(a[state.orderBy] - b[state.orderBy]));
-      this.setState({posts, ...state.postList});
-    });
+  componentWillReceiveProps(newProp) {
+    var {posts, postList} = newProp;
+    if (posts !== this.props.posts) this.updatePosts(posts, postList);
+  }
+
+  updatePosts(posts, {orderBy="createdAt"}={}) {
+    var orderedPosts = Object.keys(posts)
+      .map((_)=>posts[_])
+      .sort((a, b)=>(a[orderBy] - b[orderBy]));
+    this.setState({orderedPosts});
   }
 
   render() {
-    let posts = this.state ? this.state.posts : [];
+    var {orderedPosts=[]} = this.state || {};
+    var {dispatch} = this.props;
     return (
-      <div className="post-panel">
-        <div className="control-bar">
-          <div className="filters"></div>
+      <Flex column fill align="stretch" style={{ padding: "0 20px" }}>
+        <FlexItem fixed>
           <div className="search-bar"></div>
-          <div className="controls"></div>
-        </div>
-        <div className="hero">
-          <button className="left"></button>
-          <div className="center header">Notes</div>
-          <button className="right"></button>
-        </div>
-        <div className="tab-control">
-          <div className="tab">Team</div>
-          <div className="tab">Just You</div>
-          <div className="spacer"></div>
-          <div className="control-item">recent</div>
-        </div>
-        <PostListView posts={posts}></PostListView>
-      </div>
+        </FlexItem>
+        <FlexItem fixed>
+          <div className="hero">
+            <button className="left"></button>
+            <div className="center header">Notes</div>
+            <button className="right"></button>
+          </div>
+        </FlexItem>
+        <FlexItem fixed>
+          <div className="tab-bar">
+            <div className="tab">Team</div>
+            <div className="tab">Just You</div>
+            <div className="spacer"></div>
+            <div className="control-item">recent</div>
+          </div>
+        </FlexItem>
+        <PostListView posts={orderedPosts} dispatch={dispatch}></PostListView>
+      </Flex>
     )
   }
 }
-
-// <!--<PostListView posts={this.state.posts}></PostListView>-->
-
 

@@ -41,7 +41,7 @@ export default class FullScreenToggleButton extends React.Component {
       (<i className="material-icons" style={style}>fullscreen</i>) :
       (<i className="material-icons" style={style}>fullscreen_exit</i>);
     return (
-      <FlexItem fixed style={{"padding": "0 3px", "cursor":"pointer", "height":"40px"}}
+      <FlexItem fixed style={{"padding": "0 4px", "cursor":"pointer", "height":"40px"}}
                 onMouseEnter={this.onMouseEnter.bind(this)}
                 onMouseLeave={this.onMouseLeave.bind(this)}
                 onClick={this.onClick.bind(this)}

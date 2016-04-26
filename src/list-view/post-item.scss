@@ -1,0 +1,45 @@
+// Created by ge on 4/26/16.
+$top-padding: 15px;
+$side-padding: 6px;
+.post-list-item {
+    text-align: right;
+    // standard
+    position: relative;
+    padding: $top-padding $side-padding;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 90px;
+    background-color: white;
+    border-bottom: 1px solid #fafafa; //#e6e6e6
+    margin-bottom: 5px;
+    color: #303030;
+    &:hover, &:active {
+        color: white;
+        background-color: #23aaff;
+        .control-group {
+            z-index: 1;
+        }
+    }
+    .control-group {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        $unit-length: 40px;
+        button {
+            padding: 0;
+            cursor: pointer;
+            width: $unit-length;
+            height: $unit-length;
+            line-height: $unit-length;
+            font-size: 24px;
+            // styles
+            color: white;
+            background-color: rgba(black, 0);
+            border: none;
+        }
+        i.material-icons {
+            line-height: $unit-length;
+        }
+    }
+}

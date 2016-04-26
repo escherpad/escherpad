@@ -4,6 +4,7 @@ import Radium from 'radium';
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
 import Post from "../containers/Post";
+import Posts from "../containers/Posts";
 import MarkdownEditor from "../markdown-editor/MarkdownEditor";
 
 
@@ -30,6 +31,10 @@ export default class App extends React.Component {
     let dispatch = store.dispatch.bind(store);
     return (
       <Flex row fill align="stretch" style={style}>
+        <FlexItem fixed style={{width: "400px"}}>
+          <Posts store={store} dispatch={dispatch} component={ListPanel}
+          ></Posts>
+        </FlexItem>
         <FlexItem fluid>
           <Post store={store} dispatch={dispatch} component={MarkdownEditor}
                 view="code"
@@ -41,8 +46,3 @@ export default class App extends React.Component {
 }
 // <TeamNavBar style={flexFixed}
 // ></TeamNavBar>
-// <ListPanel className="ListPanel"
-// style={flexFixed}
-// store={store}
-// dispatch={dispatch}
-//   ></ListPanel>

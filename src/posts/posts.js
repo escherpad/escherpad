@@ -82,8 +82,9 @@ export function createPost() {
   return {
     type: ADD_POST,
     post: {
-      id: $uuid()
-
+      id: $uuid(),
+      createdAt: Date.now(),
+      modifiedAt: Date.now(),
     }
   }
 }

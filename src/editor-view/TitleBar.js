@@ -76,35 +76,32 @@ const styles = {
 @Radium
 export default class TitleBar extends React.Component {
   static propTypes = {
-    post: React.PropTypes.any.isRequired,
     dispatch: React.PropTypes.func.isRequired,
     style: React.PropTypes.any
   };
 
   onTitleChange(title) {
-    let dispatch = this.props.dispatch;
-    let post = this.props.post;
+    var {id, dispatch} = this.props;
+    var modifiedAt = Date.now();
     dispatch({
       type: "UPDATE_POST",
       post: {
-        id: post.id,
-        title: title
+        id, title, modifiedAt
       }
     })
   }
 
   render() {
-    let style = this.props.style;
-    let post = this.props.post;
-    let onTitleChange = this.onTitleChange.bind(this);
+    var {style, dispatch, ...post} = this.props;
+    var {id, title, createdAt, modifiedAt, presence} = post;
     return (
       <div className="title-bar" style={[styles.container, flexRow, style]}>
         <InlineEditable
-          value={post.title || ""}
+          value={title || ""}
           className="h1"
           style={[styles.blocks, flexFixed, styles.title]}
           placeholder="Untitled..."
-          onChange={onTitleChange}
+          onChange={this.onTitleChange.bind(this)}
         ></InlineEditable>
         <button className="dropdown chevron-bottom" style={[styles.blocks, flexFixed, styles.button]}></button>
         <div className="spacer" style={[styles.blocks, flexFluid]}></div>

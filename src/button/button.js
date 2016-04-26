@@ -9,6 +9,8 @@ function getStyle({
   hoverColor,
   hoverBackground = "#23aaff",
   hoverTextShadow,
+  activeColor,
+  activeBackground,
   padding = "0 12px",
   radius = "7px",
   height = "32px",
@@ -33,7 +35,16 @@ function getStyle({
       color: hoverColor || color,
       backgroundColor: hoverBackground,
       outline: "none"
+    },
+    ":active": {
+      color: activeColor || hoverColor || color,
+      backgroundColor: activeBackground || hoverBackground || backgroundColor,
+      outline: "none"
+    },
+    ":focus" : {
+      outline: "none"
     }
+
 
   };
   return defaultStyle;
@@ -46,7 +57,7 @@ export default class Button extends React.Component {
   };
 
   render() {
-    var {color, backgroundColor, textShadow, padding, hoverColor, hoverBackground, hoverTextShadow, height, radius, fontSize, ...props} = this.props;
+    var {color, backgroundColor, textShadow, padding, hoverColor, hoverBackground, hoverTextShadow, activeColor, activeBackground, height, radius, fontSize, ...props} = this.props;
     var style = getStyle({
       color,
       backgroundColor,
@@ -55,6 +66,8 @@ export default class Button extends React.Component {
       hoverColor,
       hoverBackground,
       hoverTextShadow,
+      activeColor,
+      activeBackground,
       height,
       radius,
       fontSize

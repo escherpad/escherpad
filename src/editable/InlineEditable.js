@@ -21,6 +21,11 @@ export default class InlineEditable extends React.Component {
     onChange: React.PropTypes.func
   };
 
+  componentWillReceiveProps(newProp) {
+    var {value} = newProp;
+    if (value != this.props.value) this.value = value;
+  }
+
   render() {
     let tagName = this.props.tagName || "div";
     let style = [styles.default, this.props.style];
@@ -51,7 +56,6 @@ export default class InlineEditable extends React.Component {
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
     this.value = this.props.value;
-    // console.log(this.value);
   }
 
   set value(value) {

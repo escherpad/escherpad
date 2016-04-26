@@ -1,23 +1,26 @@
 /** Created by ge on 4/18/16. */
 import React from "react";
-import ReactDOM from "react-dom";
-
+import FlexItem from "../layout/FlexItem";
 import PostListItem from "./PostListItem";
 
+var {any} = React.PropTypes;
 export default class PostListView extends React.Component {
   static propTypes = {
-    posts: React.PropTypes.any
+    posts: any
   };
 
   render() {
-    let posts = this.props.posts;
+    var {posts, dispatch} = this.props;
     return (
-      <div className="post-list-view">
-        {posts.map((_)=>(
-          <PostListItem key={_.id} post={_}></PostListItem>
+      <FlexItem fluid style={{overflowY: "auto"}}>
+        {posts.map((post)=>(
+          <PostListItem key={post.id} {...post}
+                        dispatch={dispatch}
+          ></PostListItem>
         ))}
-      </div>
+      </FlexItem>
     )
   }
 }
 
+const containerStyle = {};

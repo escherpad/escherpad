@@ -31,7 +31,7 @@ export default class EditorView extends React.Component {
     return (
       <Flex column fill style={style}>
         <FlexItem fixed>
-          <TitleBar post={post}
+          <TitleBar {...post}
                     dispatch={dispatch}
           ></TitleBar>
         </FlexItem>
@@ -84,15 +84,15 @@ export default class EditorView extends React.Component {
   }
 
   onChange(source, cursor, version) {
-    let user = this.props.user;
-    let post = this.props.post;
-    let agent = this.props.agent;
+    var {user, post, agent} = this.props;
+    var modifiedAt = Date.now();
     let action = {
       type: "UPDATE_POST",
       $agent: agent,
       post: {
         id: post.id,
-        source: source,
+        source,
+        modifiedAt,
         presence: {},
         _sourceVersion: version
       }

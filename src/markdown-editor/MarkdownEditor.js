@@ -31,24 +31,24 @@ export default class MarkdownEditor extends React.Component {
   }
 
   render() {
-    var {view} = this.props;
+    var {view, component, ...props} = this.props;
     if (view === "two-column") {
       return (
         <Flex column fill align="stretch">
           <FlexItem fixed>
-            <PostHeader {...this.props}></PostHeader>
+            <PostHeader {...props}></PostHeader>
           </FlexItem>
           <FlexItem fluid>
             <Flex row align="stretch" fill>
               <FlexItem fluid>
-                <MarkdownPreview {...this.props}
+                <MarkdownPreview {...props}
                   ref={(prev)=>this.markdownPreview=prev}
                   onSelect={this.onMarkdownSelect.bind(this)}
                   onScroll={this._setEditorCursorScrollTarget}
                 ></MarkdownPreview>
               </FlexItem>
               <FlexItem fluid>
-                <EditorView {...this.props}
+                <EditorView {...props}
                   ref={(_)=>this.editorView=_}
                   onScroll={this.setCursorTarget.bind(this)}
                   onEditorChange={this._setCursorTarget}
@@ -62,19 +62,19 @@ export default class MarkdownEditor extends React.Component {
       return (
         <Flex column fill align="stretch">
           <FlexItem fixed>
-            <PostHeader {...this.props}></PostHeader>
+            <PostHeader {...props}></PostHeader>
           </FlexItem>
           <FlexItem fluid>
             <Flex column align="stretch" fill>
               <FlexItem fluid>
-                <MarkdownPreview {...this.props}
+                <MarkdownPreview {...props}
                   ref={(prev)=>this.markdownPreview=prev}
                   onSelect={this.onMarkdownSelect.bind(this)}
                   onScroll={this._setEditorCursorScrollTarget}
                 ></MarkdownPreview>
               </FlexItem>
               <FlexItem fluid>
-                <EditorView {...this.props}
+                <EditorView {...props}
                   ref={(_)=>this.editorView=_}
                   onScroll={this.setCursorTarget.bind(this)}
                   onEditorChange={this._setCursorTarget}
@@ -88,10 +88,10 @@ export default class MarkdownEditor extends React.Component {
       return (
         <Flex column fill align="stretch">
           <FlexItem fixed>
-            <PostHeader {...this.props}></PostHeader>
+            <PostHeader {...props}></PostHeader>
           </FlexItem>
           <FlexItem fluid>
-            <MarkdownPreview {...this.props}
+            <MarkdownPreview {...props}
               ref={(prev)=>this.markdownPreview=prev}
               onSelect={this.onMarkdownSelect.bind(this)}
               onScroll={this._setEditorCursorScrollTarget}
@@ -103,12 +103,12 @@ export default class MarkdownEditor extends React.Component {
       return (
         <Flex column fill align="stretch">
           <FlexItem fixed>
-            <PostHeader {...this.props}></PostHeader>
+            <PostHeader {...props}></PostHeader>
           </FlexItem>
           <FlexItem fluid>
-            <EditorView {...this.props}
+            <EditorView {...props}
               ref={(_)=>this.editorView=_}
-              style={{maxWidth: "1200px", marginLeft: "auto", marginRight: "auto"}}
+              style={{maxWidth: "1200px", marginLeft: "50px", marginRight: "auto"}}
               onScroll={this.setCursorTarget.bind(this)}
               onEditorChange={this._setCursorTarget}
             ></EditorView>
