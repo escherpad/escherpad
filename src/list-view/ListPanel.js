@@ -2,6 +2,9 @@
 import React from "react";
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
+import Input from "../input/Input";
+
+require('./list-panel.scss');
 
 import PostListView from "./PostListView";
 var {func, array, any} = React.PropTypes;
@@ -35,24 +38,38 @@ export default class ListPanel extends React.Component {
     var {orderedPosts=[]} = this.state || {};
     var {dispatch} = this.props;
     return (
-      <Flex column fill align="stretch" style={{ padding: "0 20px" }}>
-        <FlexItem fixed>
-          <div className="search-bar"></div>
+      <Flex column fill align="stretch" style={{ padding: "0 20px" }} className="list-panel">
+        <FlexItem fixed className="search-bar">
+          <Input value={"test this"} placeholder={"search"} style={{width: "100%"}}/>
         </FlexItem>
         <FlexItem fixed>
-          <div className="hero">
-            <button className="left"></button>
-            <div className="center header">Notes</div>
-            <button className="right"></button>
+          <div className="hero" style={{height: "100px", width: "100%"}}>
+            <Flex fill row align="center" className="center">
+              <FlexItem fixed>
+                <button></button>
+              </FlexItem>
+              <FlexItem fluid
+                        className="header"
+                        style={{textAlign: "center", fontSize: "30px", fontWeight: "500"}}
+              >Posts</FlexItem>
+              <FlexItem fixed>
+                <button></button>
+              </FlexItem>
+            </Flex>
           </div>
         </FlexItem>
         <FlexItem fixed>
-          <div className="tab-bar">
-            <div className="tab">Team</div>
-            <div className="tab">Just You</div>
-            <div className="spacer"></div>
-            <div className="control-item">recent</div>
-          </div>
+          <Flex row className="tab-bar">
+            <FlexItem fixed>
+
+            </FlexItem>
+            <FlexItem fixed>
+
+            </FlexItem>
+            <FlexItem fixed>
+
+            </FlexItem>
+          </Flex>
         </FlexItem>
         <PostListView posts={orderedPosts} dispatch={dispatch}></PostListView>
       </Flex>

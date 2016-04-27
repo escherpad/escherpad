@@ -20,6 +20,9 @@ $side-padding: 6px;
             z-index: 1;
         }
     }
+    &:not(:hover):not(:active) .placeholder {
+        color: #e6e6e6;
+    }
     .control-group {
         z-index: -1;
         position: absolute;
@@ -40,6 +43,19 @@ $side-padding: 6px;
         }
         i.material-icons {
             line-height: $unit-length;
+        }
+    }
+}
+
+.post-list-item {
+    .modified-at {
+        line-height: 18px;
+        color: #aaa;
+        font-size: 13px;
+    }
+    &:hover, &:active {
+        .modified-at {
+            color: rgba(white, 0);
         }
     }
 }

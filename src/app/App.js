@@ -31,7 +31,7 @@ export default class App extends React.Component {
     let dispatch = store.dispatch.bind(store);
     return (
       <Flex row fill align="stretch" style={style}>
-        <FlexItem fixed style={{width: "400px"}}>
+        <FlexItem fixed style={{width: "500px"}}>
           <Posts store={store} dispatch={dispatch} component={ListPanel}
           ></Posts>
         </FlexItem>

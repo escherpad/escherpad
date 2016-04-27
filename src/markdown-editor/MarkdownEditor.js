@@ -108,7 +108,7 @@ export default class MarkdownEditor extends React.Component {
           <FlexItem fluid>
             <EditorView {...props}
               ref={(_)=>this.editorView=_}
-              style={{maxWidth: "1200px", marginLeft: "50px", marginRight: "auto"}}
+              style={{maxWidth: "1200px", marginLeft: "30px", marginRight: "auto"}}
               onScroll={this.setCursorTarget.bind(this)}
               onEditorChange={this._setCursorTarget}
             ></EditorView>

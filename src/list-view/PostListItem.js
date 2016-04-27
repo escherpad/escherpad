@@ -45,11 +45,9 @@ export default class PostListItem extends React.Component {
         </div>
         <Placeholder className="post-title"
                      style={{lineHeight: "22px", fontSize: "18px", fontWeight: "700"}}
-                     placeholder={<em style={{color: "#cfcfcf"}}>Untitled</em>}
+                     placeholder={<em className="placeholder">Untitled</em>}
         >{title}</Placeholder>
-        <div className="post-modified-at"
-             style={{lineHeight: "18px", color: "#aaa", fontSize: "13px"}}
-        >{timeStamp}</div>
+        <div className="modified-at">{timeStamp}</div>
       </div>
     )
   }
