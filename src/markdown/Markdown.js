@@ -56,7 +56,7 @@ marked
     }
   });
 
-import * as _ from "lodash";
+import throttle from "lodash.throttle";
 
 @Radium
 export default class Markdown extends React.Component {
@@ -76,7 +76,7 @@ export default class Markdown extends React.Component {
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
     this.nativeElement.addEventListener('mouseup', this.onMouseUp);
-    this.asyncMarkdown = _.throttle(this.asyncMarkdown, 100);
+    this.asyncMarkdown = throttle(this.asyncMarkdown, 100);
   }
 
   componentWillUnmount() {
