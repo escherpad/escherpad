@@ -25,6 +25,7 @@ export default class EditorView extends React.Component {
 
   render() {
     var {agent, user, post, dispatch, onScroll, style, ...props} = this.props;
+    var {id="", source="", _sourceVersion=0, type} = post;
     let presence = post.presence ? post.presence[agent] : null;
     var cursorPosition = presence ? presence.cursor : undefined;
     let onChange = this.onChange.bind(this);
@@ -32,16 +33,17 @@ export default class EditorView extends React.Component {
       <Flex column fill style={style}>
         <FlexItem fixed>
           <TitleBar {...post}
-                    dispatch={dispatch}
+            dispatch={dispatch}
           ></TitleBar>
         </FlexItem>
         <FlexItem fluid>
-          <CodeEditor ref={(_)=>this.CodeEditor=_}
+          <CodeEditor key={id}
+                      ref={(_)=>this.CodeEditor=_}
                       style={styles}
-                      value={post.source}
+                      value={source}
                       cursorPosition={cursorPosition}
-                      version={post._sourceVersion}
-                      mimeType={post.type}
+                      version={_sourceVersion}
+                      mimeType={type}
                       onChange={onChange}
                       onChangeScrollTop={onScroll}
           ></CodeEditor>

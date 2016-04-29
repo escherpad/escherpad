@@ -1,6 +1,7 @@
 /** Created by ge on 3/24/16. */
 import {Store} from "luna";
 
+import {viewMode} from "../app/viewMode";
 import {session} from "../app/session";
 import {editor} from "../editor-view/editor";
 import {posts} from "../posts/posts";
@@ -8,10 +9,11 @@ import {postList} from "../list-view/postList";
 import {demoInitialState} from "./demoInitialState";
 
 const reducer = {
-  session: session,
-  editor: editor,
-  postList: postList,
-  posts: posts
+  session,
+  editor,
+  viewMode,
+  postList,
+  posts
 };
 export const GITTOR_STORE = '@@gittor-store';
 

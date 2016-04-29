@@ -2,6 +2,7 @@
 import React from "react";
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
+import Responsive from "../layout/Responsive";
 import MarkdownPreview from '../markdown-preview/MarkdownPreview';
 import PostHeader from "../editor-view/PostHeader"
 import EditorView from "../editor-view/EditorView";
@@ -21,7 +22,7 @@ export default class MarkdownEditor extends React.Component {
     view: string
   };
   static defaultProps = {
-    view: "two-column"
+    view: "zen-mode"
   };
 
   constructor() {

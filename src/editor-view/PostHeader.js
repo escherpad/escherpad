@@ -2,6 +2,7 @@
 import React from 'react';
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
+import Responsive from "../layout/Responsive";
 import FullScreenToggleButton from "./FullScreenToggleButton";
 import Tag from "./Tag";
 import Input from "./Input";
@@ -39,7 +40,12 @@ export default class PostHeader extends React.Component {
   render() {
     return (
       <Flex row fill style={containerStyle} align="center">
-        <FullScreenToggleButton onClick={this.createNewNote.bind(this)}></FullScreenToggleButton>
+        <Responsive breakPoints={{sm: 1000}}>
+          <FullScreenToggleButton default onClick={this.createNewNote.bind(this)}></FullScreenToggleButton>
+          <FlexItem fixed sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
+            <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>
+          </FlexItem>
+        </Responsive>
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button
             color="rgb(240, 173, 50)"

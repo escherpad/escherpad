@@ -60,15 +60,10 @@ export default class ListPanel extends React.Component {
         </FlexItem>
         <FlexItem fixed>
           <Flex row className="tab-bar">
-            <FlexItem fixed>
-
-            </FlexItem>
-            <FlexItem fixed>
-
-            </FlexItem>
-            <FlexItem fixed>
-
-            </FlexItem>
+            <FlexItem fixed></FlexItem>
+            <FlexItem fixed></FlexItem>
+            <FlexItem fluid></FlexItem>
+            <FlexItem fixed>Recent</FlexItem>
           </Flex>
         </FlexItem>
         <PostListView posts={orderedPosts} dispatch={dispatch}></PostListView>

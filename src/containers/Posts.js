@@ -18,7 +18,11 @@ export default class Posts extends React.Component {
 
   componentWillMount() {
     let store = this.props.store;
-    store.subscribe(this.storeToState.bind(this));
+    this.subscription = store.subscribe(this.storeToState.bind(this));
+  }
+
+  componentWillUnmount(){
+    this.subscription.unsubscribe()
   }
 
   render() {
