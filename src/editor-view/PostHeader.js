@@ -29,10 +29,6 @@ export default class PostHeader extends React.Component {
     dispatch: func.isRequired
   };
 
-  constructor() {
-    super();
-  }
-
   createNewNote(e) {
     this.props.dispatch(createPost());
   }
