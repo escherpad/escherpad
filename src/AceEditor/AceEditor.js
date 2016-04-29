@@ -46,7 +46,6 @@ export default class ReactAce extends Component {
       version,
       theme,
       fontSize,
-      lineHeight,
       scrollMargin,
       value,
       cursorPosition,
@@ -101,9 +100,6 @@ export default class ReactAce extends Component {
     if (keyboardHandler) {
       this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
     }
-    if (typeof lineHeight !== 'undefined') {
-      this.updateLineHeight(lineHeight);
-    }
     if (typeof scrollMargin !== 'undefined') {
       this.updateScrollMargin(scrollMargin);
     }
@@ -113,10 +109,6 @@ export default class ReactAce extends Component {
       onLoad(this.editor);
     }
   }
-
-  // shouldComponentUpdate() {
-  //   return false;
-  // }
 
   componentWillReceiveProps(nextProps) {
     var oldProps = this.props;
@@ -128,12 +120,10 @@ export default class ReactAce extends Component {
         this.editor.setOption(option, nextProps[option]);
       }
     }
-    if (nextProps.lineHeight !== oldProps.lineHeight)
-      this.updateLineHeight(nextProps.lineHeight);
     if (nextProps.scrollMargin !== oldProps.scrollMargin)
       this.updateScrollMargin(nextProps.scrollMargin);
     if (nextProps.width !== oldProps.width || nextProps.height !== oldProps.height)
-      this.editor.resize();
+      this.resize();
 
     if (nextProps.mode !== oldProps.mode) {
       this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
@@ -236,14 +226,9 @@ export default class ReactAce extends Component {
     this._silent = old;
   }
 
-  updateLineHeight(height) {
-    this.editor.container.style.lineHeight = height;
-    this.editor.resize();
-  }
-
   updateScrollMargin({top, bottom, left, right}) {
     this.editor.renderer.setScrollMargin(top, bottom, left, right);
-    this.editor.resize();
+    this.resize();
   }
 
   onFocus() {
@@ -301,9 +286,13 @@ export default class ReactAce extends Component {
     this.props.onChangeScrollTop(scrollTop);
   }
 
+  resize() {
+    setTimeout(this.editor.resize.bind(this.editor), 0);
+  }
+
   render() {
-    const {name, className, width, height} = this.props;
-    const divStyle = {width, height};
+    const {name, className, width, height, lineHeight} = this.props;
+    const divStyle = {width, height, lineHeight};
     return (
       <div
         id={name}
