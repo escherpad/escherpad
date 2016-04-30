@@ -4,6 +4,7 @@ import Radium from 'radium';
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
 import FlexHide from "../layout/FlexHide";
+import If from "../if/If";
 import Responsive from "../layout/Responsive";
 import Post from "../containers/Post";
 import Posts from "../containers/Posts";
@@ -51,7 +52,10 @@ export default class App extends React.Component {
             <Posts store={store} dispatch={dispatch} component={ListPanel}></Posts>
           </FlexHide>
           <FlexItem fluid style={{flex: "8 8 auto"}}>
-            <Post store={store} dispatch={dispatch} view="code" viewMode={viewMode} component={MarkdownEditor}></Post>
+            <If data={viewMode}>
+              <Post default store={store} dispatch={dispatch} view={"code"} viewMode={viewMode} component={MarkdownEditor}></Post>
+              <Post value={"zen-mode"} store={store} dispatch={dispatch} view={"two-column"} viewMode={viewMode} component={MarkdownEditor}></Post>
+            </If>
           </FlexItem>
         </Flex>
       </Responsive>

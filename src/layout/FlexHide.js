@@ -54,7 +54,6 @@ export default class FlexHide extends React.Component {
     var _props = {...props, onTransitionEnd: this.onTransitionEnd};
     var {show, entering, leaving, init, flexContainerWidth} = this.state;
     if (show && typeof flexContainerWidth === 'undefined') { // initial rendering shown
-      console.log("2222222222222222");
       let innerStyle = {
         position: "absolute", top: 0, bottom: 0, left: 0, right: 0,
         transition: _innerTransition
@@ -68,7 +67,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (!show && typeof flexContainerWidth === 'undefined') { // initial rendering hidden
-      console.log("1111111111111111");
       return (
         <FlexItem key={"flex-hide-item"} {..._props}
                   fixed width={"0px"}
@@ -77,7 +75,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (!show) {
-      console.log("3333333333333333");
       return (
         <FlexItem key={"flex-hide-item"} {..._props}
                   fixed width={"0px"}
@@ -86,7 +83,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (show && leaving && init) {
-      console.log("4444444444444444");
       let innerStyle = {
         transition: _innerTransition,
         position: "absolute",
@@ -109,7 +105,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (show && leaving) {
-      console.log("4.54.54.54.54.54.54.5");
       let innerStyle = {
         transition: _innerTransition,
         position: "absolute",
@@ -129,7 +124,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (show && entering) {
-      console.log("5.55.55.55.55.55", flexContainerWidth);
       let innerStyle = {
         position: "absolute", top: 0, bottom: 0, right: 0,
         transition: _innerTransition,
@@ -150,7 +144,6 @@ export default class FlexHide extends React.Component {
         </FlexItem>
       );
     } else if (show) {
-      console.log("6666666666666666", flexContainerWidth);
       let innerStyle = {
         position: "absolute", top: 0, bottom: 0, right: 0,
         transition: _innerTransition,

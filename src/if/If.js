@@ -16,6 +16,6 @@ export default class If extends React.Component {
     for (var i = 0; i < children.length; i++) {
       if (children[i].props.default) return children[i];
     }
-    return (<div>can not find child</div>);
+    return (<div>If component can not find child</div>);
   }
 }
