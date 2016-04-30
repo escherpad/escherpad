@@ -131,7 +131,7 @@ export default class FlexHide extends React.Component {
         minWidth: width,
         opacity: 1
       };
-      setTimeout(()=> {
+      if (init) setTimeout(()=> {
         this.setState({init: false});
       }, 0);
       return (
