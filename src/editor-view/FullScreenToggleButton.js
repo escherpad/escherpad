@@ -16,28 +16,39 @@ const hover = {
   textShadow: "0 0 3px #23aaff"
 };
 
-var {bool} = React.PropTypes;
+var {any, bool, func} = React.PropTypes;
 export default class FullScreenToggleButton extends React.Component {
   static PropTypes = {
-    value: bool
+    viewMode: any,
+    dispatch: func
   };
 
   onClick() {
   }
 
+  setZenMode() {
+    var {dispatch} = this.props;
+    dispatch({type: "SET_ZEN_MODE"})
+  }
+
+  setFullView() {
+    var {dispatch} = this.props;
+    dispatch({type: "SET_FULL_VIEW"})
+  }
+
   render() {
-    let value = this.props.value;
+    let viewMode = this.props.viewMode;
     return (
       <FlexItem fixed style={{"padding": "0 4px", "cursor":"pointer", "height":"40px"}}
                 onClick={this.onClick.bind(this)}
-      ><If data={value}>
-        <MouseOver value={true}>
+      ><If data={viewMode}>
+        <MouseOver value={"zen-mode"}>
           <i ref="default" className="material-icons" style={style}>fullscreen</i>
-          <i ref="hover" className="material-icons" style={hover}>fullscreen_exit</i>
+          <i ref="hover" className="material-icons" style={hover} onClick={this.setFullView.bind(this)}>fullscreen_exit</i>
         </MouseOver>
         <MouseOver default>
           <i ref="default" className="material-icons" style={style}>fullscreen_exit</i>
-          <i ref="hover" className="material-icons" style={hover}>fullscreen</i>
+          <i ref="hover" className="material-icons" style={hover} onClick={this.setZenMode.bind(this)}>fullscreen</i>
         </MouseOver>
       </If>
       </FlexItem>

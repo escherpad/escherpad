@@ -22,10 +22,11 @@ const child = {
   padding: "7px",
   marginRight: "10px"
 };
-var {any, func} = React.PropTypes;
+var {bool, any, func} = React.PropTypes;
 export default class PostHeader extends React.Component {
   static propTypes = {
     style: any,
+    viewMode: any,
     dispatch: func.isRequired
   };
 
@@ -34,10 +35,11 @@ export default class PostHeader extends React.Component {
   }
 
   render() {
+    var {viewMode, dispatch} = this.props;
     return (
       <Flex row fill style={containerStyle} align="center">
         <Responsive breakPoints={{sm: 1000}}>
-          <FullScreenToggleButton default onClick={this.createNewNote.bind(this)}></FullScreenToggleButton>
+          <FullScreenToggleButton default viewMode={viewMode} dispatch={dispatch}></FullScreenToggleButton>
           <FlexItem fixed sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
             <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>
           </FlexItem>

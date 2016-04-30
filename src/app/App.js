@@ -24,28 +24,39 @@ export default class App extends React.Component {
     store: React.PropTypes.any.isRequired
   };
 
+  componentWillMount() {
+    var {store} = this.props;
+    this.subscription = store.select('viewMode').subscribe((viewMode)=> {
+      console.log('viewMode has changed: value = ', viewMode);
+      this.setState({viewMode});
+    })
+  }
+
+  componentWillUnmount() {
+    this.subscription.unsubscribe();
+  }
+
   render() {
+    var {viewMode} = this.state;
     var {store} = this.props;
     var dispatch = store.dispatch.bind(store);
     return (
       <Responsive breakPoints={{sm: 1000, lg: Infinity}}>
-        <Flex sm row fill align="stretch" style={style}>
-          <FlexItem fluid>
-            <Post store={store} dispatch={dispatch} component={MarkdownEditor}
-                  view="code"
-            ></Post>
-          </FlexItem>
-        </Flex>
+        <div sm style={style}>
+          <Post store={store} dispatch={dispatch} view="code" viewMode={viewMode} component={MarkdownEditor}
+          ></Post>
+        </div>
         <Flex lg row fill align="stretch" style={style}>
-          <FlexItem fluid style={{flex: "1 1 300px"}}>
+          <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
             <Posts store={store} dispatch={dispatch} component={ListPanel}></Posts>
-          </FlexItem>
+          </FlexHide>
           <FlexItem fluid style={{flex: "8 8 auto"}}>
-            <Post store={store} dispatch={dispatch} view="code" component={MarkdownEditor}></Post>
+            <Post store={store} dispatch={dispatch} view="code" viewMode={viewMode} component={MarkdownEditor}></Post>
           </FlexItem>
         </Flex>
       </Responsive>
     );
+    // }
   }
 }
 // <TeamNavBar style={flexFixed}

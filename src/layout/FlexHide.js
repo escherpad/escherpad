@@ -3,51 +3,167 @@ import React from "react";
 import ReactDOM from "react-dom";
 import FlexItem from "./FlexItem";
 
-var {any, node, string, bool} = React.PropTypes;
+var {string, bool, func, any, node,} = React.PropTypes;
 export default class FlexHide extends React.Component {
   static propTypes = {
-    key: string,
-    fixed: any.isRequired,
+    // fixed: any.isRequired,
     hide: bool,
     width: any.isRequired,
     transition: string,
-    children: node
+    children: node,
+    onTransitionEnd: func
   };
 
+  componentWillMount() {
+    var {hide} = this.props;
+    this.setState({show: !hide, entering: !hide, leaving: hide, init: true});
+  }
+
   componentDidMount() {
-    var {width} = this.props;
-    this.FlexItem.setWidth(width);
-    this.innerContainer = ReactDOM.findDOMNode(this.DIV);
+    this.innerContainer = ReactDOM.findDOMNode(this.refs["DIV"]);
+    window.addEventListener("resize", this.getContainerWidth);
+    this.getContainerWidth();
   }
 
   componentWillReceiveProps(newProps) {
     var {hide, width, children} = newProps;
-    var opacity = 1;
-    if (hide) {
-      width = "0px";
-      opacity = 0;
-
-      // this need to run after the timeout
-      children = [];
-    }
-    this.innerContainer.style.opacity = opacity;
-    this.FlexItem.setWidth(width);
+    if (this.props.hide && !hide) this.setState({show: true, entering: true, leaving: false, init: true});
+    if (!this.props.hide && hide) this.setState({leaving: true, entering: false, init: true});
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.getContainerWidth);
+  }
+
+  onTransitionEnd = (e)=> {
+    console.log('transition end', this.props.hide);
+    this.setState({show: !this.props.hide, entering: false, leaving: false});
+    if (typeof this.props.onTransitionEnd === "function") this.props.onTransitionEnd(e);
+    this.getContainerWidth()
+  };
+
+  getContainerWidth = ()=> {
+    this.setState({flexContainerWidth: ReactDOM.findDOMNode(this.refs["FlexItem"]).clientWidth});
+  };
 
   render() {
-    var {key, fixed, hide, width, style, transition="all 0.6s ease-out", children, ...props} = this.props;
-    var thisStyle = {...style, transition};
-    return (
-      <FlexItem key={"flex-item:" + key}
-                ref={(_)=>this.FlexItem=_}
-                fixed={fixed}
-                style={thisStyle} {...props}
-      ><div ref={(_)=>this.DIV=_}
-             style={{position: "absolute", top: 0, right: 0, bottom: 0, width, transition: "all 0.2s ease-out"}}
-        >{children}</div>
-      </FlexItem>
-    )
+    var {hide, width, style, transition="width 0.3s ease-out", children, onTransitionEnd, ...props} = this.props;
+    var _style = {...style, position: "relative", transition};
+    var _innerTransition = "opacity 10s ease-out";
+
+    var _props = {...props, onTransitionEnd: this.onTransitionEnd};
+    var {show, entering, leaving, init, flexContainerWidth} = this.state;
+    if (show && typeof flexContainerWidth === 'undefined') { // initial rendering shown
+      console.log("2222222222222222");
+      let innerStyle = {
+        position: "absolute", top: 0, bottom: 0, left: 0, right: 0,
+        transition: _innerTransition
+      };
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  width={width}
+                  style={style}>
+          <div ref="DIV" style={innerStyle}>{children}</div>
+        </FlexItem>
+      );
+    } else if (!show && typeof flexContainerWidth === 'undefined') { // initial rendering hidden
+      console.log("1111111111111111");
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  fixed width={"0px"}
+                  ref="FlexItem">
+          <div ref="DIV" style={{transition:_innerTransition}}></div>
+        </FlexItem>
+      );
+    } else if (!show) {
+      console.log("3333333333333333");
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  fixed width={"0px"}
+                  ref="FlexItem">
+          <div ref="DIV"></div>
+        </FlexItem>
+      );
+    } else if (show && leaving && init) {
+      console.log("4444444444444444");
+      let innerStyle = {
+        transition: _innerTransition,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: 0,
+        width: flexContainerWidth + "px"
+      };
+      setTimeout(()=> {
+        this.setState({init: false});
+      }, 0);
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  fixed
+                  width={flexContainerWidth + "px"}
+                  style={style}>
+          <div ref="DIV"
+               style={innerStyle}>{children}</div>
+        </FlexItem>
+      );
+    } else if (show && leaving) {
+      console.log("4.54.54.54.54.54.54.5");
+      let innerStyle = {
+        transition: _innerTransition,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: 0,
+        width: flexContainerWidth + "px"
+      };
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  fixed
+                  width={"0px"}
+                  style={_style}>
+          <div ref="DIV"
+               style={{...innerStyle, opacity: 0}}>{children}</div>
+        </FlexItem>
+      );
+    } else if (show && entering) {
+      console.log("5.55.55.55.55.55", flexContainerWidth);
+      let innerStyle = {
+        position: "absolute", top: 0, bottom: 0, right: 0,
+        transition: _innerTransition,
+        width: "100%",
+        minWidth: width,
+        opacity: 1
+      };
+      setTimeout(()=> {
+        this.setState({init: false});
+      }, 0);
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  width={width}
+                  style={_style}>
+          <div ref="DIV"
+               style={innerStyle}>{children}</div>
+        </FlexItem>
+      );
+    } else if (show) {
+      console.log("6666666666666666", flexContainerWidth);
+      let innerStyle = {
+        position: "absolute", top: 0, bottom: 0, right: 0,
+        transition: _innerTransition,
+        width: flexContainerWidth + "px"
+      };
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  width={width}
+                  style={_style}>
+          <div ref="DIV" style={innerStyle}>{children}</div>
+        </FlexItem>
+      );
+    }
   }
-
-
 }

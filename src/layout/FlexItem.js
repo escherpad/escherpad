@@ -17,8 +17,8 @@ export default class FlexItem extends React.Component {
   };
 
   componentDidMount() {
-    this.container = ReactDOM.findDOMNode(this.DIV);
-    var {width} =this.props;
+    this.container = ReactDOM.findDOMNode(this.refs["DIV"]);
+    var {width} = this.props;
     if (width) this.setWidth(width);
   }
 
@@ -27,19 +27,23 @@ export default class FlexItem extends React.Component {
     if (width) this.setWidth(width);
   }
 
+  componentWillUnmount() {
+  }
+
   setWidth(width) {
     this.container.style.width = width;
   }
 
   render() {
     var flexStyle;
-    var {style = {}, fluid, fixed, width, children = []} = this.props;
+    var {style = {}, fluid, fixed, width, children = [], ...props} = this.props;
     if (fluid) flexStyle = flexFluid;
-    if (fixed) flexStyle = {...flexFixed, width};
+    if (fixed) flexStyle = flexFixed;
     return (
       <div {...this.props}
-        ref={(_)=>this.DIV=_}
-        style={{...flexStyle, ...style}}>
+        ref="DIV"
+        style={{...flexStyle, ...style, width}}
+        {...props}>
         {children}
       </div>
     )

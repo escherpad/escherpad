@@ -13,7 +13,7 @@ const build_entry = {
     "markdown-it", "markdown-it-highlightjs", "markdown-it-task-lists",
     "rxjs",
     "luna", "luna-saga",
-    "brace", "react-ace", "lodash.debounce", "lodash.throttle",
+    "brace", "lodash.debounce", "lodash.throttle",
     "moment"
   ]
 };

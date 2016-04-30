@@ -27,10 +27,10 @@ export default class ListPanel extends React.Component {
     if (posts !== this.props.posts) this.updatePosts(posts, postList);
   }
 
-  updatePosts(posts, {orderBy="createdAt"}={}) {
+  updatePosts(posts, {orderBy="modifiedAt"}={}) {
     var orderedPosts = Object.keys(posts)
       .map((_)=>posts[_])
-      .sort((a, b)=>(a[orderBy] - b[orderBy]));
+      .sort((a, b)=>(a[orderBy] - b[orderBy])).reverse();
     this.setState({orderedPosts});
   }
 

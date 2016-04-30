@@ -15,9 +15,9 @@ import throttle from "lodash.throttle";
 var {any, string} = React.PropTypes;
 export default class MarkdownEditor extends React.Component {
   static propTypes = {
-    agent: any,
-    user: any,
-    post: any,
+    agent: any.isRequired,
+    user: any.isRequired,
+    post: any.isRequired,
     dispatch: any.isRequired,
     view: string
   };
@@ -32,6 +32,10 @@ export default class MarkdownEditor extends React.Component {
   }
 
   render() {
+    //todo: this will be removed after we add a post type selectior as a parent.
+    var {post} = this.props;
+    if (!post) return (<div>post is not specified</div>);
+    //todoEnd
     var {view, component, ...props} = this.props;
     if (view === "two-column") {
       return (

@@ -4,7 +4,7 @@ export function viewMode (state, action) {
   "use strict";
   if (action.type === "SET_ZEN_MODE") {
     return "zen-mode";
-  } else if (action.type === "SET_FULL-VIEW") {
+  } else if (action.type === "SET_FULL_VIEW") {
     return "full-view";
   } else {
     return state;
