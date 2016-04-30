@@ -85,7 +85,7 @@ export default class EditorView extends React.Component {
   }
 
   onChange(source, cursor, version) {
-    var {user, post, agent} = this.props;
+    var {user, post, agent, dispatch} = this.props;
     console.log(user, post, agent, cursor, version);
     let action = {
       type: "UPDATE_POST",
@@ -99,7 +99,7 @@ export default class EditorView extends React.Component {
     };
     if (post.source !== source) action.post.modifiedAt = Date.now();
     action.post.presence[agent] = {user, agent, cursor};
-    this.dispatch(action);
+    dispatch(action);
     if (this.props.onEditorChange) this.props.onEditorChange(source, cursor);
   }
 }
