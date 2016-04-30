@@ -3,7 +3,8 @@
 **Question:** what are the usibility issues?
 
 #### Editor
-- [ ] Editor emits editing event when loading. <red>bug</red>
+- [ ] Editor emits editing event when loading, thus modifying the `modifiedAt` property of the note. Causing the note list to flash. [^editor-flash-bug] <red>bug</red>
+    [^editor-flash-bug]: This bug is super annoying. We reall need to get it fixed
 - [ ] editor popovers <green>feature</green>
 - [ ] default view in `full-view` <green>feature</green>
 

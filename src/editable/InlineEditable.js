@@ -55,7 +55,9 @@ export default class InlineEditable extends React.Component {
 
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
+    this.silent = true; // silent change events
     this.value = this.props.value;
+    this.silent = false;
   }
 
   set value(value) {
@@ -63,7 +65,7 @@ export default class InlineEditable extends React.Component {
     // processing should happen here.
     let content = this.isEmpty() ? "<br>" : value;
     if (this.nativeElement) this.nativeElement.innerHTML = content;
-    this.onChangeValue(this.value);
+    if (!this.silent) this.onChangeValue(this.value);
   }
 
   get value() {

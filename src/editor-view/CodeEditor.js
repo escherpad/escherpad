@@ -10,6 +10,7 @@ import AceEditor from "../AceEditor/AceEditor";
 import 'brace/mode/markdown';
 import 'brace/keybinding/vim';
 import 'brace/theme/github';
+import 'brace/theme/chrome';
 
 const styles = {
   position: "absolute",
@@ -45,12 +46,13 @@ export default class CodeEditor extends React.Component {
     return (
       <div className="editor-container" style={style}>
         <AceEditor
+          key={this.key}
           ref={(_)=>this.Editor=_}
           mode="markdown"
           value={value}
           cursorPosition={cursorPosition}
           version={version}
-          theme="github"
+          theme="chrome"
           width={`${this.state.parentWidth}px`}
           height={`${this.state.parentHeight}px`}
           lineHeight={2}

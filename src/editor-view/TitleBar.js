@@ -82,6 +82,7 @@ export default class TitleBar extends React.Component {
 
   onTitleChange(title) {
     var {id, dispatch} = this.props;
+    console.log(id, title);
     var modifiedAt = Date.now();
     dispatch({
       type: "UPDATE_POST",
@@ -97,6 +98,7 @@ export default class TitleBar extends React.Component {
     return (
       <div className="title-bar" style={[styles.container, flexRow, style]}>
         <InlineEditable
+          key={id}
           value={title || ""}
           className="h1"
           style={[styles.blocks, flexFixed, styles.title]}

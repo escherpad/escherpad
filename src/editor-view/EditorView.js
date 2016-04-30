@@ -74,7 +74,6 @@ export default class EditorView extends React.Component {
   componentDidMount() {
     this.nativeElem = ReactDOM.findDOMNode(this);
     this.nativeElem.addEventListener("reflow", this.onReflow, true);
-    this.dispatch = this.props.dispatch;
   }
 
   componentWillUnmount() {
@@ -87,18 +86,18 @@ export default class EditorView extends React.Component {
 
   onChange(source, cursor, version) {
     var {user, post, agent} = this.props;
-    var modifiedAt = Date.now();
+    console.log(user, post, agent, cursor, version);
     let action = {
       type: "UPDATE_POST",
       $agent: agent,
       post: {
         id: post.id,
         source,
-        modifiedAt,
         presence: {},
         _sourceVersion: version
       }
     };
+    if (post.source !== source) action.post.modifiedAt = Date.now();
     action.post.presence[agent] = {user, agent, cursor};
     this.dispatch(action);
     if (this.props.onEditorChange) this.props.onEditorChange(source, cursor);
