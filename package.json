@@ -37,6 +37,7 @@
     "react": "^15.0.2",
     "react-codemirror": "^0.2.5",
     "react-dom": "^15.0.2",
+    "react-flip-move": "^2.1.2",
     "react-hot-api": "^0.5.0",
     "rxjs": "^5.0.0-beta.3",
     "uuid": "^2.0.1"
