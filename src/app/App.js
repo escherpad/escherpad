@@ -28,7 +28,6 @@ export default class App extends React.Component {
   componentWillMount() {
     var {store} = this.props;
     this.subscription = store.select('viewMode').subscribe((viewMode)=> {
-      console.log('viewMode has changed: value = ', viewMode);
       this.setState({viewMode});
     })
   }
