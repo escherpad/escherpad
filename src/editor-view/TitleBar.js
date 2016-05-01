@@ -26,7 +26,7 @@ const styles = {
     fontWeight: 500,
     lineHeight: "45px",
     height: "45px",
-    minWidth: "24px",
+    minWidth: "110px",
     maxWidth: "calc(100% - 200px)",
     marginRight: "5px",
     boxSizing: "border-box",
@@ -82,7 +82,6 @@ export default class TitleBar extends React.Component {
 
   onTitleChange(title) {
     var {id, dispatch} = this.props;
-    console.log(id, title);
     var modifiedAt = Date.now();
     dispatch({
       type: "UPDATE_POST",
@@ -101,7 +100,7 @@ export default class TitleBar extends React.Component {
           key={id}
           value={title || ""}
           className="h1"
-          style={[styles.blocks, flexFixed, styles.title]}
+          style={{...flexFixed, ...(styles.title)}}
           placeholder="Untitled..."
           onChange={this.onTitleChange.bind(this)}
         ></InlineEditable>

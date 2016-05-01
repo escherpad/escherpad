@@ -86,7 +86,6 @@ export default class EditorView extends React.Component {
 
   onChange(source, cursor, version) {
     var {user, post, agent, dispatch} = this.props;
-    console.log(user, post, agent, cursor, version);
     let action = {
       type: "UPDATE_POST",
       $agent: agent,

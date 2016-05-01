@@ -45,8 +45,9 @@ export default class PostListItem extends React.Component {
         </div>
         <Placeholder className="post-title"
                      style={{lineHeight: "22px", fontSize: "18px", fontWeight: "700"}}
+                     isEmpty={(!title || title.replace(/(&nbsp;|<br>|<br\/>|<br><\/br>)/g, " ").trim() === "")}
                      placeholder={<em className="placeholder">Untitled</em>}
-        >{title}</Placeholder>
+        ><div dangerouslySetInnerHTML={{__html: title}}></div></Placeholder>
         <div className="modified-at">{timeStamp}</div>
       </div>
     )
@@ -58,6 +59,7 @@ export default class PostListItem extends React.Component {
       post: this.props.id
     })
   }
+
   deletePost() {
     // now show a popup
     this.props.dispatch({

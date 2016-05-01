@@ -1,76 +1,72 @@
 /** Created by ge on 4/10/16. */
 import React from 'react';
 import ReactDOM from "react-dom";
-import Radium from 'radium';
 
-const styles = {
-  default: {
-    overflowY: "auto", // needed for the auto-resize
-    ":focus": {
-      outline: "none"
-    }
-  }
-};
-@Radium
+require('./inline-editable.scss');
 export default class InlineEditable extends React.Component {
   static propTypes = {
     tagName: React.PropTypes.string,
     style: React.PropTypes.any,
-    readOnly: React.PropTypes.bool,
+    editable: React.PropTypes.bool,
     value: React.PropTypes.string,
     onChange: React.PropTypes.func
   };
 
   componentWillReceiveProps(newProp) {
     var {value} = newProp;
-    if (value != this.props.value) this.value = value;
+    if (value != this.props.value) {
+      this.silent = true;
+      this.value = value;
+      this.silent = false;
+    }
   }
 
   render() {
-    let tagName = this.props.tagName || "div";
-    let style = [styles.default, this.props.style];
-    let className = this.props.className;
-    let isEditable = !(this.props.readOnly);
-    let placeholder = this.props.placeholder || "placeholder";
+    let {tagName="div", style, className, editable=true, placeholder = "placeholder", ..._props} = this.props;
+    className += " inline-editable";
+    if (this.isEmpty(this.value))
+      className += " placeholder";
     let props = {
-      style: style,
-      className: className,
-      contentEditable: isEditable,
+      style,
+      className,
+      contentEditable: editable,
+      placeholder,
       onBlur: this.onBlur.bind(this),
       onFocus: this.onFocus.bind(this),
       onInput: this.onInput.bind(this),
       onKeyDown: this.onKeyDown.bind(this),
-      onKeyUp: this.onKeyUp.bind(this),
-      onKeyPress: this.onKeyPress.bind(this),
-      onMouseDown: this.onMouseDown.bind(this),
-      onTouchStart: this.onTouchStart.bind(this),
-      onCopy: this.onCopy.bind(this),
-      onPaste: this.onPaste.bind(this),
-      onDrag: this.onDrag.bind(this),
-      onDrop: this.onDrop.bind(this),
-      autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false"
+      autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
+      ..._props
     };
     return React.createElement(tagName, props)
   }
 
-  componentDidMount() {
-    this.nativeElement = ReactDOM.findDOMNode(this);
+  componentWillMount() {
     this.silent = true; // silent change events
     this.value = this.props.value;
     this.silent = false;
   }
 
+  componentDidMount() {
+    this.nativeElement = ReactDOM.findDOMNode(this);
+    this.setHtml(this.value);
+  }
+
   set value(value) {
     this._value = value;
-    // processing should happen here.
-    let content = this.isEmpty() ? "<br>" : value;
-    if (this.nativeElement) this.nativeElement.innerHTML = content;
+    this.setHtml(value);
     if (!this.silent) this.onChangeValue(this.value);
   }
 
   get value() {
     // get processing
     return this._value
+  }
+
+  setHtml(value) {
+    // processing should happen here.
+    let content = this.isEmpty(value) ? "<br>" : value;
+    if (this.nativeElement) this.nativeElement.innerHTML = content;
   }
 
   // return both value and cursor position together.
@@ -80,11 +76,12 @@ export default class InlineEditable extends React.Component {
     this.props.onChange(value, cursor);
   }
 
-  isEmpty() {
-    let value = this.value;
+  isEmpty(value) {
+    var isEmpty = false;
     if (!value || value == "<br>" || value === "<br/>" || value === "<br><br>" || value === "<br/><br/>" || value === "\n" || value === "\n\n") {
-      return true
-    } else return false;
+      isEmpty = true
+    }
+    return isEmpty
   }
 
   resize() {
@@ -120,29 +117,6 @@ export default class InlineEditable extends React.Component {
     this.resize();
   }
 
-  onKeyUp() {
-  }
-
-  onKeyPress() {
-  }
-
-  onMouseDown() {
-  }
-
-  onTouchStart() {
-  }
-
-  onCopy() {
-  }
-
-  onPaste() {
-  }
-
-  onDrag() {
-  }
-
-  onDrop() {
-  }
 }
 
 

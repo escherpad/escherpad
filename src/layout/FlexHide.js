@@ -36,7 +36,6 @@ export default class FlexHide extends React.Component {
   }
 
   onTransitionEnd = (e)=> {
-    console.log('transition end', this.props.hide);
     this.setState({show: !this.props.hide, entering: false, leaving: false});
     if (typeof this.props.onTransitionEnd === "function") this.props.onTransitionEnd(e);
     this.getContainerWidth()
@@ -49,7 +48,7 @@ export default class FlexHide extends React.Component {
   render() {
     var {hide, width, style, transition="width 0.3s ease-out", children, onTransitionEnd, ...props} = this.props;
     var _style = {...style, position: "relative", transition};
-    var _innerTransition = "opacity 10s ease-out";
+    var _innerTransition = "opacity 0.3s ease-out";
 
     var _props = {...props, onTransitionEnd: this.onTransitionEnd};
     var {show, entering, leaving, init, flexContainerWidth} = this.state;
@@ -123,6 +122,25 @@ export default class FlexHide extends React.Component {
                style={{...innerStyle, opacity: 0}}>{children}</div>
         </FlexItem>
       );
+    } else if (show && entering && init) {
+      let innerStyle = {
+        position: "absolute", top: 0, bottom: 0, right: 0,
+        width: "100%",
+        minWidth: width,
+        opacity: 0
+      };
+      setTimeout(()=> {
+        this.setState({init: false});
+      }, 0);
+      return (
+        <FlexItem key={"flex-hide-item"} {..._props}
+                  ref="FlexItem"
+                  width={width}
+                  style={_style}>
+          <div ref="DIV"
+               style={innerStyle}>{children}</div>
+        </FlexItem>
+      );
     } else if (show && entering) {
       let innerStyle = {
         position: "absolute", top: 0, bottom: 0, right: 0,
@@ -131,9 +149,6 @@ export default class FlexHide extends React.Component {
         minWidth: width,
         opacity: 1
       };
-      if (init) setTimeout(()=> {
-        this.setState({init: false});
-      }, 0);
       return (
         <FlexItem key={"flex-hide-item"} {..._props}
                   ref="FlexItem"
@@ -146,6 +161,7 @@ export default class FlexHide extends React.Component {
     } else if (show) {
       let innerStyle = {
         position: "absolute", top: 0, bottom: 0, right: 0,
+        opacity: 1,
         transition: _innerTransition,
         width: flexContainerWidth + "px"
       };
