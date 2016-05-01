@@ -33,7 +33,6 @@ export default class OrderBySelection extends React.Component {
                   options={options}
                   onChange={this.onSelect.bind(this)}
                   placeholder="What do you want to see?"/>
-        <span> </span>
         <i className="material-icons"
            style={{
                 display: "inline",
