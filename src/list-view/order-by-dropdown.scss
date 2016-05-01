@@ -15,7 +15,8 @@
     border-radius: 7px;
     background-color: white;
     .order-by-dropdown-option {
-        padding: 10px 10px;
+        cursor: pointer;
+        padding: 10px 20px;
         white-space: nowrap;
         &:hover {
             color: #313131;

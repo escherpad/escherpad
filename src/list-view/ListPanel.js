@@ -25,7 +25,7 @@ export default class ListPanel extends React.Component {
 
   componentWillReceiveProps(newProp) {
     var {posts, postList} = newProp;
-    if (posts !== this.props.posts) this.updatePosts(posts, postList);
+    if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
   updatePosts(posts, {orderBy="modifiedAt"}={}) {
