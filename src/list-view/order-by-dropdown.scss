@@ -1,0 +1,26 @@
+// Created by ge on 5/1/16.
+.order-by-dropdown-control {
+    cursor: pointer;
+}
+.order-by-dropdown-menu {
+    color: #5d5d5d;
+
+    z-index: 1;
+    position: absolute;
+    right: 0;
+
+    padding: 0;
+    border: 1px solid #cfcfcf;
+    box-shadow: 0 1px 4px #cfcfcf;
+    border-radius: 7px;
+    background-color: white;
+    .order-by-dropdown-option {
+        padding: 10px 10px;
+        white-space: nowrap;
+        &:hover {
+            color: #313131;
+            background-color: rgba(#23aaff, 0.1);
+        }
+    }
+
+}

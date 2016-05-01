@@ -1,10 +1,7 @@
 /** Created by ge on 4/7/16. */
 export const SELECT_POST = "SELECT_POST";
 
-let initialEditorState = {
-  post: undefined
-};
-export function editor(state, action) {
+export function editor(state={}, action) {
   if (!action.type) return state;
   if (action.type === SELECT_POST) {
     return {

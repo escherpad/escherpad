@@ -3,7 +3,7 @@ export const ORDER_POST_BY = "ORDER_POST_BY";
 
 export function postList(state = {orderBy: "modifiedAt"}, action) {
   if (action.type === ORDER_POST_BY) {
-    return {...state, orderBy: action.field};
+    return {...state, orderBy: action.orderBy};
   }
   return state;
 }

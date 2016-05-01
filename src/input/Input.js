@@ -3,7 +3,7 @@ import React from "react";
 require('./search-input.scss');
 export default class Input extends React.Component {
   render() {
-    var {value, placeholder="type...", style, height=30, fontSize="14", padding="7", ...props} = this.props;
+    var {value, placeholder="type...", icon, style, height=30, fontSize="14", padding="7", ...props} = this.props;
     var finalStyle = {
       ...style,
       height: height + "px",
@@ -21,7 +21,7 @@ export default class Input extends React.Component {
     };
     return (
       <div className="search-input">
-        <i className="material-icons search-icon" style={iconStyle}>search</i>
+        <i className="material-icons search-icon" style={iconStyle}>{icon}</i>
         <input style={finalStyle} placeholder={placeholder} {...props}/>
       </div>
     )

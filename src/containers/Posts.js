@@ -21,7 +21,7 @@ export default class Posts extends React.Component {
     this.subscription = store.subscribe(this.storeToState.bind(this));
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.subscription.unsubscribe()
   }
 
@@ -32,7 +32,9 @@ export default class Posts extends React.Component {
     var newChild = React.createElement(
       this.props.component,
       {
-        dispatch, ...props, agent, user, users, posts, postList
+        dispatch,
+        ...props,
+        agent, user, users, posts, postList
       });
     return (newChild);
   }

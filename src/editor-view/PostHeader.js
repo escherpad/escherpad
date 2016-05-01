@@ -31,7 +31,10 @@ export default class PostHeader extends React.Component {
   };
 
   createNewNote(e) {
-    this.props.dispatch(createPost());
+    var action = createPost();
+    this.props.dispatch(action);
+    var postId = action.post.id;
+    this.props.dispatch({type: "SELECT_POST", post: postId});
   }
 
   render() {
@@ -52,7 +55,7 @@ export default class PostHeader extends React.Component {
             hoverBackground="rgb(240, 173, 50)"
             activeBackground="rgba(240, 173, 50, 0.5)"
             onClick={this.createNewNote.bind(this)}
-            padding="0 28px 0 12px">New Post<
+            padding="0 28px 0 12px">New Note<
             i className="material-icons"
               style={{fontSize: "18px", lineHeight: "32px", position: "absolute", marginRight: "-23px", width: "24px"}}>add</i
           ></Button>

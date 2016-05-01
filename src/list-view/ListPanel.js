@@ -4,6 +4,7 @@ import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
 import Input from "../input/Input";
 
+import OrderBySelection from "./OrderBySelection";
 require('./list-panel.scss');
 
 import PostListView from "./PostListView";
@@ -36,11 +37,12 @@ export default class ListPanel extends React.Component {
 
   render() {
     var {orderedPosts=[]} = this.state || {};
-    var {dispatch} = this.props;
+    var {dispatch, postList} = this.props;
     return (
       <Flex column fill align="stretch" style={{ padding: "0 20px" }} className="list-panel">
         <FlexItem fixed className="search-bar">
-          <Input value={"test this"} placeholder={"search"} style={{width: "100%"}}/>
+          <Input value={"test this"} icon={"search"}
+                 placeholder={"those needles in haystack..."} style={{width: "100%"}}/>
         </FlexItem>
         <FlexItem fixed>
           <div className="hero" style={{height: "100px", width: "100%"}}>
@@ -51,7 +53,7 @@ export default class ListPanel extends React.Component {
               <FlexItem fluid
                         className="header"
                         style={{textAlign: "center", fontSize: "30px", fontWeight: "500"}}
-              >Posts</FlexItem>
+              >Notes</FlexItem>
               <FlexItem fixed>
                 <button></button>
               </FlexItem>
@@ -63,7 +65,7 @@ export default class ListPanel extends React.Component {
             <FlexItem fixed></FlexItem>
             <FlexItem fixed></FlexItem>
             <FlexItem fluid></FlexItem>
-            <FlexItem fixed>Recent</FlexItem>
+            <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}></OrderBySelection>
           </Flex>
         </FlexItem>
         <PostListView posts={orderedPosts} dispatch={dispatch}></PostListView>
