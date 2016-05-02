@@ -55,7 +55,7 @@ export default class MarkdownPreview extends React.Component {
                     src={sourceWithCursor}
                     async={true}
                     afterRender={this.afterRender.bind(this)}
-                    placeholder={"# <em style=\"color: #cfcfcf!important;\">What a lovely day!</em>"}
+                    placeholder={"# <em style=\"color: #cfcfcf!important;\">What a lovely day!\nWhy not go ahead, and type away?</em>"}
                     onMouseUp={this.onMouseUp.bind(this)}
           ></Markdown>
           <Cursor className="blinking" {...cursor}></Cursor>
