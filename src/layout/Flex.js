@@ -21,8 +21,7 @@ export default class Flex extends React.Component {
       top: 0, bottom: 0, left: 0, right: 0
     };
     if (this.props.align) thisStyle.alignItems = this.props.align;
-    let style = this.props.style;
-    let children = this.props.children || [];
+    let {style, children = []} = this.props;
     return (
       <div {...this.props} style={{...thisStyle, ...style}}>
         {children}
