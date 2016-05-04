@@ -114,7 +114,7 @@ export default class TitleBar extends React.Component {
         <FlexItem fixed className="status" style={styles.status}>
           <div className="hint" style={styles.status.hint}>Type:</div>
           <div className="info" style={[styles.status.info, styles.clickable]}>{"md"}
-            <i className="material-icons" style={[styles.status.button]}>arrow_drop_down</i>
+            <i className="material-icons" style={[styles.status.button]}>keyboard_arrow_down</i>
           </div>
         </FlexItem>
       </Flex>
