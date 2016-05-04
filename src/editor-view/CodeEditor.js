@@ -30,41 +30,39 @@ const options = {
 @Radium
 export default class CodeEditor extends React.Component {
   static propTypes = {
-    style: React.PropTypes.any,
     value: React.PropTypes.string,
     cursorPosition: React.PropTypes.any,
     version: React.PropTypes.number,
     onChange: React.PropTypes.func,
-    onChangeScrollTop: React.PropTypes.func
+    onChangeScrollTop: React.PropTypes.func,
+    style: React.PropTypes.any,
   };
 
   render() {
-    let value = this.props.value;
-    let cursorPosition = this.props.cursorPosition;
-    let version = this.props.version;
-    let style = [this.props.style, styles];
+    let {value, cursorPosition, version, onChange, onChangeScrollTop, style, ...props} = this.props;
+    let _style = [this.props.style, styles];
     return (
-      <div className="editor-container" style={style}>
+      <div className="editor-container" style={_style}>
         <AceEditor
           key={this.key}
           ref={(_)=>this.Editor=_}
-          mode="markdown"
+          {...props}
           value={value}
           cursorPosition={cursorPosition}
           version={version}
+          lineHeight={2}
+          mode="markdown"
           theme="chrome"
+          editorProps={options}
+          wrapEnabled={true}
           width={`${this.state.parentWidth}px`}
           height={`${this.state.parentHeight}px`}
-          lineHeight={2}
           scrollMargin={{bottom: "900"}}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
           onChange={this.props.onChange}
           onChangeScrollTop={this.props.onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
-          editorProps={options}
-          keyboardHandler=""
-          wrapEnabled={true}
         />
       </div>
     )

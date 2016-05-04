@@ -38,7 +38,7 @@ export default class EditorView extends React.Component {
         </FlexItem>
         <FlexItem fluid>
           <CodeEditor key={id}
-                      ref={(_)=>this.CodeEditor=_}
+                      ref={(_)=>this.CodeEditor=_} {...props}
                       style={styles}
                       value={source}
                       cursorPosition={cursorPosition}
