@@ -1,9 +1,11 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
+import Flex from "../layout/Flex";
+import FlexItem from "../layout/FlexItem";
+
 import Radium from 'radium';
 import InlineEditable from "../editable/InlineEditable";
-require('./chevron.scss');
-import {flexRow, flexFluid, flexFixed} from '../layout/style-globals';
+
 const styles = {
   container: {
     borderBottom: "1px solid #eeeeee",
@@ -26,9 +28,6 @@ const styles = {
     fontWeight: 500,
     lineHeight: "45px",
     height: "45px",
-    minWidth: "110px",
-    maxWidth: "calc(100% - 200px)",
-    marginRight: "5px",
     boxSizing: "border-box",
     overflowX: "hidden"
   },
@@ -37,7 +36,12 @@ const styles = {
     border: "none",
     boxShadow: "none",
     fontSize: "24px",
-    cursor: "pointer"
+    lineHeight: "45px",
+    cursor: "pointer",
+    ":hover": {
+      color: "#23aaff",
+      textShadow: "0 0 2px #23aaff"
+    }
   },
   clickable: {
     cursor: "pointer"
@@ -57,20 +61,16 @@ const styles = {
       color: "#23aaff",
       ":hover": {
         textShadow: "0 0 2px #23aaff"
-      },
+      }
     },
     button: {
-      marginLeft: "10px",
+      fontSize: "12px",
       backgroundColor: "rgba(255, 255, 255, 0)",
       border: "none",
       boxShadow: "none",
       cursor: "pointer"
     }
-  },
-  blocks: {
-    display: "block"
-  },
-  dropdownButton: {}
+  }
 };
 
 @Radium
@@ -95,24 +95,30 @@ export default class TitleBar extends React.Component {
     var {style, dispatch, ...post} = this.props;
     var {id, title, createdAt, modifiedAt, presence} = post;
     return (
-      <div className="title-bar" style={[styles.container, flexRow, style]}>
-        <InlineEditable
-          key={id}
-          value={title || ""}
-          className="h1"
-          style={{...flexFixed, ...(styles.title)}}
-          placeholder="Untitled..."
-          onChange={this.onTitleChange.bind(this)}
-        ></InlineEditable>
-        <button className="dropdown chevron-bottom" style={[styles.blocks, flexFixed, styles.button]}></button>
-        <div className="spacer" style={[styles.blocks, flexFluid]}></div>
-        <div className="status" style={[styles.blocks, flexFixed, styles.status]}>
-          <div className="hint" style={[styles.status.hint, flexFixed]}>Type:</div>
-          <div className="info" style={[styles.status.info, styles.clickable, flexFixed]}>{"md"}
-            <span className="dropdown chevron-bottom" style={[styles.status.button]}> </span>
+      <Flex row align="stretch" style={{...styles.container, ...style}}>
+        <FlexItem fixed style={{ minWidth: "110px", maxWidth: "calc(100% - 200px)" }}>
+          <InlineEditable
+            key={id}
+            value={title || ""}
+            className="h1"
+            style={styles.title}
+            placeholder="Untitled..."
+            onChange={this.onTitleChange.bind(this)}
+          ></InlineEditable>
+        </FlexItem>
+        <FlexItem fixed>
+          <i className="material-icons" key="title-icon"
+             style={[styles.button, styles.clickable]}>keyboard_arrow_down</i>
+        </FlexItem>
+        <FlexItem fluid></FlexItem>
+        <FlexItem fixed className="status" style={styles.status}>
+          <div className="hint" style={styles.status.hint}>Type:</div>
+          <div className="info" style={[styles.status.info, styles.clickable]}>{"md"}
+            <i className="material-icons" style={[styles.status.button]}>arrow_drop_down</i>
           </div>
-        </div>
-      </div>
+        </FlexItem>
+      </Flex>
     )
   }
 }
+// <span className="dropdown chevron-bottom" style={[styles.status.button]}> </span>
