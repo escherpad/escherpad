@@ -43,12 +43,12 @@ export default class FullScreenToggleButton extends React.Component {
                 onClick={this.onClick.bind(this)}
       ><If data={viewMode}>
         <MouseOver value={"zen-mode"}>
-          <i ref="default" className="material-icons" style={style}>fullscreen</i>
-          <i ref="hover" className="material-icons" style={hover} onClick={this.setFullView.bind(this)}>fullscreen_exit</i>
+          <i ref="default" className="material-icons select-zen-mode" style={style}>fullscreen</i>
+          <i ref="hover" className="material-icons select-full-view" style={hover} onClick={this.setFullView.bind(this)}>fullscreen_exit</i>
         </MouseOver>
         <MouseOver default>
-          <i ref="default" className="material-icons" style={style}>fullscreen_exit</i>
-          <i ref="hover" className="material-icons" style={hover} onClick={this.setZenMode.bind(this)}>fullscreen</i>
+          <i ref="default" className="material-icons select-full-view" style={style}>fullscreen_exit</i>
+          <i ref="hover" className="material-icons select-zen-mode" style={hover} onClick={this.setZenMode.bind(this)}>fullscreen</i>
         </MouseOver>
       </If>
       </FlexItem>

@@ -32,6 +32,7 @@ const styles = {
     overflowX: "hidden"
   },
   button: {
+    color: "#cfcfcf",
     backgroundColor: "rgba(255, 255, 255, 0)",
     border: "none",
     boxShadow: "none",
@@ -107,14 +108,14 @@ export default class TitleBar extends React.Component {
           ></InlineEditable>
         </FlexItem>
         <FlexItem fixed>
-          <i className="material-icons" key="title-icon"
+          <i className="material-icons editor-title-dropdown" key="title-icon"
              style={[styles.button, styles.clickable]}>keyboard_arrow_down</i>
         </FlexItem>
         <FlexItem fluid></FlexItem>
         <FlexItem fixed className="status" style={styles.status}>
           <div className="hint" style={styles.status.hint}>Type:</div>
           <div className="info" style={[styles.status.info, styles.clickable]}>{"md"}
-            <i className="material-icons" style={[styles.status.button]}>keyboard_arrow_down</i>
+            <i className="material-icons editor-status-dropdown" style={[styles.status.button]}>keyboard_arrow_down</i>
           </div>
         </FlexItem>
       </Flex>

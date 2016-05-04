@@ -49,6 +49,7 @@ export default class PostHeader extends React.Component {
         </Responsive>
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button
+            className="add-new-post"
             color="rgb(240, 173, 50)"
             backgroundColor="rgba(240, 173, 50, 0)"
             hoverColor="white"

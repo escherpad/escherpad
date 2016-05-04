@@ -40,7 +40,7 @@ export default class PostListItem extends React.Component {
            onClick={this.selectPost.bind(this)}>
         <div className="control-group">
           <button onClick={this.deletePost.bind(this)}>
-            <i className="material-icons">close</i>
+            <i className="material-icons delete-post">close</i>
           </button>
         </div>
         <Placeholder className="post-title"

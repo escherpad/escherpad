@@ -41,7 +41,8 @@ export default class ListPanel extends React.Component {
     return (
       <Flex column fill align="stretch" style={{ padding: "0 20px" }} className="list-panel">
         <FlexItem fixed className="search-bar">
-          <Input value={"test this"} icon={"search"}
+          <Input className="search-input"
+                 value={"test this"} icon={"search"}
                  placeholder={"those needles in haystack..."} style={{width: "100%"}}/>
         </FlexItem>
         <FlexItem fixed>
