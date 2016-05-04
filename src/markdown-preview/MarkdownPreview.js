@@ -34,18 +34,25 @@ export default class MarkdownPreview extends React.Component {
   };
 
   render() {
-    let style = this.props.style;
-    let post = this.props.post;
-    let agent = this.props.agent;
-    let sourceWithCursor;
+    var {style, post, agent} = this.props;
+    var sourceWithCursor;
+    var {source = ""} = post;
+    var {cursor = {row: 0, column: 0}} = ((post.presence || {})[agent] || {});
+
+    // this is a very imperative piece of code.
+    /* if source is empty then do not try to find the cursor. */
+    if (source.trim() === "") {
+      source = "# <em style=\"color: #cfcfcf!important;\">What a lovely day!\nWhy not go ahead, and type away?</em>";
+      cursor = {row: 0, column: 40};
+    }
+
     try {
-      sourceWithCursor = insertCursor(post.source, post.presence[agent].cursor);
+      sourceWithCursor = insertCursor(source, cursor);
     } catch (e) {
-      // console.log('error: ', e);
+      console.log('error: ', e);
       sourceWithCursor = post.source;
     }
-    let cursor = {};
-    if (this && this.state) cursor = this.state.cursor || {};
+    if (this.state) var displayCursor = this.state.cursor || {};
     return (
       <div className="markdown-preview scroll-container"
            style={{...defaultStyle.scrollContainer, ...style}}
@@ -55,13 +62,23 @@ export default class MarkdownPreview extends React.Component {
                     src={sourceWithCursor}
                     async={true}
                     afterRender={this.afterRender.bind(this)}
-                    placeholder={"# <em style=\"color: #cfcfcf!important;\">What a lovely day!\nWhy not go ahead, and type away?</em>"}
                     onMouseUp={this.onMouseUp.bind(this)}
           ></Markdown>
-          <Cursor className="blinking" {...cursor}></Cursor>
+          <Cursor className="blinking" {...displayCursor}></Cursor>
         </div>
       </div>
     )
+  }
+
+  componentWillMount() {
+    this.setState({
+      cursor: {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0
+      }
+    })
   }
 
   componentDidMount() {
@@ -128,6 +145,7 @@ export default class MarkdownPreview extends React.Component {
     if (this._silent || this.smoothScroll.running || Math.abs(scrollTop - this.smoothScroll.target) <= 0.5 || !this.props.onScroll) return;
     this.props.onScroll(scrollTop);
   }
+  
 
   findCursorString(markdownElement) {
     var rect = getCursorStringPosition(markdownElement);

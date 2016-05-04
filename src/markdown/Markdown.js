@@ -58,15 +58,17 @@ marked
 
 import throttle from "lodash.throttle";
 
+var {string, bool, func, any} = React.PropTypes;
 @Radium
 export default class Markdown extends React.Component {
   static propTypes = {
-    src: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    style: React.PropTypes.any,
-    onMouseUp: React.PropTypes.func,
-    async: React.PropTypes.any,
-    afterRender: React.PropTypes.func
+    src: string,
+    placeholder: string,
+    isEmpty: bool, // if `isEmpty` is `true`, then the markdown shows the placeholder regardless of the string passed in.
+    style: any,
+    onMouseUp: func,
+    async: any,
+    afterRender: func
   };
 
   shouldComponentUpdate(newProps) {
@@ -87,8 +89,14 @@ export default class Markdown extends React.Component {
     if (this.props && this.props.onMouseUp) this.props.onMouseUp(e);
   };
 
+  isEmpty(src = "") {
+    return (src.trim() === "");
+  }
+
   asyncMarkdown = ()=> {
-    var source = this.props.src || this.props.placeholder || "";
+    var {src, placeholder, isEmpty} = this.props;
+    var source = src;
+    if (isEmpty || this.isEmpty(src)) source = placeholder || "";
     var html;
     try {
       html = marked.render(source);
