@@ -1,6 +1,6 @@
 /** Created by ge on 4/9/16. */
 
-import demoPost from './demoPost';
+import demoPost from './../posts/demoPost';
 
 export var demoInitialState = {
   editor: {},

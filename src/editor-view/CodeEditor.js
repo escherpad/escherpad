@@ -63,7 +63,7 @@ export default class CodeEditor extends React.Component {
           onChangeScrollTop={this.props.onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
           editorProps={options}
-          keyboardHandler="vim"
+          keyboardHandler=""
           wrapEnabled={true}
         />
       </div>
