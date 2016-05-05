@@ -11,7 +11,7 @@ const options = [
 ];
 var {func, any} = React.PropTypes;
 export default class OrderBySelection extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     orderBy: any,
     dispatch: func.isRequired,
   };

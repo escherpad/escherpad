@@ -5,6 +5,7 @@ import FlexItem from "../layout/FlexItem";
 
 import Radium from 'radium';
 import InlineEditable from "../editable/InlineEditable";
+import Popover from "../popover/Popover";
 
 const styles = {
   container: {
@@ -108,8 +109,11 @@ export default class TitleBar extends React.Component {
           ></InlineEditable>
         </FlexItem>
         <FlexItem fixed>
-          <i className="material-icons editor-title-dropdown" key="title-icon"
-             style={[styles.button, styles.clickable]}>keyboard_arrow_down</i>
+          <Popover menuItems={[{icon: "down", text: "first menu item", onClick: (_)=> console.log('thisis clicked!')}]}>
+            <i className="material-icons editor-title-dropdown"
+               key="title-icon"
+               style={[styles.button, styles.clickable]}>keyboard_arrow_down</i>
+          </Popover>
         </FlexItem>
         <FlexItem fluid></FlexItem>
         <FlexItem fixed className="status" style={styles.status}>

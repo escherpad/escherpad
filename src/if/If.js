@@ -1,9 +1,9 @@
 /** Created by ge on 4/29/16. */
 import React from "react";
-var {bool, node}  = React.PropTypes;
+var {any, node}  = React.PropTypes;
 export default class If extends React.Component {
-  static PropTypes = {
-    data: bool,
+  static propTypes = {
+    data: any,
     children: node
   };
 
@@ -16,6 +16,6 @@ export default class If extends React.Component {
     for (var i = 0; i < children.length; i++) {
       if (children[i].props.default) return children[i];
     }
-    return (<div>If component can not find child</div>);
+    return (null);
   }
 }

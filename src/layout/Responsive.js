@@ -6,7 +6,7 @@
 import React from "react";
 var {any, node, string, number, bool} = React.PropTypes;
 export default class Responsive extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     breakPoints: any,
     children: node,
     fill: any,

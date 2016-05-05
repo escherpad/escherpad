@@ -2,7 +2,7 @@
 import React from "react";
 var {node}  = React.PropTypes;
 export default class MouseOver extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     children: node
   };
 

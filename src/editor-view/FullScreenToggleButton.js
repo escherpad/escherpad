@@ -18,7 +18,7 @@ const hover = {
 
 var {any, bool, func} = React.PropTypes;
 export default class FullScreenToggleButton extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     viewMode: any,
     dispatch: func
   };

@@ -158,8 +158,5 @@ class Dropdown extends Component {
 
 }
 
-Dropdown
-  .defaultProps = {baseClassName: 'Dropdown'};
-export
-default
-Dropdown;
+Dropdown.defaultProps = {baseClassName: 'Dropdown'};
+export default Dropdown;
