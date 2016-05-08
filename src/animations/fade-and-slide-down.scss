@@ -1,0 +1,22 @@
+// Created by ge on 5/8/16.
+.fade-and-slide-down-enter {
+    opacity: 0.01;
+    transform: translateY(-1000px);
+}
+
+.fade-and-slide-down-enter.fade-and-slide-down-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 500ms ease-out;
+}
+
+.fade-and-slide-down-leave {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.fade-and-slide-down-leave.fade-and-slide-down-leave-active {
+    opacity: 0.01;
+    transform: translateY(-1000px);
+    transition: all 500ms ease-out;
+}

@@ -37,30 +37,47 @@ $left-offset: 10px;
             border-bottom: ($arrow-size - 2px) solid $background-color;
         }
     }
-    .popover-menu-item {
-        &:first-child {
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-        }
-        &:last-child {
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-        }
-        height: 24px;
-        line-height: 24px;
-        font-size: 18px;
-        cursor: pointer;
-        padding: 10px 20px;
-        white-space: nowrap;
-        &:hover {
-            color: #313131;
-            background-color: rgba(#23aaff, 0.1);
-        }
-        &:active {
-            background-color: rgba(#23aaff, 0.3);
-        }
-        i.material-icons {
-            font-size: 22px;
-        }
+}
+
+$height: 40px;
+$line-height: 22px;
+$text-left-offset: -2px;
+.popover-menu-item {
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
+    &:first-child {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+    &:last-child {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+    height: $height;
+    line-height: 22px;
+    font-size: 18px;
+    cursor: pointer;
+    padding: ($height - $line-height)/2 20px ($height - $line-height)/2 ($height + $text-left-offset);
+    white-space: nowrap;
+
+    color: #5d5d5d;
+    &:hover {
+        color: #313131;
+        background-color: rgba(#23aaff, 0.1);
+    }
+    &:active {
+        background-color: rgba(#23aaff, 0.3);
+    }
+    i.material-icons {
+        display: inline;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $height;
+        height: $height;
+        line-height: $height;
+        font-size: 22px;
+        text-align: center;
     }
 }
