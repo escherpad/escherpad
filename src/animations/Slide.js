@@ -13,8 +13,8 @@ export default class Slide extends Component {
     var {children, ...props} = this.props;
     return (
       <ReactCSSTransitionGroup transitionName="fade-and-slide-down"
-                               transitionEnterTimeout={500}
-                               transitionLeaveTimeout={500} {...props}
+                               transitionEnterTimeout={400}
+                               transitionLeaveTimeout={300} {...props}
       >{children}</ReactCSSTransitionGroup>
     )
   }

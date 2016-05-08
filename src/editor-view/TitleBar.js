@@ -131,7 +131,8 @@ export default class TitleBar extends React.Component {
             </div>
           </Popover>
           <SimpleModal value={this.state.configModalOpen} onClose={this.toggleModal.bind(this)}>
-            <h1>this is the title</h1>
+            <h2>Settings for Note: {"note.title"}</h2>
+            <hr></hr>
             <h2>this is the substitute title</h2>
           </SimpleModal>
         </FlexItem>

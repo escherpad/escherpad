@@ -10,13 +10,13 @@
  *          </EsModal>
  * */
 import React, {Component, PropTypes, cloneElement} from 'react'
+import Transition from "react-addons-css-transition-group";
 import Modal from "./Modal";
 import ModalContainer from "./ModalContainer";
 import ModalBackdrop from "./ModalBackdrop";
 import CloseButton from "./CloseButton";
-import Fade from "../animations/Fade";
-import Slide from "../animations/Slide";
 
+require('./modal-transitions.scss');
 const {func, node, any} = PropTypes;
 export default class SimpleModal extends Component {
   static PropTypes = {
@@ -81,13 +81,19 @@ export default class SimpleModal extends Component {
     } else {
       return (
         <div className="modal-component">
-          <Fade>
+          <Transition transitionName="backdrop-fade"
+                      transitionEnterTimeout={300}
+                      transitionLeaveTimeout={500} {...props}
+          >
             {this.state.isOpen ?
               (<ModalBackdrop key="modal-backdrop"></ModalBackdrop>)
               : null
             }
-          </Fade>
-          <Slide>
+          </Transition>
+          <Transition transitionName="modal-fade-and-slide-down"
+                      transitionEnterTimeout={500}
+                      transitionLeaveTimeout={300} {...props}
+          >
             {this.state.isOpen ?
               (<ModalContainer key="modal-container">
                   <Modal
@@ -101,7 +107,7 @@ export default class SimpleModal extends Component {
                   </Modal>
                 </ModalContainer>
               ) : null}
-          </Slide>
+          </Transition>
         </div>
       );
     }
