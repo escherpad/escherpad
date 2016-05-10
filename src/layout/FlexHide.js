@@ -39,6 +39,7 @@ export default class FlexHide extends React.Component {
     this.setState({show: !this.props.hide, entering: false, leaving: false});
     if (typeof this.props.onTransitionEnd === "function") this.props.onTransitionEnd(e);
     this.getContainerWidth()
+    window.dispatchEvent(new CustomEvent("reflow", {target: this.nativeElement}));
   };
 
   getContainerWidth = ()=> {

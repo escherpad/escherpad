@@ -1,5 +1,5 @@
 /** Created by ge on 4/9/16. */
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
 import {getSelection} from "./dom/getSelection";
 
@@ -25,12 +25,13 @@ const defaultStyle = {
     left: 0, right: 0,
   }
 };
-export default class MarkdownPreview extends React.Component {
+var {string, func, object} = PropTypes;
+export default class MarkdownPreview extends Component {
   static propTypes = {
-    style: React.PropTypes.any,
-    agent: React.PropTypes.any.isRequired,
-    post: React.PropTypes.any.isRequired,
-    onSelect: React.PropTypes.func
+    agent: string.isRequired,
+    post: object.isRequired,
+    onSelect: func,
+    style: object,
   };
 
   render() {
@@ -59,6 +60,7 @@ export default class MarkdownPreview extends React.Component {
            onScroll={this.onScroll.bind(this)}>
         <div className="markdown-and-cursor-container" style={{position: "relative"}}>
           <Markdown style={defaultStyle.article}
+                    ref="Markdown"
                     src={sourceWithCursor}
                     async={true}
                     afterRender={this.afterRender.bind(this)}
@@ -84,11 +86,20 @@ export default class MarkdownPreview extends React.Component {
   componentDidMount() {
     this.scrollContainer = ReactDOM.findDOMNode(this);
     this.smoothScroll = new SmoothScroll(this.scrollContainer, {});
+    window.addEventListener("reflow", this.forceMarkdownRerender);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("reflow", this.forceMarkdownRerender);
   }
 
   getScrollTop() {
     return this.scrollContainer.scrollTop;
   }
+
+  forceMarkdownRerender = ()=> {
+    this.refs["Markdown"].forceUpdate();
+  };
 
   setCursorTarget(target) {
     if (typeof target === "undefined") return;
@@ -145,7 +156,7 @@ export default class MarkdownPreview extends React.Component {
     if (this._silent || this.smoothScroll.running || Math.abs(scrollTop - this.smoothScroll.target) <= 0.5 || !this.props.onScroll) return;
     this.props.onScroll(scrollTop);
   }
-  
+
 
   findCursorString(markdownElement) {
     var rect = getCursorStringPosition(markdownElement);

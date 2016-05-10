@@ -1,16 +1,22 @@
 /** Created by ge on 4/10/16. */
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
 
 require('./inline-editable.scss');
-export default class InlineEditable extends React.Component {
+var {string, bool, func, any} = PropTypes;
+export default class InlineEditable extends Component {
   static propTypes = {
-    tagName: React.PropTypes.string,
-    style: React.PropTypes.any,
-    editable: React.PropTypes.bool,
-    value: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    tagName: string,
+    style: any,
+    editable: bool,
+    value: string,
+    onChange: func
   };
+
+  constructor() {
+    super();
+    this._resize = this.resize.bind(this);
+  }
 
   componentWillReceiveProps(newProp) {
     var {value} = newProp;
@@ -31,10 +37,10 @@ export default class InlineEditable extends React.Component {
       className,
       contentEditable: editable,
       placeholder,
-      onBlur: this.onBlur.bind(this),
-      onFocus: this.onFocus.bind(this),
+      onBlur: this._resize,
+      onFocus: this._resize,
       onInput: this.onInput.bind(this),
-      onKeyDown: this.onKeyDown.bind(this),
+      onKeyDown: this._resize,
       autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
       ..._props
     };
@@ -50,6 +56,13 @@ export default class InlineEditable extends React.Component {
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
     this.setHtml(this.value);
+    window.addEventListener('resize', this._resize);
+    window.addEventListener('reflow', this._resize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._resize);
+    window.removeEventListener('reflow', this._resize);
   }
 
   set value(value) {
@@ -94,29 +107,17 @@ export default class InlineEditable extends React.Component {
       inputElem.style.height = (height - 1 ) + "px";
     }
     inputElem.style.height = inputElem.scrollHeight + "px";
-    if (inputElem.clientHeight !== originalHeight) {
-      this.nativeElement.dispatchEvent(new CustomEvent("reflow", {target: this.nativeElement}));
-    }
-  }
-
-  onBlur() {
-    this.resize();
-  }
-
-  onFocus() {
-    this.resize();
+    // if (inputElem.clientHeight !== originalHeight) {
+    //   this.nativeElement.dispatchEvent(new CustomEvent("reflow", {target: this.nativeElement}));
+    // }
   }
 
   onInput(e) {
     let value = e.target.innerHTML;
-    if (this.props.onChange) this.props.onChange(value);
+    var {onChange} = this.props;
+    if (onChange) onChange(value);
     this.resize();
   }
-
-  onKeyDown() {
-    this.resize();
-  }
-
 }
 
 

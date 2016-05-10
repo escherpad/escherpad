@@ -75,15 +75,9 @@ export default class EditorView extends React.Component {
 
   componentDidMount() {
     this.nativeElem = ReactDOM.findDOMNode(this);
-    this.nativeElem.addEventListener("reflow", this.onReflow, true);
   }
 
   componentWillUnmount() {
-    this.nativeElem.removeEventListener("reflow", this.onReflow, true);
-  }
-
-  onReflow(e) {
-    window.dispatchEvent(new CustomEvent("reflow"));
   }
 
   onChange(source, cursor, version) {

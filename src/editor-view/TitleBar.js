@@ -31,7 +31,9 @@ const styles = {
     lineHeight: "45px",
     height: "45px",
     boxSizing: "border-box",
-    overflowX: "hidden"
+    overflowX: "none",
+    whiteSpace: "pre-wrap",
+    margin: 0
   },
   button: {
     color: "#cfcfcf",
@@ -119,7 +121,7 @@ export default class TitleBar extends Component {
           <InlineEditable
             key={id}
             value={title || ""}
-            className="h1"
+            tagName="h1"
             style={styles.title}
             placeholder="Untitled..."
             onChange={this.onTitleChange.bind(this)}
