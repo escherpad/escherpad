@@ -135,7 +135,6 @@ export default class ReactAce extends Component {
       this.editor.setTheme('ace/theme/' + nextProps.theme);
     }
     if (nextProps.fontSize !== oldProps.fontSize) {
-      console.log(nextProps.fontSize);
       this.editor.setFontSize(nextProps.fontSize);
     }
     if (nextProps.wrapEnabled !== oldProps.wrapEnabled) {
