@@ -11,6 +11,7 @@ const editorInitialState = {
   }
 };
 export function editor(state = editorInitialState, action) {
+  // console.log(action.options);
   if (!action.type) return state;
   if (action.type === SELECT_POST) {
     return {
