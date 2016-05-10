@@ -8,10 +8,14 @@ export default class Modal extends Component {
     children: node
   };
 
+  stopPropagation(e){
+    e.stopPropagation();
+  }
+
   render() {
     var {children} = this.props;
     return (
-      <div className="modal">
+      <div className="modal" onClick={this.stopPropagation}>
         {children}
       </div>
     );

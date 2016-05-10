@@ -14,7 +14,8 @@ export default class Post extends React.Component {
     let agent = state.session.agent;
     let user = state.session.user;
     let post = state.posts[state.editor.post];
-    this.setState({post, agent, user})
+    let options = state.editor.options;
+    this.setState({post, agent, user, options})
   }
 
   componentWillMount() {
@@ -38,7 +39,8 @@ export default class Post extends React.Component {
           ...props,
           agent: this.state.agent,
           user: this.state.user,
-          post: this.state.post
+          post: this.state.post,
+          options: this.state.options
         });
     } else if (component) {
       newChild = React.createElement(
@@ -47,7 +49,8 @@ export default class Post extends React.Component {
           ...props,
           agent: this.state.agent,
           user: this.state.user,
-          post: this.state.post
+          post: this.state.post,
+          options: this.state.options
         })
     }
     return (newChild);

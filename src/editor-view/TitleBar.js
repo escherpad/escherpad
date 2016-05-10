@@ -1,10 +1,10 @@
 /** Created by ge on 3/10/16. */
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import Flex from "../layout/Flex";
 import FlexItem from "../layout/FlexItem";
 import InlineEditable from "../editable/InlineEditable";
 import Popover from "../popover/Popover";
-import SimpleModal from "../modal/SimpleModal";
+import EditorConfigModal from "./modals/EditorConfigModal";
 
 import Radium from 'radium';
 
@@ -76,11 +76,15 @@ const styles = {
   }
 };
 
+var {any, func} = PropTypes;
+
 @Radium
-export default class TitleBar extends React.Component {
+export default class TitleBar extends Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    style: React.PropTypes.any
+    post: any,
+    options: any,
+    dispatch: func.isRequired,
+    style: any
   };
 
   componentWillMount() {
@@ -105,8 +109,8 @@ export default class TitleBar extends React.Component {
   }
 
   render() {
-    var {style, dispatch, ...post} = this.props;
-    var {id, title, createdAt, modifiedAt, presence} = post;
+    var {style, dispatch, post, options} = this.props;
+    var {id, title} = post;
     return (
       <Flex row align="stretch" style={{...styles.container, ...style}}>
         <FlexItem fixed style={{ minWidth: "110px", maxWidth: "calc(100% - 200px)" }}>
@@ -130,11 +134,12 @@ export default class TitleBar extends React.Component {
               <i className="material-icons">menu</i>Editor Settings
             </div>
           </Popover>
-          <SimpleModal value={this.state.configModalOpen} onClose={this.toggleModal.bind(this)}>
-            <h2>Settings for Note: {"note.title"}</h2>
-            <hr></hr>
-            <h2>this is the substitute title</h2>
-          </SimpleModal>
+          <EditorConfigModal value={this.state.configModalOpen}
+                             onClose={this.toggleModal.bind(this)}
+                             post={post}
+                             options={options}
+                             dispatch={dispatch}
+          ></EditorConfigModal>
         </FlexItem>
         <FlexItem fluid></FlexItem>
         <FlexItem fixed className="status" style={styles.status}>

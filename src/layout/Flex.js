@@ -1,31 +1,24 @@
 /** Created by ge on 4/24/16. */
-import React from 'react';
-import Radium from 'radium';
+import React, {Component, PropTypes, createElement} from 'react';
 
 import {flexRow, flexColumn, flexFluid, flexFixed} from "./style-globals";
 
-const styles = {};
-
-export default class Flex extends React.Component {
+export default class Flex extends Component {
   static propTypes = {
-    children: React.PropTypes.any
+    children: PropTypes.any
   };
 
   render() {
+    var {tagName="div", style, row, column, fill, children = [], ...props} = this.props;
     var thisStyle;
-    if (this.props.column) thisStyle = flexColumn;
-    if (this.props.row) thisStyle = flexRow;
-    if (this.props.fill) thisStyle = {
+    if (column) thisStyle = flexColumn;
+    if (row) thisStyle = flexRow;
+    if (fill) thisStyle = {
       ...thisStyle,
       position: "absolute",
       top: 0, bottom: 0, left: 0, right: 0
     };
     if (this.props.align) thisStyle.alignItems = this.props.align;
-    let {style, children = []} = this.props;
-    return (
-      <div {...this.props} style={{...thisStyle, ...style}}>
-        {children}
-      </div>
-    )
+    return createElement(tagName, {...props, style: {...thisStyle, ...style}}, children);
   }
 }

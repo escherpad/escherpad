@@ -39,8 +39,8 @@ $left-offset: 10px;
     }
 }
 
-$height: 40px;
-$line-height: 22px;
+$height: 35px;
+$line-height: 20px;
 $text-left-offset: -2px;
 .popover-menu-item {
     box-sizing: border-box;
@@ -54,9 +54,10 @@ $text-left-offset: -2px;
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
     }
+    user-select: none;
     height: $height;
-    line-height: 22px;
-    font-size: 18px;
+    line-height: $line-height;
+    font-size: 16px;
     cursor: pointer;
     padding: ($height - $line-height)/2 20px ($height - $line-height)/2 ($height + $text-left-offset);
     white-space: nowrap;
@@ -77,7 +78,7 @@ $text-left-offset: -2px;
         width: $height;
         height: $height;
         line-height: $height;
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
     }
 }

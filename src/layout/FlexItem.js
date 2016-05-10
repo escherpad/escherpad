@@ -1,13 +1,13 @@
 /** Created by ge on 4/24/16. */
-import React from 'react';
+import React, {Component, PropTypes, createElement} from 'react';
 import ReactDOM from "react-dom";
 
 import {flexFluid, flexFixed} from "./style-globals";
 
 const styles = {};
 
-var {any} = React.PropTypes;
-export default class FlexItem extends React.Component {
+var {any} = PropTypes;
+export default class FlexItem extends Component {
   static propTypes = {
     fluid: any,
     fixed: any,
@@ -36,16 +36,9 @@ export default class FlexItem extends React.Component {
 
   render() {
     var flexStyle;
-    var {style = {}, fluid, fixed, width, children = [], ...props} = this.props;
+    var {tagName="div", style = {}, fluid, fixed, width, children = [], ...props} = this.props;
     if (fluid) flexStyle = flexFluid;
     if (fixed) flexStyle = flexFixed;
-    return (
-      <div {...this.props}
-        ref="DIV"
-        style={{...flexStyle, ...style, width}}
-        {...props}>
-        {children}
-      </div>
-    )
+    return createElement(tagName, {...props, ref: "DIV", style: {...flexStyle, ...style, width}}, children);
   }
 }

@@ -61,16 +61,12 @@ export default class SimpleModal extends Component {
         </ReactCSSTransitionGroup>
       ), (<ReactCSSTransitionGroup duration={500} enterAnimation="elevator" leaveAnimation="elevator" easing="ease-out">
         {this.state.isOpen ?
-          (<ModalContainer key="modal-container">
-            <Modal key="modal"
-                   closeOnEsc={true}
-                   closeOnBackdropClick={true}
-                   onClose={this.close.bind(this)}
-                   backdropClassName="modal-backdrop"
-                   modalClassName="modal">
-              <CloseButton onClick={this.close.bind(this)}></CloseButton>
-              {children}
-            </Modal>
+          (<ModalContainer key="modal-container"
+                           onClick={this.close.bind(this)}
+          ><Modal>
+            <CloseButton onClick={this.close.bind(this)}></CloseButton>
+            {children}
+          </Modal>
           </ModalContainer>)
           : []}
       </ReactCSSTransitionGroup>)]);
@@ -95,16 +91,12 @@ export default class SimpleModal extends Component {
                       transitionLeaveTimeout={300} {...props}
           >
             {this.state.isOpen ?
-              (<ModalContainer key="modal-container">
-                  <Modal
-                    closeOnEsc={true}
-                    closeOnBackdropClick={true}
-                    onClose={this.close.bind(this)}
-                    backdropClassName="modal-backdrop"
-                    modalClassName="modal">
-                    <CloseButton onClick={this.close.bind(this)}></CloseButton>
-                    {children}
-                  </Modal>
+              (<ModalContainer key="modal-container"
+                               onClick={this.close.bind(this)}
+                ><Modal>
+                  <CloseButton onClick={this.close.bind(this)}></CloseButton>
+                  {children}
+                </Modal>
                 </ModalContainer>
               ) : null}
           </Transition>

@@ -12,10 +12,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .modal {
-        // need max width
-        width: 500px;
-        position: relative;
-        flex: 1 1 auto;
-    }
+}
+.modal {
+    // need max width
+    width: 500px;
+    position: relative;
+    flex: 1 1 auto;
 }

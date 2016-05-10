@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import Radium from 'radium';
-import EditorHeader from "./PostHeader";
 
 import brace from "brace";
 import AceEditor from "../AceEditor/AceEditor";
@@ -46,13 +45,13 @@ export default class CodeEditor extends React.Component {
         <AceEditor
           key={this.key}
           ref={(_)=>this.Editor=_}
-          {...props}
           value={value}
           cursorPosition={cursorPosition}
           version={version}
-          lineHeight={2}
           mode="markdown"
-          theme="chrome"
+          // lineHeight={2}
+          // keyboardHandler="vim"
+          // theme="chrome"
           editorProps={options}
           wrapEnabled={true}
           width={`${this.state.parentWidth}px`}
@@ -60,9 +59,10 @@ export default class CodeEditor extends React.Component {
           scrollMargin={{bottom: "900"}}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
-          onChange={this.props.onChange}
-          onChangeScrollTop={this.props.onChangeScrollTop}
+          onChange={onChange}
+          onChangeScrollTop={onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"
+          {...props}
         />
       </div>
     )

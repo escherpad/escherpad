@@ -97,8 +97,8 @@ export default class ReactAce extends Component {
       });
     }
 
-    if (keyboardHandler) {
-      this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
+    if (typeof keyboardHandler !== "undefined") {
+      this.editor.setKeyboardHandler((keyboardHandler ? ('ace/keyboard/' + keyboardHandler) : ""));
     }
     if (typeof scrollMargin !== 'undefined') {
       this.updateScrollMargin(scrollMargin);
@@ -128,10 +128,14 @@ export default class ReactAce extends Component {
     if (nextProps.mode !== oldProps.mode) {
       this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
     }
+    if (nextProps.keyboardHandler !== oldProps.keyboardHandler) {
+      this.editor.setKeyboardHandler((nextProps.keyboardHandler ? ('ace/keyboard/' + nextProps.keyboardHandler) : ""));
+    }
     if (nextProps.theme !== oldProps.theme) {
       this.editor.setTheme('ace/theme/' + nextProps.theme);
     }
     if (nextProps.fontSize !== oldProps.fontSize) {
+      console.log(nextProps.fontSize);
       this.editor.setFontSize(nextProps.fontSize);
     }
     if (nextProps.wrapEnabled !== oldProps.wrapEnabled) {
@@ -143,6 +147,7 @@ export default class ReactAce extends Component {
     if (nextProps.showGutter !== oldProps.showGutter) {
       this.editor.renderer.setShowGutter(nextProps.showGutter);
     }
+
     // if (version is not a number), just do the usual thing. If is, use for comparison.
     if (typeof version === "number" && version <= this.version) {
       // use this version number to avoid oscillation.
@@ -304,44 +309,46 @@ export default class ReactAce extends Component {
   }
 }
 
+var {string, number, bool, func, array, object, any, oneOfType} = PropTypes;
 ReactAce
   .propTypes = {
-  mode: PropTypes.string,
-  theme: PropTypes.string,
-  name: PropTypes.string,
-  className: PropTypes.string,
-  height: PropTypes.string,
-  width: PropTypes.string,
-  fontSize: PropTypes.number,
-  showGutter: PropTypes.bool,
-  onChange: PropTypes.func, // both `change` and `changeCursor` event go through this.
-  onCopy: PropTypes.func,
-  onPaste: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  value: PropTypes.string,
-  cursorPosition: PropTypes.any,
-  version: PropTypes.number,
-  onLoad: PropTypes.func,
-  onBeforeLoad: PropTypes.func,
-  minLines: PropTypes.number,
-  maxLines: PropTypes.number,
-  readOnly: PropTypes.bool,
-  highlightActiveLine: PropTypes.bool,
-  tabSize: PropTypes.number,
-  showPrintMargin: PropTypes.bool,
-  editorProps: PropTypes.object,
-  keyboardHandler: PropTypes.string,
-  wrapEnabled: PropTypes.bool,
-  enableBasicAutocompletion: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array,
+  mode: string,
+  theme: string,
+  name: string,
+  className: string,
+  height: string,
+  width: string,
+  fontSize: number,
+  lineHeight: number,
+  showGutter: bool,
+  onChange: func, // both `change` and `changeCursor` event go through this.
+  onCopy: func,
+  onPaste: func,
+  onFocus: func,
+  onBlur: func,
+  value: string,
+  cursorPosition: any,
+  version: number,
+  onLoad: func,
+  onBeforeLoad: func,
+  minLines: number,
+  maxLines: number,
+  readOnly: bool,
+  highlightActiveLine: bool,
+  tabSize: number,
+  showPrintMargin: bool,
+  editorProps: object,
+  keyboardHandler: string,
+  wrapEnabled: bool,
+  enableBasicAutocompletion: oneOfType([
+    bool,
+    array,
   ]),
-  enableLiveAutocompletion: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array,
+  enableLiveAutocompletion: oneOfType([
+    bool,
+    array,
   ]),
-  commands: PropTypes.array,
+  commands: array,
 };
 
 ReactAce

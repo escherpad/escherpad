@@ -9,9 +9,9 @@ export default class Modal extends Component {
   };
 
   render() {
-    var {children} = this.props;
+    var {children, ...props} = this.props;
     return (
-      <div className="modal-container">
+      <div className="modal-container" {...props}>
         {children}
       </div>
     );

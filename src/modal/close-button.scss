@@ -4,10 +4,11 @@
     position: absolute;
     right: 20px;
     top: 20px;
-    fontSize: 30px;
     color: #5d5d5d;
+    z-index: 1;
     &:hover {
         color: #303030;
     }
     cursor: pointer;
+    font-size: 30px !important;
 }
