@@ -11,7 +11,6 @@ require('brace/ext/themelist');
 require('brace/ext/modelist');
 const {themes} = ace.acequire("ace/ext/themelist");
 const {modes} = ace.acequire('ace/ext/modelist');
-console.log(modes);
 
 require('./modal-form.scss');
 var {any, func} = PropTypes
