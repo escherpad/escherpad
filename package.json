@@ -46,6 +46,7 @@
     "uuid": "^2.0.1"
   },
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "babel": "^6.5.2",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
@@ -65,6 +66,9 @@
     "highlight.js": "^9.2.0",
     "json-loader": "^0.5.4",
     "node-sass": "^3.4.2",
+    "postcss": "^5.0.21",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
     "radium": "^0.16.6",
     "react": "^0.14.7",
     "react-ace": "^3.2.0",

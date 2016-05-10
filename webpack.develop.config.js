@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
 const port = 3000;
 
@@ -59,7 +61,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style', 'css', "postcss-loader", 'sass']
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -90,6 +92,9 @@ module.exports = {
         loader: "url-loader?limit=10000&mimetype=image/png"
       }
     ]
+  },
+  postcss: function () {
+    return [precss, autoprefixer];
   },
   devServer: {
     port: port,

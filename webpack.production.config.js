@@ -17,6 +17,8 @@ const build_entry = {
 var path = require('path');
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: build_entry,
@@ -58,7 +60,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style', 'css', "postcss-loader", 'sass']
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -89,6 +91,9 @@ module.exports = {
         loader: "url-loader?limit=10000&mimetype=image/png"
       }
     ]
+  },
+  postcss: function () {
+    return [precss, autoprefixer];
   },
   plugins: [
     new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('production')}),
