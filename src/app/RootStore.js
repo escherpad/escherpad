@@ -26,7 +26,7 @@ try {
 
 let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
 
-console.log(initialState);
+// console.log(initialState);
 
 export const rootStore = new Store(reducer, initialState);
 rootStore.subscribe((state)=> {
