@@ -2,7 +2,7 @@
 export const SELECT_POST = "SELECT_POST";
 export const UPDATE_EDITOR_OPTIONS = "UPDATE_EDITOR_OPTIONS";
 
-const editorInitialState = {
+export const editorInitialState = {
   options: {
     keyboardHandler: "",
     theme: "chrome",
@@ -11,7 +11,6 @@ const editorInitialState = {
   }
 };
 export function editor(state = editorInitialState, action) {
-  console.log(state, action.options);
   if (!action.type) return state;
   if (action.type === SELECT_POST) {
     return {
