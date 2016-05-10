@@ -1,6 +1,7 @@
 // Created by ge on 4/30/16.
 .inline-editable {
     display: block;
+    white-space: pre-wrap;
     overflow: hidden;
     &:focus {
         outline: none;

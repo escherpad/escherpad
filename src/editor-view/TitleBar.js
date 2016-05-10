@@ -32,7 +32,6 @@ const styles = {
     height: "45px",
     boxSizing: "border-box",
     overflowX: "none",
-    whiteSpace: "pre-wrap",
     margin: 0
   },
   button: {
