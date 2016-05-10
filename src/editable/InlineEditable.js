@@ -102,7 +102,7 @@ export default class InlineEditable extends Component {
     let height = inputElem.scrollHeight;
     let originalHeight = inputElem.clientHeight;
     inputElem.style.height = (height - 1 ) + "px";
-    while (inputElem.scrollHeight <= height || inputElem.scrollHeight < 1) {
+    while (inputElem.scrollHeight < (height - 1) || inputElem.scrollHeight < 1) {
       height--;
       inputElem.style.height = (height - 1 ) + "px";
     }

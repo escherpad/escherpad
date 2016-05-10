@@ -13,7 +13,7 @@ const {themes} = ace.acequire("ace/ext/themelist");
 const {modes} = ace.acequire('ace/ext/modelist');
 
 require('./modal-form.scss');
-var {any, func} = PropTypes
+var {any, func} = PropTypes;
 export default class EditorConfigModal extends Component {
   static PropTypes = {
     options: any,
