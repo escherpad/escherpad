@@ -13,7 +13,7 @@ export function presence(state = {}, action) {
   else return state;
 }
 
-export function post(state, action) {
+export function post(state={}, action) {
   if (!action.type) {
     return state;
   } else if (action.type === ADD_POST) {

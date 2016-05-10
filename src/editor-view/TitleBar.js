@@ -92,7 +92,9 @@ export default class TitleBar extends Component {
   }
 
   onTitleChange(title) {
-    var {id, dispatch} = this.props;
+    var {post={}, dispatch} = this.props;
+    var {id} = post;
+    if (!id) return;
     var modifiedAt = Date.now();
     dispatch({
       type: "UPDATE_POST",
