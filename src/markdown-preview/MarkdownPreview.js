@@ -87,10 +87,12 @@ export default class MarkdownPreview extends Component {
     this.scrollContainer = ReactDOM.findDOMNode(this);
     this.smoothScroll = new SmoothScroll(this.scrollContainer, {});
     window.addEventListener("reflow", this.forceMarkdownRerender);
+    window.addEventListener("resize", this.forceMarkdownRerender);
   }
 
   componentWillUnmount() {
     window.removeEventListener("reflow", this.forceMarkdownRerender);
+    window.removeEventListener("resize", this.forceMarkdownRerender);
   }
 
   getScrollTop() {
