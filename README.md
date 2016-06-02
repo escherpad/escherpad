@@ -3,6 +3,7 @@
 Gittor (Git-Editor) is a CommonMark spec-respecting markdown editor for GitHub and Dropbox. It is a free web-based editor that saves your notes locally in your browser's `LocalStorage`, that can be connected to your Dropbox, GitHub, and Google Drive accounts.
 
 It is betten than exsting markdown editors because
+
 1. [x] editor supports both <kbd>vim</kbd> and <kbd>emacs</kbd>,
 2. [x] the preview is styled with **100%** fidelity to GitHub
 3. [x] the synchronized scrolling is anchored by cursor. So what you are editing in preview is always going to be right next to where your cursor is in the editor.
