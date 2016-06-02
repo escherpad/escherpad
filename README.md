@@ -18,15 +18,16 @@ My name is Ge Yang, I'm a fifth year physics graduate student at the University 
 ### Tables
 
 A table can be made like this:
-inline style            | syntax             | comments
------------------------ | ------------------ | -----------
-*emphasis* (italic)     | *                  | no space after the first delimiter or before last
-**bold**                | **                 | same as above
-~~strike through~~      | ~~                 | same
-`inline code block`     | \` (back tick)     | usually the key <kbd>~</kbd> under your <kbd>esc</kbd> key.
-<mark>highlight</mark>  | `<mark></mark>`    |
-<kbd>key</kbd>          | `<kbd></kbd>`      |
-[link]()                | `[text](link-url)` |
+
+| inline style            | syntax             | comments    |
+| ----------------------- | ------------------ | ----------- |
+| *emphasis* (italic)     | *                  | no space after the first delimiter or before last |
+| **bold**                | **                 | same as above |
+| ~~strike through~~      | ~~                 | same |
+| `inline code block`     | \` (back tick)     | usually the key <kbd>~</kbd> under your <kbd>esc</kbd> key. |
+| <mark>highlight</mark>  | `<mark></mark>`    |  |
+| <kbd>key</kbd>          | `<kbd></kbd>`      |  |
+| [link]()                | `[text](link-url)` |  |
 
 
 ### horizontal line
