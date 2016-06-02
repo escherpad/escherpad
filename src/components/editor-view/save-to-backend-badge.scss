@@ -1,0 +1,24 @@
+// Created by ge on 5/12/16.
+$height: 24px;
+.save-to-backend-badge {
+    font-size: 14px;
+    line-height: $height - 2px;
+    height: $height;
+    border-radius: 7px;
+    padding: 0 8px 0 8px;
+    cursor: pointer;
+    transition: all 0.05s linear;
+
+    color: #007ee5;
+    text-shadow: 0 0 1px #007ee5;
+    background-color: rgba(white, 0);
+    &:hover {
+        color: white;
+        background-color: #23aaff;
+    }
+    &:active {
+        background-color: darken(#23aaff, 10%);
+    }
+    // standard
+    border: 1px solid rgba(white, 0);
+}

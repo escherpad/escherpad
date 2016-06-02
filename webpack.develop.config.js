@@ -3,7 +3,7 @@ var path = require('path');
 var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
-const port = 3000;
+const port = 4000;
 
 const build_entry = {
   app: "./src/index.js",
@@ -101,7 +101,22 @@ module.exports = {
     contentBase: "./src",
     noInfo: true, //  --no-info option
     hot: true,
-    inline: true
+    inline: true,
+    // historyApiFallback: true,
+    proxy: {
+      "/integrations": {
+        target: {
+          "host": "localhost",
+          "protocol": 'http:',
+          "port": 4000
+        },
+        rewrite: function (req) {
+          console.log('rewriting');
+          req.url = req.url + ".html";
+          console.log('rewritten', req.url);
+        }
+      }
+    }
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
