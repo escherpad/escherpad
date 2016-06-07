@@ -1,10 +1,11 @@
 /** Created by ge on 5/15/16. */
-export default function BadgeWithCtrol(props) {
-  "use strict";
-  var {className, style, icon, children, text, onClick, onIconClick} = props;
+import React from "react";
+
+require('./badge.scss');
+export default function BadgeWithControl({className, icon, children, text, onIconClick, ...props}) {
   return (
-    <div className={"badge badge-with-control " + className}>
-      {(text||children)}
+    <div className={"badge badge-with-control " + (className || "") } {...props}>
+      {(text || children)}
       {(icon || (<i className="material-icons" onClick={onIconClick}></i>))}
     </div>
   )

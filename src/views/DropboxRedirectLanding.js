@@ -1,6 +1,6 @@
 /** Created by ge on 5/14/16. */
 import React, {Component, PropTypes} from "react";
-import {parseToken} from "./../services/dropboxApi";
+import {parseTokenQueryString} from "./../services/dropboxApi";
 import AccountsListContainer from "../store/accounts/AccountsListContainer";
 import AccountListView from "../components/account-list-view/AccountListView";
 
@@ -19,7 +19,7 @@ export default class DropoxRedirectLanding extends Component {
     var dispatch = store.dispatch.bind(store);
 
 
-    var {hash, accessToken, tokenType, uid, state} = parseToken();
+    var {hash, accessToken, tokenType, uid, state} = parseTokenQueryString();
 
     var action = {
       type: "UPSERT_ACCOUNT",

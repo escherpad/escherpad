@@ -10,6 +10,7 @@
     "front-matter": "^2.0.6",
     "github-api": "^2.2.0",
     "github-markdown-css": "^2.2.1",
+    "jsondiffpatch": "^0.1.43",
     "katex": "^0.5.1",
     "lodash.debounce": "^4.0.6",
     "lodash.throttle": "^4.0.1",

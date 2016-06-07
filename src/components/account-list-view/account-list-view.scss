@@ -1,45 +1,11 @@
 // Created by ge on 5/15/16.
 $font-size: 12px;
 .account-list-item {
-    position: relative;
-    box-sizing: border-box;
-    display: block;
-    margin: 10px 0 10px;
-    .right {  text-align: right  }
-    label, .control {  margin: 0; box-sizing: border-box; display: inline-block; }
-    label {  width: 40%; padding-right: 10px; font-size: 14px; font-weight: 500; color: #232323}
-    .control {  width: 60%; padding-left: 10px; }
-    .account-badge {
-        color: white;
-        background-color: #007ee5;
-        border-radius: 3px;
-        cursor: pointer;
-        border: none;
+    height: 45px;
+    line-height: 45px;
 
-        // dimension
-        position: relative;
-        $height: 18px;
-        height: $height;
-        padding-right: $height;
-        i.material-icons {
-            cursor: pointer;
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-size: $font-size;
-            width: $height;
-            height: $height;
-            line-height: $height;
-        }
-    }
-
-    padding: 15px 0;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: solid 1px white;
-    cursor: pointer;
+    border-radius: 7px;
     &:hover, &:active {
-        border: solid 1px #eeeeee;
-        background-color: #eeeeee;
+        background-color: #eee;
     }
 }

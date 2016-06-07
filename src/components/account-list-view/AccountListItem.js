@@ -1,8 +1,8 @@
 /** Created by ge on 5/30/16. */
 import React, {Component, PropTypes} from "react";
-import Row from "../layout/Row";
-import Width from "../layout/Width";
 import MouseOver from "../mouseover/MouseOver";
+import TwoColumn from "../two-column/TwoColumn";
+import BadgeWithControl from "../badge/BadgeWithControl";
 
 import {getFolders} from "../../services/dropboxApi";
 
@@ -29,7 +29,7 @@ export default class ListItem extends Component {
     var {post, account, dispatch} = this.props;
     console.log(account);
 
-    getFolders('', account.accessToken).then(data=>{
+    getFolders('', account.accessToken).then(data=> {
       console.log(data);
     });
 
@@ -46,22 +46,24 @@ export default class ListItem extends Component {
   render() {
     var {post, account, dispatch} = this.props;
     return (
-      <Row tagName="div" className="account-list-item"
-           onClick={this.selectAccount.bind(this)}
-      >
-        <Width width="40%" style={{textAlign: "right", paddingRight: "10px"}}>
-          <div>Dropbox Account:</div>
-        </Width>
-        <Width tagName="div" width="60%" style={{paddingLeft: "10px"}}>
-          <button className="account-badge"
-          >{(account.email || "email is not available")}
-            <MouseOver>
-              <i mouseOver className="material-icons" onClick={this.removeAccount.bind(this)}>cancel</i>
-              <i mouseDefault className="material-icons">clear</i>
-            </MouseOver>
-          </button>
-        </Width>
-      </Row>
+      <TwoColumn className="account-list-item"
+                 onClick={this.selectAccount.bind(this)}
+                 col1={(
+                     <span>Dropbox Configured As</span>
+                 )}
+                 col2={(
+                      <BadgeWithControl className="account-badge"
+                                        style={{backgroundColor:"#23aaff", color: "white"}}
+                                        text={(account.email || "email is not available")}
+                                        icon={(
+                                            <MouseOver>
+                                              <i mouseOver className="material-icons" onClick={this.removeAccount.bind(this)}>cancel</i>
+                                              <i mouseDefault className="material-icons">clear</i>
+                                            </MouseOver>
+                                        )}
+                      ></BadgeWithControl>
+                 )}
+      ></TwoColumn>
     )
   }
 }

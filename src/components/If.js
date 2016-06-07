@@ -6,6 +6,6 @@ export default function If({ifData, children}) {
   }
   for (var i = 0; i < children.length; i++) {
     if (children[i].props.ifDefault) return children[i];
-  }
-  return (null);
+  };
+  return (null)
 }

@@ -2,7 +2,8 @@
 import React, {Component, PropTypes} from 'react';
 import FlexItem from "../layout/FlexItem";
 import Button from "../form/Button";
-import SaveToBackEndModal from "./modals/SaveToBackEndModal";
+import AccountListContainer from "../../store/accounts/AccountsListContainer";
+import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";
 
 require('./save-to-backend-badge.scss');
 var {any, func} = PropTypes;
@@ -15,7 +16,7 @@ export default class BackEndBadge extends Component {
   };
 
   render() {
-    var {style, post, dispatch, ...props} = this.props;
+    var {style, store, post, dispatch, ..._props} = this.props;
     return (
       <FlexItem fixed style={{"padding": "0 5px"}}>
         {/*view selection logic here*/}
@@ -24,11 +25,12 @@ export default class BackEndBadge extends Component {
           onClick={this.openModal.bind(this)}
         >save to...
         </button>
-        <SaveToBackEndModal value={this.state.modalOpen}
-                            post={post}
-                            onClose={this.closeModal.bind(this)}
-                            dispatch={dispatch} {...props}
-        ></SaveToBackEndModal>
+        <AccountListContainer store={store}
+                              dispatch={dispatch}
+                              value={this.state.modalOpen}
+                              post={post}
+                              onClose={this.closeModal.bind(this)} {..._props}
+                              component={SaveToBackendModal}></AccountListContainer>
       </FlexItem>
     )
   }
