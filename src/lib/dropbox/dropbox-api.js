@@ -77,12 +77,14 @@ export function parseTokenQueryString() {
 /*  */
 export function getAccountInfo(access_token) {
   "use strict";
-  // var url = 'https://api.dropboxapi.com/1/account/info';
   var url = 'https://api.dropboxapi.com/2/users/get_current_account';
   return rpcRequest(access_token, "POST", url)
 }
 
 export function list() {
+  "use strict";
+  var url = 'https://api.dropboxapi.com/2/users/get_current_account';
+  return rpcRequest(access_token, "POST", url)
 }
 
 export function get() {
