@@ -87,7 +87,7 @@ export function list() {
   return rpcRequest(access_token, "POST", url)
 }
 
-export function get() {
+export function get_file() {
 }
 
 export function create() {

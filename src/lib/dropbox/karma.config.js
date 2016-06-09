@@ -9,15 +9,13 @@ module.exports = function (config) {
     files: [
       "**/*.spec.js"
     ],
-    exclude: [
-      ""
-    ],
+    exclude: [""],
     plugins: [
       webpack,
       'karma-jasmine',
-      'karma-safari-launcher'//,
-      // 'karma-chrome-launcher',
-      // 'karma-firefox-launcher'
+      'karma-safari-launcher',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher'
     ],
     preprocessors: {
       '**/*.spec.js': ["webpack"]
