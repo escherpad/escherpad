@@ -47,6 +47,7 @@ export function accounts(state = {}, action) {
 
 import {take, dispatch} from "luna-saga";
 import {getAccountInfo} from "../../services/dropboxApi";
+import "regenerator-runtime/runtime";
 export function* getDropboxAccount() {
   "use strict";
   var {action} = yield take('UPSERT_ACCOUNT');

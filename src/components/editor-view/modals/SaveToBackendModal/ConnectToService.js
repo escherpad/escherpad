@@ -10,7 +10,11 @@ export default function ConnectToService({dispatch, dropboxApi, ..._props}) {
 
   function linkDropbox(event) {
     event.stopPropagation();
-    dropboxApi.requestToken();
+    dispatch({
+      type: "EYWA_REQUEST_TOKEN",
+      service: "dropbox",
+      scope: "app"
+    });
   }
 
   return (

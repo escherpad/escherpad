@@ -4,7 +4,7 @@ const build_entry = {
     "react",
     "react-dom",
     "radium",
-    "./node_modules/regenerator/runtime.js",
+    "./node_modules/regenerator-runtime/runtime.js",
     "markdown-it", "markdown-it-highlightjs", "markdown-it-task-lists",
     "rxjs",
     "luna", "luna-saga",

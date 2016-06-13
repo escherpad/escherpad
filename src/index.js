@@ -15,9 +15,9 @@ function createWithDefaultProps(Component, props) {
 document.addEventListener('DOMContentLoaded', function () {
   ReactDOM.render(
     <Router history={browserHistory} createElement={createWithDefaultProps}>
-      <Route path="/" component={MainEditorView}></Route>
-      <Route path="/integrations(.html)" component={IntegrationsView}></Route>
-      <Route path="/oauth/dropbox-redirect(.html)" component={DropboxRedirectLanding}></Route>
+      <Route path="/gittor/(index.html)" component={MainEditorView}></Route>
+      <Route path="/gittor/integrations(.html)" component={IntegrationsView}></Route>
+      <Route path="/gittor/oauth/dropbox-redirect(.html)" component={DropboxRedirectLanding}></Route>
     </Router>,
     document.getElementById('app')
   );

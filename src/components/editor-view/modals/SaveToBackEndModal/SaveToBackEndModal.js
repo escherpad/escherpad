@@ -21,8 +21,7 @@ export default class SaveToBackendModal extends Component {
   static propTypes = {
     options: any,
     accountList: array.isRequired,
-    dispatch: func.isRequired,
-    dropboxApi: any.isRequired
+    dispatch: func.isRequired
   };
 
   render() {
@@ -84,38 +83,4 @@ export default class SaveToBackendModal extends Component {
       dispatch(action);
     }
   }
-
-
 }
-// <Row className="description" style={{marginTop: "24px"}}><p>
-//   Gittor is designed to be a server-less web app. So to save your notes permanently, you need to choose
-//   a storage service.</p></Row>
-// <Row><p>
-// Each document can only be saved to one storage service. To choose a service that is already connected, click on an account below.
-// </p></Row>
-// <Row><Size size="22px"><TextShadow color="#23aaff"><span>
-//   Meta Data
-// </span></TextShadow></Size></Row>
-// <Row><span>
-// this file is located at: /test_folder2/new_file.json.
-// <br/>
-// the file ID is :id:lkshsfD8d02ndQx
-// </span></Row>
-// <Row><Size size="22px"><TextShadow color="#23aaff"><span>
-//   Save To...
-// </span></TextShadow></Size></Row>
-// <AccountListContainer {...props} component={AccountListView}></AccountListContainer>
-//   <Row><Size size="22px"><TextShadow color="#23aaff"><span>
-//   Configure New
-// </span></TextShadow></Size></Row>
-// <Row tagName="div" style={{marginTop: "14px"}}>
-// <Width width="40%" style={{textAlign: "right", paddingRight: "10px"}}>
-// <div>Connect To Dropbox</div>
-// </Width>
-// <Width width="60%" tagName="div" style={{paddingLeft: "10px"}}>
-// <button onClick={this.linkDropbox.bind(this)}
-// style={{color: "white", backgroundColor: "#007ee5", border: "none", borderRadius: "3px", cursor: "pointer"}}
-// >Authorize Via OAuth
-// </button>
-// </Width>
-// </Row>

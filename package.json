@@ -7,6 +7,7 @@
     "brace": "^0.8.0",
     "classnames": "^2.2.4",
     "codemirror": "^5.13.2",
+    "eywa-dropbox": "git+https://episodeyang@github.com/episodeyang/eywa-dropbox.git",
     "front-matter": "^2.0.6",
     "github-api": "^2.2.0",
     "github-markdown-css": "^2.2.1",
@@ -45,6 +46,7 @@
     "react-hot-api": "^0.5.0",
     "react-modal2": "^3.0.2",
     "react-router": "^2.4.0",
+    "regenerator-runtime": "^0.9.5",
     "rxjs": "^5.0.0-beta.3",
     "uuid": "^2.0.1",
     "whatwg-fetch": "^1.0.0"

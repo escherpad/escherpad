@@ -11,7 +11,6 @@ const build_entry = {
     "react",
     "react-dom",
     "radium",
-    "./node_modules/regenerator/runtime.js",
     "markdown-it", "markdown-it-highlightjs", "markdown-it-task-lists",
     "rxjs",
     "luna", "luna-saga",
@@ -24,7 +23,7 @@ module.exports = {
   entry: build_entry,
   devtool: process.env.WEBPACK_DEVTOOL || 'source-map',
   output: {
-    path: path.join(__dirname, 'gittor'),
+    path: '/gittor/', //path.join(__dirname, 'gittor'),
     filename: '[name].js'
   },
   resolve: {
@@ -98,22 +97,28 @@ module.exports = {
   },
   devServer: {
     port: port,
+    stats: {colors: true},
     contentBase: "./src",
     noInfo: true, //  --no-info option
     hot: true,
     inline: true,
-    // historyApiFallback: true,
+    historyApiFallback: {
+      index: "/index.html"
+    },
     proxy: {
-      "/integrations": {
+      "/gittor/*": {
         target: {
           "host": "localhost",
           "protocol": 'http:',
           "port": 4000
         },
         rewrite: function (req) {
-          console.log('rewriting');
-          req.url = req.url + ".html";
-          console.log('rewritten', req.url);
+          req.url = req.url.replace(/^\/gittor\//, "/");
+          if (req.url.match(/\/$/)) req.url += "index.html";
+          var extension = req.url
+            .split('/').slice(-1)[0]
+            .split('.')[1];
+          if (!extension) req.url += ".html";
         }
       }
     }
