@@ -18,7 +18,6 @@ export default class MarkdownEditor extends React.Component {
     agent: any.isRequired,
     user: any.isRequired,
     post: any.isRequired,
-    dropboxApi: any.isRequired,
     dispatch: any.isRequired,
     view: string
   };

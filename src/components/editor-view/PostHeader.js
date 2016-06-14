@@ -27,7 +27,6 @@ export default class PostHeader extends React.Component {
   static propTypes = {
     style: any,
     viewMode: any,
-    dropboxApi: any.isRequired,
     dispatch: func.isRequired
   };
 
