@@ -2,6 +2,8 @@
 .idea
 
 # node files
+*.log
+*.logs
 *~
 node_modules
 .DS_Store
