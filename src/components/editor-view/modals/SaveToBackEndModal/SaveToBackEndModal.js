@@ -1,10 +1,7 @@
 /** Created by ge on 5/8/16. */
 import React, {Component, PropTypes} from "react";
-import Row from "../../../layout/Row";
-import Width from "../../../layout/Width";
+import {Row, Flex, FlexItem} from 'layout-components';
 import If from "../../../If";
-import Flex from "../../../layout/Flex";
-import FlexItem from "../../../layout/FlexItem";
 import Height from "../../../styling/Height";
 import TextShadow from "../../../styling/TextShadow";
 import Size from "../../../styling/Size";

@@ -1,6 +1,6 @@
 /** Created by ge on 5/12/16. */
 import React, {Component, PropTypes} from 'react';
-import FlexItem from "../layout/FlexItem";
+import {FlexItem} from "layout-components";
 import Button from "../form/Button";
 import AccountListContainer from "../../store/accounts/AccountsListContainer";
 import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";

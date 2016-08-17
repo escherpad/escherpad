@@ -1,7 +1,6 @@
 /** Created by ge on 5/28/16. */
 import React, {Component, PropTypes} from "react";
-import Flex from "../components/layout/Flex"
-import FlexItem from "../components/layout/FlexItem"
+import {Flex, FlexItem} from 'layout-components';
 
 const {any, object} = PropTypes;
 export default class IntegratsionsView extends Component {

@@ -1,7 +1,6 @@
 /** Created by ge on 5/8/16. */
 import React, {Component, PropTypes} from "react";
-import Flex from "../../layout/Flex";
-import FlexItem from "../../layout/FlexItem";
+import {Flex, FlexItem} from 'layout-components';
 import SimpleModal from "../../modal/SimpleModal";
 import Input from "../../form/Input";
 import Select from "../../form/Select";

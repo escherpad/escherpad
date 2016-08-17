@@ -1,7 +1,6 @@
 /** Created by ge on 3/10/16. */
 import React, {Component, PropTypes} from 'react';
-import Flex from "../layout/Flex";
-import FlexItem from "../layout/FlexItem";
+import {Flex, FlexItem} from 'layout-components';
 import InlineEditable from "../editable/InlineEditable";
 import Popover from "../popover/Popover";
 import EditorConfigModal from "./modals/EditorConfigModal";

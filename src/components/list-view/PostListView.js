@@ -1,6 +1,6 @@
 /** Created by ge on 4/18/16. */
 import React from "react";
-import FlexItem from "../layout/FlexItem";
+import {Flex, FlexItem} from 'layout-components';
 import PostListItem from "./PostListItem";
 import FlipMove from "react-flip-move";
 

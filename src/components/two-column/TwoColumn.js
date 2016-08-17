@@ -1,6 +1,5 @@
 import React from "react";
-import Row from "./../layout/Row";
-import Width from "./../layout/Width";
+import {Row, Width} from 'layout-components';
 
 require('./two-column.scss');
 export default function TwoColumn({className, col1, col2, ..._props}) {

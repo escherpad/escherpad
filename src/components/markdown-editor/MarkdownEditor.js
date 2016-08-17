@@ -1,8 +1,6 @@
 /** Created by ge on 4/24/16. */
 import React from "react";
-import Flex from "../layout/Flex";
-import FlexItem from "../layout/FlexItem";
-import Responsive from "../layout/Responsive";
+import {Flex, FlexItem, Responsive} from "layout-components";
 import MarkdownPreview from '../markdown-preview/MarkdownPreview';
 import PostHeader from "../editor-view/PostHeader"
 import EditorView from "../editor-view/EditorView";

@@ -1,11 +1,7 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
-import Radium from 'radium';
-import Flex from "../components/layout/Flex";
-import FlexItem from "../components/layout/FlexItem";
-import FlexHide from "../components/layout/FlexHide";
+import {Flex, FlexItem, FlexHide, Responsive} from 'layout-components';
 import If from "../components/If";
-import Responsive from "../components/layout/Responsive";
 import Post from "../store/posts/PostContainer";
 import Posts from "../store/posts/PostsContainer";
 import MarkdownEditor from "../components/markdown-editor/MarkdownEditor";
@@ -17,7 +13,6 @@ const style = {
   fontSmoothing: "antialiased"
 };
 
-@Radium
 export default class MainEditorView extends React.Component {
   static propTypes = {
     store: React.PropTypes.any.isRequired
@@ -41,17 +36,19 @@ export default class MainEditorView extends React.Component {
     return (
       <Responsive breakPoints={{sm: 1000, lg: Infinity}}>
         <div data-sm style={style}>
-          <Post store={store} dispatch={dispatch} {...props} view="code" viewMode={viewMode} component={MarkdownEditor}
-          ></Post>
+          <Post store={store} dispatch={dispatch} {...props} view="code" viewMode={viewMode}
+                component={MarkdownEditor}/>
         </div>
         <Flex data-lg row fill align="stretch" style={style}>
           <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
-            <Posts store={store} dispatch={dispatch}  {...props}  component={ListPanel}></Posts>
+            <Posts store={store} dispatch={dispatch}  {...props} component={ListPanel}/>
           </FlexHide>
           <FlexItem fluid style={{flex: "8 8 auto"}}>
             <If ifData={viewMode}>
-              <Post data-ifDefault store={store} dispatch={dispatch}  {...props}  view={"code"} viewMode={viewMode} component={MarkdownEditor}></Post>
-              <Post data-ifValue={"zen-mode"} store={store} dispatch={dispatch} {...props} view="two-column" viewMode={viewMode} component={MarkdownEditor}></Post>
+              <Post data-ifDefault store={store} dispatch={dispatch}  {...props} view={"code"} viewMode={viewMode}
+                    component={MarkdownEditor}/>
+              <Post data-ifValue={"zen-mode"} store={store} dispatch={dispatch} {...props} view="two-column"
+                    viewMode={viewMode} component={MarkdownEditor}/>
             </If>
           </FlexItem>
         </Flex>

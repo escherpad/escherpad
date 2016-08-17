@@ -1,6 +1,6 @@
 import React from "react";
+import {Row} from 'layout-components';
 import TwoColumn from "../../../two-column/TwoColumn";
-import Row from "../../../../components/layout/Row";
 import Badge from "../../../../components/badge/Badge";
 import TextShadow from "../../../styling/TextShadow";
 

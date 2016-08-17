@@ -1,5 +1,5 @@
 import React from "react";
-import Row from "../../../../components/layout/Row";
+import {Row} from 'layout-components';
 import TextShadow from "../../../styling/TextShadow";
 
 import AccountListView from "../../../account-list-view/AccountListView";

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import If from "../../../If";
-import Row from "../../../layout/Row";
-import Width from "../../../layout/Width";
+import {Row, Width} from 'layout-components';
 import TextShadow from "../../../styling/TextShadow";
 
 import ConnectToService from "./ConnectToService";

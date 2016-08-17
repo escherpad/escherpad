@@ -1,8 +1,6 @@
 /** Created by ge on 3/23/16. */
 import React from 'react';
-import Flex from "../layout/Flex";
-import FlexItem from "../layout/FlexItem";
-import Responsive from "../layout/Responsive";
+import {Flex, FlexItem, Responsive} from 'layout-components';
 import FullScreenToggleButton from "./FullScreenToggleButton";
 import Tag from "./Tag";
 import Button from "../form/Button";

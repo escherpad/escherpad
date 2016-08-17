@@ -1,7 +1,6 @@
 /** Created by ge on 4/18/16. */
 import React from "react";
-import Flex from "../layout/Flex";
-import FlexItem from "../layout/FlexItem";
+import {Flex, FlexItem} from 'layout-components';
 import Input from "../input/Input";
 
 import OrderBySelection from "./OrderBySelection";

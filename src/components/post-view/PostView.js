@@ -10,7 +10,8 @@ import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
 
 import {getAceCursorPosition} from "../markdown-editor/getAceCursorPosition";
-import {flexRow, flexFluid} from "../layout/style-globals";
+import {flexStyle} from 'layout-components';
+const {flexRow, flexFluid} = flexStyle;
 
 @Radium
 export default class PostView extends React.Component {

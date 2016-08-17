@@ -3,8 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TitleBar from "./TitleBar";
 import CodeEditor from "./CodeEditor";
-import Flex from "../layout/Flex";
-import FlexItem from "../layout/FlexItem";
+import {Flex, FlexItem} from "layout-components";
 
 require('./ace-gutter.scss');
 const styles = {

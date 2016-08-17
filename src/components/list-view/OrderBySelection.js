@@ -1,6 +1,6 @@
 /** Created by ge on 5/1/16. */
 import React from "react";
-import FlexItem from "../layout/FlexItem";
+import {FlexItem} from "layout-components";
 import Dropdown from "../dropdown/Dropdown";
 
 require('./order-by-dropdown.scss');

@@ -2,7 +2,7 @@
 import React from "react";
 import MouseOver from "../mouseover/MouseOver";
 import If from "../If";
-import FlexItem from "../layout/FlexItem";
+import {FlexItem} from 'layout-components';
 
 const style = {
   color: "#cfcfcf",
