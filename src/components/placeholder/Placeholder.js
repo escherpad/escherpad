@@ -8,15 +8,15 @@ export default class Placeholder extends React.Component {
   };
 
   isEmpty(children) {
-    var {isEmpty} = this.props;
-    if (typeof isEmpty === 'boolean') return this.props.isEmpty;
-    else if (typeof isEmpty === 'function') return this.props.isEmpty(children);
+    const {isEmpty} = this.props;
+    if (typeof isEmpty === 'boolean') return isEmpty;
+    else if (typeof isEmpty === 'function') return isEmpty(children);
     else return (!children)
   }
 
   render() {
-    var {children, placeholder, ...props} = this.props;
-    if (this.isEmpty(children)) return (<div {...props}>{placeholder || ""}</div>);
-    else return (<div {...props}>{children}</div>);
+    var {children, placeholder, isEmpty, ..._props} = this.props;
+    if (this.isEmpty(children)) return (<div {..._props}>{placeholder || ""}</div>);
+    else return (<div {..._props}>{children}</div>);
   }
 }

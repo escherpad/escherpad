@@ -41,7 +41,7 @@ function getStyle({
       backgroundColor: activeBackground || hoverBackground || backgroundColor,
       outline: "none"
     },
-    ":focus" : {
+    ":focus": {
       outline: "none"
     }
 

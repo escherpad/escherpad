@@ -31,13 +31,15 @@ export default class Responsive extends React.Component {
   }
 
   getWidth() {
-    var {fill, height} = this.props;
-    var width;
+    const {fill, height} = this.props;
+    const {container} = this.refs;
+
+    let width;
     if (fill) {
-      if (height) width = this.refs.container.clientHeight;
-      else width = this.refs.container.clientWidth;
+      if (height) width = container.clientHeight;
+      else width = container.clientWidth;
     } else {
-      if (this.props.height) width = window.innerHeight;
+      if (height) width = window.innerHeight;
       else width = window.innerWidth;
     }
     this.setState({width});
@@ -79,7 +81,7 @@ export default class Responsive extends React.Component {
     var {breakKey} = this.state || {};
     var _children = [].concat(children);
     for (var key in children) {
-      if (children[key].props[breakKey]) return (children[key]);
+      if (children[key].props[`data-${breakKey}`]) return (children[key]);
     }
     return (<div>no child found</div>);
   }

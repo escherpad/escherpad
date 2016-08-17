@@ -36,11 +36,11 @@ export default class PostServiceInfoView extends Component {
         <a href="https://www.dropbox.com/contents/asdfasdfsafas">/test_folder2/test_folder3/new_note.json</a>
         <div className="current-service">
           <If ifData={showChooseService}>
-            <div ifValue={true} className="choose-service-view">
+            <div data-ifValue={true} className="choose-service-view">
               <ChooseAService {...this.props}></ChooseAService>
               <ConnectToService {...this.props}></ConnectToService>
             </div>
-            <div ifDefault className="placeholder"></div>
+            <div data-ifDefault className="placeholder"></div>
           </If>
         </div>
       </div>

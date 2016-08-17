@@ -43,8 +43,8 @@ export default class PostHeader extends React.Component {
     return (
       <Flex row fill style={containerStyle} align="center">
         <Responsive breakPoints={{sm: 1000}}>
-          <FullScreenToggleButton default viewMode={viewMode} dispatch={dispatch}></FullScreenToggleButton>
-          <FlexItem fixed sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
+          <FullScreenToggleButton data-default viewMode={viewMode} dispatch={dispatch}></FullScreenToggleButton>
+          <FlexItem fixed data-sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
             <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>
           </FlexItem>
         </Responsive>

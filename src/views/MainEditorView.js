@@ -40,18 +40,18 @@ export default class MainEditorView extends React.Component {
     var dispatch = store.dispatch.bind(store);
     return (
       <Responsive breakPoints={{sm: 1000, lg: Infinity}}>
-        <div sm style={style}>
+        <div data-sm style={style}>
           <Post store={store} dispatch={dispatch} {...props} view="code" viewMode={viewMode} component={MarkdownEditor}
           ></Post>
         </div>
-        <Flex lg row fill align="stretch" style={style}>
+        <Flex data-lg row fill align="stretch" style={style}>
           <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
             <Posts store={store} dispatch={dispatch}  {...props}  component={ListPanel}></Posts>
           </FlexHide>
           <FlexItem fluid style={{flex: "8 8 auto"}}>
             <If ifData={viewMode}>
-              <Post ifDefault store={store} dispatch={dispatch}  {...props}  view={"code"} viewMode={viewMode} component={MarkdownEditor}></Post>
-              <Post ifValue={"zen-mode"} store={store} dispatch={dispatch} {...props} view="two-column" viewMode={viewMode} component={MarkdownEditor}></Post>
+              <Post data-ifDefault store={store} dispatch={dispatch}  {...props}  view={"code"} viewMode={viewMode} component={MarkdownEditor}></Post>
+              <Post data-ifValue={"zen-mode"} store={store} dispatch={dispatch} {...props} view="two-column" viewMode={viewMode} component={MarkdownEditor}></Post>
             </If>
           </FlexItem>
         </Flex>
@@ -60,5 +60,3 @@ export default class MainEditorView extends React.Component {
     // }
   }
 }
-// <TeamNavBar style={flexFixed}
-// ></TeamNavBar>

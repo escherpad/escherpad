@@ -57,8 +57,8 @@ export default class ListItem extends Component {
                                         text={(account.email || "email is not available")}
                                         icon={(
                                             <MouseOver>
-                                              <i mouseOver className="material-icons" onClick={this.removeAccount.bind(this)}>cancel</i>
-                                              <i mouseDefault className="material-icons">clear</i>
+                                              <i data-mouseOver className="material-icons" onClick={this.removeAccount.bind(this)}>cancel</i>
+                                              <i data-mouseDefault className="material-icons">clear</i>
                                             </MouseOver>
                                         )}
                       ></BadgeWithControl>

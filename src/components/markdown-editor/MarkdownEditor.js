@@ -36,7 +36,7 @@ export default class MarkdownEditor extends React.Component {
     //todo: this will be removed after we add a post type selectior as a parent.
     if (!this.props.post) return (<div>post is not specified</div>);
     //todoEnd
-    var {view, ifValue, ...props} = this.props;
+    var {view, ...props} = this.props;
     if (view === "two-column") {
       return (
         <Flex column fill align="stretch">

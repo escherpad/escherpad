@@ -46,7 +46,7 @@ export default class SimpleModal extends Component {
   }
 
   render() {
-    var {children, value, component, ...props} = this.props;
+    var {children, value, component, ..._props} = this.props;
     var _component, _children;
     if (component) {
       _children = [...component.props.children];
@@ -70,14 +70,14 @@ export default class SimpleModal extends Component {
       </ReactCSSTransitionGroup>)]);
       if (this.state.isOpen) _children.concat([]);
 
-      _component = React.cloneElement(component, {onClick: this.open.bind(this), ...props}, _children);
+      _component = cloneElement(component, {onClick: this.open.bind(this), ..._props}, _children);
       return _component
     } else {
       return (
         <div className="modal-component">
           <Transition transitionName="backdrop-fade"
                       transitionEnterTimeout={300}
-                      transitionLeaveTimeout={500} {...props}
+                      transitionLeaveTimeout={500}
           >
             {this.state.isOpen ?
               (<ModalBackdrop key="modal-backdrop"></ModalBackdrop>)
@@ -86,7 +86,7 @@ export default class SimpleModal extends Component {
           </Transition>
           <Transition transitionName="modal-fade-and-slide-down"
                       transitionEnterTimeout={500}
-                      transitionLeaveTimeout={300} {...props}
+                      transitionLeaveTimeout={300}
           >
             {this.state.isOpen ?
               (<ModalContainer key="modal-container"

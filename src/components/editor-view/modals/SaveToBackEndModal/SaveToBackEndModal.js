@@ -50,17 +50,17 @@ export default class SaveToBackendModal extends Component {
           </FlexItem>
           <FlexItem fixed className="modal-body">
             <If ifData={view}>
-              <div ifValue="no-services-available">
+              <div data-ifValue="no-services-available">
                 <Row tagName="p" className="intro" style={{marginTop: "24px"}}>
                   {"To save your note, Gittor need to connect to a service via OAuth."}
                 </Row>
                 <ConnectToService {..._props}></ConnectToService>
               </div>
-              <div ifValue="choose-a-service">
+              <div data-ifValue="choose-a-service">
                 <ChooseAService {..._props}></ChooseAService>
                 <ConnectToService {..._props}></ConnectToService>
               </div>
-              <div ifValue="has-service">
+              <div data-ifValue="has-service">
                 <PostServiceInfoView {..._props}></PostServiceInfoView>
               </div>
             </If>
