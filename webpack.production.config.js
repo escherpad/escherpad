@@ -47,12 +47,12 @@ module.exports = {
       {
         // ES6 modules
         test: /luna\-saga\/(.*)\.js$/,
-        loaders: ['react-hot', 'babel-loader']
+        loaders: ['babel-loader']
       },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['regenerator', 'react-hot', 'babel-loader']
+        loaders: ['regenerator', 'babel-loader']
       },
       {
         test: /\.json$/,
