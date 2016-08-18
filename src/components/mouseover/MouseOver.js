@@ -1,5 +1,6 @@
 /** Created by ge on 4/29/16. */
 import React from "react";
+import autobind from 'autobind-decorator';
 var {node}  = React.PropTypes;
 export default class MouseOver extends React.Component {
   static propTypes = {
@@ -10,17 +11,19 @@ export default class MouseOver extends React.Component {
     this.setState({mouseOver: false})
   }
 
+  @autobind
   onMouseEnter() {
     this.setState({mouseOver: true})
   }
 
+  @autobind
   onMouseLeave() {
     this.setState({mouseOver: false})
   }
 
   render() {
-    var selector = 'mouseDefault';
-    if (this.state && this.state.mouseOver) selector = "mouseOver";
+    var selector = 'data-mouseDefault';
+    if (this.state && this.state.mouseOver) selector = "data-mouseOver";
     var {children} = this.props;
     children = [].concat(children);
     if (children.length > 2) console.warn('MouseOver can have only two children. Children after the second are ignored');
@@ -29,8 +32,8 @@ export default class MouseOver extends React.Component {
         return React.cloneElement(
           children[i],
           {
-            onMouseEnter: this.onMouseEnter.bind(this),
-            onMouseLeave: this.onMouseLeave.bind(this)
+            onMouseEnter: this.onMouseEnter,
+            onMouseLeave: this.onMouseLeave
           }
         );
     }
