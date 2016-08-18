@@ -24,13 +24,13 @@ export default class MouseOver extends React.Component {
   render() {
     var selector = 'data-mouseDefault';
     if (this.state && this.state.mouseOver) selector = "data-mouseOver";
-    var {children} = this.props;
-    children = [].concat(children);
-    if (children.length > 2) console.warn('MouseOver can have only two children. Children after the second are ignored');
-    for (var i = 0; i < children.length; i++) {
-      if (children[i].props[selector])
+    const {children} = this.props;
+    const _children = [].concat(children);
+    if (_children.length > 2) console.warn('MouseOver can have only two children. Children after the second are ignored');
+    for (var i = 0; i < _children.length; i++) {
+      if (_children[i].props[selector])
         return React.cloneElement(
-          children[i],
+          _children[i],
           {
             onMouseEnter: this.onMouseEnter,
             onMouseLeave: this.onMouseLeave
