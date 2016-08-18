@@ -24,17 +24,19 @@ export function accounts(state = {}, action) {
   if (action.type === "UPSERT_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
-    let newState = {...state};
-    newState[key(account)] = account;
-    return newState;
+    return {
+      ...state,
+      [key(account)]: account
+    };
   } else if (action.type === "UPDATE_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
     let _key = key(account);
     if (!state[_key]) return state;
-    let newState = {...state};
-    newState[key(account)] = {...state[key], ...account};
-    return newState;
+    return {
+      ...state,
+      [key(account)]: {...state[key], ...account}
+    };
   } else if (action.type === "DELETE_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
@@ -48,11 +50,12 @@ export function accounts(state = {}, action) {
 import {take, dispatch} from "luna-saga";
 import {getAccountInfo} from "../../services/dropboxApi";
 import "regenerator-runtime/runtime";
+
 export function* getDropboxAccount() {
   "use strict";
-  var {action} = yield take('UPSERT_ACCOUNT');
-  var {account} = action;
-  var {service, uid, accessToken} = account;
+  const {action} = yield take('UPSERT_ACCOUNT');
+  const {account} = action;
+  const {service, uid, accessToken} = account;
   if (service === "dropbox") {
     var _account = yield getAccountInfo(accessToken);
     if (!!_account) yield dispatch({
@@ -62,5 +65,17 @@ export function* getDropboxAccount() {
       }
     });
   }
-
 }
+
+export function* requestDropboxToken() {
+  "use strict";
+  const {action} = yield take('EYWA_REQUEST_TOKEN');
+  const {service} = action;
+  if (service === 'dropbox') {
+    requestAccessToken()
+
+  } else {
+
+  }
+
+    }

@@ -6,6 +6,7 @@ import TextShadow from "../../../styling/TextShadow";
 
 require("./connect-to-service.scss");
 
+
 export default function ConnectToService({dispatch, dropboxApi, ..._props}) {
 
   function linkDropbox(event) {
@@ -26,9 +27,8 @@ export default function ConnectToService({dispatch, dropboxApi, ..._props}) {
                  col2={(
                      <Badge text="connect via OAuth"
                             onClick={linkDropbox}
-                            style={{backgroundColor: "#23aaff", color: "white"}}></Badge>
-                 )}
-      ></TwoColumn>
+                            style={{backgroundColor: "#23aaff", color: "white"}}/>
+                 )}/>
       <Row tagName="p">{"" +
       "Important: Gittor only get access to the folder Dropbox/Apps/Gittor. It will not have access to your existing folders in Dropbox."}</Row>
     </div>

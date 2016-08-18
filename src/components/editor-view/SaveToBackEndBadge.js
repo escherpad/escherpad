@@ -23,8 +23,7 @@ export default class BackEndBadge extends Component {
     return (
       <FlexItem fixed style={{"padding": "0 5px"}}>
         {/*view selection logic here*/}
-        <button className="save-to-backend-badge"
-                onClick={this.openModal}>
+        <button className="save-to-backend-badge" onClick={this.openModal}>
           save to...
         </button>
         <AccountListContainer value={modalOpen}

@@ -2,9 +2,7 @@
 import React, {Component, PropTypes} from "react";
 import {Row, Flex, FlexItem} from 'layout-components';
 import If from "../../../If";
-
 import SimpleModal from "../../../modal/SimpleModal";
-
 import ConnectToService from "./ConnectToService";
 import ChooseAService from "./ChooseAService";
 import PostServiceInfoView from "./PostServiceInfoView";
@@ -44,7 +42,7 @@ export default class SaveToBackendModal extends Component {
             <If ifData={view}>
               <div data-ifValue="no-services-available">
                 <Row tagName="p" className="intro" style={{marginTop: "24px"}}>
-                  {"To save your note, Gittor need to connect to a service via OAuth."}
+                  To save your note, Gittor need to connect to a service via OAuth.
                 </Row>
                 <ConnectToService {..._props}/>
               </div>

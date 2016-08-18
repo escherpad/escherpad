@@ -1,10 +1,9 @@
 /** Created by ge on 5/14/16. */
-import DropboxApi, {parseTokenQueryString, requestAccessToken} from "eywa-dropbox";
+import DropboxApi from "eywa-dropbox";
 
-// var dropboxApi = new DropboxApi("wous2hd2d66sone", "http://localhost:4000/oauth/dropbox-redirect.html");
+export {parseTokenQueryString, requestAccessToken} from "eywa-dropbox";
+export const CLIENT_ID = "wous2hd2d66sone";
+export const REDIRECT_URI = "http://localhost:4000/oauth/dropbox-redirect.html";
 
-module.exports = {
-  requestAccessToken,
-  parseTokenQueryString
-  // dropboxApi
-};
+export const dropboxApi = new DropboxApi(CLIENT_ID, REDIRECT_URI);
+

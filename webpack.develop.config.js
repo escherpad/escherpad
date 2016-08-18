@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         // ES6 modules
-        test: /luna\-saga\/(.*)\.js$/,
+        test: /(luna\-saga)\/(.*)\.js$/,
         loaders: ['babel-loader']
       },
       {
