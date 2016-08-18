@@ -2,18 +2,15 @@
 import React, {Component, PropTypes} from "react";
 import {Row, Flex, FlexItem} from 'layout-components';
 import If from "../../../If";
-import Height from "../../../styling/Height";
-import TextShadow from "../../../styling/TextShadow";
-import Size from "../../../styling/Size";
 
 import SimpleModal from "../../../modal/SimpleModal";
 
 import ConnectToService from "./ConnectToService";
 import ChooseAService from "./ChooseAService";
 import PostServiceInfoView from "./PostServiceInfoView";
-
 require('./../modal-form.scss');
-var {any, func, array} = PropTypes;
+
+const {any, func, array} = PropTypes;
 export default class SaveToBackendModal extends Component {
   static propTypes = {
     options: any,
@@ -22,25 +19,23 @@ export default class SaveToBackendModal extends Component {
   };
 
   render() {
-    var {value, ..._props} = this.props;
-    var post = this.props.post;
-    var accountList = this.props.accountList;
-    var view;
+    const {post, accountList} = this.props;
+    let view;
     if (accountList.length == 0) {
       view = "no-services-available";
-    } else if (!post.service)  {
+    } else if (!post.service) {
       view = "choose-a-service";
     } else {
       view = "has-service";
     }
 
+    const {value, ..._props} = this.props;
     return (
       <SimpleModal value={value} {..._props}>
         <Flex column fill>
           <FlexItem fixed>
             <div className="modal-header">
-              <h2>
-                Save Note&nbsp;
+              <h2>Save Note&nbsp;
                 <span className="hint">to GitHub, Dropbox and so on...</span>
               </h2>
             </div>
@@ -51,14 +46,14 @@ export default class SaveToBackendModal extends Component {
                 <Row tagName="p" className="intro" style={{marginTop: "24px"}}>
                   {"To save your note, Gittor need to connect to a service via OAuth."}
                 </Row>
-                <ConnectToService {..._props}></ConnectToService>
+                <ConnectToService {..._props}/>
               </div>
               <div data-ifValue="choose-a-service">
-                <ChooseAService {..._props}></ChooseAService>
-                <ConnectToService {..._props}></ConnectToService>
+                <ChooseAService {..._props}/>
+                <ConnectToService {..._props}/>
               </div>
               <div data-ifValue="has-service">
-                <PostServiceInfoView {..._props}></PostServiceInfoView>
+                <PostServiceInfoView {..._props}/>
               </div>
             </If>
           </FlexItem>
@@ -69,15 +64,14 @@ export default class SaveToBackendModal extends Component {
   onChange(key) {
     var {options, dispatch} = this.props;
     return function (accountId) {
-      var action = {
+      dispatch({
         type: "UPDATE_POST",
         post: {
           backend: {
             id: accountId
           }
         }
-      };
-      dispatch(action);
+      });
     }
   }
 }

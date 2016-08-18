@@ -6,7 +6,13 @@ var autoprefixer = require('autoprefixer');
 const port = 4000;
 
 const build_entry = {
-  app: "./src/index.js",
+  app: [
+    `webpack-dev-server/client?http://localhost:${port}`,
+    'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
+    'babel-polyfill',
+    "./src/index.js"
+  ],
   vendor: [
     "react",
     "react-dom",
@@ -47,12 +53,12 @@ module.exports = {
       {
         // ES6 modules
         test: /luna\-saga\/(.*)\.js$/,
-        loaders: ['react-hot', 'babel-loader']
+        loaders: ['babel-loader']
       },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['regenerator', 'react-hot', 'babel-loader']
+        loaders: ['regenerator', 'babel-loader']
       },
       {
         test: /\.json$/,

@@ -1,13 +1,15 @@
 /** Created by ge on 5/12/16. */
 import React, {Component, PropTypes} from 'react';
+import autobind from 'autobind-decorator';
 import {FlexItem} from "layout-components";
-import Button from "../form/Button";
 import AccountListContainer from "../../store/accounts/AccountsListContainer";
 import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";
 
 require('./save-to-backend-badge.scss');
-var {any, func} = PropTypes;
+
+const {any, func} = PropTypes;
 export default class BackEndBadge extends Component {
+
   static propTypes = {
     post: any,
     account: any,
@@ -16,21 +18,21 @@ export default class BackEndBadge extends Component {
   };
 
   render() {
-    var {style, store, post, dispatch, ..._props} = this.props;
+    const {store, post, dispatch, ..._props} = this.props;
+    const {modalOpen} = this.state;
     return (
       <FlexItem fixed style={{"padding": "0 5px"}}>
         {/*view selection logic here*/}
-        <button
-          className="save-to-backend-badge"
-          onClick={this.openModal.bind(this)}
-        >save to...
+        <button className="save-to-backend-badge"
+                onClick={this.openModal}>
+          save to...
         </button>
-        <AccountListContainer store={store}
-                              dispatch={dispatch}
-                              value={this.state.modalOpen}
+        <AccountListContainer value={modalOpen}
                               post={post}
-                              onClose={this.closeModal.bind(this)} {..._props}
-                              component={SaveToBackendModal}></AccountListContainer>
+                              store={store}
+                              dispatch={dispatch}
+                              onClose={this.closeModal}
+                              component={SaveToBackendModal} {..._props}/>
       </FlexItem>
     )
   }
@@ -39,14 +41,17 @@ export default class BackEndBadge extends Component {
     this.setState({modalOpen: false});
   }
 
+  @autobind
   openModal() {
     this.setState({modalOpen: true});
   }
 
+  @autobind
   closeModal() {
     this.setState({modalOpen: false});
   }
 
+  @autobind
   toggleModal() {
     this.setState({modalOpen: !this.state.modalOpen});
   }
