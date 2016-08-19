@@ -1,26 +1,14 @@
 /** Created by ge on 5/14/16. */
-// import {$uuid} from "./../utils/$uuid";
-// const accountInitialState = {
-//   type: "dropbox" // "github", "google", "facebook"
-// };
-//
-// export function account(state = accountInitialState, action) {
-//   return state;
-// }
-
 const services = ["email", "dropbox"];
 
 export function validateAccount(account) {
-  "use strict";
   return (!!account && account.service && (services.indexOf(account.service) > -1) && account.uid);
 }
 export function key(account) {
-  "use strict";
   return (account.service + ':' + account.uid);
 }
 
 export function accounts(state = {}, action) {
-  "use strict";
   if (action.type === "UPSERT_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
@@ -73,9 +61,7 @@ export function* requestDropboxToken() {
   const {service} = action;
   if (service === 'dropbox') {
     requestAccessToken()
-
   } else {
-
   }
 
-    }
+}
