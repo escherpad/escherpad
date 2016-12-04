@@ -32,7 +32,7 @@ export default class MainEditorView extends React.Component {
     var {viewMode} = this.state;
     var {..._props} = this.props;
     return (
-      <Responsive breakPoints={{sm: 1000, lg: Infinity}}>
+      <Responsive breakPoints={{sm: 979, lg: Infinity}}>
         <div data-sm style={style}>
           <Post view="code" viewMode={viewMode} component={MarkdownEditor} {..._props}/>
         </div>

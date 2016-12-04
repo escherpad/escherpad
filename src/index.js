@@ -1,4 +1,5 @@
 /** Created by ge on 3/8/16. */
+import 'react-fastclick';
 import React from "react";
 import {render} from "react-dom";
 import {browserHistory, Router, Route} from 'react-router';

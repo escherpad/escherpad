@@ -1,6 +1,13 @@
 // Created by ge on 3/10/16.
+body {
+    font-size: 0.5em;
+}
+
 body, .app {
     margin: 0;
 }
 
+html, body {
+    -webkit-tap-highlight-color: transparent;
+}
 

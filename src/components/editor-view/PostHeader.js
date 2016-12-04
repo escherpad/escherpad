@@ -35,7 +35,7 @@ export default class PostHeader extends React.Component {
     var {viewMode, dispatch, ..._props} = this.props;
     return (
       <Flex row fill style={containerStyle} align="center">
-        <Responsive breakPoints={{sm: 1000}}>
+        <Responsive breakPoints={{sm: 979}}>
           <FullScreenToggleButton data-default viewMode={viewMode} dispatch={dispatch}/>
           <FlexItem fixed data-sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
             <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>

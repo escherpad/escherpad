@@ -49,19 +49,20 @@ export default class ListItem extends Component {
       <TwoColumn className="account-list-item"
                  onClick={this.selectAccount.bind(this)}
                  col1={(
-                     <span>Dropbox Configured As</span>
+                   <span>Dropbox Configured As</span>
                  )}
                  col2={(
-                      <BadgeWithControl className="account-badge"
-                                        style={{backgroundColor:"#23aaff", color: "white"}}
-                                        text={(account.email || "email is not available")}
-                                        icon={(
-                                            <MouseOver>
-                                              <i data-mouseOver className="material-icons" onClick={this.removeAccount.bind(this)}>cancel</i>
-                                              <i data-mouseDefault className="material-icons">clear</i>
-                                            </MouseOver>
-                                        )}
-                      ></BadgeWithControl>
+                   <BadgeWithControl className="account-badge"
+                                     style={{backgroundColor: "#23aaff", color: "white"}}
+                                     text={(account.email || "email is not available")}
+                                     icon={(
+                                       <MouseOver>
+                                         <i data-mouseOver className="material-icons"
+                                            onClick={this.removeAccount.bind(this)}>cancel</i>
+                                         <i data-mouseDefault className="material-icons">clear</i>
+                                       </MouseOver>
+                                     )}
+                   ></BadgeWithControl>
                  )}
       ></TwoColumn>
     )
