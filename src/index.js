@@ -9,6 +9,8 @@ import MainEditorView from './views/MainEditorView'
 import IntegrationsView from "./views/IntegratsionsView"
 import DropboxRedirectLanding from "./views/DropboxRedirectLanding";
 
+import "./index.scss";
+
 function createWithDefaultProps(Component, props) {
   return <Component {...props} store={rootStore} dispatch={rootStore.dispatch.bind(rootStore)}
                                dropboxApi={dropboxApi}/>;

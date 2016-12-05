@@ -37,7 +37,9 @@ export default class PostListItem extends React.Component {
 
     return (
       <div className="post-list-item"
-           onClick={this.selectPost.bind(this)}>
+           onTouchStart={this.selectPost.bind(this)}
+           onMouseDown={this.selectPost.bind(this)}
+      >
         <div className="control-group">
           <button onClick={this.deletePost.bind(this)}>
             <i className="material-icons delete-post">close</i>
@@ -47,7 +49,9 @@ export default class PostListItem extends React.Component {
                      style={{lineHeight: "22px", fontSize: "18px", fontWeight: "700"}}
                      isEmpty={(!title || title.replace(/(&nbsp;|<br>|<br\/>|<br><\/br>)/g, " ").trim() === "")}
                      placeholder={<em className="placeholder">Untitled</em>}
-        ><div dangerouslySetInnerHTML={{__html: title}}></div></Placeholder>
+        >
+          <div dangerouslySetInnerHTML={{__html: title}}></div>
+        </Placeholder>
         <div className="modified-at">{timeStamp}</div>
       </div>
     )
