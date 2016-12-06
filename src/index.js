@@ -2,18 +2,23 @@
 import 'react-fastclick';
 import React from "react";
 import {render} from "react-dom";
+import dapi from "./modules/dropbox";
 import {browserHistory, Router, Route} from 'react-router';
 import {rootStore} from "./store/RootStore";
-import {dropboxApi} from "./services/dropboxApi";
 import MainEditorView from './views/MainEditorView'
 import IntegrationsView from "./views/IntegratsionsView"
-import DropboxRedirectLanding from "./views/DropboxRedirectLanding";
+import DropboxRedirectLanding from "./oauth/DropboxRedirectLanding";
 
 import "./index.scss";
 
 function createWithDefaultProps(Component, props) {
-  return <Component {...props} store={rootStore} dispatch={rootStore.dispatch.bind(rootStore)}
-                               dropboxApi={dropboxApi}/>;
+  return <Component {...props}
+                    store={rootStore}
+                    dispatch={rootStore.dispatch.bind(rootStore)}
+                    dapi={dapi}
+  />;
+  // {/*gapi={gapi}*/}
+  // {/*githubapi={githubapi}*/}
 }
 
 document.addEventListener('DOMContentLoaded', function () {

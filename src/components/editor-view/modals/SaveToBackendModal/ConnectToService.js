@@ -6,16 +6,12 @@ import TextShadow from "../../../styling/TextShadow";
 
 require("./connect-to-service.scss");
 
-
-export default function ConnectToService({dispatch, dropboxApi, ..._props}) {
+import dapi from "../../../../modules/dropbox";
+export default function ConnectToService({dispatch, ..._props}) {
 
   function linkDropbox(event) {
     event.stopPropagation();
-    dispatch({
-      type: "EYWA_REQUEST_TOKEN",
-      service: "dropbox",
-      scope: "app"
-    });
+    dapi.requestAuth();
   }
 
   return (
@@ -29,8 +25,7 @@ export default function ConnectToService({dispatch, dropboxApi, ..._props}) {
                             onClick={linkDropbox}
                             style={{backgroundColor: "#23aaff", color: "white"}}/>
                  )}/>
-      <Row tagName="p">{"" +
-      "Important: Gittor only get access to the folder Dropbox/Apps/Gittor. It will not have access to your existing folders in Dropbox."}</Row>
+      <Row tagName="p">After authorization, Gittor will gain access to your dropbox.</Row>
     </div>
   );
 }

@@ -15,6 +15,7 @@ const reducer = combineReducers({
   session,
   editor,
   viewMode,
+  // bindrs,
   postList,
   posts,
   accounts

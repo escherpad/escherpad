@@ -36,16 +36,15 @@ export function accounts(state = {}, action) {
 }
 
 import {take, dispatch} from "luna-saga";
-import {getAccountInfo} from "../../services/dropboxApi";
+import dapi from "../../modules/dropbox";
 import "regenerator-runtime/runtime";
 
 export function* getDropboxAccount() {
   "use strict";
   const {action} = yield take('UPSERT_ACCOUNT');
   const {account} = action;
-  const {service, uid, accessToken} = account;
-  if (service === "dropbox") {
-    var _account = yield getAccountInfo(accessToken);
+  if (account.service === "dropbox") {
+    let _account = yield dapi.getAccountInfo();
     if (!!_account) yield dispatch({
       type: "UPDATE_ACCOUNT",
       account: {
@@ -53,15 +52,4 @@ export function* getDropboxAccount() {
       }
     });
   }
-}
-
-export function* requestDropboxToken() {
-  "use strict";
-  const {action} = yield take('EYWA_REQUEST_TOKEN');
-  const {service} = action;
-  if (service === 'dropbox') {
-    requestAccessToken()
-  } else {
-  }
-
 }

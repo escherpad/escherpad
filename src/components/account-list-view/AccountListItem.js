@@ -4,7 +4,7 @@ import MouseOver from "../mouseover/MouseOver";
 import TwoColumn from "../two-column/TwoColumn";
 import BadgeWithControl from "../badge/BadgeWithControl";
 
-import {getFolders} from "../../services/dropboxApi";
+import dapi from "../../modules/dropbox";
 
 require('./account-list-view.scss');
 
@@ -27,10 +27,16 @@ export default class ListItem extends Component {
 
   selectAccount() {
     var {post, account, dispatch} = this.props;
-    console.log(account);
 
-    getFolders('', account.accessToken).then(data=> {
+    dapi.updateAccessToken(account.accessToken);
+    dapi.list('').then(data => {
+      // simple no cursor support version
       console.log(data);
+      dispatch({
+        type: "",
+        cursor: data.cursor,
+        entries: data.entries
+      })
     });
 
     var action = {
