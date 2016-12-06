@@ -2,13 +2,14 @@
 import React from "react";
 import {Flex, FlexItem} from 'layout-components';
 import Input from "../input/Input";
+import Selector from "../../lib/Selector";
 
 import OrderBySelection from "./OrderBySelection";
 require('./list-panel.scss');
 
 import PostListView from "./PostListView";
 var {func, array, any} = React.PropTypes;
-export default class ListPanel extends React.Component {
+class ListPanel extends React.Component {
   static propTypes = {
     agent: any,
     user: any,
@@ -74,3 +75,9 @@ export default class ListPanel extends React.Component {
   }
 }
 
+export default Selector((store)=>{
+  "use strict";
+  let {agent, user} = store.session;
+  let {users, postList, posts} = store;
+  return {agent, user, users, posts, postList}
+}, ListPanel)

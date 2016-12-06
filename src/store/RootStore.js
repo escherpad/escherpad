@@ -9,7 +9,7 @@ import {posts} from "./posts/posts";
 import {postList} from "../components/list-view/postList";
 import {accounts, getDropboxAccount} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
-
+import ModalReducer from "../lib/ModalReducer";
 
 const reducer = combineReducers({
   session,
@@ -18,7 +18,12 @@ const reducer = combineReducers({
   // bindrs,
   postList,
   posts,
-  accounts
+  accounts,
+  // view states
+  editorDropdown: ModalReducer('editor_dropdown'),
+  editorDropdownMinor: ModalReducer('editor_dropdown_minor'),
+  postSaveModal: ModalReducer('post_save'),
+  editorConfigModal: ModalReducer('editor_config')
 });
 const _reducer = function (state, action) {
   "use strict";
@@ -58,6 +63,7 @@ window.onstorage = ()=> {
     rootStore.dispatch({type: "STORAGE_UPDATE", storage})
   }
 };
+
 rootStore.update$.subscribe(({state, action})=> {
   if (action.type === "STORAGE_UPDATE") return;
   var serialized = JSON.stringify(state);

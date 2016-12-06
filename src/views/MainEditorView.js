@@ -29,21 +29,20 @@ export default class MainEditorView extends React.Component {
   }
 
   render() {
-    var {viewMode} = this.state;
-    var {..._props} = this.props;
+    let {viewMode} = this.state;
     return (
       <Responsive breakPoints={{sm: 979, lg: Infinity}}>
         <div data-sm style={style}>
-          <Post view="code" viewMode={viewMode} component={MarkdownEditor} {..._props}/>
+          <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
         </div>
         <Flex data-lg row fill align="stretch" style={style}>
           <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
-            <Posts {..._props} component={ListPanel}/>
+            <ListPanel {...this.props}/>
           </FlexHide>
           <FlexItem fluid style={{flex: "8 8 auto"}}>
             {(viewMode == "zen-mode") ?
-              <Post {..._props} view="two-column" viewMode={viewMode} component={MarkdownEditor}/> :
-              <Post {..._props} view="code" viewMode={viewMode} component={MarkdownEditor}/>
+              <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
+              <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
             }
           </FlexItem>
         </Flex>

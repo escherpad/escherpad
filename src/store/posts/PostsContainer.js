@@ -26,17 +26,12 @@ export default class Posts extends React.Component {
 
   render() {
     if (!this.state || !this.props.component) return (<div></div>);
-    var {store, dispatch, component, ...props} = this.props;
-    var {agent, user, users, posts, postList} = this.state;
-    var newChild = React.createElement(
-      this.props.component,
-      {
-        dispatch,
-        ...props,
-        store,
-        agent, user, users, posts, postList
-      });
-    return (newChild);
+    let {store, dispatch, component: Component, ..._props} = this.props;
+    let {agent, user, users, posts, postList} = this.state;
+    return <Component
+      dispatch={dispatch}
+      store={store}
+      {...{..._props, ...this.state}}/>
   }
 }
 

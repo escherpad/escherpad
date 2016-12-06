@@ -1,6 +1,7 @@
 /** Created by ge on 4/24/16. */
 import React, {Component, PropTypes, cloneElement} from "react";
 var {node, func, any} = PropTypes;
+import autobind from "autobind-decorator";
 
 export default class Post extends Component {
   static propTypes = {
@@ -10,16 +11,17 @@ export default class Post extends Component {
     dispatch: func.isRequired
   };
 
+  @autobind
   storeToState(state) {
-    const {agent, user} = state.session;
-    const post = state.posts[state.editor.post];
-    const options = state.editor.options;
+    let {agent, user} = state.session;
+    let post = state.posts[state.editor.post];
+    let options = state.editor.options;
     this.setState({post, agent, user, options})
   }
 
   componentWillMount() {
     const {store} = this.props;
-    this.subscription = store.subscribe(this.storeToState.bind(this));
+    this.subscription = store.subscribe(this.storeToState);
   }
 
   componentWillUnmount() {

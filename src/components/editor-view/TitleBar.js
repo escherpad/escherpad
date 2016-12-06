@@ -4,6 +4,7 @@ import {Flex, FlexItem} from 'layout-components';
 import InlineEditable from "../editable/InlineEditable";
 import Popover from "../popover/Popover";
 import EditorConfigModal from "./modals/EditorConfigModal";
+import autobind from "autobind-decorator";
 
 import Radium from 'radium';
 
@@ -84,12 +85,9 @@ export default class TitleBar extends Component {
     post: any,
     options: any,
     dispatch: func.isRequired,
+    postSaveModal: any,
     style: any
   };
-
-  componentWillMount() {
-    this.setState({modalOpen: false});
-  }
 
   onTitleChange(title) {
     var {post={}, dispatch} = this.props;
@@ -104,15 +102,17 @@ export default class TitleBar extends Component {
     });
   }
 
+  @autobind
   toggleModal() {
-    this.setState({modalOpen: !this.state.modalOpen});
-    // var editorConfigModal = this.refs['editor-config-modal'];
-    // editorConfigModal.open();
+    this.props.dispatch({
+      type: "POST_SAVE_MODAL_TOGGLE"
+    });
   }
 
   render() {
-    var {style, dispatch, post, options} = this.props;
-    var {id, title} = post;
+    let {style, dispatch, post, options} = this.props;
+    let postSaveModal = {};
+    let {id, title} = post;
     return (
       <Flex row align="stretch" style={{...styles.container, ...style}}>
         <FlexItem fixed style={{ minWidth: "110px", maxWidth: "calc(100% - 200px)" }}>
@@ -123,7 +123,7 @@ export default class TitleBar extends Component {
             style={styles.title}
             placeholder="Untitled..."
             onChange={this.onTitleChange.bind(this)}
-          ></InlineEditable>
+          />
         </FlexItem>
         <FlexItem fixed className="editor-options-and-modal-container">
           <Popover component={
@@ -132,18 +132,18 @@ export default class TitleBar extends Component {
                    style={{...styles.button, ...styles.clickable}}>keyboard_arrow_down</i>
                }
                    collapseOnMouseLeave="true">
-            <div className="popover-menu-item" onClick={this.toggleModal.bind(this)}>
+            <div className="popover-menu-item" onClick={this.toggleModal}>
               <i className="material-icons">menu</i>Editor Settings
             </div>
           </Popover>
-          <EditorConfigModal value={this.state.modalOpen}
-                             onClose={this.toggleModal.bind(this)}
+          <EditorConfigModal value={postSaveModal.open}
+                             onClose={this.toggleModal}
                              post={post}
                              options={options}
                              dispatch={dispatch}
-          ></EditorConfigModal>
+          />
         </FlexItem>
-        <FlexItem fluid></FlexItem>
+        <FlexItem fluid/>
         <FlexItem fixed className="status" style={styles.status}>
           <div className="hint" style={styles.status.hint}>Type:</div>
           <div className="info editor-status-dropdown" style={[styles.status.info, styles.clickable]}>{"md"}

@@ -9,6 +9,6 @@ export default function ChooseAService({accountList, ..._props}) {
     <div>
       <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
         color="#23aaff"><span>Save To...</span></TextShadow></Row>
-      <AccountListView accountList={accountList} {..._props}></AccountListView>
+      <AccountListView accountList={accountList} {..._props}/>
     </div>);
 }
