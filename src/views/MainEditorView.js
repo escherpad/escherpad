@@ -1,8 +1,6 @@
 /** Created by ge on 3/10/16. */
 import React from 'react';
 import {Flex, FlexItem, FlexHide, Responsive} from 'layout-components';
-import Post from "../store/posts/PostContainer";
-import Posts from "../store/posts/PostsContainer";
 import MarkdownEditor from "../components/markdown-editor/MarkdownEditor";
 
 import ListPanel from "../components/list-view/ListPanel";

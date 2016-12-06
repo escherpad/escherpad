@@ -32,9 +32,8 @@ export default function Selector(selector, Component) {
 
     render() {
       if (!this.state) return <div></div>;
-      let {store, dispatch, ..._props} = this.props;
-      let props = {...this.state, ..._props};
-      return <Component dispatch={dispatch} store={store} {...props}/>
+      let props = {...this.state, ...this.props};
+      return <Component {...props}/>
     }
   }
 }

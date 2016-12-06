@@ -49,7 +49,7 @@ class ListPanel extends React.Component {
           <div className="hero" style={{height: "100px", width: "100%"}}>
             <Flex fill row align="center" className="center">
               <FlexItem fixed>
-                <button></button>
+                <button/>
               </FlexItem>
               <FlexItem fluid
                         className="header"
@@ -63,13 +63,13 @@ class ListPanel extends React.Component {
         </FlexItem>
         <FlexItem fixed>
           <Flex row className="tab-bar">
-            <FlexItem fixed></FlexItem>
-            <FlexItem fixed></FlexItem>
-            <FlexItem fluid></FlexItem>
-            <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}></OrderBySelection>
+            <FlexItem fixed/>
+            <FlexItem fixed/>
+            <FlexItem fluid/>
+            <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}/>
           </Flex>
         </FlexItem>
-        <PostListView posts={orderedPosts} dispatch={dispatch}></PostListView>
+        <PostListView posts={orderedPosts} dispatch={dispatch}/>
       </Flex>
     )
   }
