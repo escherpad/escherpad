@@ -1,11 +1,17 @@
 // Created by ge on 5/15/16.
-$font-size: 12px;
 .account-list-item {
-    height: 45px;
-    line-height: 45px;
-
     border-radius: 7px;
+    height: 45px;
+
+    line-height: 45px;
     &:hover, &:active {
         background-color: #eee;
     }
+}
+
+.account-list-item-expanded {
+    background-color: #eee;
+    border-radius: 7px;
+    margin-top: 12px;
+    padding: 0 12px 12px;
 }

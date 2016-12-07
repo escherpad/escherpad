@@ -52,11 +52,6 @@ module.exports = {
         loaders: ['source-map']
       },
       {
-        // ES6 modules
-        test: /(luna\-saga)\/(.*)\.js$/,
-        loaders: ['babel-loader']
-      },
-      {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loaders: ['regenerator', 'babel-loader']

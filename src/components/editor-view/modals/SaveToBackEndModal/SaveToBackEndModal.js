@@ -1,5 +1,6 @@
 /** Created by ge on 5/8/16. */
 import React, {Component, PropTypes} from "react";
+import Selector from "../../../../lib/Selector";
 import {Row, Flex, FlexItem} from 'layout-components';
 import If from "../../../If";
 import SimpleModal from "../../../modal/SimpleModal";
@@ -9,7 +10,7 @@ import PostServiceInfoView from "./PostServiceInfoView";
 require('./../modal-form.scss');
 
 const {any, func, array} = PropTypes;
-export default class SaveToBackendModal extends Component {
+class SaveToBackendModal extends Component {
   static propTypes = {
     options: any,
     accountList: array.isRequired,
@@ -27,9 +28,9 @@ export default class SaveToBackendModal extends Component {
       view = "has-service";
     }
 
-    const {value, ..._props} = this.props;
+    const {postSaveModal, ..._props} = this.props;
     return (
-      <SimpleModal value={value} {..._props}>
+      <SimpleModal value={postSaveModal.open} {..._props}>
         <Flex column fill>
           <FlexItem fixed>
             <div className="modal-header">
@@ -73,3 +74,13 @@ export default class SaveToBackendModal extends Component {
     }
   }
 }
+
+export default Selector((store)=> {
+  "use strict";
+  return {
+    accountList: Object.keys(store.accounts).map(k=> {
+      return store.accounts[k]
+    }),
+    postSaveModal: store.postSaveModal
+  };
+}, SaveToBackendModal)

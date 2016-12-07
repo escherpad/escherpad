@@ -1,5 +1,6 @@
 /** Created by ge on 3/10/16. */
 import React, {Component, PropTypes} from 'react';
+import Selector from "../../lib/Selector";
 import {Flex, FlexItem} from 'layout-components';
 import InlineEditable from "../editable/InlineEditable";
 import Popover from "../popover/Popover";
@@ -80,17 +81,17 @@ const styles = {
 var {any, func} = PropTypes;
 
 @Radium
-export default class TitleBar extends Component {
+class TitleBar extends Component {
   static propTypes = {
     post: any,
     options: any,
     dispatch: func.isRequired,
-    postSaveModal: any,
+    editorConfigModal: any,
     style: any
   };
 
   onTitleChange(title) {
-    var {post={}, dispatch} = this.props;
+    var {post = {}, dispatch} = this.props;
     var {id} = post;
     if (!id) return;
     var modifiedAt = Date.now();
@@ -110,12 +111,11 @@ export default class TitleBar extends Component {
   }
 
   render() {
-    let {style, dispatch, post, options} = this.props;
-    let postSaveModal = {};
+    let {style, dispatch, post, editorConfigModal, options} = this.props;
     let {id, title} = post;
     return (
       <Flex row align="stretch" style={{...styles.container, ...style}}>
-        <FlexItem fixed style={{ minWidth: "110px", maxWidth: "calc(100% - 200px)" }}>
+        <FlexItem fixed style={{minWidth: "110px", maxWidth: "calc(100% - 200px)"}}>
           <InlineEditable
             key={id}
             value={title || ""}
@@ -127,16 +127,16 @@ export default class TitleBar extends Component {
         </FlexItem>
         <FlexItem fixed className="editor-options-and-modal-container">
           <Popover component={
-                <i className="material-icons editor-title-dropdown"
-                   key="title-icon"
-                   style={{...styles.button, ...styles.clickable}}>keyboard_arrow_down</i>
-               }
+            <i className="material-icons editor-title-dropdown"
+               key="title-icon"
+               style={{...styles.button, ...styles.clickable}}>keyboard_arrow_down</i>
+          }
                    collapseOnMouseLeave="true">
             <div className="popover-menu-item" onClick={this.toggleModal}>
               <i className="material-icons">menu</i>Editor Settings
             </div>
           </Popover>
-          <EditorConfigModal value={postSaveModal.open}
+          <EditorConfigModal value={editorConfigModal.open}
                              onClose={this.toggleModal}
                              post={post}
                              options={options}
@@ -154,3 +154,9 @@ export default class TitleBar extends Component {
     )
   }
 }
+
+export default Selector((store)=> {
+  "use strict";
+  let {editorConfigModal} = store;
+  return {editorConfigModal};
+}, TitleBar)

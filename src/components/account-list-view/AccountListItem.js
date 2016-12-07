@@ -4,8 +4,6 @@ import MouseOver from "../mouseover/MouseOver";
 import TwoColumn from "../two-column/TwoColumn";
 import BadgeWithControl from "../badge/BadgeWithControl";
 
-import dapi from "../../modules/dropbox";
-
 require('./account-list-view.scss');
 
 const {object, func, bool} = PropTypes;
@@ -18,38 +16,6 @@ export default class ListItem extends Component {
     post: object,
     dispatch: func
   };
-
-  removeAccount() {
-    var {post, account, dispatch} = this.props;
-  }
-
-  selectAccount() {
-    var {post, account, dispatch} = this.props;
-
-    // dapi.updateAccessToken(account.accessToken);
-    // dapi.list('').then(data => {
-    //   // simple no cursor support version
-    //   console.log(data);
-    //   dispatch({
-    //     type: "",
-    //     cursor: data.cursor,
-    //     entries: data.entries
-    //   })
-    // });
-    /**
-     * when clicking on the account bar, we activate the browser for dropbox. This list view takes the
-     * and display them in a
-     * */
-
-    // var action = {
-    //   type: "UPSERT_BINDR",
-    //   bindr: {
-    //     // path: to the dropbox folder
-    //   }
-    // };
-    // dispatch(action);
-  }
-
 
   render() {
     var {account, onDelete, onClick} = this.props;

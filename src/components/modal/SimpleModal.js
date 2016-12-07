@@ -40,7 +40,6 @@ export default class SimpleModal extends Component {
   }
 
   close() {
-    console.log('SimpleModal close handle triggered');
     var {onClose} = this.props;
     if (typeof onClose === "function") onClose();
   }

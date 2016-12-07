@@ -1,7 +1,6 @@
 /** Created by ge on 5/14/16. */
 import React, {Component, PropTypes} from "react";
 import {parseToken} from "./../modules/dropbox";
-import AccountsListContainer from "../store/accounts/AccountsListContainer";
 import AccountListView from "../components/account-list-view/AccountListView";
 
 const {any, object} = PropTypes;
@@ -41,7 +40,7 @@ export default class DropoxRedirectLanding extends Component {
             <i className="material-icons">chevron_right</i>
             Gittor
           </strong> for the following accounts: </p>
-        <AccountsListContainer {...this.props} component={AccountListView}></AccountsListContainer>
+        <AccountListView {...this.props} />
       </div>
     );
   }

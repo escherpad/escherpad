@@ -1,4 +1,4 @@
-import React from "react";
+import React, {PropTypes} from "react";
 import {Row} from 'layout-components';
 import TwoColumn from "../../../two-column/TwoColumn";
 import Badge from "../../../../components/badge/Badge";
@@ -7,7 +7,8 @@ import TextShadow from "../../../styling/TextShadow";
 require("./connect-to-service.scss");
 
 import dapi from "../../../../modules/dropbox";
-export default function ConnectToService({dispatch, ..._props}) {
+function ConnectToService(props) {
+  let {dispatch, ..._props} = props;
 
   function linkDropbox(event) {
     event.stopPropagation();
@@ -21,11 +22,13 @@ export default function ConnectToService({dispatch, ..._props}) {
       <TwoColumn className="connect-to-service-item"
                  col1={"Dropbox"}
                  col2={(
-                     <Badge text="connect via OAuth"
-                            onClick={linkDropbox}
-                            style={{backgroundColor: "#23aaff", color: "white"}}/>
+                   <Badge text="connect via OAuth"
+                          onClick={linkDropbox}
+                          style={{backgroundColor: "#23aaff", color: "white"}}/>
                  )}/>
       <Row tagName="p">After authorization, Gittor will gain access to your dropbox.</Row>
     </div>
   );
 }
+ConnectToService.propTypes = {dispatch: PropTypes.func, store: PropTypes.object};
+export default  ConnectToService;

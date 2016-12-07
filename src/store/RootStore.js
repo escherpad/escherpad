@@ -1,6 +1,6 @@
 /** Created by ge on 3/24/16. */
 import {Store, combineReducers} from "luna";
-import {Saga} from "luna-saga";
+import Saga, {sagaConnect} from "luna-saga";
 
 import {viewMode} from "./viewMode";
 import {session} from "./session";
@@ -10,6 +10,7 @@ import {postList} from "../components/list-view/postList";
 import {accounts, getDropboxAccount} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
 import ModalReducer from "../lib/ModalReducer";
+import accountBrowser, {accountBrowserReducer} from "./accountBrowser";
 
 const reducer = combineReducers({
   session,
@@ -22,9 +23,11 @@ const reducer = combineReducers({
   // view states
   editorDropdown: ModalReducer('editor_dropdown'),
   editorDropdownMinor: ModalReducer('editor_dropdown_minor'),
-  postSaveModal: ModalReducer('post_save'),
-  editorConfigModal: ModalReducer('editor_config')
+  postSaveModal: ModalReducer('post_save_modal'),
+  accountBrowser: ModalReducer('account_browser', accountBrowserReducer),
+  editorConfigModal: ModalReducer('editor_config_modal')
 });
+
 const _reducer = function (state, action) {
   "use strict";
   if (action.type == "STORAGE_UPDATE") {
@@ -69,12 +72,20 @@ rootStore.update$.subscribe(({state, action})=> {
   var serialized = JSON.stringify(state);
   var compressed = lz.compress(serialized);
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
-  // console.log(serialized);
+  console.log(state);
   window.localStorage.setItem(GITTOR_STORE, compressed);
 });
 
-var getDropboxAccountProc = new Saga(getDropboxAccount);
-rootStore.update$.subscribe(getDropboxAccountProc);
-getDropboxAccountProc.thunk$.subscribe(_t=>rootStore.dispatch(_t));
-getDropboxAccountProc.action$.subscribe(_a=>rootStore.dispatch(_a));
-getDropboxAccountProc.run();
+sagaConnect(rootStore, getDropboxAccount, true);
+// var getDropboxAccountProc = new Saga(getDropboxAccount);
+// rootStore.update$.subscribe(getDropboxAccountProc);
+// getDropboxAccountProc.thunk$.subscribe(_t=>rootStore.dispatch(_t));
+// getDropboxAccountProc.action$.subscribe(_a=>rootStore.dispatch(_a));
+// getDropboxAccountProc.run();
+
+
+var accountBrowserProc = new Saga(accountBrowser);
+rootStore.update$.subscribe(accountBrowserProc);
+accountBrowserProc.thunk$.subscribe(_t=>rootStore.dispatch(_t));
+accountBrowserProc.action$.subscribe(_a=>rootStore.dispatch(_a));
+accountBrowserProc.run();

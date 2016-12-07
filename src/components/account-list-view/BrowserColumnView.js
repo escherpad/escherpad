@@ -1,8 +1,10 @@
 /** Created by ge on 12/5/16. */
 import React, {Component, PropTypes} from "react";
+import {Row} from "layout-components";
+import Selector from "../../lib/Selector";
 let {func, any, array} = PropTypes;
 
-export default class BrowserColumns extends Component {
+class BrowserColumns extends Component {
   static propTypes = {
     title: any,
     breadCrumb: any,
@@ -19,14 +21,13 @@ export default class BrowserColumns extends Component {
   };
 
   render() {
-
     let {backButtonText, searchQuery, items, breadCrumb: breadCrumb, onQueryUpdate} = this.props;
     return <div className="browser-column">
-      <div className="title-bar">
-        {backButtonText ? backButtonText : null}
+      <Row tagName="div" className="title-bar">
+        {/*{backButtonText ? backButtonText : null}*/}
         {breadCrumb ? breadCrumb.map((crumb)=><span className="bread-crumb"> {crumb}</span>) : null}
-        <input className="search-box" onInput={onQueryUpdate}></input>
-      </div>
+        {/*<input className="search-box" onInput={onQueryUpdate}></input>*/}
+      </Row>
       {searchQuery ?
         <div className="search-view">
           {items.map((item)=><div className="search-entry">
@@ -46,3 +47,7 @@ export default class BrowserColumns extends Component {
   }
 }
 
+export default Selector((store)=>{
+  "use strict";
+  return {};
+}, BrowserColumns)
