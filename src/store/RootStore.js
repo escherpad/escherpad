@@ -77,15 +77,4 @@ rootStore.update$.subscribe(({state, action})=> {
 });
 
 sagaConnect(rootStore, getDropboxAccount, true);
-// var getDropboxAccountProc = new Saga(getDropboxAccount);
-// rootStore.update$.subscribe(getDropboxAccountProc);
-// getDropboxAccountProc.thunk$.subscribe(_t=>rootStore.dispatch(_t));
-// getDropboxAccountProc.action$.subscribe(_a=>rootStore.dispatch(_a));
-// getDropboxAccountProc.run();
-
-
-var accountBrowserProc = new Saga(accountBrowser);
-rootStore.update$.subscribe(accountBrowserProc);
-accountBrowserProc.thunk$.subscribe(_t=>rootStore.dispatch(_t));
-accountBrowserProc.action$.subscribe(_a=>rootStore.dispatch(_a));
-accountBrowserProc.run();
+sagaConnect(rootStore,accountBrowser, true);
