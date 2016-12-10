@@ -34,6 +34,8 @@ export default class InlineEditable extends Component {
       onInput: this.onInput,
       onKeyDown: this.resize,
       onPaste: this.onPaste,
+      onCopy: this.onCopy,
+      onCut: this.onCut,
       autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
       ..._props
     };
@@ -79,6 +81,12 @@ export default class InlineEditable extends Component {
     return this._value;
   }
 
+  get caretPosition() {
+    let selection = window.getSelection();
+    return selection.focusOffset;
+  }
+
+
   setHtml(value) {
     // processing should happen here.
     let content = this.isEmpty(value) ? "<br>" : value;
@@ -111,6 +119,7 @@ export default class InlineEditable extends Component {
 
   @autobind
   onInput(e) {
+    console.log('onInput');
     let {onChange} = this.props;
     // force a call to the get method
     let value = this.value;
@@ -123,8 +132,45 @@ export default class InlineEditable extends Component {
     let {onPaste} = this.props;
     var text = e.clipboardData.getData("Text");
     if (onPaste) text = onPaste(text);
-    this.value = text;
+    // todo: full behavior: 1. split text by caret, 2.
+    e.preventDefault();
+    let caret = this.caretPosition;
+    console.log(caret);
+    let currentText = this.value;
+    let result = currentText.slice(0, caret) + text + currentText.slice(caret + 1);
+    console.log(text);
+    console.log(result);
+    this.value = result;
+    this.onInput(e);
   }
+
+  @autobind
+  onCopy(e) {
+    let {onCopy} = this.props;
+    let text = this.value;
+    // if (isIe) {
+    //   window.clipboardData.setData('Text', text);
+    // } else {
+    e.clipboardData.setData('text/plain', text);
+    // }
+    if (onCopy) onCopy(text);
+    e.preventDefault()
+  }
+
+  @autobind
+  onCut(e) {
+    let {onCut} = this.props;
+    let text = this.value;
+    // if (isIe) {
+    //   window.clipboardData.setData('Text', text);
+    // } else {
+    e.clipboardData.setData('text/plain', text);
+    // }
+    if (onCut) onCut(text);
+    // todo: investigate default behavior of cut action besides deleting the text.
+    // e.preventDefault()
+  }
+
 }
 
 
