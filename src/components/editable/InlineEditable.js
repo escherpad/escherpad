@@ -33,6 +33,7 @@ export default class InlineEditable extends Component {
       onFocus: this.resize,
       onInput: this.onInput,
       onKeyDown: this.resize,
+      onPaste: this.onPaste,
       autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
       ..._props
     };
@@ -115,6 +116,14 @@ export default class InlineEditable extends Component {
     let value = this.value;
     if (onChange) onChange(value);
     this.resize();
+  }
+
+  @autobind
+  onPaste(e) {
+    let {onPaste} = this.props;
+    var text = e.clipboardData.getData("Text");
+    if (onPaste) text = onPaste(text);
+    this.value = text;
   }
 }
 
