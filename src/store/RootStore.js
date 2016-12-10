@@ -55,14 +55,14 @@ function getStored() {
   }
 }
 var cachedStore = getStored();
-// let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
-let initialState = '';
-var input = prompt('please paste your state');
-while (input !== "@@done") {
-  initialState += input;
-  input = prompt('please paste your state');
-}
-initialState = JSON.parse(initialState);
+let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
+// let initialState = '';
+// var input = prompt('please paste your state');
+// while (input !== "@@done") {
+//   initialState += input;
+//   input = prompt('please paste your state');
+// }
+// initialState = JSON.parse(initialState);
 
 
 // need to figure out the best way to apply localStorage update on the store.
