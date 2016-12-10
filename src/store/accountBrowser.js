@@ -1,5 +1,5 @@
 /** Created by ge on 12/6/16. */
-import {take, dispatch} from "luna-saga";
+import {take, dispatch, call, delay} from "luna-saga";
 
 import dapi from "../modules/dropbox";
 
@@ -63,7 +63,7 @@ export function* pushPost() {
     const {accounts} = state;
     const {post} = action;
     let _post = state.posts[post.id];
-    console.log(_post);
+    // console.log(_post);
     if (_post.account && _post.account.service == "dropbox") {
       let accessToken = accounts[key(_post.account)].accessToken;
       dapi.updateAccessToken(accessToken);
@@ -76,5 +76,6 @@ export function* pushPost() {
         console.log('exception during upload', e);
       }
     }
+    yield call(delay, 500);
   }
 }

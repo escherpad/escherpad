@@ -90,10 +90,10 @@ class TitleBar extends Component {
     style: any
   };
 
-  onTitleChange(_title) {
-    let title = _title.replace('\<br\>', "");
-    var {post = {}, dispatch} = this.props;
-    var {id} = post;
+  onTitleChange(title) {
+    // let title = _title.replace('\<br\>', "");
+    let {post = {}, dispatch} = this.props;
+    let {id} = post;
     if (!id) return;
     var modifiedAt = Date.now();
     dispatch({

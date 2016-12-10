@@ -1,6 +1,7 @@
 /** Created by ge on 4/10/16. */
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
+import autobind from "autobind-decorator";
 
 require('./inline-editable.scss');
 var {string, bool, func, any} = PropTypes;
@@ -15,32 +16,23 @@ export default class InlineEditable extends Component {
 
   constructor() {
     super();
-    this._resize = this.resize.bind(this);
-  }
-
-  componentWillReceiveProps(newProp) {
-    var {value} = newProp;
-    if (value != this.props.value) {
-      this.silent = true;
-      this.value = value;
-      this.silent = false;
-    }
   }
 
   render() {
-    let {tagName="div", style, className, editable=true, placeholder = "placeholder", ..._props} = this.props;
+    let {tagName = "div", style, className, editable = true, placeholder = "placeholder", ..._props} = this.props;
     className += " inline-editable";
     if (this.isEmpty(this.value))
       className += " placeholder";
     let props = {
+      ref: "element",
       style,
       className,
       contentEditable: editable,
       placeholder,
-      onBlur: this._resize,
-      onFocus: this._resize,
-      onInput: this.onInput.bind(this),
-      onKeyDown: this._resize,
+      onBlur: this.resize,
+      onFocus: this.resize,
+      onInput: this.onInput,
+      onKeyDown: this.resize,
       autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
       ..._props
     };
@@ -48,45 +40,48 @@ export default class InlineEditable extends Component {
   }
 
   componentWillMount() {
-    this.silent = true; // silent change events
     this.value = this.props.value;
-    this.silent = false;
   }
 
   componentDidMount() {
     this.nativeElement = ReactDOM.findDOMNode(this);
-    this.setHtml(this.value);
-    window.addEventListener('resize', this._resize);
-    window.addEventListener('reflow', this._resize);
+    this.setHtml(this._value);
+    window.addEventListener('resize', this.resize);
+    window.addEventListener('reflow', this.resize);
+  }
+
+  componentWillReceiveProps(newProp) {
+    var {value} = newProp;
+    if (value != this.props.value) {
+      this.value = value;
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
-    window.removeEventListener('reflow', this._resize);
+    window.removeEventListener('resize', this.resize);
+    window.removeEventListener('reflow', this.resize);
   }
 
+  // does not take into account of cursor position yet.
   set value(value) {
-    this._value = value;
-    this.setHtml(value);
-    if (!this.silent) this.onChangeValue(this.value);
+    if (this._value !== value) {
+      this._value = value;
+      this.setHtml(value);
+    }
   }
 
   get value() {
     // get processing
-    return this._value
+    if (this.nativeElement) {
+      this._value = this.nativeElement.innerText;
+    }
+    return this._value;
   }
 
   setHtml(value) {
     // processing should happen here.
     let content = this.isEmpty(value) ? "<br>" : value;
     if (this.nativeElement) this.nativeElement.innerHTML = content;
-  }
-
-  // return both value and cursor position together.
-  onChangeValue(value) {
-    if (!this.props || !this.props.onChange) return;
-    let cursor;
-    this.props.onChange(value, cursor);
   }
 
   isEmpty(value) {
@@ -97,6 +92,7 @@ export default class InlineEditable extends Component {
     return isEmpty
   }
 
+  @autobind
   resize() {
     let inputElem = ReactDOM.findDOMNode(this);
     let height = inputElem.scrollHeight;
@@ -112,9 +108,11 @@ export default class InlineEditable extends Component {
     // }
   }
 
+  @autobind
   onInput(e) {
-    let value = e.target.innerHTML;
-    var {onChange} = this.props;
+    let {onChange} = this.props;
+    // force a call to the get method
+    let value = this.value;
     if (onChange) onChange(value);
     this.resize();
   }
