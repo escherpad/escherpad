@@ -62,6 +62,7 @@ while (input !== "@@done") {
   initialState += input;
   input = prompt('please paste your state');
 }
+initialState = JSON.parse(initialState);
 
 
 // need to figure out the best way to apply localStorage update on the store.
