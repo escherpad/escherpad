@@ -6,11 +6,12 @@ import AccountEntryWithExpandableBrowser from "./AccountEntryWithExpandableBrows
 class AccountListView extends Component {
 
   render() {
-    let {accountList = [], ..._props} = this.props;
+    let {post, accountList = [], ..._props} = this.props;
     return (
       <div className="account-list-view">
         {accountList.map((account)=> {
           return <AccountEntryWithExpandableBrowser key={`${account.service}:${account.uid}`}
+                                                    post={post}
                                                     account={account}
                                                     {..._props}/>;
         })}

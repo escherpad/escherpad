@@ -13,7 +13,7 @@ export function presence(state = {}, action) {
   else return state;
 }
 
-export function post(state={}, action) {
+export function post(state = {}, action) {
   if (!action.type) {
     return state;
   } else if (action.type === ADD_POST) {
@@ -23,9 +23,10 @@ export function post(state={}, action) {
     return {_v: 0, _v0: 0, ...action.post}
   } else if (action.type === UPDATE_POST) {
     if (state.id !== action.post.id) return state;
-    return {
+    let result = {
       ... state, ...(action.post), presence: presence(state.presence, action), _v: (state._v + 1)
-    }
+    };
+    return result;
   } else if (action.type === UPDATE_POST_PRESENCE) { // does not update the version number
     if (state.id !== action.post.id) return state;
     return {
@@ -57,9 +58,7 @@ export function posts(state = {}, action) {
   } else if (action.type === UPDATE_POST || action.type === UPDATE_POST_PRESENCE) {
     let updatedPost = post(state[action.post.id], action);
     if (updatedPost == state[action.post.id]) return state;
-    let newState = {...state};
-    newState[updatedPost.id] = updatedPost;
-    return newState;
+    return {...state, [updatedPost.id]: updatedPost};
   } else if (action.type === DELETE_POST) {
     if (!state[action.id]) return state;
     let newState = {...state};

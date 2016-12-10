@@ -1,5 +1,6 @@
 /** Created by ge on 12/6/16. */
 import React, {Component, PropTypes} from "react";
+import {Row} from "layout-components";
 import Selector from "../../lib/Selector";
 import autobind from "autobind-decorator";
 import AccountListItem from "./AccountListItem";
@@ -45,12 +46,24 @@ class AccountEntryWithExpandableBrowser extends Component {
 
   @autobind
   onSubmit() {
+    let {post, account, accountBrowser} = this.props;
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: post.id,
+        account: {
+          service: account.service,
+          uid: account.uid
+        },
+        path: accountBrowser.cwd
+      }
+    });
     this._close();
   }
 
   render() {
 
-    let {account, accountBrowser, ..._props} = this.props;
+    let {post, account, accountBrowser, ..._props} = this.props;
 
     let item = <AccountListItem account={account}
                                 onDelete={this.removeAccount}
@@ -60,6 +73,7 @@ class AccountEntryWithExpandableBrowser extends Component {
       return <div className="account-list-item-expanded">
         {item}
         <BrowserColumnView title={account.title}
+                           account={account}
                            breadCrumb={accountBrowser.cwd}
                            items={accountBrowser.list}
                            searchQuery={null}
@@ -72,9 +86,11 @@ class AccountEntryWithExpandableBrowser extends Component {
                            }}
                            onClick={()=> {
                            }}
-                           onSubmit={this.onSubmit}
                            {..._props}
         />
+        <Row className="footer">
+          <button onClick={this.onSubmit}>submit</button>
+        </Row>
       </div>
     } else {
       return item;
@@ -85,7 +101,6 @@ class AccountEntryWithExpandableBrowser extends Component {
 AccountEntryWithExpandableBrowser.propTypes = propTypes;
 export default Selector((store)=> {
   "use strict";
-  console.log(store.accountBrowser);
   return {
     accountBrowser: store.accountBrowser
   };

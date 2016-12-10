@@ -41,16 +41,18 @@ import "regenerator-runtime/runtime";
 
 export function* getDropboxAccount() {
   "use strict";
-  const {action} = yield take('UPSERT_ACCOUNT');
-  const {account} = action;
-  if (account.service === "dropbox") {
-    let _account = yield dapi.getAccountInfo();
-    if (!!_account) yield dispatch({
-      type: "UPDATE_ACCOUNT",
-      account: {
-        ...account, ..._account
-      }
-    });
+  while (true) {
+    const {action} = yield take('UPSERT_ACCOUNT');
+    const {account} = action;
+    if (account.service === "dropbox") {
+      let _account = yield dapi.getAccountInfo();
+      if (!!_account) yield dispatch({
+        type: "UPDATE_ACCOUNT",
+        account: {
+          ...account, ..._account
+        }
+      });
+    }
   }
 }
 

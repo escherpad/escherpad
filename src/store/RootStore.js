@@ -10,7 +10,7 @@ import {postList} from "../components/list-view/postList";
 import {accounts, getDropboxAccount} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
 import ModalReducer from "../lib/ModalReducer";
-import accountBrowser, {accountBrowserReducer} from "./accountBrowser";
+import {accountBrowserReducer, onAccountBrowserOpen, listFiles, pushPost} from "./accountBrowser";
 
 const reducer = combineReducers({
   session,
@@ -72,9 +72,11 @@ rootStore.update$.subscribe(({state, action})=> {
   var serialized = JSON.stringify(state);
   var compressed = lz.compress(serialized);
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
-  console.log(state);
+  // console.log(state);
   window.localStorage.setItem(GITTOR_STORE, compressed);
 });
 
 sagaConnect(rootStore, getDropboxAccount, true);
-sagaConnect(rootStore,accountBrowser, true);
+sagaConnect(rootStore, onAccountBrowserOpen, true);
+sagaConnect(rootStore, listFiles, true);
+sagaConnect(rootStore, pushPost, true);

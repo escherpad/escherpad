@@ -15,10 +15,10 @@ export default class PostListView extends React.Component {
     return (
       <FlexItem fluid style={{overflowY: "auto"}}>
         <FlipMove duration={150} enterAnimation="fade" easing="ease-out">
-          {posts.map((post)=>(
-            <PostListItem key={post.id} {...post}
+          {posts.map((post, index)=>(
+            <PostListItem key={post.id || index} {...post}
                           dispatch={dispatch}
-            ></PostListItem>
+            />
           ))}
         </FlipMove>
       </FlexItem>
