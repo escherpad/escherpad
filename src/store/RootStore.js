@@ -59,6 +59,11 @@ let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState)
 
 // need to figure out the best way to apply localStorage update on the store.
 export const rootStore = new Store(_reducer, initialState);
+sagaConnect(rootStore, getDropboxAccount, true);
+sagaConnect(rootStore, onAccountBrowserOpen, true);
+sagaConnect(rootStore, listFiles, true);
+sagaConnect(rootStore, pushPost, true);
+
 window.onstorage = ()=> {
   "use strict";
   var storage = getStored();
@@ -76,7 +81,3 @@ rootStore.update$.subscribe(({state, action})=> {
   window.localStorage.setItem(GITTOR_STORE, compressed);
 });
 
-sagaConnect(rootStore, getDropboxAccount, true);
-sagaConnect(rootStore, onAccountBrowserOpen, true);
-sagaConnect(rootStore, listFiles, true);
-sagaConnect(rootStore, pushPost, true);

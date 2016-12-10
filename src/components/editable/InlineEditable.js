@@ -119,7 +119,6 @@ export default class InlineEditable extends Component {
 
   @autobind
   onInput(e) {
-    console.log('onInput');
     let {onChange} = this.props;
     // force a call to the get method
     let value = this.value;
@@ -135,11 +134,8 @@ export default class InlineEditable extends Component {
     // todo: full behavior: 1. split text by caret, 2.
     e.preventDefault();
     let caret = this.caretPosition;
-    console.log(caret);
     let currentText = this.value;
     let result = currentText.slice(0, caret) + text + currentText.slice(caret + 1);
-    console.log(text);
-    console.log(result);
     this.value = result;
     this.onInput(e);
   }
