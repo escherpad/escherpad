@@ -55,7 +55,9 @@ function getStored() {
   }
 }
 var cachedStore = getStored();
-let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
+// let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
+let initialState = prompt('please paste your state');
+
 
 // need to figure out the best way to apply localStorage update on the store.
 export const rootStore = new Store(_reducer, initialState);
