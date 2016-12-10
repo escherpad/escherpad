@@ -7,3 +7,4 @@
 3. [x] add copy, paste, and cut handler to inlineEditable
 4. [x] fix `luna-saga` select effect initial blockage
 5. [x] get note title to rename on dropbox properly.
+
