@@ -77,7 +77,7 @@ rootStore.update$.subscribe(({state, action})=> {
   var serialized = JSON.stringify(state);
   var compressed = lz.compress(serialized);
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
-  console.log(state);
+  console.log(serialized);
   window.localStorage.setItem(GITTOR_STORE, compressed);
 });
 
