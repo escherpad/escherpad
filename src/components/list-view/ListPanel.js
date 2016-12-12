@@ -70,6 +70,7 @@ class ListPanel extends React.Component {
   render() {
     let {orderedPosts = []} = this.state || {};
     let {dispatch, postList} = this.props;
+    let {searchQuery} = postList;
     return (
       <Flex column fill align="stretch" style={{padding: "0 20px"}} className="list-panel">
         <FlexItem fixed className="search-bar">
