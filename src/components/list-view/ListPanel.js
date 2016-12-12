@@ -38,7 +38,9 @@ class ListPanel extends React.Component {
     if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
+  @throttle(500)
   updatePosts(posts, {orderBy = "modifiedAt", searchQuery = ""}={}) {
+    console.log('searchQuery ====>', searchQuery);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
       .filter(function (post, index, posts) {
@@ -59,7 +61,6 @@ class ListPanel extends React.Component {
     this.updateQuery(query);
   }
 
-  @throttle(250)
   updateQuery(query = "") {
     this.props.dispatch({
       type: "UPDATE_SEARCH_QUERY",
