@@ -29,20 +29,19 @@ class ListPanel extends React.Component {
   };
 
   componentDidMount() {
-    var {posts, postList} = this.props;
+    const {posts, postList} = this.props;
     this.updatePosts(posts, postList);
   }
 
   componentWillReceiveProps(newProp) {
-    var {posts, postList} = newProp;
+    const {posts, postList} = newProp;
     if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
-  @throttle(500)
+  @throttle(200)
   updatePosts(posts, {orderBy = "modifiedAt", searchQuery = ""}={}) {
     // note: throttling is working perfectly. However searchQuery update interrups the
     // enter and leave animation, making the UX very very bad.
-    console.log('searchQuery ====>', searchQuery);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
       .filter(function (post, index, posts) {
@@ -54,7 +53,7 @@ class ListPanel extends React.Component {
       })
       .sort((a, b) => (a[orderBy] - b[orderBy]))
       .reverse();
-    this.setState({orderedPosts});
+    this.setState({orderedPosts, currentSearchQuery: searchQuery});
   }
 
   @autobind
@@ -71,9 +70,8 @@ class ListPanel extends React.Component {
   }
 
   render() {
-    let {orderedPosts = []} = this.state || {};
-    let {dispatch, postList} = this.props;
-    let {searchQuery} = postList;
+    let {orderedPosts = [], currentSearchQuery} = this.state || {};
+    let {dispatch, postList, searchQuery} = this.props;
     return (
       <Flex column fill align="stretch" style={{padding: "0 20px"}} className="list-panel">
         <FlexItem fixed className="search-bar">
@@ -106,7 +104,7 @@ class ListPanel extends React.Component {
             <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}/>
           </Flex>
         </FlexItem>
-        <PostListView posts={orderedPosts} searchQuery={searchQuery} dispatch={dispatch}/>
+        <PostListView key="list-view" posts={orderedPosts} searchQuery={currentSearchQuery} dispatch={dispatch}/>
       </Flex>
     )
   }
