@@ -11,12 +11,12 @@ export default class PostListView extends React.Component {
   };
 
   render() {
-    var {posts, dispatch} = this.props;
+    var {posts, searchQuery, dispatch} = this.props;
     return (
       <FlexItem fluid style={{overflowY: "auto"}}>
         <FlipMove duration={150} enterAnimation="fade" easing="ease-out">
-          {posts.map((post, index)=>(
-            <PostListItem key={post.id || index} {...post}
+          {posts.map((post, index) => (
+            <PostListItem searchQuery={searchQuery} key={post.id || index} {...post}
                           dispatch={dispatch}
             />
           ))}

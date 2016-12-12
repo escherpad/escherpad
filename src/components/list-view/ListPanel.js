@@ -103,7 +103,7 @@ class ListPanel extends React.Component {
             <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}/>
           </Flex>
         </FlexItem>
-        <PostListView posts={orderedPosts} dispatch={dispatch}/>
+        <PostListView posts={orderedPosts} searchQuery={searchQuery} dispatch={dispatch}/>
       </Flex>
     )
   }
