@@ -16,7 +16,7 @@ export default class PostListView extends React.Component {
   // state update overrides the result of this method.
   shouldComponentUpdate(nextProps, nextState) {
     const {posts, searchQuery} = nextProps;
-    return !(searchQuery === this.props.searchQuery);
+    return !(searchQuery === this.props.searchQuery && posts === this.props.posts);
   }
 
   render() {
