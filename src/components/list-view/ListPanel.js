@@ -38,7 +38,7 @@ class ListPanel extends React.Component {
     if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
-  @throttle(200)
+  @throttle(400)
   updatePosts(posts, {orderBy = "modifiedAt", searchQuery = ""}={}) {
     // note: throttling is working perfectly. However searchQuery update interrups the
     // enter and leave animation, making the UX very very bad.
