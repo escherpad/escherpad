@@ -22,7 +22,7 @@ export default class Input extends React.Component {
     return (
       <div className="search-input">
         <i className="material-icons search-icon" style={iconStyle}>{icon}</i>
-        <input style={finalStyle} placeholder={placeholder} {...props}/>
+        <input style={finalStyle} value={value} placeholder={placeholder} {...props}/>
       </div>
     )
   }
