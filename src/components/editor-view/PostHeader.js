@@ -1,5 +1,5 @@
 /** Created by ge on 3/23/16. */
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import autobind from 'autobind-decorator';
 import {Flex, FlexItem, Responsive} from 'layout-components';
 import FullScreenToggleButton from "./FullScreenToggleButton";
@@ -14,8 +14,8 @@ const containerStyle = {
   right: 0,
   height: "50px"
 };
-const {any, func} = React.PropTypes;
-export default class PostHeader extends React.Component {
+const {any, func} = PropTypes;
+export default class PostHeader extends Component {
   static propTypes = {
     style: any,
     viewMode: any,
@@ -32,12 +32,13 @@ export default class PostHeader extends React.Component {
   }
 
   render() {
-    var {viewMode, dispatch, ..._props} = this.props;
+    let {viewMode, dispatch, ..._props} = this.props;
+    let post = _props.post;
     return (
       <Flex row fill style={containerStyle} align="center">
         <Responsive breakPoints={{sm: 979}}>
           <FullScreenToggleButton data-default viewMode={viewMode} dispatch={dispatch}/>
-          <FlexItem fixed data-sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign:"center"}}>
+          <FlexItem fixed data-sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign: "center"}}>
             <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>
           </FlexItem>
         </Responsive>
@@ -56,7 +57,9 @@ export default class PostHeader extends React.Component {
               style={{fontSize: "18px", lineHeight: "32px", position: "absolute", marginRight: "-23px", width: "24px"}}>add</i
           ></Button>
         </FlexItem>
-        <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
+        <FlexItem>
+          <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
+        </FlexItem>
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button className="add-new-post"
                   height="25px"

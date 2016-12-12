@@ -7,11 +7,11 @@ export default function TwoColumn({className, col1, col2, ..._props}) {
   else className = "two-column";
   if (_props.onClick) className += " clickable";
   return (
-    <Row tagName="div" className={className} {..._props}>
-      <Width width="40%" tagName="div" style={{textAlign: "right"}}>
+    <Row component="div" className={className} {..._props}>
+      <Width width="40%" component="div" style={{textAlign: "right"}}>
         {col1}
       </Width>
-      <Width width="60%" tagName="div">
+      <Width width="60%" component="div">
         {col2}
       </Width>
     </Row>

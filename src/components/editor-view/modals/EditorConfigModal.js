@@ -46,7 +46,7 @@ export default class EditorConfigModal extends Component {
               </h2>
             </div>
           </FlexItem>
-          <FlexItem fluid tagName="form" className="modal-body" onSubmit={e=>e.preventDefault()}>
+          <FlexItem fluid component="form" className="modal-body" onSubmit={e=>e.preventDefault()}>
             <fieldset>
               <legend>Code Editor</legend>
               <div className="control-group">

@@ -1,5 +1,7 @@
 /** Created by ge on 4/18/16. */
 import React from "react";
+import SmallBlueBadge from "../badge/SmallBlueBadge";
+import {Flex, FlexItem, FlexSpacer} from "layout-components";
 import Radium from "radium";
 import Placeholder from "../placeholder/Placeholder";
 import moment from "moment";
@@ -25,9 +27,12 @@ export default class PostListItem extends React.Component {
       title,
       source,
       presence,
+      path,
+      account,
       createdAt,
       modifiedAt
     } = this.props;
+    console.log(account);
 
 
     var timeStamp;
@@ -38,8 +43,7 @@ export default class PostListItem extends React.Component {
     return (
       <div className="post-list-item"
            onTouchStart={this.selectPost.bind(this)}
-           onMouseDown={this.selectPost.bind(this)}
-      >
+           onMouseDown={this.selectPost.bind(this)}>
         <div className="control-group">
           <button onClick={this.deletePost.bind(this)}>
             <i className="material-icons delete-post">close</i>
@@ -48,11 +52,19 @@ export default class PostListItem extends React.Component {
         <Placeholder className="post-title"
                      style={{lineHeight: "22px", fontSize: "18px", fontWeight: "700"}}
                      isEmpty={(!title || title.replace(/(&nbsp;|<br>|<br\/>|<br><\/br>)/g, " ").trim() === "")}
-                     placeholder={<em className="placeholder">Untitled</em>}
-        >
-          <div dangerouslySetInnerHTML={{__html: title}}></div>
+                     placeholder={<em className="placeholder">Untitled</em>}>
+          <div dangerouslySetInnerHTML={{__html: title}}/>
         </Placeholder>
-        <div className="modified-at">{timeStamp}</div>
+        <Flex row style={{justifyContent: "right"}} className="modified-at">
+          <FlexItem fluid style={{overflowX: "hidden"}}>
+            {account && account.service ?
+              <SmallBlueBadge onClick={() => null}>{account.service}:{path}</SmallBlueBadge> :
+              <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
+            }
+          </FlexItem>
+          <FlexItem fixed width="5px"/>
+          <FlexItem fixed>{timeStamp}</FlexItem>
+        </Flex>
       </div>
     )
   }
@@ -65,7 +77,7 @@ export default class PostListItem extends React.Component {
   }
 
   deletePost() {
-    // now show a popup
+    // todo: now show a popup
     this.props.dispatch({
       type: "DELETE_POST",
       id: this.props.id

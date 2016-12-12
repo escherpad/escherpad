@@ -42,7 +42,7 @@ class SaveToBackendModal extends Component {
           <FlexItem fixed className="modal-body">
             <If ifData={view}>
               <div data-ifValue="no-services-available">
-                <Row tagName="p" className="intro" style={{marginTop: "24px"}}>
+                <Row component="p" className="intro" style={{marginTop: "24px"}}>
                   To save your note, Gittor need to connect to a service via OAuth.
                 </Row>
                 <ConnectToService {..._props}/>

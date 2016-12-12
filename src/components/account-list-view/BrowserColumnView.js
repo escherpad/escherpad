@@ -47,7 +47,7 @@ class BrowserColumns extends Component {
   render() {
     let {backButtonText, searchQuery, items, breadCrumb: breadCrumb, onQueryUpdate} = this.props;
     return <div className="browser-column">
-      <Row tagName="div" className="title-bar">
+      <Row component="div" className="title-bar">
         {/*{backButtonText ? backButtonText : null}*/}
         <button onClick={this.backupPath}>&lt; back</button>
         {breadCrumb ? <span className="bread-crumb">{breadCrumb}</span> : null}

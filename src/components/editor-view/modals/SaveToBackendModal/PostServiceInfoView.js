@@ -22,15 +22,15 @@ export default class PostServiceInfoView extends Component {
     var {showChooseService} = this.state;
     return (
       <div className="post-service-info-view">
-        <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
+        <Row component="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
           color="#23aaff"><span>Service</span></TextShadow></Row>
-        <Row tagName="div">
-          <Width width="40%" tagName="div">{"dropbox"}</Width>
-          <Width width="60%" tagName="div" onClick={this.toggleChooseService.bind(this)}>{"show other services"}</Width>
+        <Row component="div">
+          <Width width="40%" component="div">{"dropbox"}</Width>
+          <Width width="60%" component="div" onClick={this.toggleChooseService.bind(this)}>{"show other services"}</Width>
         </Row>
-        <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow color="#23aaff"><span>Dropbox File uid</span></TextShadow></Row>
+        <Row component="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow color="#23aaff"><span>Dropbox File uid</span></TextShadow></Row>
         <div>id:sdfasddfasfdasdfa</div>
-        <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
+        <Row component="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
           color="#23aaff"><span>Path</span></TextShadow></Row>
         <a href="https://www.dropbox.com/contents/asdfasdfsafas">/test_folder2/test_folder3/new_note.json</a>
         <div className="current-service">

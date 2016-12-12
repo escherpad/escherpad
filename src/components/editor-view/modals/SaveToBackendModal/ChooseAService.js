@@ -7,7 +7,7 @@ import AccountListView from "../../../account-list-view/AccountListView";
 function ChooseAService(props) {
   return (
     <div>
-      <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
+      <Row component="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
         color="#23aaff"><span>Save To...</span></TextShadow></Row>
       <AccountListView {...props}/>
     </div>);

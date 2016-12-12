@@ -7,7 +7,7 @@ require('./inline-editable.scss');
 var {string, bool, func, any} = PropTypes;
 export default class InlineEditable extends Component {
   static propTypes = {
-    tagName: string,
+    component: string,
     style: any,
     editable: bool,
     value: string,
@@ -19,7 +19,7 @@ export default class InlineEditable extends Component {
   }
 
   render() {
-    let {tagName = "div", style, className, editable = true, placeholder = "placeholder", ..._props} = this.props;
+    let {component = "div", style, className, editable = true, placeholder = "placeholder", ..._props} = this.props;
     className += " inline-editable";
     if (this.isEmpty(this.value))
       className += " placeholder";
@@ -39,7 +39,7 @@ export default class InlineEditable extends Component {
       autoComplete: "off", autoCorrect: "off", autoCapitalize: "off", spellCheck: "false",
       ..._props
     };
-    return React.createElement(tagName, props)
+    return React.createElement(component, props)
   }
 
   componentWillMount() {

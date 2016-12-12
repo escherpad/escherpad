@@ -17,7 +17,7 @@ function ConnectToService(props) {
 
   return (
     <div className="connect-to-service">
-      <Row tagName="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
+      <Row component="div" style={{fontSize: "20px", marginTop: "24px"}}><TextShadow
         color="#23aaff"><span>Configure New</span></TextShadow></Row>
       <TwoColumn className="connect-to-service-item"
                  col1={"Dropbox"}
@@ -26,7 +26,7 @@ function ConnectToService(props) {
                           onClick={linkDropbox}
                           style={{backgroundColor: "#23aaff", color: "white"}}/>
                  )}/>
-      <Row tagName="p">After authorization, Gittor will gain access to your dropbox.</Row>
+      <Row component="p">After authorization, Gittor will gain access to your dropbox.</Row>
     </div>
   );
 }

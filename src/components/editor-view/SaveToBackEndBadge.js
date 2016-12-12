@@ -2,6 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import autobind from 'autobind-decorator';
 import {FlexItem} from "layout-components";
+import BlueBadge from "../badge/BlueBadge";
 import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";
 
 require('./save-to-backend-badge.scss');
@@ -17,17 +18,20 @@ export default class BackEndBadge extends Component {
 
   render() {
     const {store, dispatch, ..._props} = this.props;
+    let {post} = this.props;
     return (
-      <FlexItem fixed style={{"padding": "0 5px"}}>
-        {/*view selection logic here*/}
-        <button className="save-to-backend-badge" onClick={this.openModal}>
-          save to...
-        </button>
+      <span>
+        {(post.account && post.account.service) ?
+          <BlueBadge onClick={this.openModal}>{post.account.service}:{post.path}</BlueBadge> :
+          <button className="save-to-backend-badge" onClick={this.openModal}>
+            save to...
+          </button>
+        }
         <SaveToBackendModal store={store}
                             dispatch={dispatch}
                             onClose={this.closeModal}
                             {..._props}/>
-      </FlexItem>
+      </span>
     )
   }
 

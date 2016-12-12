@@ -120,7 +120,7 @@ class TitleBar extends Component {
           <InlineEditable
             key={id}
             value={title || ""}
-            tagName="h1"
+            component="h1"
             style={styles.title}
             placeholder="Untitled..."
             onChange={this.onTitleChange.bind(this)}

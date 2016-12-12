@@ -12,6 +12,7 @@ export default class PostListView extends React.Component {
 
   render() {
     var {posts, dispatch} = this.props;
+    console.log(posts);
     return (
       <FlexItem fluid style={{overflowY: "auto"}}>
         <FlipMove duration={150} enterAnimation="fade" easing="ease-out">
