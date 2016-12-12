@@ -60,19 +60,20 @@ class SaveToBackendModal extends Component {
       </SimpleModal>);
   }
 
-  onChange(key) {
-    var {options, dispatch} = this.props;
-    return function (accountId) {
-      dispatch({
-        type: "UPDATE_POST",
-        post: {
-          backend: {
-            id: accountId
-          }
-        }
-      });
-    }
-  }
+  // onChange(key) {
+  //   var {options, dispatch} = this.props;
+  //   return function (accountId) {
+  //     dispatch({
+  //       type: "UPDATE_POST",
+  //       post: {
+  //         id: post.id,
+  //         backend: {
+  //           id: accountId
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
 }
 
 export default Selector((store)=> {

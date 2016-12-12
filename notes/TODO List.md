@@ -4,7 +4,13 @@
 
 # Todos
 
-0. search render throttling to improve UX.
+0. search render throttling to improve UX.\
+    note: throttling is working perfectly. However searchQuery update interrups the
+    enter and leave animation, making the UX very very bad.
+
+    might want to batch the props that are applied to the list view. **not just** `post`.
+    `postList` too.
+
 1. figure out the best way to load all notes from dropbox.
 1. save-on-write caching or cache all?
 3. fix note saving, make sure final version is always saved.

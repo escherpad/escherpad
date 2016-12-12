@@ -40,6 +40,8 @@ class ListPanel extends React.Component {
 
   @throttle(500)
   updatePosts(posts, {orderBy = "modifiedAt", searchQuery = ""}={}) {
+    // note: throttling is working perfectly. However searchQuery update interrups the
+    // enter and leave animation, making the UX very very bad.
     console.log('searchQuery ====>', searchQuery);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
