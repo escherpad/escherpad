@@ -58,19 +58,28 @@ export function posts(state = {}, action) {
   } else if (action.type === UPDATE_POST || action.type === UPDATE_POST_PRESENCE) {
     let updatedPost = post(state[action.post.id], action);
     if (updatedPost == state[action.post.id]) return state;
-    return {...state, [updatedPost.id]: updatedPost};
+    return {
+      ...state,
+      [updatedPost.id]: updatedPost
+    };
   } else if (action.type === DELETE_POST) {
     if (!state[action.id]) return state;
     let newState = {...state};
     delete newState[action.id];
     return newState;
   } else if (action.type === UPSERT_POST) {
-    if (state[action.post.id]) return state.map((it)=>post(it, action));
-    else return posts(state, {...action, type: ADD_POST})
+    if (state[action.post.id]) return state.map((it) => post(it, action));
+    else return posts(state, {
+      ...action,
+      type: ADD_POST
+    })
   } else if (action.type === MERGE_POST) {
     if (!action.post) return state;
     if (state[action.post.id]) return state.map(it => post(it, action));
-    else return posts(state, {...action, type: ADD_POST});
+    else return posts(state, {
+      ...action,
+      type: ADD_POST
+    });
   } else {
     return state;
   }
@@ -82,6 +91,8 @@ export function createPost() {
     type: ADD_POST,
     post: {
       id: $uuid(),
+      // path: 'in dropbox',
+      // account: accountKey,
       createdAt: Date.now(),
       modifiedAt: Date.now(),
     }

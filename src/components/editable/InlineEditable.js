@@ -1,7 +1,7 @@
 /** Created by ge on 4/10/16. */
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from "react-dom";
-import autobind from "autobind-decorator";
+import {autobind} from "core-decorators";
 
 require('./inline-editable.scss');
 var {string, bool, func, any} = PropTypes;

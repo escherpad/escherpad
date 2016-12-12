@@ -4,7 +4,7 @@
  * */
 
 import React, {PropTypes} from "react";
-import autobind from "autobind-decorator";
+import {autobind} from "core-decorators";
 
 var {func, any} = PropTypes;
 

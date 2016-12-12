@@ -1,8 +1,10 @@
 /** Created by ge on 5/14/16. */
-const services = ["email", "dropbox"];
+const ALLOWED_SERVICES = ["email", "dropbox"];
 
 export function validateAccount(account) {
-  return (!!account && account.service && (services.indexOf(account.service) > -1) && account.uid);
+  // account is valid if account has the service field, and service is one of the ones listed above.
+  // require fields: service, uid.
+  return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.uid);
 }
 export function key(account) {
   return (account.service + ':' + account.uid);

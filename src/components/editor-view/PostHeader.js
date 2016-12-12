@@ -1,6 +1,6 @@
 /** Created by ge on 3/23/16. */
 import React, {Component, PropTypes} from 'react';
-import autobind from 'autobind-decorator';
+import {autobind} from 'core-decorators';
 import {Flex, FlexItem, Responsive} from 'layout-components';
 import FullScreenToggleButton from "./FullScreenToggleButton";
 import Button from "../form/Button";

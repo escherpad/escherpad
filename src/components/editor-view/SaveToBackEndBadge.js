@@ -1,6 +1,6 @@
 /** Created by ge on 5/12/16. */
 import React, {Component, PropTypes} from 'react';
-import autobind from 'autobind-decorator';
+import {autobind} from 'core-decorators';
 import {FlexItem} from "layout-components";
 import BlueBadge from "../badge/BlueBadge";
 import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";

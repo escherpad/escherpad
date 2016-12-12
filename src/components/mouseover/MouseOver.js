@@ -1,6 +1,6 @@
 /** Created by ge on 4/29/16. */
 import React from "react";
-import autobind from 'autobind-decorator';
+import {autobind} from 'core-decorators';
 var {node}  = React.PropTypes;
 export default class MouseOver extends React.Component {
   static propTypes = {

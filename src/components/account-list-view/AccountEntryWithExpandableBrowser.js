@@ -2,7 +2,7 @@
 import React, {Component, PropTypes} from "react";
 import {Row} from "layout-components";
 import Selector from "../../lib/Selector";
-import autobind from "autobind-decorator";
+import {autobind} from "core-decorators";
 import AccountListItem from "./AccountListItem";
 import BrowserColumnView from "./BrowserColumnView";
 

@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import autobind from "autobind-decorator";
 import Selector from "../../lib/Selector";
 import AccountEntryWithExpandableBrowser from "./AccountEntryWithExpandableBrowser";
 

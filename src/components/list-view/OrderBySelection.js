@@ -17,7 +17,7 @@ export default class OrderBySelection extends React.Component {
 
   onSelect(value, selected) {
     this.props.dispatch({
-      type: "ORDER_POST_BY",
+      type: "ORDER_POSTS_BY",
       orderBy: value
     })
   }

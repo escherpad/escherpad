@@ -1,6 +1,6 @@
 /** Created by ge on 4/25/16. */
 import React from "react";
-import autobind from 'autobind-decorator';
+import {autobind} from 'core-decorators';
 import MouseOver from "../mouseover/MouseOver";
 import If from "../If";
 import {FlexItem} from 'layout-components';

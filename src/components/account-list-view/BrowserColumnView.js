@@ -1,6 +1,6 @@
 /** Created by ge on 12/5/16. */
 import React, {Component, PropTypes} from "react";
-import autobind from "autobind-decorator";
+import {autobind} from "core-decorators";
 import {Row} from "layout-components";
 import Selector from "../../lib/Selector";
 let {func, any, array} = PropTypes;

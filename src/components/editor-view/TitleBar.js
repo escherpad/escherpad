@@ -5,7 +5,7 @@ import {Flex, FlexItem} from 'layout-components';
 import InlineEditable from "../editable/InlineEditable";
 import Popover from "../popover/Popover";
 import EditorConfigModal from "./modals/EditorConfigModal";
-import autobind from "autobind-decorator";
+import {autobind} from "core-decorators";
 
 import Radium from 'radium';
 
