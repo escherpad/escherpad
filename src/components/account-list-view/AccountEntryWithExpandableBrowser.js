@@ -7,11 +7,12 @@ import AccountListItem from "./AccountListItem";
 import BrowserColumnView from "./BrowserColumnView";
 
 let {any} = PropTypes;
-const propTypes = {
-  account: any,
-  accountBrowser: any
-};
+
 class AccountEntryWithExpandableBrowser extends Component {
+  static propTypes = {
+    account: any,
+    accountBrowser: any
+  };
 
   @autobind
   removeAccount() {
@@ -78,13 +79,13 @@ class AccountEntryWithExpandableBrowser extends Component {
                            items={accountBrowser.list}
                            searchQuery={null}
                            backButtonText="back"
-                           onSelect={(rootPath)=> {
+                           onSelect={(rootPath) => {
                              // get rid of all set state.
                              this.setState({rootPath})
                            }}
-                           onQueryUpdate={()=> {
+                           onQueryUpdate={() => {
                            }}
-                           onClick={()=> {
+                           onClick={() => {
                            }}
                            {..._props}
         />
@@ -98,8 +99,7 @@ class AccountEntryWithExpandableBrowser extends Component {
   }
 
 }
-AccountEntryWithExpandableBrowser.propTypes = propTypes;
-export default Selector((store)=> {
+export default Selector((store) => {
   "use strict";
   return {
     accountBrowser: store.accountBrowser

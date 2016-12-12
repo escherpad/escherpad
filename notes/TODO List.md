@@ -1,6 +1,13 @@
+# Two Main Tasks
+0. add hand writing notes.
+1. add dropbox folder view support.
+
+# Todos
+
 1. figure out the best way to load all notes from dropbox.
 1. save-on-write caching or cache all?
 3. fix note saving, make sure final version is always saved.
+4. search bar Chinese input debounce issue
 1. [x] add search
 3. add binders to notes
 1. [x] fix title box
