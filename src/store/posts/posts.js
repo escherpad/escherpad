@@ -56,14 +56,17 @@ export function posts(state = {}, action) {
       return newState;
     }
   } else if (action.type === UPDATE_POST || action.type === UPDATE_POST_PRESENCE) {
-    let updatedPost = post(state[action.post.id], action);
-    if (updatedPost == state[action.post.id]) return state;
+    const thisPost = state[action.post.id];
+    if (!thisPost) return state;
+    let updatedPost = post(thisPost, action);
+    if (updatedPost == thisPost) return state;
     return {
       ...state,
       [updatedPost.id]: updatedPost
     };
   } else if (action.type === DELETE_POST) {
-    if (!state[action.id]) return state;
+    const thisPost = state[action.id];
+    if (!thisPost) return state;
     let newState = {...state};
     delete newState[action.id];
     return newState;

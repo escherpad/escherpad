@@ -24,14 +24,18 @@ class MainEditorView extends React.Component {
     let {viewMode, post} = this.props;
     let Editor;
     let {title = ""} = (post || {});
-    if (title.match(/\.ink$/)) {
-      Editor = <BristolBoard {...this.props}/>
+    if (title.match(/\.png$/)) {
+      Editor = <BristolBoard mode="png" {...this.props}/>
+    } else if (title.match(/\.ink$/)) {
+      Editor = <BristolBoard mode="ink" {...this.props}/>
     } else if (title.match(/\.((r|py)?)md$/)) {
       Editor = (viewMode == "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
         <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
     } else {
-      Editor = MarkdownEditor
+      Editor = (viewMode == "zen-mode") ?
+        <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
+        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
     }
 
     return (

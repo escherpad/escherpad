@@ -16,7 +16,7 @@ export default class PostListItem extends React.Component {
     searchQuery: string,
     id: string,
     title: string,
-    source: string,
+    source: any,
     presence: any,
     createdAt: number,
     modifiedAt: number,

@@ -34,7 +34,14 @@ class MarkdownEditor extends Component {
   render() {
     //todo: this will be removed after we add a post type selector as a parent.
     let {post} = this.props;
-    if (!post) return (<div>post is not specified</div>);
+    if (!post) return (
+      <Flex column fill align="stretch">
+        <FlexItem fixed>
+          <PostHeader {...props}/>
+        </FlexItem>
+        <FlexItem fluid/>
+      </Flex>
+    );
     //todoEnd
     var {view, ..._props} = this.props;
     if (view === "two-column") {
@@ -47,14 +54,14 @@ class MarkdownEditor extends Component {
             <Flex row align="stretch" fill>
               <FlexItem fluid>
                 <MarkdownPreview {..._props}
-                                 ref={(prev)=>this.markdownPreview = prev}
+                                 ref={(prev) => this.markdownPreview = prev}
                                  onSelect={this.onMarkdownSelect.bind(this)}
                                  onScroll={this._setEditorCursorScrollTarget}
                 />
               </FlexItem>
               <FlexItem fluid>
                 <EditorView {..._props}
-                            ref={(_)=>this.editorView = _}
+                            ref={(_) => this.editorView = _}
                             onScroll={this.setCursorTarget.bind(this)}
                             onEditorChange={this._setCursorTarget}
                 />
@@ -73,14 +80,14 @@ class MarkdownEditor extends Component {
             <Flex column align="stretch" fill>
               <FlexItem fluid>
                 <MarkdownPreview {..._props}
-                                 ref={(prev)=>this.markdownPreview = prev}
+                                 ref={(prev) => this.markdownPreview = prev}
                                  onSelect={this.onMarkdownSelect.bind(this)}
                                  onScroll={this._setEditorCursorScrollTarget}
                 />
               </FlexItem>
               <FlexItem fluid>
                 <EditorView {..._props}
-                            ref={(_)=>this.editorView = _}
+                            ref={(_) => this.editorView = _}
                             onScroll={this.setCursorTarget.bind(this)}
                             onEditorChange={this._setCursorTarget}
                 />
@@ -97,7 +104,7 @@ class MarkdownEditor extends Component {
           </FlexItem>
           <FlexItem fluid>
             <MarkdownPreview {..._props}
-                             ref={(prev)=>this.markdownPreview = prev}
+                             ref={(prev) => this.markdownPreview = prev}
                              onSelect={this.onMarkdownSelect.bind(this)}
                              onScroll={this._setEditorCursorScrollTarget}
             />
@@ -112,7 +119,7 @@ class MarkdownEditor extends Component {
           </FlexItem>
           <FlexItem fluid>
             <EditorView {..._props}
-                        ref={(_)=>this.editorView = _}
+                        ref={(_) => this.editorView = _}
                         style={{maxWidth: "1200px", marginLeft: "30px", marginRight: "auto"}}
                         onScroll={this.setCursorTarget.bind(this)}
                         onEditorChange={this._setCursorTarget}
@@ -157,7 +164,7 @@ class MarkdownEditor extends Component {
 
 }
 
-export default Selector((store)=> {
+export default Selector((store) => {
   "use strict";
   let {agent, user} = store.session;
   let post = store.posts[store.editor.post];
