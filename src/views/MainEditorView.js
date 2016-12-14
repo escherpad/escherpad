@@ -22,26 +22,32 @@ class MainEditorView extends React.Component {
 
   render() {
     let {viewMode, post} = this.props;
-    let Editor;
+    let Editor, SmallEditor;
     let {title = ""} = (post || {});
     if (title.match(/\.png$/)) {
-      Editor = <BristolBoard mode="png" {...this.props}/>
+      Editor = <BristolBoard mode="png" {...this.props}/>;
+      SmallEditor = Editor;
     } else if (title.match(/\.ink$/)) {
-      Editor = <BristolBoard mode="ink" {...this.props}/>
+      Editor = <BristolBoard mode="ink" {...this.props}/>;
+      SmallEditor = Editor;
     } else if (title.match(/\.((r|py)?)md$/)) {
       Editor = (viewMode == "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
         <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
+      SmallEditor =
+        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
     } else {
       Editor = (viewMode == "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
+        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
+      SmallEditor =
+        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
     }
 
     return (
       <Responsive breakPoints={{sm: 979, lg: Infinity}}>
         <div data-sm style={style}>
-          <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
+          {SmallEditor}
         </div>
         <Flex data-lg row fill align="stretch" style={style}>
           <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
