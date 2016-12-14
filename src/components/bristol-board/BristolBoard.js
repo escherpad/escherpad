@@ -1,15 +1,15 @@
 /** Created by ge on 12/12/16. */
 import React, {Component, PropTypes} from "react";
 import Selector from "../../lib/Selector";
-import {autobind} from "core-decorators";
+import {autobind, debounce} from "core-decorators";
 import {Flex, FlexItem} from "layout-components";
 import Bristol from "./react-bristol/src/Bristol";
 import SimplePen from './react-bristol/src/extensions/SimplePen';
 import TitleBar from "../editor-view/TitleBar";
 import PostHeader from "../editor-view/PostHeader";
 
-import debounce from "lodash.debounce";
-import throttle from "lodash.throttle";
+// import debounce from "lodash.debounce";
+// import throttle from "lodash.throttle";
 
 let {any, string} = PropTypes;
 class BristolBoard extends Component {
@@ -25,7 +25,10 @@ class BristolBoard extends Component {
   }
 
   @autobind
+  @debounce(5000)
   onChange(inkData) {
+    console.log("----- pushing updated note through store -----");
+    // slow store update is the bottle neck!
     this.props.dispatch({
       type: "UPDATE_POST",
       post: {
