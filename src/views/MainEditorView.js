@@ -31,13 +31,14 @@ class MainEditorView extends React.Component {
       Editor = <BristolBoard mode="ink" {...this.props}/>;
       SmallEditor = Editor;
     } else if (title.match(/\.((r|py)?)md$/)) {
-      Editor = (viewMode == "zen-mode") ?
+      console.log(viewMode);
+      Editor = (viewMode === "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>
+        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
       SmallEditor =
         <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
     } else {
-      Editor = (viewMode == "zen-mode") ?
+      Editor = (viewMode === "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
         <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
       SmallEditor =

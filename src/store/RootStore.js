@@ -49,13 +49,16 @@ export const GITTOR_STORE = '@@gittor-store';
 import lz from "lz-string";
 function getStored() {
   "use strict";
-  try {
-    return JSON.parse(lz.decompress(window.localStorage.getItem(GITTOR_STORE)));
-  } catch (e) {
+  const store = window.localStorage.getItem(GITTOR_STORE);
+  if (store.match('^\{(.*)\}$')) {
+    return JSON.parse(store);
+  } else {
+    return JSON.parse(lz.decompress(store));
   }
 }
-var cachedStore = getStored();
-let initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
+
+const cachedStore = getStored();
+const initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialState);
 
 // need to figure out the best way to apply localStorage update on the store.
 export const rootStore = new Store(_reducer, initialState);
@@ -64,7 +67,7 @@ sagaConnect(rootStore, onAccountBrowserOpen, true);
 sagaConnect(rootStore, listFiles, true);
 sagaConnect(rootStore, pushPost, true);
 
-window.onstorage = ()=> {
+window.onstorage = () => {
   "use strict";
   var storage = getStored();
   if (typeof storage !== "undefined") {
@@ -72,12 +75,13 @@ window.onstorage = ()=> {
   }
 };
 
-rootStore.update$.subscribe(({state, action})=> {
+rootStore.update$.subscribe(({state, action}) => {
+  console.log(state);
   if (action.type === "STORAGE_UPDATE") return;
-  var serialized = JSON.stringify(state);
-  var compressed = lz.compress(serialized);
+  const serialized = JSON.stringify(state);
+  // var compressed = lz.compress(serialized);
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
   // console.log(serialized);
-  window.localStorage.setItem(GITTOR_STORE, compressed);
+  window.localStorage.setItem(GITTOR_STORE, serialized);
 });
 

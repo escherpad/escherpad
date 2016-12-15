@@ -25,7 +25,7 @@ class BristolBoard extends Component {
   }
 
   @autobind
-  @debounce(5000)
+  // @debounce(5000)
   onChange(inkData) {
     console.log("----- pushing updated note through store -----");
     // slow store update is the bottle neck!
