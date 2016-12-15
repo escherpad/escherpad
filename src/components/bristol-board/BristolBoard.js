@@ -5,6 +5,7 @@ import {autobind, debounce} from "core-decorators";
 import {Flex, FlexItem} from "layout-components";
 import Bristol from "./react-bristol/src/Bristol";
 import SimplePen from './react-bristol/src/extensions/SimplePen';
+import Eraser from './react-bristol/src/extensions/Eraser';
 import TitleBar from "../editor-view/TitleBar";
 import PostHeader from "../editor-view/PostHeader";
 
@@ -20,8 +21,8 @@ class BristolBoard extends Component {
     dispatch: any.isRequired
   };
 
-  constructor() {
-    super();
+  componentWillMount(){
+    this.setState({pen: {type: "SimplePen", color: '#003BFF', strokeWidth: 1.4}});
   }
 
   @autobind
@@ -36,6 +37,12 @@ class BristolBoard extends Component {
         source: inkData
       }
     })
+  }
+
+  select(tool) {
+    return ()=>{
+      this.setState({pen: tool})
+    }
   }
 
   render() {
@@ -58,20 +65,29 @@ class BristolBoard extends Component {
       <FlexItem fixed>
         <PostHeader {...props}/>
       </FlexItem>
-      <FlexItem fluid>
+      <FlexItem fluid style={{"marginLeft": "30px"}}>
         <Flex column fill>
           <FlexItem fixed>
             <TitleBar post={post}
                       options={post.options} {...props}/>
           </FlexItem>
+          <FlexItem fixed className="bristol-toolbar">
+            <button className="select-pen"
+                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 1.4})}>
+              <i className="material-icons">edit</i>
+            </button>
+            <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 30})}>
+              <i className="material-icons">radio_button_unchecked</i>
+            </button>
+          </FlexItem>
           <FlexItem fluid>
             <Bristol ref="bristol"
                      style={{borderRight: "1px solid rgba(125, 125, 125, 0.5)"}}
                      width={width} height={height}
-                     renderRatio={2}
+                     renderRatio={3}
                      data={post.source}
-                     pen={{type: "SimplePen", color: '#003BFF', strokeWidth: 3}}
-                     palette={{SimplePen: SimplePen}}
+                     pen={this.state.pen}
+                     palette={{SimplePen, Eraser}}
                      onChange={this.onChange}
             />
           </FlexItem>
@@ -81,6 +97,7 @@ class BristolBoard extends Component {
   }
 }
 
+// pen={}
 export default Selector((store) => {
   "use strict";
   let {agent, user} = store.session;
