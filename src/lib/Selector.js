@@ -33,7 +33,6 @@ export default function Selector(selector, Component) {
     shouldComponentUpdate(newProps, newStates){
       // note: both store and dispatch are required.
       // note2: state update *always* trigger re-render
-      console.log("--------------");
       if (Object.keys(newProps).length > 2) return true;
       return false;
     }
