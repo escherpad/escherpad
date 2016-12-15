@@ -50,7 +50,8 @@ import lz from "lz-string";
 function getStored() {
   "use strict";
   const store = window.localStorage.getItem(GITTOR_STORE);
-  if (store.match('^\{(.*)\}$')) {
+  if (!store || !store.match) return;
+  else if (store.match('^\{(.*)\}$')) {
     return JSON.parse(store);
   } else {
     return JSON.parse(lz.decompress(store));
