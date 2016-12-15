@@ -73,7 +73,7 @@ class BristolBoard extends Component {
           </FlexItem>
           <FlexItem fixed className="bristol-toolbar">
             <button className="select-pen"
-                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 1.4})}>
+                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 2})}>
               <i className="material-icons">edit</i>
             </button>
             <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 20})}>
