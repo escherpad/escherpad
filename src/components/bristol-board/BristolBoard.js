@@ -76,7 +76,7 @@ class BristolBoard extends Component {
                     onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 2})}>
               <i className="material-icons">edit</i>
             </button>
-            <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 20})}>
+            <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 10})}>
               <i className="material-icons">radio_button_unchecked</i>
             </button>
           </FlexItem>
