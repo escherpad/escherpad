@@ -70,7 +70,7 @@ class BristolBoard extends Component {
                      width={width} height={height}
                      renderRatio={2}
                      data={post.source}
-                     pen={{type: "SimplePen", color: '#003BFF', strokeWidth: 2}}
+                     pen={{type: "SimplePen", color: '#003BFF', strokeWidth: 3}}
                      palette={{SimplePen: SimplePen}}
                      onChange={this.onChange}
             />
