@@ -28,7 +28,6 @@ class BristolBoard extends Component {
   @autobind
   // @debounce(5000)
   onChange(inkData) {
-    console.log("----- pushing updated note through store -----");
     // slow store update is the bottle neck!
     this.props.dispatch({
       type: "UPDATE_POST",
@@ -73,7 +72,7 @@ class BristolBoard extends Component {
           </FlexItem>
           <FlexItem fixed className="bristol-toolbar">
             <button className="select-pen"
-                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 3})}>
+                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 1.4})}>
               <i className="material-icons">edit</i>
             </button>
             <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 20})}>
