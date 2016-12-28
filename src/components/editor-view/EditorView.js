@@ -23,10 +23,11 @@ export default class EditorView extends React.Component {
   };
 
   render() {
-    var {agent, user, post, options = {}, onScroll, style, ...props} = this.props;
-    var {id = "", source = "", _sourceVersion = 0, type} = post;
+    let {agent, user, post, options = {}, onScroll, style, ...props} = this.props;
+    let {id = "", source = "", _sourceVersion = 0, type} = post;
+    if (typeof source !== 'string') source = JSON.stringify(source);
     let presence = post.presence ? post.presence[agent] : null;
-    var cursorPosition = presence ? presence.cursor : undefined;
+    let cursorPosition = presence ? presence.cursor : undefined;
     let onChange = this.onChange.bind(this);
     return (
       <Flex column fill style={style}>
@@ -36,7 +37,7 @@ export default class EditorView extends React.Component {
         </FlexItem>
         <FlexItem fluid>
           <CodeEditor key={id}
-                      ref={(_)=>this.CodeEditor = _}
+                      ref={(_) => this.CodeEditor = _}
                       style={styles}
                       value={source}
                       cursorPosition={cursorPosition}
@@ -77,7 +78,7 @@ export default class EditorView extends React.Component {
   }
 
   onChange(source, cursor, version) {
-    var {user, post, agent, dispatch} = this.props;
+    let {user, post, agent, dispatch} = this.props;
     let action = {
       type: "UPDATE_POST",
       $agent: agent,

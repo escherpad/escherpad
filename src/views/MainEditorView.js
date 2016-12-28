@@ -2,6 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import Selector from "../lib/Selector";
 import {Flex, FlexItem, FlexHide, Responsive} from 'layout-components';
+import Notifications from "../components/notifications/notifications";
 import MarkdownEditor from "../components/markdown-editor/MarkdownEditor";
 import BristolBoard from "../components/bristol-board/BristolBoard";
 
@@ -12,7 +13,6 @@ const style = {
   fontSmoothing: "antialiased"
 };
 
-
 const {string, any} = PropTypes;
 class MainEditorView extends React.Component {
   static propTypes = {
@@ -21,51 +21,55 @@ class MainEditorView extends React.Component {
   };
 
   render() {
-    let {viewMode, post} = this.props;
+    let {notices, ..._props} = this.props;
+    let {viewMode, post, dispatch} = this.props;
     let Editor, SmallEditor;
     let {title = ""} = (post || {});
     if (title.match(/\.png$/)) {
-      Editor = <BristolBoard mode="png" {...this.props}/>;
+      Editor = <BristolBoard mode="png" {..._props}/>;
       SmallEditor = Editor;
     } else if (title.match(/\.ink$/)) {
-      Editor = <BristolBoard mode="ink" {...this.props}/>;
+      Editor = <BristolBoard mode="ink" {..._props}/>;
       SmallEditor = Editor;
     } else if (title.match(/\.((r|py)?)md$/)) {
-      console.log(viewMode);
+      console.log('view mode is', viewMode);
       Editor = (viewMode === "zen-mode") ?
-        <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
+        <MarkdownEditor view="two-column" viewMode={viewMode} {..._props}/> :
+        <MarkdownEditor view="code" viewMode={viewMode} {..._props}/>;
       SmallEditor =
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
+        <MarkdownEditor view="code" viewMode={viewMode} {..._props}/>;
     } else {
       Editor = (viewMode === "zen-mode") ?
-        <MarkdownEditor view="two-column" viewMode={viewMode} {...this.props}/> :
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
+        <MarkdownEditor view="two-column" viewMode={viewMode} {..._props}/> :
+        <MarkdownEditor view="code" viewMode={viewMode} {..._props}/>;
       SmallEditor =
-        <MarkdownEditor view="code" viewMode={viewMode} {...this.props}/>;
+        <MarkdownEditor view="code" viewMode={viewMode} {..._props}/>;
     }
 
     return (
-      <Responsive breakPoints={{sm: 979, lg: Infinity}}>
-        <div data-sm style={style}>
-          {SmallEditor}
-        </div>
-        <Flex data-lg row fill align="stretch" style={style}>
-          <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
-            <ListPanel {...this.props}/>
-          </FlexHide>
-          <FlexItem fluid style={{flex: "8 8 auto"}}>
-            {Editor}
-          </FlexItem>
-        </Flex>
-      </Responsive>
+      <div className="page-getContainer">
+        <Notifications maxNumber={5} data={Object.keys(notices).map(k => notices[k])} dispatch={dispatch}/>
+        <Responsive breakPoints={{sm: 979, lg: Infinity}}>
+          <div data-sm style={style}>
+            {SmallEditor}
+          </div>
+          <Flex data-lg row fill align="stretch" style={style}>
+            <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
+              <ListPanel {..._props}/>
+            </FlexHide>
+            <FlexItem fluid style={{flex: "8 8 auto"}}>
+              {Editor}
+            </FlexItem>
+          </Flex>
+        </Responsive>
+      </div>
     );
   }
 }
 
 export default Selector((state) => {
   "use strict";
-  let {viewMode} = state;
+  let {viewMode, notices} = state;
   let post = state.posts[state.editor.post];
-  return {viewMode, post}
+  return {viewMode, notices, post}
 }, MainEditorView);

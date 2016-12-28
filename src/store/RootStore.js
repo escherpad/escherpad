@@ -2,6 +2,7 @@
 import {Store, combineReducers} from "luna";
 import Saga, {sagaConnect} from "luna-saga";
 
+import {notices, noticeProc, createNotification} from "./notices";
 import {viewMode} from "./viewMode";
 import {session} from "./session";
 import {editor} from "./editor";
@@ -13,6 +14,7 @@ import ModalReducer from "../lib/ModalReducer";
 import {accountBrowserReducer, onAccountBrowserOpen, listFiles, pushPost} from "./accountBrowser";
 
 const reducer = combineReducers({
+  notices,
   session,
   editor,
   viewMode,
@@ -63,21 +65,25 @@ const initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialStat
 
 // need to figure out the best way to apply localStorage update on the store.
 export const rootStore = new Store(_reducer, initialState);
-sagaConnect(rootStore, getDropboxAccount, true);
-sagaConnect(rootStore, onAccountBrowserOpen, true);
-sagaConnect(rootStore, listFiles, true);
-sagaConnect(rootStore, pushPost, true);
+sagaConnect(rootStore, getDropboxAccount(), true);
+sagaConnect(rootStore, onAccountBrowserOpen(), true);
+sagaConnect(rootStore, listFiles(), true);
+sagaConnect(rootStore, pushPost(), true);
+sagaConnect(rootStore, noticeProc(), true);
 
 window.onstorage = () => {
   "use strict";
-  var storage = getStored();
+  let storage = getStored();
   if (typeof storage !== "undefined") {
     rootStore.dispatch({type: "STORAGE_UPDATE", storage})
   }
 };
 
+// for debug purpose
+window.dispatch = rootStore.dispatch.bind(rootStore);
+
 rootStore.update$.subscribe(({state, action}) => {
-  console.log(state);
+  console.log("state is", state);
   if (action.type === "STORAGE_UPDATE") return;
   const serialized = JSON.stringify(state);
   // var compressed = lz.compress(serialized);
