@@ -137,9 +137,9 @@ export function* pushPost() {
         // take on more "UPDATE_POST" events.
         let response;
         if (post.title) {
+          //fixme: somehow, exception thrown here from the 
+          //backlog: use id:<file_id> as the path, make sure `post.id` is dropbox id.
           //backlog: use collaboration to make sure the correct version is saved.
-          //fixme: use id:<file_id> as the path, make sure `post.id` is dropbox id.
-
           // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
 
           let oldTitle = oldPosts[post.id].title;
