@@ -107,7 +107,7 @@ export function createPost() {
   }
 }
 
-import {accountKeyIsService} from "../accounts/accounts";
+import {accountKeyIsService, isDropboxId} from "../accounts/accounts";
 import {select, take, delay, call, dispatch} from "luna-saga";
 
 //fixme: implement process to dedupe repetitive posts that share same path and dropbox id.
@@ -137,14 +137,15 @@ export function* pushPost() {
         // take on more "UPDATE_POST" events.
         let response;
         if (post.title) {
-          //fixme: somehow, exception thrown here from the 
+          //issue: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
           //backlog: use id:<file_id> as the path, make sure `post.id` is dropbox id.
           //backlog: use collaboration to make sure the correct version is saved.
           // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
 
           let oldTitle = oldPosts[post.id].title;
           if (oldTitle !== _post.title) {
-            response = yield dapi.move(_post.path + '/' + oldTitle,
+            response = yield dapi.move(
+              isDropboxId(post.id) ? post.id : _post.path + '/' + oldTitle,
               _post.path + '/' + _post.title, "overwrite", false, false);
 
             // now update local copy.
@@ -172,7 +173,7 @@ export function* pullPostFromService() {
     const {state, action} = yield take(["PULL_POST_FROM_SERVICE", "SELECT_POST"]);
     const {accounts} = state;
     const {postId} = action;
-    let _post = state.posts[postId];
+    const _post = state.posts[postId];
     // console.log(_post);
     let account = state.accounts[_post.accountKey];
     if (accountKeyIsService(_post.accountKey, "dropbox")) {
@@ -180,7 +181,9 @@ export function* pullPostFromService() {
       dapi.updateAccessToken(accessToken);
       try {
         // use id:<file_id> as the path
-        let response = yield dapi.download(postId);
+        let response = yield dapi.download(
+          isDropboxId(postId) ? postId : _post.path + '/' + _post.title,
+        );
         console.log(response);
         // yield dispatch
         let result = yield dispatch({

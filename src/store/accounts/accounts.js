@@ -15,6 +15,11 @@ export function dropboxAccountKey(account) {
   }
 }
 
+export function isDropboxId(postId){
+  "use strict";
+  return (!!postId && postId.match(/^id:/));
+}
+
 export function getServiceFromAccountKey(accountKey) {
   "use strict";
   return accountKey ? accountKey.split(':')[0] : undefined;
