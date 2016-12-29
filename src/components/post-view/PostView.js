@@ -63,7 +63,7 @@ export default class PostView extends React.Component {
     store
     // .throttleTime(10)
       .subscribe((state)=> {
-        let post = state.posts[state.editor.post];
+        let post = state.posts[state.editor.postId];
         let agent = state.session.agent;
         let user = state.session.user;
         setImmediate(()=>this.setState({post, agent, user}))

@@ -95,11 +95,11 @@ class TitleBar extends Component {
     let {post = {}, dispatch} = this.props;
     let {id} = post;
     if (!id) return;
-    var modifiedAt = Date.now();
+    //todo: use MERGE_POST type instead?
     dispatch({
       type: "UPDATE_POST",
       post: {
-        id, title, modifiedAt
+        id, title, modifiedAt: Date.now()
       }
     });
   }

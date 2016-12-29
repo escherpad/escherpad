@@ -32,17 +32,8 @@ class MarkdownEditor extends Component {
   }
 
   render() {
-    //backlog: this will be removed after we add a post type selector as a parent.
-    let {post} = this.props;
-    if (!post) return (
-      <Flex column fill align="stretch">
-        <FlexItem fixed>
-          <PostHeader {...props}/>
-        </FlexItem>
-        <FlexItem fluid/>
-      </Flex>
-    );
-    //todoEnd
+    //DONE: this will be removed after we add a post type selector as a parent.
+    //TODO: add content insert for what to do when source does not exist.
     let {view, ..._props} = this.props;
     if (view === "two-column") {
       return (
@@ -167,7 +158,7 @@ class MarkdownEditor extends Component {
 export default Selector((store) => {
   "use strict";
   let {agent, user} = store.session;
-  let post = store.posts[store.editor.post];
+  let post = store.posts[store.editor.postId];
   let options = store.editor.options;
   return {post, agent, user, options};
 }, MarkdownEditor)

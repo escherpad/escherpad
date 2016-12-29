@@ -28,7 +28,7 @@ export default class PostHeader extends Component {
     const action = createPost();
     dispatch(action);
     const postId = action.post.id;
-    dispatch({type: "SELECT_POST", post: postId});
+    dispatch({type: "SELECT_POST", postId: postId});
   }
 
   render() {
@@ -57,9 +57,10 @@ export default class PostHeader extends Component {
               style={{fontSize: "18px", lineHeight: "32px", position: "absolute", marginRight: "-23px", width: "24px"}}>add</i
           ></Button>
         </FlexItem>
-        <FlexItem>
-          <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
-        </FlexItem>
+        {post ?
+          <FlexItem>
+            <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
+          </FlexItem> : null}
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button className="add-new-post"
                   height="25px"

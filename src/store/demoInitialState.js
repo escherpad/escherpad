@@ -8,5 +8,5 @@ export var demoInitialState = {
   posts: {}
 };
 
-demoInitialState.editor.post = demoPost.id;
+demoInitialState.editor.postId = demoPost.id;
 demoInitialState.posts[demoPost.id] = demoPost;

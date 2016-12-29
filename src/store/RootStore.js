@@ -6,12 +6,12 @@ import {notices, noticeProc, createNotification} from "./notices";
 import {viewMode} from "./viewMode";
 import {session} from "./session";
 import {editor} from "./editor";
-import {posts} from "./posts/posts";
-import {postList} from "../components/list-view/postList";
+import {posts, pushPost, pullPostFromService} from "./posts/posts";
+import {postList, onSetCurrentFolder} from "./postList";
 import {accounts, getDropboxAccount, dropboxAccountKey} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
 import ModalReducer from "../lib/ModalReducer";
-import {accountBrowserReducer, onAccountBrowserOpen, listFiles, pushPost} from "./accountBrowser";
+import {accountBrowserReducer, onAccountBrowserOpen, accountBrowserListFiles} from "./accountBrowser";
 
 const reducer = combineReducers({
   notices,
@@ -67,9 +67,11 @@ const initialState = (window.__INITIAL_STATE__ || cachedStore || demoInitialStat
 export const rootStore = new Store(_reducer, initialState);
 sagaConnect(rootStore, getDropboxAccount(), true);
 sagaConnect(rootStore, onAccountBrowserOpen(), true);
-sagaConnect(rootStore, listFiles(), true);
+sagaConnect(rootStore, accountBrowserListFiles(), true);
 sagaConnect(rootStore, pushPost(), true);
 sagaConnect(rootStore, noticeProc(), true);
+sagaConnect(rootStore, onSetCurrentFolder(), true);
+sagaConnect(rootStore, pullPostFromService(), true);
 
 window.onstorage = () => {
   "use strict";
@@ -93,7 +95,7 @@ rootStore.update$.subscribe(({state, action}) => {
 
 
   //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
-  //one-time thing
+  //update: this worked well. Will try to test out more.
   let posts = state.posts;
   Object.keys(posts).map(k=>posts[k]).map(post=>{
     "use strict";

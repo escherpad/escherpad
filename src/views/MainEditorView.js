@@ -1,6 +1,7 @@
 /** Created by ge on 3/10/16. */
 import React, {Component, PropTypes} from 'react';
 import Selector from "../lib/Selector";
+import PostHeader from "../components/editor-view/PostHeader";
 import {Flex, FlexItem, FlexHide, Responsive} from 'layout-components';
 import Notifications from "../components/notifications/notifications";
 import MarkdownEditor from "../components/markdown-editor/MarkdownEditor";
@@ -25,7 +26,15 @@ class MainEditorView extends React.Component {
     let {viewMode, post, dispatch} = this.props;
     let Editor, SmallEditor;
     let {title = ""} = (post || {});
-    if (title.match(/\.png$/)) {
+    if (!post) {
+      Editor = <Flex column fill align="stretch">
+        <FlexItem fixed>
+          <PostHeader {..._props}/>
+        </FlexItem>
+        <FlexItem fluid/>
+      </Flex>;
+      SmallEditor = Editor;
+    } else if (title.match(/\.png$/)) {
       Editor = <BristolBoard mode="png" {..._props}/>;
       SmallEditor = Editor;
     } else if (title.match(/\.ink$/)) {
@@ -70,6 +79,6 @@ class MainEditorView extends React.Component {
 export default Selector((state) => {
   "use strict";
   let {viewMode, notices} = state;
-  let post = state.posts[state.editor.post];
+  let post = state.posts[state.editor.postId];
   return {viewMode, notices, post}
 }, MainEditorView);

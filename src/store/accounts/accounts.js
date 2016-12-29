@@ -17,7 +17,7 @@ export function dropboxAccountKey(account) {
 
 export function getServiceFromAccountKey(accountKey) {
   "use strict";
-  return accountKey.split(':')[0];
+  return accountKey ? accountKey.split(':')[0] : undefined;
 }
 
 export function accountKeyIsService(accountKey, targetService) {
@@ -59,8 +59,10 @@ export function accounts(state = {}, action) {
 }
 
 /* Action Creators */
+//backlog: move this to better place
 export function addAccountToPost(postId, account, path) {
   "use strict";
+  //todo: use MERGE_POST type instead?
   return {
     type: "UPDATE_POST",
     post: {

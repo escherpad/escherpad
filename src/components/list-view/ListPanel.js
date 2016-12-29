@@ -7,8 +7,10 @@ import Input from "../input/Input";
 import Selector from "../../lib/Selector";
 
 import OrderBySelection from "./OrderBySelection";
-import {dropboxAccountKey} from "../../store/accounts/accounts";
-require('./list-panel.scss');
+import {getParentFolder} from "../account-list-view/BrowserColumnView";
+import {SET_CURRENT_FOLDER} from "../../store/postList";
+
+import PostListView from "./PostListView";
 
 function throttle(time = 300, options = {}) {
   "use strict";
@@ -18,8 +20,8 @@ function throttle(time = 300, options = {}) {
   };
 }
 
-import PostListView from "./PostListView";
-var {func, array, any} = React.PropTypes;
+require('./list-panel.scss');
+const {func, array, any} = React.PropTypes;
 class ListPanel extends React.Component {
   static propTypes = {
     agent: any,
@@ -39,29 +41,44 @@ class ListPanel extends React.Component {
     if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
+  /*in progress: add back button to go back to root folder*/
+  @autobind
+  goBack() {
+    // length == 2 when "/first_level".split() == ["", "first_level"]
+    const {currentFolder} = this.props.postList || {};
+    if (currentFolder.split('/').length <= 1) {
+      console.log('reached root folder');
+      this.props.dispatch({
+        type: SET_CURRENT_FOLDER,
+        path: undefined,
+        accountKey: undefined
+      })
+    } else {
+      let parentFolder = getParentFolder(currentFolder);
+      this.props.dispatch({
+        type: SET_CURRENT_FOLDER,
+        path: parentFolder
+        //notice: accountKey here should [OVERWRITE/NOT]
+      })
+    }
+  }
+
+  //done: throttling is working perfectly.
   @throttle(400)
-  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", path = "", accountKey}={}) {
-    // note: throttling is working perfectly. Otherwise searchQuery update would interrupts the
-    // enter and leave animation, making the UX very very bad. This is due to limitations of the
-    // animation higher component.
+  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder}={}) {
+    console.log('accountKey', accountKey);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
       .filter(function (post, index, posts) {
-        return (
-          !(post.path) || !(post.accountKey) || (
-            post.path.match(path) &&
-            ((post.accountKey && accountKey) ? post.accountKey === accountKey : true) ||
-            //done: corner case: post.accountKey == "localstorage"
-            (accountKey === "localstorage" && typeof post.accountKey === "undefined")
+        if (searchQuery !== "") {
+          // feature: add scoped search => mingles with current path and account.
+          return JSON.stringify(post).toLowerCase().match(searchQuery.toLowerCase())
+        } else return (
+          (typeof post.accountKey === "undefined" && accountKey === "localstorage") ||
+          (typeof accountKey === "undefined" ? true :
+              (post.accountKey === accountKey && post.path.match(currentFolder))
           )
         );
-      })
-      .filter(function (post, index, posts) {
-        if (searchQuery !== "") {
-          return JSON.stringify(post).toLowerCase().match(searchQuery.toLowerCase())
-        } else {
-          return true
-        }
       })
       .sort((a, b) => (a[orderBy] - b[orderBy]))
       .reverse();
@@ -96,12 +113,15 @@ class ListPanel extends React.Component {
           <div className="hero" style={{height: "100px", width: "100%"}}>
             <Flex fill row align="center" className="center">
               <FlexItem fixed>
-                <button/>
+                <button onClick={this.goBack}>back</button>
               </FlexItem>
               <FlexItem fluid
                         className="header"
                         style={{textAlign: "center", fontSize: "30px", fontWeight: "500"}}
-              >Notes</FlexItem>
+              >{postList.currentFolder ?
+                <span style={{color: "#23aaff"}}>{"" + postList.currentFolder}</span>
+                : "Notes"
+              }</FlexItem>
               <FlexItem fixed>
                 <button></button>
               </FlexItem>

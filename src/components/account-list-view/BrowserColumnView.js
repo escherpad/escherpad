@@ -10,6 +10,10 @@ import {dropboxAccountKey} from "../../store/accounts/accounts";
 
 require('./browser-column-view.scss');
 
+export function getParentFolder(currentFolder) {
+  return currentFolder ? currentFolder.split('/').slice(0, -1).join('/') : undefined;
+}
+
 class BrowserColumns extends Component {
   static propTypes = {
     title: any,
@@ -27,7 +31,7 @@ class BrowserColumns extends Component {
 
   @autobind
   backupPath() {
-    let parentPath = this.props.breadCrumb.split('/').slice(0, -1).join('/');
+    let parentPath = getParentFolder(this.props.breadCrumb);
     this.props.dispatch({
       type: "LIST_FILES",
       accountKey: dropboxAccountKey(this.props.account),
@@ -36,7 +40,7 @@ class BrowserColumns extends Component {
   }
 
   selectPath(path) {
-    return ()=> {
+    return () => {
       this.props.dispatch({
         type: "LIST_FILES",
         accountKey: dropboxAccountKey(this.props.account),
@@ -56,13 +60,13 @@ class BrowserColumns extends Component {
       </Row>
       {searchQuery ?
         <div className="search-view">
-          {items.map((item, key)=><div className="search-entry" key={key}>
+          {items.map((item, key) => <div className="search-entry" key={key}>
             <div className="entry-title">{item.title}</div>
             <div className="entry-path">{item.path}</div>
           </div>)}
         </div> :
         <div className="item-list-view">
-          {items.map((item, key)=> {
+          {items.map((item, key) => {
             if (item[".tag"] == "folder") {
               return <Folder key={key}
                              title={item.name}
@@ -81,7 +85,7 @@ class BrowserColumns extends Component {
   }
 }
 
-export default Selector((store)=> {
+export default Selector((store) => {
   "use strict";
   return {};
 }, BrowserColumns)

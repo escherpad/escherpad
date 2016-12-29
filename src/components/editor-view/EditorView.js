@@ -79,6 +79,7 @@ export default class EditorView extends React.Component {
 
   onChange(source, cursor, version) {
     let {user, post, agent, dispatch} = this.props;
+    //todo: use MERGE_POST type instead?
     let action = {
       type: "UPDATE_POST",
       $agent: agent,

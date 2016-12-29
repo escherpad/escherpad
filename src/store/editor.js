@@ -14,7 +14,7 @@ export function editor(state = editorInitialState, action) {
   if (!action.type) return state;
   if (action.type === SELECT_POST) {
     return {
-      ...state, post: action.post
+      ...state, postId: action.postId
     }
   } else if (action.type === UPDATE_EDITOR_OPTIONS) {
     if (!action.options) return state;

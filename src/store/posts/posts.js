@@ -1,6 +1,4 @@
 /** Created by ge on 4/7/16. */
-import {combineReducers} from "luna";
-
 export const ADD_POST = "ADD_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const UPDATE_POST_PRESENCE = "UPDATE_POST_PRESENCE";
@@ -62,6 +60,7 @@ export function posts(state = {}, action) {
       return newState;
     }
   } else if ([UPDATE_POST, UPDATE_POST_PRESENCE, OVERWRITE_POST].indexOf(action.type) > -1) {
+    //fixme: update the key of post in posts collection when file id has changed.
     const thisPost = state[action.post.id];
     if (!thisPost) return state;
     let updatedPost = post(thisPost, action);
@@ -100,10 +99,107 @@ export function createPost() {
     type: ADD_POST,
     post: {
       id: $uuid(),
-      // path: 'in dropbox',
-      // account: accountKey,
+      // path, //'in dropbox',
+      // accountKey,
       createdAt: Date.now(),
       modifiedAt: Date.now(),
     }
   }
+}
+
+import {accountKeyIsService} from "../accounts/accounts";
+import {select, take, delay, call, dispatch} from "luna-saga";
+
+//fixme: implement process to dedupe repetitive posts that share same path and dropbox id.
+export function* dedupePosts() {
+  "use strict";
+}
+
+import dapi from "../../modules/dropbox";
+//done: move `postPost` to proper place
+//fixme: need to push post by post.id. Path allows empty post to overwrite existing files.
+export function* pushPost() {
+  "use strict";
+  let oldPosts = yield select('posts');
+  while (true) {
+    //todo: use MERGE_POST type instead?
+    const {state, action} = yield take("UPDATE_POST");
+    const {accounts} = state;
+    const {post} = action;
+    let _post = state.posts[post.id];
+    // console.log(_post);
+    let account = state.accounts[_post.accountKey];
+    if (accountKeyIsService(_post.accountKey, "dropbox")) {
+      let accessToken = account.accessToken;
+      dapi.updateAccessToken(accessToken);
+      try {
+        // note: saga is single threaded. If it hangs here, it will not
+        // take on more "UPDATE_POST" events.
+        let response;
+        if (post.title) {
+          //backlog: use collaboration to make sure the correct version is saved.
+          //fixme: use id:<file_id> as the path, make sure `post.id` is dropbox id.
+
+          // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
+
+          let oldTitle = oldPosts[post.id].title;
+          if (oldTitle !== _post.title) {
+            response = yield dapi.move(_post.path + '/' + oldTitle,
+              _post.path + '/' + _post.title, "overwrite", false, false);
+
+            // now update local copy.
+            oldPosts[post.id] = {
+              ...(oldPosts[post.id] || {}),
+              ...post
+            };
+          }
+        } else {
+          response = yield dapi.upload(_post.path + '/' + _post.title, _post.source, "overwrite", false, false);
+        }
+        // console.log(response);
+      } catch (e) {
+        console.warn('exception during upload', e);
+      }
+    }
+    yield call(delay, 500);
+  }
+}
+
+export function* pullPostFromService() {
+  "use strict";
+  //feature: pull posts with differential synchronization
+  while (true) {
+    const {state, action} = yield take(["PULL_POST_FROM_SERVICE", "SELECT_POST"]);
+    const {accounts} = state;
+    const {postId} = action;
+    let _post = state.posts[postId];
+    // console.log(_post);
+    let account = state.accounts[_post.accountKey];
+    if (accountKeyIsService(_post.accountKey, "dropbox")) {
+      let accessToken = account.accessToken;
+      dapi.updateAccessToken(accessToken);
+      try {
+        // use id:<file_id> as the path
+        let response = yield dapi.download(postId);
+        console.log(response);
+        // yield dispatch
+        let result = yield dispatch({
+          type: UPDATE_POST,
+          post: {
+            id: postId,
+            //notice: hydrate the <string> type content to javascript object
+            //notice: right now this just overwrites local copy.
+            title: JSON.parse(response.meta).name,
+            source: response.content
+          }
+        });
+        console.log('========>', result);
+
+      } catch (e) {
+        console.warn('exception during pulling', e);
+      }
+    }
+    yield call(delay, 500);
+  }
+
 }

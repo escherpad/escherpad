@@ -7,6 +7,7 @@ import Radium from "radium";
 import Placeholder from "../placeholder/Placeholder";
 import moment from "moment";
 import {getServiceFromAccountKey} from "../../store/accounts/accounts";
+import {setFolder} from "../../store/postList";
 
 require('./post-item.scss');
 
@@ -64,7 +65,8 @@ export default class PostListItem extends React.Component {
         <Flex row style={{justifyContent: "right"}} className="modified-at">
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
-              <SmallBlueBadge onClick={() => null}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
+              <SmallBlueBadge
+                onClick={this.goToFolder(accountKey, path)}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>
@@ -79,7 +81,7 @@ export default class PostListItem extends React.Component {
   selectPost() {
     this.props.dispatch({
       type: "SELECT_POST",
-      post: this.props.id
+      postId: this.props.id
     })
   }
 
@@ -90,6 +92,10 @@ export default class PostListItem extends React.Component {
       type: "DELETE_POST",
       id: this.props.id
     })
+  }
+
+  goToFolder(accountKey, path) {
+    return () => this.props.dispatch(setFolder(accountKey, path));
   }
 
 }

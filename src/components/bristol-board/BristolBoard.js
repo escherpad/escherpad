@@ -29,6 +29,7 @@ class BristolBoard extends Component {
   // @debounce(5000)
   onChange(inkData) {
     // slow store update is the bottle neck!
+    //todo: use MERGE_POST type instead?
     this.props.dispatch({
       type: "UPDATE_POST",
       post: {
@@ -45,20 +46,9 @@ class BristolBoard extends Component {
   }
 
   render() {
-    //backlog: this will be removed after we add a post type selector as a parent.
-    let {post} = this.props;
-    if (!post) return (
-      <Flex column fill align="stretch">
-        <FlexItem fixed>
-          <PostHeader {...props}/>
-        </FlexItem>
-        <FlexItem fluid/>
-      </Flex>
-    );
-    //todoEnd
-
-
-    let {view, ...props} = this.props;
+    //DONE: this will be removed after we add a post type selector as a parent.
+    //TODO: add content insert for what to do when source does not exist.
+    let {post, ...props} = this.props;
     const width = 800, height = 1000;
     return <Flex column fill align="stretch">
       <FlexItem fixed>
@@ -100,7 +90,7 @@ class BristolBoard extends Component {
 export default Selector((store) => {
   "use strict";
   let {agent, user} = store.session;
-  let post = store.posts[store.editor.post];
+  let post = store.posts[store.editor.postId];
   let options = store.editor.options;
   return {post, agent, user, options};
 }, BristolBoard)
