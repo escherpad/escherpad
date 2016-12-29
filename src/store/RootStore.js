@@ -92,7 +92,8 @@ rootStore.update$.subscribe(({state, action}) => {
   window.localStorage.setItem(GITTOR_STORE, serialized);
 
 
-  // one-time things
+  //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
+  //one-time thing
   let posts = state.posts;
   Object.keys(posts).map(k=>posts[k]).map(post=>{
     "use strict";
