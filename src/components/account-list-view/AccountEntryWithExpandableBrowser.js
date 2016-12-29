@@ -5,6 +5,7 @@ import Selector from "../../lib/Selector";
 import {autobind} from "core-decorators";
 import AccountListItem from "./AccountListItem";
 import BrowserColumnView from "./BrowserColumnView";
+import {addAccountToPost, dropboxAccountKey} from "../../store/accounts/accounts";
 
 let {any} = PropTypes;
 
@@ -47,18 +48,8 @@ class AccountEntryWithExpandableBrowser extends Component {
 
   @autobind
   onSubmit() {
-    let {post, account, accountBrowser} = this.props;
-    this.props.dispatch({
-      type: "UPDATE_POST",
-      post: {
-        id: post.id,
-        account: {
-          service: account.service,
-          uid: account.uid
-        },
-        path: accountBrowser.cwd
-      }
-    });
+    let {dispatch, post, account, accountBrowser} = this.props;
+    dispatch(addAccountToPost(post.id, account, accountBrowser.cwd));
     this._close();
   }
 
@@ -70,7 +61,7 @@ class AccountEntryWithExpandableBrowser extends Component {
                                 onDelete={this.removeAccount}
                                 onClick={this.onClick}/>;
 
-    if (accountBrowser.open && accountBrowser.accountId == account.uid) {
+    if (accountBrowser.open && accountBrowser.accountKey == dropboxAccountKey(account)) {
       return <div className="account-list-item-expanded">
         {item}
         <BrowserColumnView title={account.title}

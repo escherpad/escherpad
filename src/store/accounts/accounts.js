@@ -4,10 +4,27 @@ const ALLOWED_SERVICES = ["email", "dropbox"];
 export function validateAccount(account) {
   // account is valid if account has the service field, and service is one of the ones listed above.
   // require fields: service, uid.
-  return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.uid);
+  return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.id);
 }
-export function key(account) {
-  return (account.service + ':' + account.uid);
+export function dropboxAccountKey(account) {
+  if (!account) console.warn("account is undefined", account);
+  return (account ? account.service + ':' + account.uid : undefined);
+}
+
+export function getServiceFromAccountKey(accountKey) {
+  "use strict";
+  return accountKey.split(':')[0];
+}
+
+export function accountKeyIsService(accountKey, targetService) {
+  "use strict";
+  if (typeof targetService !== "undefined") {
+    let ind = ALLOWED_SERVICES.indexOf(targetService);
+    let service = ALLOWED_SERVICES[ind];
+    return getServiceFromAccountKey(accountKey) === service;
+  } else {
+    return false;
+  }
 }
 
 export function accounts(state = {}, action) {
@@ -16,25 +33,38 @@ export function accounts(state = {}, action) {
     if (!validateAccount(account)) return state;
     return {
       ...state,
-      [key(account)]: account
+      [dropboxAccountKey(account)]: account
     };
   } else if (action.type === "UPDATE_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
-    let _key = key(account);
+    let _key = dropboxAccountKey(account);
     if (!state[_key]) return state;
     return {
       ...state,
-      [key(account)]: {...state[key], ...account}
+      [dropboxAccountKey(account)]: {...state[dropboxAccountKey], ...account}
     };
   } else if (action.type === "DELETE_ACCOUNT") {
     let {account} = action;
     if (!validateAccount(account)) return state;
     let newState = {...state};
-    delete newState[key(account)];
+    delete newState[dropboxAccountKey(account)];
     return newState;
   }
   return state;
+}
+
+/* Action Creators */
+export function addAccountToPost(postId, account, cwd) {
+  "use strict";
+  return {
+    type: "UPDATE_POST",
+    post: {
+      id: postId,
+      accountKey: dropboxAccountKey(account),
+      path: cwd
+    }
+  }
 }
 
 import {take, dispatch} from "luna-saga";

@@ -9,7 +9,7 @@ export function accountBrowserReducer(state, action) {
     return {
       ...state,
       accountType: action.account.service,
-      accountId: action.account.uid,
+      accountKey: dropboxAccountKey(action),
       accessToken: action.account.accessToken
     };
   } else {
@@ -54,7 +54,8 @@ export function* listFiles() {
   }
 }
 
-import {key} from "../store/accounts/accounts";
+import {dropboxAccountKey} from "../store/accounts/accounts";
+import {accountKeyIsService} from "./accounts/accounts";
 
 export function* pushPost() {
   "use strict";
@@ -65,13 +66,13 @@ export function* pushPost() {
     const {post} = action;
     let _post = state.posts[post.id];
     // console.log(_post);
-    if (_post.account && _post.account.service == "dropbox") {
-      let accessToken = accounts[key(_post.account)].accessToken;
+    if (accountKeyIsService(_post.accountKey, "dropbox")) {
+      let accessToken = accounts[dropboxAccountKey(_post.account)].accessToken;
       dapi.updateAccessToken(accessToken);
       try {
         // note: saga is single threaded. If it hangs here, it will not
         // take on more "UPDATE_POST" events.
-        var response;
+        let response;
         if (post.title) {
           // todo: use collaboration to make sure the correct version is saved.
           response = yield dapi.move(_post.path + '/' + oldPosts[post.id].title, _post.path + '/' + _post.title, "overwrite", false, false);

@@ -7,6 +7,7 @@ import Input from "../input/Input";
 import Selector from "../../lib/Selector";
 
 import OrderBySelection from "./OrderBySelection";
+import {dropboxAccountKey} from "../../store/accounts/accounts";
 require('./list-panel.scss');
 
 function throttle(time = 300, options = {}) {
@@ -39,11 +40,21 @@ class ListPanel extends React.Component {
   }
 
   @throttle(400)
-  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = ""}={}) {
-    // note: throttling is working perfectly. However searchQuery update interrups the
-    // enter and leave animation, making the UX very very bad.
+  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", path = "", account = {}}={}) {
+    // note: throttling is working perfectly. Otherwise searchQuery update would interrupts the
+    // enter and leave animation, making the UX very very bad. This is due to limitations of the
+    // animation higher component.
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
+      .filter(function (post, index, posts) {
+        return (
+          !(post.path) || !(post.account) || (
+            post.path.match(path) &&
+            // post.account.service === account.service &&
+              post.accountKey === dropboxAccountKey(account)
+          )
+        );
+      })
       .filter(function (post, index, posts) {
         if (searchQuery !== "") {
           return JSON.stringify(post).toLowerCase().match(searchQuery.toLowerCase())
