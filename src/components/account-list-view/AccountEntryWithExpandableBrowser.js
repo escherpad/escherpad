@@ -24,14 +24,11 @@ class AccountEntryWithExpandableBrowser extends Component {
   }
 
   @autobind
-  onClick() {
+  onSelection() {
     this.props.dispatch({
       type: "ACCOUNT_BROWSER_OPEN",
-      account: this.props.account
+      accountKey: dropboxAccountKey(this.props.account)
     });
-    this.props.dispatch({
-      type: "account_browser"
-    })
   }
 
   @autobind
@@ -42,14 +39,9 @@ class AccountEntryWithExpandableBrowser extends Component {
   }
 
   @autobind
-  onSelect() {
-    this._close();
-  }
-
-  @autobind
   onSubmit() {
     let {dispatch, post, account, accountBrowser} = this.props;
-    dispatch(addAccountToPost(post.id, account, accountBrowser.cwd));
+    dispatch(addAccountToPost(post.id, account, accountBrowser.path));
     this._close();
   }
 
@@ -59,14 +51,14 @@ class AccountEntryWithExpandableBrowser extends Component {
 
     let item = <AccountListItem account={account}
                                 onDelete={this.removeAccount}
-                                onClick={this.onClick}/>;
+                                onClick={this.onSelection}/>;
 
     if (accountBrowser.open && accountBrowser.accountKey == dropboxAccountKey(account)) {
       return <div className="account-list-item-expanded">
         {item}
         <BrowserColumnView title={account.title}
                            account={account}
-                           breadCrumb={accountBrowser.cwd}
+                           breadCrumb={accountBrowser.path}
                            items={accountBrowser.list}
                            searchQuery={null}
                            backButtonText="back"

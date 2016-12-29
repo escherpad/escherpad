@@ -83,7 +83,7 @@ window.onstorage = () => {
 window.dispatch = rootStore.dispatch.bind(rootStore);
 
 rootStore.update$.subscribe(({state, action}) => {
-  console.log("state is", state);
+  console.log("state is", state, "action is", action);
   if (action.type === "STORAGE_UPDATE") return;
   const serialized = JSON.stringify(state);
   // var compressed = lz.compress(serialized);

@@ -8,9 +8,7 @@ export function accountBrowserReducer(state, action) {
   if (action.type == "ACCOUNT_BROWSER_OPEN") {
     return {
       ...state,
-      accountType: action.account.service,
-      accountKey: dropboxAccountKey(action),
-      accessToken: action.account.accessToken
+      accountKey: action.accountKey
     };
   } else {
     // only execute on "ACCOUNT_BROWSER"
@@ -22,16 +20,10 @@ export function accountBrowserReducer(state, action) {
 export function* onAccountBrowserOpen() {
   "use strict";
   while (true) {
-    const {action, state} = yield take('ACCOUNT_BROWSER_OPEN');
-
+    const {state, action} = yield take('ACCOUNT_BROWSER_OPEN');
     yield dispatch({
-      type: "ACCOUNT_BROWSER",
-      accountId: action.account.uid,
-    });
-
-    yield dispatch({
-      type: "ACCOUNT_BROWSER_LIST_FILES",
-      account: action.account,
+      type: "LIST_FILES",
+      accountKey: action.accountKey,
       path: state.accountBrowser.cwd
     })
   }
@@ -40,20 +32,24 @@ export function* onAccountBrowserOpen() {
 export function* listFiles() {
   "use strict";
   while (true) {
-    const {action} = yield take("ACCOUNT_BROWSER_LIST_FILES");
-    const {account, path} = action;
+    const {state, action} = yield take("LIST_FILES");
+    const {accountKey, path} = action;
+    const account = state.accounts[accountKey];
+    if (!account) console.error("account not found by key:", accountKey);
+
     if (account.service === "dropbox") {
       dapi.updateAccessToken(account.accessToken);
       let listResponse = yield dapi.list(path);
       if (listResponse.entries) yield dispatch({
         type: "ACCOUNT_BROWSER",
-        cwd: path,
+        path,
         list: listResponse.entries
       });
     }
   }
 }
 
+//todo: maybe this shouldn't be here.
 import {dropboxAccountKey} from "../store/accounts/accounts";
 import {accountKeyIsService} from "./accounts/accounts";
 

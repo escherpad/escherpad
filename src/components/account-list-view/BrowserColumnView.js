@@ -6,6 +6,7 @@ import Selector from "../../lib/Selector";
 let {func, any, array} = PropTypes;
 import Folder from "./Folder";
 import File from "./File";
+import {dropboxAccountKey} from "../../store/accounts/accounts";
 
 require('./browser-column-view.scss');
 
@@ -28,8 +29,8 @@ class BrowserColumns extends Component {
   backupPath() {
     let parentPath = this.props.breadCrumb.split('/').slice(0, -1).join('/');
     this.props.dispatch({
-      type: "ACCOUNT_BROWSER_LIST_FILES",
-      account: this.props.account,
+      type: "LIST_FILES",
+      accountKey: dropboxAccountKey(this.props.account),
       path: parentPath
     });
   }
@@ -37,8 +38,8 @@ class BrowserColumns extends Component {
   selectPath(path) {
     return ()=> {
       this.props.dispatch({
-        type: "ACCOUNT_BROWSER_LIST_FILES",
-        account: this.props.account,
+        type: "LIST_FILES",
+        accountKey: dropboxAccountKey(this.props.account),
         path: path
       })
     }

@@ -35,7 +35,6 @@ export default class Notifications extends Component {
 
   render() {
     const {maxNumber, data, dispatch} = this.props;
-    console.log(data);
     return <div className="notification-container">
       {(data && data.length) ?
         data.map((d) => <Notification key={d.id} id={d.id} text={d.text} type={d.type}

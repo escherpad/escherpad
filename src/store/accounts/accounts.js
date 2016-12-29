@@ -55,14 +55,14 @@ export function accounts(state = {}, action) {
 }
 
 /* Action Creators */
-export function addAccountToPost(postId, account, cwd) {
+export function addAccountToPost(postId, account, path) {
   "use strict";
   return {
     type: "UPDATE_POST",
     post: {
       id: postId,
       accountKey: dropboxAccountKey(account),
-      path: cwd
+      path
     }
   }
 }
