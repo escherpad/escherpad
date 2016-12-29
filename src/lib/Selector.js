@@ -1,6 +1,6 @@
-/** Created by ge on 12/6/16. */
-/** Usage Example
- * Selector('key'/selectionFunction/arrayOf'keys/etc, component)
+/** Created by ge on 12/6/16.
+ * Usage Example
+ * Selector(key/selectionFunction/arrayOf'keys/etc, component)
  * */
 
 import React, {PropTypes} from "react";
@@ -30,7 +30,7 @@ export default function Selector(selector, Component) {
       this.subscription.unsubscribe()
     }
 
-    shouldComponentUpdate(newProps, newStates){
+    shouldComponentUpdate(newProps, newStates) {
       // note: both store and dispatch are required.
       // note2: state update *always* trigger re-render
       if (Object.keys(newProps).length > 2) return true;
