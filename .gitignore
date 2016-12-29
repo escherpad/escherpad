@@ -2,8 +2,9 @@
 .idea
 
 # node files
-*.log
-*.logs
+npm-debug.log*
+*.log*
+*.logs*
 *~
 node_modules
 .DS_Store
