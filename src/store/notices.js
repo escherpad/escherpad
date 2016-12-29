@@ -29,7 +29,7 @@ export function notices(state = {}, action) {
     delete newState[action.id];
     return newState;
   } else if (action.type === "NOTICE_UPDATE") {
-    //todo: decide if want to update by field
+    //backlog: decide if want to update by field
     return {
       ...state,
       [action.message.id]: action.message

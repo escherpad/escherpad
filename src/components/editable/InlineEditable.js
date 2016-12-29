@@ -129,9 +129,9 @@ export default class InlineEditable extends Component {
   @autobind
   onPaste(e) {
     let {onPaste} = this.props;
-    var text = e.clipboardData.getData("Text");
+    let text = e.clipboardData.getData("Text");
     if (onPaste) text = onPaste(text);
-    // todo: full behavior: 1. split text by caret, 2.
+    //backlog: full behavior: 1. split text by caret, 2.
     e.preventDefault();
     let caret = this.caretPosition;
     let currentText = this.value;
@@ -163,7 +163,7 @@ export default class InlineEditable extends Component {
     e.clipboardData.setData('text/plain', text);
     // }
     if (onCut) onCut(text);
-    // todo: investigate default behavior of cut action besides deleting the text.
+    //backlog: investigate default behavior of cut action besides deleting the text.
     // e.preventDefault()
   }
 

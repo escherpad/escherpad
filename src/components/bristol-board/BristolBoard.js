@@ -45,7 +45,7 @@ class BristolBoard extends Component {
   }
 
   render() {
-    //todo: this will be removed after we add a post type selector as a parent.
+    //backlog: this will be removed after we add a post type selector as a parent.
     let {post} = this.props;
     if (!post) return (
       <Flex column fill align="stretch">

@@ -12,7 +12,6 @@ const COLOR_CLASSES = {
 require('./notifications.scss');
 function Notification({id, type, text, timeout, children, dispatch}) {
   "use strict";
-  // todo: could potentially use text here
   return <div className={`notification-item ${COLOR_CLASSES[type]}`}>
     {children}
     <div className={`remove-button ${!!timeout ? "show-on-hover" : ""}`} onClick={() => dispatch({

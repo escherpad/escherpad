@@ -49,7 +49,7 @@ export function* listFiles() {
   }
 }
 
-//todo: maybe this shouldn't be here.
+//backlog: move this to proper place
 import {dropboxAccountKey} from "../store/accounts/accounts";
 import {accountKeyIsService} from "./accounts/accounts";
 
@@ -70,7 +70,7 @@ export function* pushPost() {
         // take on more "UPDATE_POST" events.
         let response;
         if (post.title) {
-          // todo: use collaboration to make sure the correct version is saved.
+          //backlog: use collaboration to make sure the correct version is saved.
           response = yield dapi.move(_post.path + '/' + oldPosts[post.id].title, _post.path + '/' + _post.title, "overwrite", false, false);
           oldPosts[post.id] = {
             ...(oldPosts[post.id] || {}),
