@@ -6,6 +6,7 @@ import {Flex, FlexItem, FlexSpacer} from "layout-components";
 import Radium from "radium";
 import Placeholder from "../placeholder/Placeholder";
 import moment from "moment";
+import {getServiceFromAccountKey} from "../../store/accounts/accounts";
 
 require('./post-item.scss');
 
@@ -24,19 +25,19 @@ export default class PostListItem extends React.Component {
   };
 
   render() {
-    var {
+    const {
       searchQuery,
       id,
       title,
       source,
       presence,
       path,
-      account,
+      accountKey,
       createdAt,
       modifiedAt
     } = this.props;
 
-    var timeStamp;
+    let timeStamp;
     if (modifiedAt) timeStamp = moment(modifiedAt).fromNow();
     else if (createdAt) timeStamp = moment(createdAt).fromNow();
     else timeStamp = '';
@@ -62,8 +63,8 @@ export default class PostListItem extends React.Component {
         </Placeholder>
         <Flex row style={{justifyContent: "right"}} className="modified-at">
           <FlexItem fluid style={{overflowX: "hidden"}}>
-            {account && account.service ?
-              <SmallBlueBadge onClick={() => null}>{account.service}:{path}</SmallBlueBadge> :
+            {accountKey ?
+              <SmallBlueBadge onClick={() => null}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>
@@ -84,7 +85,7 @@ export default class PostListItem extends React.Component {
 
   @autobind
   deletePost() {
-    // todo: now show a popup
+    // backlog: show a popup to confirm delete
     this.props.dispatch({
       type: "DELETE_POST",
       id: this.props.id

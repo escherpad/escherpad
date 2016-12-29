@@ -7,8 +7,12 @@ export function validateAccount(account) {
   return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.id);
 }
 export function dropboxAccountKey(account) {
-  if (!account) console.warn("account is undefined", account);
-  return (account ? account.service + ':' + account.uid : undefined);
+  if (!account) {
+    console.warn("account is undefined", account);
+    return undefined;
+  } else {
+    return (account ? account.service + ':' + account.uid : undefined);
+  }
 }
 
 export function getServiceFromAccountKey(accountKey) {

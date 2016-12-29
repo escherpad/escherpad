@@ -40,7 +40,7 @@ class ListPanel extends React.Component {
   }
 
   @throttle(400)
-  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", path = "", account = {}}={}) {
+  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", path = "", accountKey}={}) {
     // note: throttling is working perfectly. Otherwise searchQuery update would interrupts the
     // enter and leave animation, making the UX very very bad. This is due to limitations of the
     // animation higher component.
@@ -48,10 +48,11 @@ class ListPanel extends React.Component {
       .map((_) => posts[_])
       .filter(function (post, index, posts) {
         return (
-          !(post.path) || !(post.account) || (
+          !(post.path) || !(post.accountKey) || (
             post.path.match(path) &&
-            // post.account.service === account.service &&
-              post.accountKey === dropboxAccountKey(account)
+            ((post.accountKey && accountKey) ? post.accountKey === accountKey : true) ||
+            //done: corner case: post.accountKey == "localstorage"
+            (accountKey === "localstorage" && typeof post.accountKey === "undefined")
           )
         );
       })

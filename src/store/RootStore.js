@@ -8,7 +8,7 @@ import {session} from "./session";
 import {editor} from "./editor";
 import {posts} from "./posts/posts";
 import {postList} from "../components/list-view/postList";
-import {accounts, getDropboxAccount} from "./accounts/accounts";
+import {accounts, getDropboxAccount, dropboxAccountKey} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
 import ModalReducer from "../lib/ModalReducer";
 import {accountBrowserReducer, onAccountBrowserOpen, listFiles, pushPost} from "./accountBrowser";
@@ -90,5 +90,22 @@ rootStore.update$.subscribe(({state, action}) => {
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
   // console.log(serialized);
   window.localStorage.setItem(GITTOR_STORE, serialized);
+
+
+  // one-time things
+  let posts = state.posts;
+  Object.keys(posts).map(k=>posts[k]).map(post=>{
+    "use strict";
+    if (post.account) {
+      let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
+      delete newPost['account'];
+      setTimeout(()=>{
+        rootStore.dispatch({
+          type: "OVERWRITE_POST",
+          post: newPost
+        })
+      }, 1000);
+    }
+  })
 });
 

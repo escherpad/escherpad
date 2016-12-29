@@ -4,6 +4,7 @@ import {autobind} from 'core-decorators';
 import {FlexItem} from "layout-components";
 import BlueBadge from "../badge/BlueBadge";
 import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";
+import {getServiceFromAccountKey} from "../../store/accounts/accounts";
 
 require('./save-to-backend-badge.scss');
 
@@ -21,8 +22,8 @@ export default class BackEndBadge extends Component {
     let {post} = this.props;
     return (
       <span>
-        {(post.account && post.account.service) ?
-          <BlueBadge onClick={this.openModal}>{post.account.service}:{post.path}</BlueBadge> :
+        {(post.accountKey) ?
+          <BlueBadge onClick={this.openModal}>{getServiceFromAccountKey(post.accountKey)}:{post.path}</BlueBadge> :
           <button className="save-to-backend-badge" onClick={this.openModal}>
             save to...
           </button>
@@ -33,6 +34,10 @@ export default class BackEndBadge extends Component {
                             {..._props}/>
       </span>
     )
+  }
+
+  getServiceFromAccountKey(accountKey) {
+
   }
 
   @autobind

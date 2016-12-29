@@ -7,6 +7,7 @@ export const UPDATE_POST_PRESENCE = "UPDATE_POST_PRESENCE";
 export const UPSERT_POST = "UPSERT_POST";
 export const DELETE_POST = "DELETE_POST";
 export const MERGE_POST = "MERGE_POST";
+export const OVERWRITE_POST = "OVERWRITE_POST";
 
 export function presence(state = {}, action) {
   if (action.post && action.post.presence) return {...state, ...action.post.presence};
@@ -23,10 +24,15 @@ export function post(state = {}, action) {
     return {_v: 0, _v0: 0, ...action.post}
   } else if (action.type === UPDATE_POST) {
     if (state.id !== action.post.id) return state;
-    let result = {
+    return {
       ... state, ...(action.post), presence: presence(state.presence, action), _v: (state._v + 1)
     };
-    return result;
+  } else if (action.type === OVERWRITE_POST) {
+    if (state.id !== action.post.id) return state;
+    let newPost = {
+      ...(action.post), presence: presence(state.presence, action), _v: (state._v + 1)
+    };
+    return newPost;
   } else if (action.type === UPDATE_POST_PRESENCE) { // does not update the version number
     if (state.id !== action.post.id) return state;
     return {
@@ -55,7 +61,7 @@ export function posts(state = {}, action) {
       newState[newPost.id] = newPost;
       return newState;
     }
-  } else if (action.type === UPDATE_POST || action.type === UPDATE_POST_PRESENCE) {
+  } else if ([UPDATE_POST, UPDATE_POST_PRESENCE, OVERWRITE_POST].indexOf(action.type) > -1) {
     const thisPost = state[action.post.id];
     if (!thisPost) return state;
     let updatedPost = post(thisPost, action);
