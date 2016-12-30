@@ -41,7 +41,7 @@ class MainEditorView extends React.Component {
       Editor = <BristolBoard mode="ink" {..._props}/>;
       SmallEditor = Editor;
     } else if (title.match(/\.((r|py)?)md$/)) {
-      console.log('view mode is', viewMode);
+      // console.log('view mode is', viewMode);
       Editor = (viewMode === "zen-mode") ?
         <MarkdownEditor view="two-column" viewMode={viewMode} {..._props}/> :
         <MarkdownEditor view="code" viewMode={viewMode} {..._props}/>;

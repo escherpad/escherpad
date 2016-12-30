@@ -7,7 +7,8 @@ import Radium from "radium";
 import Placeholder from "../placeholder/Placeholder";
 import moment from "moment";
 import {getServiceFromAccountKey} from "../../store/accounts/accounts";
-import {setFolder} from "../../store/postList";
+import {setCurrentFolder} from "../../store/postList";
+import {getParentFolder} from "../account-list-view/BrowserColumnView";
 
 require('./post-item.scss');
 
@@ -66,7 +67,7 @@ export default class PostListItem extends React.Component {
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
               <SmallBlueBadge
-                onClick={this.goToFolder(accountKey, path)}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
+                onClick={this.goToFolder}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>
@@ -94,8 +95,13 @@ export default class PostListItem extends React.Component {
     })
   }
 
-  goToFolder(accountKey, path) {
-    return () => this.props.dispatch(setFolder(accountKey, path));
+  @autobind
+  goToFolder(e) {
+    const {accountKey, path} = this.props;
+    e.stopPropagation();
+    e.preventDefault();
+    this.props.dispatch(setCurrentFolder(accountKey, path));
+    // to prevent the parent from firing
   }
 
 }

@@ -36,18 +36,20 @@ export function* accountBrowserListFiles() {
     const {accountKey, path} = action;
     if (!accountKey) {
       //notice: accountKey is not defined when at root
-    } else if (account.service === "dropbox") {
+    } else {
       const account = state.accounts[accountKey];
-      if (!action) {
+      if (!account) {
         console.warn("account not found by key:", accountKey);
       } else {
-        dapi.updateAccessToken(account.accessToken);
-        let listResponse = yield dapi.list(path);
-        if (listResponse.entries) yield dispatch({
-          type: "ACCOUNT_BROWSER",
-          path,
-          list: listResponse.entries
-        });
+        if (account.service === "dropbox") {
+          dapi.updateAccessToken(account.accessToken);
+          let listResponse = yield dapi.list(path);
+          if (listResponse.entries) yield dispatch({
+            type: "ACCOUNT_BROWSER",
+            path,
+            list: listResponse.entries
+          });
+        }
       }
     }
   }

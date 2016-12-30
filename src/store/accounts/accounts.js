@@ -15,7 +15,12 @@ export function dropboxAccountKey(account) {
   }
 }
 
-export function isDropboxId(postId){
+export function dropboxDateStringToIntDate(dateString) {
+  "use strict";
+  return moment(dateString).valueOf();
+}
+
+export function isDropboxId(postId) {
   "use strict";
   return (!!postId && postId.match(/^id:/));
 }
@@ -81,6 +86,7 @@ export function addAccountToPost(postId, account, path) {
 import {take, dispatch} from "luna-saga";
 import dapi from "../../modules/dropbox";
 import "regenerator-runtime/runtime";
+import moment from "moment";
 
 export function* getDropboxAccount() {
   "use strict";

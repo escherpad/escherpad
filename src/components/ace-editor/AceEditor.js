@@ -149,8 +149,9 @@ export default class ReactAce extends Component {
 
     // if (version is not a number), just do the usual thing. If is, use for comparison.
     if (typeof version === "number" && version <= this.version) {
-      // use this version number to avoid oscillation.
+      // console.warn("store update is rejected because version number is equal or less. Incoming version: ", version, "this version is:", this.version)
     } else if (this.editor.getValue() !== nextProps.value) {
+      /* use this version number to avoid oscillation. */
       if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition, version);
       else this.setValue(nextProps.value, this.editor.selection.getCursor(), version);
     } else if (nextProps.cursorPosition) {
@@ -204,7 +205,7 @@ export default class ReactAce extends Component {
     return this.editor.session.getCursor();
   }
 
-  setCursor({row=0, column=0}={}, silent = true) {
+  setCursor({row = 0, column = 0}={}, silent = true) {
     var old = this._silent;
     this._silent = silent;
     this.editor.moveCursorToPosition({row, column});
@@ -302,7 +303,7 @@ export default class ReactAce extends Component {
         id={name}
         className={className}
         style={divStyle}
-        ref={(_)=>this.nativeElement=_}
+        ref={(_) => this.nativeElement = _}
       ></div>
     );
   }

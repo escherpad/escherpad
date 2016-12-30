@@ -8,7 +8,7 @@ import Selector from "../../lib/Selector";
 
 import OrderBySelection from "./OrderBySelection";
 import {getParentFolder} from "../account-list-view/BrowserColumnView";
-import {SET_CURRENT_FOLDER} from "../../store/postList";
+import {SET_CURRENT_FOLDER, setCurrentFolder} from "../../store/postList";
 
 import PostListView from "./PostListView";
 
@@ -45,21 +45,13 @@ class ListPanel extends React.Component {
   @autobind
   goBack() {
     // length == 2 when "/first_level".split() == ["", "first_level"]
-    const {currentFolder} = this.props.postList || {};
-    if (currentFolder.split('/').length <= 1) {
+    const {accountKey, currentFolder} = this.props.postList || {};
+    if (!!currentFolder && currentFolder.split('/').length <= 1) {
       console.log('reached root folder');
-      this.props.dispatch({
-        type: SET_CURRENT_FOLDER,
-        path: undefined,
-        accountKey: undefined
-      })
+      this.props.dispatch(setCurrentFolder())
     } else {
       let parentFolder = getParentFolder(currentFolder);
-      this.props.dispatch({
-        type: SET_CURRENT_FOLDER,
-        path: parentFolder
-        //notice: accountKey here should [OVERWRITE/NOT]
-      })
+      this.props.dispatch(setCurrentFolder(accountKey, parentFolder))
     }
   }
 

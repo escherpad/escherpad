@@ -24,7 +24,7 @@ export default class EditorView extends React.Component {
 
   render() {
     let {agent, user, post, options = {}, onScroll, style, ...props} = this.props;
-    let {id = "", source = "", _sourceVersion = 0, type} = post;
+    let {id = "", source = "", _v = 0, type} = post;
     if (typeof source !== 'string') source = JSON.stringify(source);
     let presence = post.presence ? post.presence[agent] : null;
     let cursorPosition = presence ? presence.cursor : undefined;
@@ -41,7 +41,7 @@ export default class EditorView extends React.Component {
                       style={styles}
                       value={source}
                       cursorPosition={cursorPosition}
-                      version={_sourceVersion}
+                      version={_v}
                       mimeType={type}
                       onChange={onChange}
                       onChangeScrollTop={onScroll} {...options}
@@ -87,7 +87,7 @@ export default class EditorView extends React.Component {
         id: post.id,
         source,
         presence: {},
-        _sourceVersion: version
+        _v: version
       }
     };
     if (post.source !== source) action.post.modifiedAt = Date.now();

@@ -22,9 +22,14 @@ export function post(state = {}, action) {
     return {_v: 0, _v0: 0, ...action.post}
   } else if (action.type === UPDATE_POST) {
     if (state.id !== action.post.id) return state;
-    return {
-      ... state, ...(action.post), presence: presence(state.presence, action), _v: (state._v + 1)
+    let newPost = {
+      ...state,
+      ...action.post,
+      presence: presence(state.presence, action),
+      // allow the editor to override this.
+      _v: action.post._v || (state._v + 1)
     };
+    return newPost
   } else if (action.type === OVERWRITE_POST) {
     if (state.id !== action.post.id) return state;
     let newPost = {
@@ -142,6 +147,7 @@ export function* pushPost() {
           //backlog: use collaboration to make sure the correct version is saved.
           // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
 
+          let oldPost = oldPosts[post.id];
           let oldTitle = oldPosts[post.id].title;
           if (oldTitle !== _post.title) {
             response = yield dapi.move(
@@ -166,11 +172,12 @@ export function* pushPost() {
   }
 }
 
+export const PULL_POST_FROM_SERVICE = "PULL_POST_FROM_SERVICE";
 export function* pullPostFromService() {
   "use strict";
   //feature: pull posts with differential synchronization
   while (true) {
-    const {state, action} = yield take(["PULL_POST_FROM_SERVICE", "SELECT_POST"]);
+    const {state, action} = yield take([PULL_POST_FROM_SERVICE, "SELECT_POST"]);
     const {accounts} = state;
     const {postId} = action;
     const _post = state.posts[postId];
@@ -184,7 +191,8 @@ export function* pullPostFromService() {
         let response = yield dapi.download(
           isDropboxId(postId) ? postId : _post.path + '/' + _post.title,
         );
-        console.log(response);
+        let meta = JSON.parse(response.meta);
+        console.log("meta is:", meta)
         // yield dispatch
         let result = yield dispatch({
           type: UPDATE_POST,
@@ -192,7 +200,7 @@ export function* pullPostFromService() {
             id: postId,
             //notice: hydrate the <string> type content to javascript object
             //notice: right now this just overwrites local copy.
-            title: JSON.parse(response.meta).name,
+            title: meta.name,
             source: response.content
           }
         });

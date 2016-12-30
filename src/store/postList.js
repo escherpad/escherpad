@@ -1,5 +1,5 @@
 /** Created by ge on 4/18/16. */
-import {dropboxAccountKey} from "./accounts/accounts";
+import {dropboxAccountKey, dropboxDateStringToIntDate} from "./accounts/accounts";
 export const ORDER_POSTS_BY = "ORDER_POSTS_BY";
 export const UPDATE_SEARCH_QUERY = "UPDATE_SEARCH_QUERY";
 export const SET_CURRENT_FOLDER = "SET_CURRENT_FOLDER";
@@ -22,9 +22,8 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
 }
 
 // action creator
-export function setFolder(accountKey, path) {
+export function setCurrentFolder(accountKey, path) {
   "use strict";
-  console.log('test this', accountKey);
   return {
     type: SET_CURRENT_FOLDER,
     accountKey,
@@ -33,44 +32,62 @@ export function setFolder(accountKey, path) {
 }
 
 import dapi from "../modules/dropbox";
-import {createPost} from "./posts/posts";
-import {take, dispatch} from "luna-saga";
+import {createPost, PULL_POST_FROM_SERVICE} from "./posts/posts";
+import {take, dispatch, call} from "luna-saga";
+import {getParentFolder} from "../components/account-list-view/BrowserColumnView";
 
-let QUERY = "*.md";
+let QUERIES = ["*md", "*ink", "*url"];
+
+function* listFilesByExtension(accessToken, accountKey, extension, path) {
+  console.warn(`searchQuery ${extension} and path ${path}`);
+  dapi.updateAccessToken(accessToken);
+  let searchResponse = yield dapi.search(extension, path, 0, 15, "filename");
+
+  if (searchResponse.matches) {
+    for (let ind in searchResponse.matches) {
+      const metadata = searchResponse.matches[ind].metadata;
+      if (metadata) {
+        console.log("metadata is", metadata);
+      } else {
+        console.warn('metadata is not defined.', searchResponse.matches[ind]);
+      }
+      const {type, post} = createPost();
+      const {id, name: title, path_display: path} = metadata;
+      const modifiedAt = dropboxDateStringToIntDate(metadata.client_modified);
+      yield dispatch({
+        type,
+        post: {
+          ...post,
+          //reminder: local post id is inconsistent with dropbox id.
+          id,
+          title,
+          path: path.split('/').slice(0, -1).join('/'),
+          modifiedAt,
+          accountKey: accountKey
+        }
+      });
+      // yield dispatch({type: PULL_POST_FROM_SERVICE, path, postId: id})
+    }
+  }
+}
 
 export function* onSetCurrentFolder() {
   "use strict";
   while (true) {
     let {state, action} = yield take(SET_CURRENT_FOLDER);
     const {path, accountKey} = action;
-
     if (!accountKey) {
       //notice: accountKey is not defined when at root
-    } else if (account.service === "dropbox") {
+      console.info('accountKey is undefined. Do not download folder.');
+    } else {
       const account = state.accounts[accountKey];
-      if (!action) {
+      if (!account) {
         console.warn("account not found by key:", accountKey);
       } else {
-        dapi.updateAccessToken(account.accessToken);
-        let searchResponse = yield dapi.search(QUERY, path, 0, 100, "filename");
-
-        if (searchResponse.matches) {
-          for (let ind in searchResponse.matches) {
-            let {metadata} = searchResponse.matches[ind];
-            let {type, post} = createPost();
-            let {id, name: title, path_display: path} = metadata;
-            yield dispatch({
-              type,
-              post: {
-                ...post,
-                //reminder: local post id is inconsistent with dropbox id.
-                id,
-                title,
-                path: path.split('/').slice(0, -1).join('/'),
-                accountKey: accountKey
-              }
-            });
-            yield dispatch({type: "PULL_POST_FROM_SERVICE", path, postId: id})
+        if (account.service === "dropbox") {
+          for (let k in QUERIES) {
+            const extension = QUERIES[k];
+            yield call(listFilesByExtension, account.accessToken, accountKey, extension, path);
           }
         }
       }

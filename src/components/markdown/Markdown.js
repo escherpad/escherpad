@@ -101,7 +101,7 @@ export default class Markdown extends React.Component {
     try {
       html = marked.render(source);
     } catch (e) {
-      console.log("markdown error: ", e);
+      console.warn("markdown error: ", e);
       html = source;
     }
     this.nativeElement.innerHTML = html || "";
@@ -123,7 +123,7 @@ export default class Markdown extends React.Component {
     try {
       html = marked.render(source);
     } catch (e) {
-      console.log("markdown error: ", e);
+      console.warn("markdown error: ", e);
       html = source;
     }
     var style = this.props.style;
