@@ -3,6 +3,10 @@
 
 ## Implementation Plans
 0. [important] fix rendering when no post exist.
+1. [ ] use parentFolder for path to avoid confusion with file path.
+1. [ ] make the folder tags much shorter.
+2. [ ] use parent folder name as back button
+3. [ ] make all folder name short.
 
 1. [ ] make it possible to click on the badges to go to folder (set: `postList.accountKey` and `.path`)
     - [ ] add trigger on `POSTLIST_GO_TO_FOLDER`
