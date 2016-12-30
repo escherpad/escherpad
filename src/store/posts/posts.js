@@ -141,6 +141,7 @@ export function* pushPost() {
         // note: saga is single threaded. If it hangs here, it will not
         // take on more "UPDATE_POST" events.
         let response;
+        //fixme: urgent: the upload only runs once, logic here is very unsound.
         if (post.title) {
           //issue: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
           //backlog: use id:<file_id> as the path, make sure `post.id` is dropbox id.
@@ -148,12 +149,12 @@ export function* pushPost() {
           // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
 
           let oldPost = oldPosts[post.id];
-          let oldTitle = oldPosts[post.id].title;
-          if (oldTitle !== _post.title) {
+          if (!oldPost) {
+            response = yield dapi.upload(_post.path + '/' + _post.title, _post.source, "overwrite", false, false);
+          } else if (oldPost.title !== _post.title) {
             response = yield dapi.move(
-              isDropboxId(post.id) ? post.id : _post.path + '/' + oldTitle,
+              isDropboxId(post.id) ? post.id : _post.path + '/' + oldPost.title,
               _post.path + '/' + _post.title, "overwrite", false, false);
-
             // now update local copy.
             oldPosts[post.id] = {
               ...(oldPosts[post.id] || {}),
