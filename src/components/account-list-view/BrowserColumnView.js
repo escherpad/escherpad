@@ -7,6 +7,7 @@ let {func, any, array} = PropTypes;
 import Folder from "./Folder";
 import File from "./File";
 import {dropboxAccountKey} from "../../store/accounts/accounts";
+import {listFiles} from "../../store/accountBrowser";
 
 require('./browser-column-view.scss');
 
@@ -31,26 +32,18 @@ class BrowserColumns extends Component {
 
   @autobind
   backupPath() {
-    let parentPath = getParentFolder(this.props.breadCrumb);
-    this.props.dispatch({
-      type: "LIST_FILES",
-      accountKey: dropboxAccountKey(this.props.account),
-      path: parentPath
-    });
+    let parentFolder = getParentFolder(this.props.breadCrumb);
+    this.props.dispatch(listFiles(parentFolder, dropboxAccountKey(this.props.account)));
   }
 
-  selectPath(path) {
+  selectPath(folder) {
     return () => {
-      this.props.dispatch({
-        type: "LIST_FILES",
-        accountKey: dropboxAccountKey(this.props.account),
-        path: path
-      })
+      this.props.dispatch(listFiles(folder, dropboxAccountKey(this.props.account), folder))
     }
   }
 
   render() {
-    let {backButtonText, searchQuery, items, breadCrumb: breadCrumb, onQueryUpdate} = this.props;
+    let {backButtonText, searchQuery, items, breadCrumb, onQueryUpdate} = this.props;
     return <div className="browser-column">
       <Row component="div" className="title-bar">
         {/*{backButtonText ? backButtonText : null}*/}

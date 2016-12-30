@@ -21,19 +21,25 @@ export function* onAccountBrowserOpen() {
   "use strict";
   while (true) {
     const {state, action} = yield take('ACCOUNT_BROWSER_OPEN');
-    yield dispatch({
-      type: "LIST_FILES",
-      accountKey: action.accountKey,
-      path: state.accountBrowser.cwd
-    })
+    yield dispatch(listFiles(state.accountBrowser.currentFolder, action.accountKey));
+  }
+}
+
+export const LIST_FILES = "LIST_FILES";
+export function listFiles(folder, accountKey) {
+  "use strict";
+  return {
+    type: LIST_FILES,
+    accountKey,
+    folder: folder
   }
 }
 
 export function* accountBrowserListFiles() {
   "use strict";
   while (true) {
-    const {state, action} = yield take("LIST_FILES");
-    const {accountKey, path} = action;
+    const {state, action} = yield take(LIST_FILES);
+    const {accountKey, folder} = action;
     if (!accountKey) {
       //notice: accountKey is not defined when at root
     } else {
@@ -43,11 +49,11 @@ export function* accountBrowserListFiles() {
       } else {
         if (account.service === "dropbox") {
           dapi.updateAccessToken(account.accessToken);
-          let listResponse = yield dapi.list(path);
+          let listResponse = yield dapi.list(folder);
           if (listResponse.entries) yield dispatch({
             type: "ACCOUNT_BROWSER",
-            path,
-            list: listResponse.entries
+            currentFolder: folder,
+            entries: listResponse.entries
           });
         }
       }

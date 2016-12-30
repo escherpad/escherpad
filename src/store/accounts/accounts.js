@@ -70,7 +70,7 @@ export function accounts(state = {}, action) {
 
 /* Action Creators */
 //backlog: move this to better place
-export function addAccountToPost(postId, account, path) {
+export function addAccountToPost(postId, account, parentFolder) {
   "use strict";
   //todo: use MERGE_POST type instead?
   return {
@@ -78,7 +78,7 @@ export function addAccountToPost(postId, account, path) {
     post: {
       id: postId,
       accountKey: dropboxAccountKey(account),
-      path
+      parentFolder
     }
   }
 }

@@ -68,7 +68,7 @@ class ListPanel extends React.Component {
         } else return (
           (typeof post.accountKey === "undefined" && accountKey === "localstorage") ||
           (typeof accountKey === "undefined" ? true :
-              (post.accountKey === accountKey && post.path.match(currentFolder))
+              (post.accountKey === accountKey && (post.path || post.parentFolder).match(currentFolder))
           )
         );
       })

@@ -33,7 +33,7 @@ export default class PostListItem extends React.Component {
       title,
       source,
       presence,
-      path,
+      parentFolder,
       accountKey,
       createdAt,
       modifiedAt
@@ -67,7 +67,7 @@ export default class PostListItem extends React.Component {
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
               <SmallBlueBadge
-                onClick={this.goToFolder}>{getServiceFromAccountKey(accountKey)}:{path}</SmallBlueBadge> :
+                onClick={this.goToFolder}>{/*getServiceFromAccountKey(accountKey)*/}{parentFolder}</SmallBlueBadge> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>
@@ -97,10 +97,10 @@ export default class PostListItem extends React.Component {
 
   @autobind
   goToFolder(e) {
-    const {accountKey, path} = this.props;
+    const {accountKey, parentFolder} = this.props;
     e.stopPropagation();
     e.preventDefault();
-    this.props.dispatch(setCurrentFolder(accountKey, path));
+    this.props.dispatch(setCurrentFolder(accountKey, parentFolder));
     // to prevent the parent from firing
   }
 

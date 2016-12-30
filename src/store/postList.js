@@ -13,8 +13,8 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
     return {
       ...state,
       accountKey: action.accountKey,
-      //reminder: [Call this `currentFolder`, because it is easier to change by *replace*] should this be called `currentFolder`, or path?
-      currentFolder: action.path
+      //reminder: [Call this `currentFolder`, because it is easier to change by *replace*] should this be called `currentFolder`, or parentFolder?
+      currentFolder: action.parentFolder
     };
   } else {
     return state;
@@ -22,12 +22,12 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
 }
 
 // action creator
-export function setCurrentFolder(accountKey, path) {
+export function setCurrentFolder(accountKey, parentFolder) {
   "use strict";
   return {
     type: SET_CURRENT_FOLDER,
     accountKey,
-    path
+    parentFolder
   };
 }
 
@@ -38,10 +38,10 @@ import {getParentFolder} from "../components/account-list-view/BrowserColumnView
 
 let QUERIES = ["*md", "*ink", "*url"];
 
-function* listFilesByExtension(accessToken, accountKey, extension, path) {
-  console.warn(`searchQuery ${extension} and path ${path}`);
+function* listFilesByExtension(accessToken, accountKey, extension, parentFolder) {
+  console.warn(`searchQuery ${extension} and parentFolder ${parentFolder}`);
   dapi.updateAccessToken(accessToken);
-  let searchResponse = yield dapi.search(extension, path, 0, 15, "filename");
+  let searchResponse = yield dapi.search(extension, parentFolder, 0, 15, "filename");
 
   if (searchResponse.matches) {
     for (let ind in searchResponse.matches) {
@@ -52,7 +52,7 @@ function* listFilesByExtension(accessToken, accountKey, extension, path) {
         console.warn('metadata is not defined.', searchResponse.matches[ind]);
       }
       const {type, post} = createPost();
-      const {id, name: title, path_display: path} = metadata;
+      const {id, name: title, path_display: parentFolder} = metadata;
       const modifiedAt = dropboxDateStringToIntDate(metadata.client_modified);
       yield dispatch({
         type,
@@ -61,12 +61,12 @@ function* listFilesByExtension(accessToken, accountKey, extension, path) {
           //reminder: local post id is inconsistent with dropbox id.
           id,
           title,
-          path: path.split('/').slice(0, -1).join('/'),
+          parentFolder: parentFolder.split('/').slice(0, -1).join('/'),
           modifiedAt,
           accountKey: accountKey
         }
       });
-      // yield dispatch({type: PULL_POST_FROM_SERVICE, path, postId: id})
+      // yield dispatch({type: PULL_POST_FROM_SERVICE, parentFolder, postId: id})
     }
   }
 }
@@ -75,7 +75,7 @@ export function* onSetCurrentFolder() {
   "use strict";
   while (true) {
     let {state, action} = yield take(SET_CURRENT_FOLDER);
-    const {path, accountKey} = action;
+    const {parentFolder, accountKey} = action;
     if (!accountKey) {
       //notice: accountKey is not defined when at root
       console.info('accountKey is undefined. Do not download folder.');
@@ -87,7 +87,7 @@ export function* onSetCurrentFolder() {
         if (account.service === "dropbox") {
           for (let k in QUERIES) {
             const extension = QUERIES[k];
-            yield call(listFilesByExtension, account.accessToken, accountKey, extension, path);
+            yield call(listFilesByExtension, account.accessToken, accountKey, extension, parentFolder);
           }
         }
       }

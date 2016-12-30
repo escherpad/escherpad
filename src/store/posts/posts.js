@@ -104,7 +104,7 @@ export function createPost() {
     type: ADD_POST,
     post: {
       id: $uuid(),
-      // path, //'in dropbox',
+      // parentFolder, //'in dropbox',
       // accountKey,
       createdAt: Date.now(),
       modifiedAt: Date.now(),
@@ -115,7 +115,7 @@ export function createPost() {
 import {accountKeyIsService, isDropboxId} from "../accounts/accounts";
 import {select, take, delay, call, dispatch} from "luna-saga";
 
-//fixme: implement process to dedupe repetitive posts that share same path and dropbox id.
+//fixme: implement process to dedupe repetitive posts that share same parentFolder and dropbox id.
 export function* dedupePosts() {
   "use strict";
 }
@@ -144,17 +144,17 @@ export function* pushPost() {
         //fixme: urgent: the upload only runs once, logic here is very unsound.
         if (post.title) {
           //issue: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
-          //backlog: use id:<file_id> as the path, make sure `post.id` is dropbox id.
+          //backlog: use id:<file_id> as the parentFolder, make sure `post.id` is dropbox id.
           //backlog: use collaboration to make sure the correct version is saved.
-          // response = yield dapi.move(post.id, _post.path + '/' + _post.title, "overwrite", false, false);
+          // response = yield dapi.move(post.id, _post.parentFolder + '/' + _post.title, "overwrite", false, false);
 
           let oldPost = oldPosts[post.id];
           if (!oldPost) {
-            response = yield dapi.upload(_post.path + '/' + _post.title, _post.source, "overwrite", false, false);
+            response = yield dapi.upload(_post.parentFolder + '/' + _post.title, _post.source, "overwrite", false, false);
           } else if (oldPost.title !== _post.title) {
             response = yield dapi.move(
-              isDropboxId(post.id) ? post.id : _post.path + '/' + oldPost.title,
-              _post.path + '/' + _post.title, "overwrite", false, false);
+              isDropboxId(post.id) ? post.id : _post.parentFolder + '/' + oldPost.title,
+              _post.parentFolder + '/' + _post.title, "overwrite", false, false);
             // now update local copy.
             oldPosts[post.id] = {
               ...(oldPosts[post.id] || {}),
@@ -162,7 +162,7 @@ export function* pushPost() {
             };
           }
         } else {
-          response = yield dapi.upload(_post.path + '/' + _post.title, _post.source, "overwrite", false, false);
+          response = yield dapi.upload(_post.parentFolder + '/' + _post.title, _post.source, "overwrite", false, false);
         }
         // console.log(response);
       } catch (e) {
@@ -188,9 +188,9 @@ export function* pullPostFromService() {
       let accessToken = account.accessToken;
       dapi.updateAccessToken(accessToken);
       try {
-        // use id:<file_id> as the path
+        // use id:<file_id> as the parentFolder
         let response = yield dapi.download(
-          isDropboxId(postId) ? postId : _post.path + '/' + _post.title,
+          isDropboxId(postId) ? postId : _post.parentFolder + '/' + _post.title,
         );
         let meta = JSON.parse(response.meta);
         console.log("meta is:", meta)
@@ -205,8 +205,6 @@ export function* pullPostFromService() {
             source: response.content
           }
         });
-        console.log('========>', result);
-
       } catch (e) {
         console.warn('exception during pulling', e);
       }

@@ -41,7 +41,7 @@ class AccountEntryWithExpandableBrowser extends Component {
   @autobind
   onSubmit() {
     let {dispatch, post, account, accountBrowser} = this.props;
-    dispatch(addAccountToPost(post.id, account, accountBrowser.path));
+    dispatch(addAccountToPost(post.id, account, accountBrowser.currentFolder));
     this._close();
   }
 
@@ -58,8 +58,8 @@ class AccountEntryWithExpandableBrowser extends Component {
         {item}
         <BrowserColumnView title={account.title}
                            account={account}
-                           breadCrumb={accountBrowser.path}
-                           items={accountBrowser.list}
+                           breadCrumb={accountBrowser.currentFolder}
+                           items={accountBrowser.entries}
                            searchQuery={null}
                            backButtonText="back"
                            onSelect={(rootPath) => {

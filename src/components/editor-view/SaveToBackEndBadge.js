@@ -23,7 +23,7 @@ export default class BackEndBadge extends Component {
     return (
       <span>
         {(post.accountKey) ?
-          <BlueBadge onClick={this.openModal}>{getServiceFromAccountKey(post.accountKey)}:{post.path}</BlueBadge> :
+          <BlueBadge onClick={this.openModal}>{getServiceFromAccountKey(post.accountKey)}:{post.parentFolder}</BlueBadge> :
           <button className="save-to-backend-badge" onClick={this.openModal}>
             save to...
           </button>
