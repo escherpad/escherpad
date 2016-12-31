@@ -4,20 +4,23 @@ const ALLOWED_SERVICES = ["email", "dropbox"];
 export function validateAccount(account) {
   // account is valid if account has the service field, and service is one of the ones listed above.
   // require fields: service, uid.
-  return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.id);
+  return (!!account && account.service && (ALLOWED_SERVICES.indexOf(account.service) > -1) && account.uid);
 }
+
 export function dropboxAccountKey(account) {
-  if (!account) {
-    console.warn("account is undefined", account);
-    return undefined;
-  } else {
-    return (account ? account.service + ':' + account.uid : undefined);
-  }
+  return (account ? account.service + ':' + account.uid : undefined);
 }
 
 export function dropboxDateStringToIntDate(dateString) {
   "use strict";
+  if (typeof dateString === "undefined") throw Error('variable dateString is not defined');
   return moment(dateString).valueOf();
+}
+
+export function unixEpochToDropboxDateString(unixEpoch) {
+  "use strict";
+  if (typeof unixEpoch === "undefined") throw Error('variable unixEpoch is not defined');
+  return moment.utc(unixEpoch).format()
 }
 
 export function isDropboxId(postId) {
@@ -43,26 +46,23 @@ export function accountKeyIsService(accountKey, targetService) {
 
 export function accounts(state = {}, action) {
   if (action.type === "UPSERT_ACCOUNT") {
-    let {account} = action;
-    if (!validateAccount(account)) return state;
+    if (!validateAccount(action.account)) return state;
     return {
       ...state,
-      [dropboxAccountKey(account)]: account
+      [dropboxAccountKey(action.account)]: action.account
     };
   } else if (action.type === "UPDATE_ACCOUNT") {
-    let {account} = action;
-    if (!validateAccount(account)) return state;
-    let _key = dropboxAccountKey(account);
+    if (!validateAccount(action.account)) return state;
+    let _key = dropboxAccountKey(action.account);
     if (!state[_key]) return state;
     return {
       ...state,
-      [dropboxAccountKey(account)]: {...state[dropboxAccountKey], ...account}
+      [dropboxAccountKey(action.account)]: {...state[dropboxAccountKey], ...action.account}
     };
   } else if (action.type === "DELETE_ACCOUNT") {
-    let {account} = action;
-    if (!validateAccount(account)) return state;
+    if (!validateAccount(action.account)) return state;
     let newState = {...state};
-    delete newState[dropboxAccountKey(account)];
+    delete newState[dropboxAccountKey(action.account)];
     return newState;
   }
   return state;
