@@ -1,7 +1,11 @@
 ## Two Main Tasks
 
+2. [todo] standardize the architecture of text editor, make it pluggable and standardized
+1. [bug] fix editor modal selection
+1. [bug] have note change `uuid` to dropbox id when ADD_ACCOUNT_TO_POST
+2. [bug] lingering unsaved modification due to limitation of `saga`
+3. [feature] highlight the note that is currently open in the editor.
 1. [issue] the keystroke response in the editors is a bit slow. Investigate cause and fix it
-2. standardize the architecture of text editor, make it pluggable and standardized
 3. add infinite scroll to the postList
 4. reminder: deal with the corner cases where `maxLength` has already gone up. 
     ```
@@ -9,14 +13,18 @@
     ```
 5. add modal for note deletion
 6. in that modal, link the deletion to dropbox backend with an option.
-
+7. [feature] add dropbox global results in a separate list in `postList`
 
 ## Implementation Plans
-
 
 ## TODOs
 
 ## Backlog TODO Items
+
+### Editor Enhancement Ideas
+
+- todo item management (batch update multiple todo strings, move todo items) 
+- customizable tags, highlight particular keywords
 
 1. [ ] Batch action on updating all notes associated: like update todo item in comments when the item is updated in master todo file.
 1. [ ] can't save to GitHub repo yet.
