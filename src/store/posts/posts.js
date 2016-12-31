@@ -112,7 +112,7 @@ export function createPost() {
   }
 }
 
-import {accountKeyIsService, isDropboxId} from "../accounts/accounts";
+import {accountKeyIsService, isDropboxId, unixEpochToDropboxDateString} from "../accounts/accounts";
 import {select, take, delay, call, dispatch} from "luna-saga";
 
 //fixme: implement process to dedupe repetitive posts that share same parentFolder and dropbox id.
@@ -120,55 +120,72 @@ export function* dedupePosts() {
   "use strict";
 }
 
+function fileIsBlackListed(title = "") {
+  "use strict";
+  return (title.match(/\.(docx?|png)$/));
+}
+
+function fileIsWhiteListedForUpload(title = "") {
+  "use strict";
+  //todo: add url to this list *after* adding editor view with built-in iframe preview.
+  return (title.match(/\.(md|txt)$/));
+}
+
+function extensionSupportPreview(title = "") {
+  "use strict";
+  return (title.match(/\.(docx?)$/));
+}
+
 import dapi from "../../modules/dropbox";
 //done: move `postPost` to proper place
-//fixme: need to push post by post.id. Path allows empty post to overwrite existing files.
+//resolved: can NOT push (upload) post by post.id. Post.id are only used in pulling.
 export function* pushPost() {
   "use strict";
-  let oldPosts = yield select('posts');
   while (true) {
     //todo: use MERGE_POST type instead?
+    //reminder: race condition when switching between different posts, updates gets ignored.
+    let oldPosts = yield select('posts');
     const {state, action} = yield take("UPDATE_POST");
     const {accounts} = state;
-    const {post} = action;
-    let _post = state.posts[post.id];
-    // console.log(_post);
-    let account = state.accounts[_post.accountKey];
-    if (accountKeyIsService(_post.accountKey, "dropbox")) {
-      let accessToken = account.accessToken;
-      dapi.updateAccessToken(accessToken);
-      try {
-        // note: saga is single threaded. If it hangs here, it will not
-        // take on more "UPDATE_POST" events.
-        let response;
-        //fixme: urgent: the upload only runs once, logic here is very unsound.
-        if (post.title) {
-          //issue: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
-          //backlog: use id:<file_id> as the parentFolder, make sure `post.id` is dropbox id.
-          //backlog: use collaboration to make sure the correct version is saved.
-          // response = yield dapi.move(post.id, _post.parentFolder + '/' + _post.title, "overwrite", false, false);
+    let postFromState = state.posts[action.post.id];
 
-          let oldPost = oldPosts[post.id];
+    if (fileIsBlackListed(postFromState.title || action.post.title)) {
+      console.warn("file update has been prevented");
+    } else if (fileIsWhiteListedForUpload(postFromState.title || action.post.title)) {
+      let account = state.accounts[postFromState.accountKey];
+      if (accountKeyIsService(postFromState.accountKey, "dropbox")) {
+        let accessToken = account.accessToken;
+        dapi.updateAccessToken(accessToken);
+        try {
+          // note: saga is single threaded. If it hangs here, it will not
+          // take on more "UPDATE_POST" events.
+          let response;
+          //fixme: urgent: the upload only runs once, logic here is very unsound.
+          let oldPost = oldPosts[action.post.id];
           if (!oldPost) {
-            response = yield dapi.upload(_post.parentFolder + '/' + _post.title, _post.source, "overwrite", false, false);
-          } else if (oldPost.title !== _post.title) {
-            response = yield dapi.move(
-              isDropboxId(post.id) ? post.id : _post.parentFolder + '/' + oldPost.title,
-              _post.parentFolder + '/' + _post.title, "overwrite", false, false);
-            // now update local copy.
-            oldPosts[post.id] = {
-              ...(oldPosts[post.id] || {}),
-              ...post
-            };
+            response = yield dapi.upload(postFromState.parentFolder + '/' + postFromState.title, postFromState.source, "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
+          } else {
+            //fixed: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
+            //done: use id:<file_id> as the parentFolder, make sure `post.id` is dropbox id.
+            //backlog: use collaboration to make sure the correct version is saved.
+            //notice: we assume that only one of the title and the content are changed.
+            if (action.post.title && oldPost.title !== postFromState.title) {
+              response = yield dapi.move(
+                oldPost.parentFolder + '/' + oldPost.title,
+                postFromState.parentFolder + '/' + postFromState.title, "overwrite", false, false);
+            }
+            if (typeof action.post.source !== "undefined" && action.post.source !== oldPost.source) {
+              console.log('=====> Now upload');
+              response = yield dapi.upload(postFromState.parentFolder + "/" + postFromState.title, postFromState.source, "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
+            }
           }
-        } else {
-          response = yield dapi.upload(_post.parentFolder + '/' + _post.title, _post.source, "overwrite", false, false);
+          // console.log(response);
+        } catch (e) {
+          console.warn('exception during upload', e);
         }
-        // console.log(response);
-      } catch (e) {
-        console.warn('exception during upload', e);
       }
     }
+
     yield call(delay, 500);
   }
 }
@@ -182,31 +199,57 @@ export function* pullPostFromService() {
     const {accounts} = state;
     const {postId} = action;
     const _post = state.posts[postId];
-    // console.log(_post);
     let account = state.accounts[_post.accountKey];
-    if (accountKeyIsService(_post.accountKey, "dropbox")) {
-      let accessToken = account.accessToken;
-      dapi.updateAccessToken(accessToken);
-      try {
-        // use id:<file_id> as the parentFolder
-        let response = yield dapi.download(
-          isDropboxId(postId) ? postId : _post.parentFolder + '/' + _post.title,
-        );
-        let meta = JSON.parse(response.meta);
-        console.log("meta is:", meta)
-        // yield dispatch
-        let result = yield dispatch({
-          type: UPDATE_POST,
-          post: {
-            id: postId,
-            //notice: hydrate the <string> type content to javascript object
-            //notice: right now this just overwrites local copy.
-            title: meta.name,
-            source: response.content
+    let accessToken = account.accessToken;
+    if (fileIsBlackListed(_post.title)) {
+      if (accountKeyIsService(_post.accountKey, "dropbox")) {
+        dapi.updateAccessToken(accessToken);
+        try {
+          let response;
+          if (extensionSupportPreview(_post.title)) {
+            response = yield dapi.getPreview(_post.id || _post.parentFolder + "/" + _post.title);
+          } else {
+            response = yield dapi.downloadBlob(_post.id || _post.parentFolder + "/" + _post.title);
           }
-        });
-      } catch (e) {
-        console.warn('exception during pulling', e);
+          let result = yield dispatch({
+            type: UPDATE_POST,
+            post: {
+              id: postId,
+              title: response.metadata.name,
+              // this is a PDF string.
+              previewURL: URL.createObjectURL(response.blob)
+            }
+          });
+
+        } catch (e) {
+          console.warn("download preview failed", e);
+        }
+      }
+    } else {
+      if (accountKeyIsService(_post.accountKey, "dropbox")) {
+        dapi.updateAccessToken(accessToken);
+        try {
+          // use id:<file_id> as the parentFolder
+          let response = yield dapi.download(
+            isDropboxId(postId) ? postId : _post.parentFolder + '/' + _post.title,
+          );
+          let metadata = response.metadata;
+          console.log("pulling request: metadata is:", metadata);
+          //, "\ncontent is: ", response.content);
+          // yield dispatch
+          let result = yield dispatch({
+            type: UPDATE_POST,
+            post: {
+              id: postId,
+              //notice: hydrate the <string> type content to javascript object
+              //notice: right now this just overwrites local copy.
+              title: metadata.name,
+              source: response.content
+            }
+          });
+        } catch (e) {
+          console.warn('exception during pulling', e);
+        }
       }
     }
     yield call(delay, 500);

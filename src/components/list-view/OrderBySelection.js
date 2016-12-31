@@ -5,10 +5,12 @@ import Dropdown from "../dropdown/Dropdown";
 
 require('./order-by-dropdown.scss');
 const options = [
-  {value: "createdAt", label: "Created"},
-  {value: "modifiedAt", label: "Recent"}
+  {value: "-modifiedAt", label: "Recent"},
+  {value: "-title", label: "by Title [des]"},
+  {value: "-createdAt", label: "Created"},
+  {value: "title", label: "by Title [asc]"}
 ];
-var {func, any} = React.PropTypes;
+const {func, any} = React.PropTypes;
 export default class OrderBySelection extends React.Component {
   static propTypes = {
     orderBy: any,

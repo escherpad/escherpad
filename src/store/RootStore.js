@@ -84,7 +84,7 @@ window.onstorage = () => {
 // for debug purpose
 window.dispatch = rootStore.dispatch.bind(rootStore);
 
-rootStore.update$.subscribe(({state, action}) => {
+rootStore.update$.debounceTime(500).subscribe(({state, action}) => {
   console.log("state is", state, "action is", action);
   if (action.type === "STORAGE_UPDATE") return;
   const serialized = JSON.stringify(state);
@@ -92,6 +92,7 @@ rootStore.update$.subscribe(({state, action}) => {
   // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
   // console.log(serialized);
   window.localStorage.setItem(GITTOR_STORE, serialized);
+  return;
 
 
   //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.

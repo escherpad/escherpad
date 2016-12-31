@@ -57,7 +57,13 @@ class ListPanel extends React.Component {
 
   //done: throttling is working perfectly.
   @throttle(400)
-  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder}={}) {
+  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder, maxLength = 15}={}) {
+    let ascending = 1, _orderBy = orderBy;
+    if (orderBy.match(/^-/)) {
+      ascending = 0;
+      _orderBy = orderBy.slice(1);
+    }
+
     console.log('accountKey', accountKey);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
@@ -72,9 +78,17 @@ class ListPanel extends React.Component {
           )
         );
       })
-      .sort((a, b) => (a[orderBy] - b[orderBy]))
-      .reverse();
-    this.setState({orderedPosts, currentSearchQuery: searchQuery});
+      .sort((a, b) => (
+        a[_orderBy] > b[_orderBy] ? 1 :
+          a[_orderBy] === b[_orderBy] ? 0 :
+            -1
+      ));
+    this.setState({
+      orderedPosts: ascending ?
+        orderedPosts.slice(0, maxLength) :
+        orderedPosts.reverse().slice(0, maxLength),
+      currentSearchQuery: searchQuery
+    });
   }
 
   @autobind

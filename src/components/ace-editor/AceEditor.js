@@ -72,7 +72,7 @@ export default class ReactAce extends Component {
     this.editor.getSession().setMode(`ace/mode/${mode}`);
     if (theme) this.editor.setTheme(`ace/theme/${theme}`);
     this.editor.setFontSize(fontSize);
-    this.setValue(value, cursorPosition);
+    this.setValue(value, cursorPosition, this.version, true);
     // editor.session.doc.positionToIndex(editor.selection.getCursor())
     this.editor.renderer.setShowGutter(showGutter);
     this.editor.getSession().setUseWrapMode(wrapEnabled);
@@ -104,14 +104,15 @@ export default class ReactAce extends Component {
       this.updateScrollMargin(scrollMargin);
     }
 
-
     if (onLoad) {
       onLoad(this.editor);
     }
   }
 
+  //note: timed to take less than 0.060 ms
+  //and called a few times during input.
   componentWillReceiveProps(nextProps) {
-    var oldProps = this.props;
+    const oldProps = this.props;
     let {version} = nextProps;
 
     for (let i = 0; i < editorOptions.length; i++) {
@@ -152,8 +153,8 @@ export default class ReactAce extends Component {
       // console.warn("store update is rejected because version number is equal or less. Incoming version: ", version, "this version is:", this.version)
     } else if (this.editor.getValue() !== nextProps.value) {
       /* use this version number to avoid oscillation. */
-      if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition, version);
-      else this.setValue(nextProps.value, this.editor.selection.getCursor(), version);
+      if (nextProps.cursorPosition) this.setValue(nextProps.value, nextProps.cursorPosition, version, true);
+      else this.setValue(nextProps.value, this.editor.selection.getCursor(), version, true);
     } else if (nextProps.cursorPosition) {
       // let old = oldProps.cursorPosition;
       let old = this.editor.selection.getCursor();
@@ -164,6 +165,12 @@ export default class ReactAce extends Component {
       }
     }
   }
+
+  shouldComponentUpdate(newProps) {
+    return newProps.width !== this.props.width ||
+      newProps.height !== this.props.height ||
+      newProps.lineHeight !== this.props.lineHeight;
+  };
 
   componentWillUnmount() {
     this.editor.off('focus', this.onFocus);
@@ -183,14 +190,14 @@ export default class ReactAce extends Component {
     this.version = version;
   }
 
-  setValue(value, cursorPosition, silent = true, version) {
+  setValue(value, cursorPosition, version = undefined, silent = true) {
     // editor.setValue is a synchronous function call, change event is emitted before setValue return. This way we can prevent the changeCursor event from firing.
-    var old = this._silent;
+    let old = this._silent;
     this._silent = silent;
     this.editor.setValue(value, 1); //this sets the start to beginning of the document.
     // moveCursor... is also a synchronous call. Change event is emitted before it returns.
     this.setCursor(cursorPosition);
-    this.setVersion(version);
+    if (typeof version !== "undefined") this.setVersion(version);
     this.editor.focus();
     this._silent = old;
   }
@@ -198,6 +205,10 @@ export default class ReactAce extends Component {
   focus() {
     this.editor.focus();
     return this;
+  }
+
+  resize(timeout = 0) {
+    setTimeout(this.editor.resize.bind(this.editor), timeout);
   }
 
   // never needed
@@ -291,20 +302,17 @@ export default class ReactAce extends Component {
     this.props.onChangeScrollTop(scrollTop);
   }
 
-  resize() {
-    setTimeout(this.editor.resize.bind(this.editor), 0);
-  }
-
   render() {
     const {name, className, width, height, lineHeight} = this.props;
     const divStyle = {width, height, lineHeight};
+    console.warn('rendering AceEditor');
     return (
       <div
         id={name}
         className={className}
         style={divStyle}
         ref={(_) => this.nativeElement = _}
-      ></div>
+      />
     );
   }
 }

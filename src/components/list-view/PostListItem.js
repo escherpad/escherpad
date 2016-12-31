@@ -6,13 +6,12 @@ import {Flex, FlexItem, FlexSpacer} from "layout-components";
 import Radium from "radium";
 import Placeholder from "../placeholder/Placeholder";
 import moment from "moment";
-import {getServiceFromAccountKey} from "../../store/accounts/accounts";
-import {setCurrentFolder} from "../../store/postList";
-import {getParentFolder} from "../account-list-view/BrowserColumnView";
+import {BreadCrumBadges} from "./BreadCrumBadges";
 
 require('./post-item.scss');
 
-var {string, any, number, func} = React.PropTypes;
+const {string, any, number, func} = React.PropTypes;
+
 @Radium
 export default class PostListItem extends React.Component {
   static propTypes = {
@@ -36,7 +35,8 @@ export default class PostListItem extends React.Component {
       parentFolder,
       accountKey,
       createdAt,
-      modifiedAt
+      modifiedAt,
+      dispatch,
     } = this.props;
 
     let timeStamp;
@@ -66,8 +66,7 @@ export default class PostListItem extends React.Component {
         <Flex row style={{justifyContent: "right"}} className="modified-at">
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
-              <SmallBlueBadge
-                onClick={this.goToFolder}>{/*getServiceFromAccountKey(accountKey)*/}{parentFolder}</SmallBlueBadge> :
+              <BreadCrumBadges accountKey={accountKey} path={parentFolder} dispatch={dispatch}/> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>
@@ -93,15 +92,6 @@ export default class PostListItem extends React.Component {
       type: "DELETE_POST",
       id: this.props.id
     })
-  }
-
-  @autobind
-  goToFolder(e) {
-    const {accountKey, parentFolder} = this.props;
-    e.stopPropagation();
-    e.preventDefault();
-    this.props.dispatch(setCurrentFolder(accountKey, parentFolder));
-    // to prevent the parent from firing
   }
 
 }

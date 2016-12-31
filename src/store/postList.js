@@ -36,12 +36,12 @@ import {createPost, PULL_POST_FROM_SERVICE} from "./posts/posts";
 import {take, dispatch, call} from "luna-saga";
 import {getParentFolder} from "../components/account-list-view/BrowserColumnView";
 
-let QUERIES = ["*md", "*ink", "*url"];
+let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc"];
 
 function* listFilesByExtension(accessToken, accountKey, extension, parentFolder) {
   console.warn(`searchQuery ${extension} and parentFolder ${parentFolder}`);
   dapi.updateAccessToken(accessToken);
-  let searchResponse = yield dapi.search(extension, parentFolder, 0, 15, "filename");
+  let searchResponse = yield dapi.search(extension, parentFolder, 0, 100, "filename");
 
   if (searchResponse.matches) {
     for (let ind in searchResponse.matches) {

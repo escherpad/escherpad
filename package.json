@@ -97,6 +97,7 @@
     "react-ace": "^3.2.0",
     "react-hot-loader": "^3.0.0-beta.2",
     "react-inline": "^0.8.2",
+    "react-pdf-js": "^1.0.32",
     "react-popover": "^0.4.4",
     "read": "^1.0.7",
     "regenerator": "^0.8.42",

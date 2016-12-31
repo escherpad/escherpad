@@ -1,19 +1,16 @@
 ## Two Main Tasks
-1. [todo] add dropbox folder view support.
+1. [x] add dropbox folder view support.
 
 ## Implementation Plans
-0. [important] fix rendering when no post exist.
-1. [ ] use parentFolder for path to avoid confusion with file path.
-1. [ ] make the folder tags much shorter.
-2. [ ] use parent folder name as back button
-3. [ ] make all folder name short.
-
-1. [ ] make it possible to click on the badges to go to folder (set: `postList.accountKey` and `.path`)
-    - [ ] add trigger on `POSTLIST_GO_TO_FOLDER`
-2. [ ] add handler for action: `POSTLIST_GO_TO_FOLDER`: post list filtering, and download list of notes from dropbox
-
-3. Batch action on updating all notes associated: like update todo item in comments when the item is updated
-in master todo file.
+1. [ ] Batch action on updating all notes associated: like update todo item in comments when the item is updated in master todo file.
+2. [x] fix rendering when no post exist.
+3. [x] use parentFolder for path to avoid confusion with file path.
+4. [x] make the folder tags much shorter.
+5. [x] use parent folder name as back button
+6. [x] make all folder name short.
+7. [x] make it possible to click on the badges to go to folder (set: `postList.accountKey` and `.path`)
+    - [x] add trigger on `POSTLIST_GO_TO_FOLDER`
+8. [x] add handler for action: `POSTLIST_GO_TO_FOLDER`: post list filtering, and download list of notes from dropbox
 
 ## TODOs
 
