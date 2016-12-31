@@ -14,7 +14,7 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
       ...state,
       accountKey: action.accountKey,
       //reminder: [Call this `currentFolder`, because it is easier to change by *replace*] should this be called `currentFolder`, or parentFolder?
-      currentFolder: action.parentFolder
+      currentFolder: action.folder
     };
   } else {
     return state;
@@ -22,12 +22,12 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
 }
 
 // action creator
-export function setCurrentFolder(accountKey, parentFolder) {
+export function setCurrentFolder(accountKey, folder) {
   "use strict";
   return {
     type: SET_CURRENT_FOLDER,
     accountKey,
-    parentFolder
+    folder
   };
 }
 
@@ -75,19 +75,18 @@ export function* onSetCurrentFolder() {
   "use strict";
   while (true) {
     let {state, action} = yield take(SET_CURRENT_FOLDER);
-    const {parentFolder, accountKey} = action;
     if (!accountKey) {
       //notice: accountKey is not defined when at root
       console.info('accountKey is undefined. Do not download folder.');
     } else {
-      const account = state.accounts[accountKey];
+      const account = state.accounts[action.accountKey];
       if (!account) {
-        console.warn("account not found by key:", accountKey);
+        console.warn("account not found by key:", action.accountKey);
       } else {
         if (account.service === "dropbox") {
           for (let k in QUERIES) {
             const extension = QUERIES[k];
-            yield call(listFilesByExtension, account.accessToken, accountKey, extension, parentFolder);
+            yield call(listFilesByExtension, account.accessToken, action.accountKey, extension, action.folder);
           }
         }
       }
