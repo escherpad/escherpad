@@ -75,7 +75,7 @@ export function* onSetCurrentFolder() {
   "use strict";
   while (true) {
     let {state, action} = yield take(SET_CURRENT_FOLDER);
-    if (!accountKey) {
+    if (!action.accountKey) {
       //notice: accountKey is not defined when at root
       console.info('accountKey is undefined. Do not download folder.');
     } else {
