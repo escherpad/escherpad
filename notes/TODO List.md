@@ -1,7 +1,15 @@
 ## Two Main Tasks
 
-2. [issue] the keystroke response in the editors is a bit slow. Investigate cause and fix it
-1. [ ] standardize the architecture of text editor, make it pluggable and standardized
+1. [issue] the keystroke response in the editors is a bit slow. Investigate cause and fix it
+2. standardize the architecture of text editor, make it pluggable and standardized
+3. add infinite scroll to the postList
+4. reminder: deal with the corner cases where `maxLength` has already gone up. 
+    ```
+    collapse only when existing items are not inside the maxLength?
+    ```
+5. add modal for note deletion
+6. in that modal, link the deletion to dropbox backend with an option.
+
 
 ## Implementation Plans
 
