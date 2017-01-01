@@ -1,5 +1,8 @@
 ## Todos
 
+1. [ ] show list of folders from dropbox in search view.
+    - Gittor
+    - interview preps
 0. [x] do NOT download search result in root folder.
 1. [work in progress] create new note with the same extension, accountKey and path as current note
     1. [x] add `mimeType` field to posts
