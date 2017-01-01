@@ -41,7 +41,7 @@ class ListPanel extends React.Component {
     if (posts !== this.props.posts || postList !== this.props.postList) this.updatePosts(posts, postList);
   }
 
-  /*in progress: add back button to go back to root folder*/
+  /*done: add back button to go back to root folder*/
   @autobind
   goBack() {
     // length == 2 when "/first_level".split() == ["", "first_level"]

@@ -78,6 +78,8 @@ export function* onSetCurrentFolder() {
     if (!action.accountKey) {
       //notice: accountKey is not defined when at root
       console.info('accountKey is undefined. Do not download folder.');
+    } else if (!action.path) {
+      console.warn('reached root folder, do NOT download search result here since there will be too many');
     } else {
       const account = state.accounts[action.accountKey];
       if (!account) {
