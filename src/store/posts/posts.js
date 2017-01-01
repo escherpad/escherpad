@@ -120,7 +120,7 @@ function fileIsBlackListed(title = "") {
 function fileIsWhiteListedForUpload(title = "") {
   "use strict";
   //todo: add url to this list *after* adding editor view with built-in iframe preview.
-  return (title.match(/\.(md|txt)$/));
+  return (title.match(/\.(md|txt|ink)$/));
 }
 
 function extensionSupportPreview(title = "") {
