@@ -1,5 +1,6 @@
 /** Created by ge on 3/8/16. */
-import 'react-fastclick';
+// remove react-fastclick to recover scrolls
+// import 'react-fastclick';
 import React from "react";
 import {render} from "react-dom";
 import dapi from "./modules/dropbox";

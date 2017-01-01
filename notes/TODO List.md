@@ -1,9 +1,15 @@
 ## Mobile (iPad) Ready Preparation: Use Flow
 
-0. create post => add account to post, update post key
-1. create new note with the same extension, accountKey and path as current note
+1. [in progress] create new note with the same extension, accountKey and path as current note
 2. make it easy to switch to a different note in profile view.
     - [ ] profile view `<ListPanel/>` vs `<Editor/>` dual view (save in viewMode object?)
+3. fast-click messes up all scroll events:
+    1. save to backend folder view is not scrollable at all
+    2. posts focus on EditorView upon touch start, which then changes the focus
+    
+### done
+
+0. [x] create post => add account to post, update post key
 
 ## TODOs
 2. [todo] standardize the architecture of text editor, make it pluggable and standardized
