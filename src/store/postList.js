@@ -53,7 +53,7 @@ function* listFilesByExtension(accessToken, accountKey, extension, parentFolder)
       }
       const {type, post} = createPost();
       const {id, name: title, path_display: parentFolder} = metadata;
-      const modifiedAt = dropboxDateStringToIntDate(metadata.client_modified);
+      const modifiedAt = dropboxDateStringToIntDate(metadata.client_modified || metadata.server_modified);
       yield dispatch({
         type,
         post: {

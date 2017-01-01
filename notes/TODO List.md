@@ -1,11 +1,16 @@
-## Two Main Tasks
+## Mobile (iPad) Ready Preparation: Use Flow
 
+0. create post => add account to post, update post key
+1. create new note with the same extension, accountKey and path as current note
+2. make it easy to switch to a different note in profile view.
+    - [ ] profile view `<ListPanel/>` vs `<Editor/>` dual view (save in viewMode object?)
+
+## TODOs
 2. [todo] standardize the architecture of text editor, make it pluggable and standardized
 1. [bug] fix editor modal selection
 1. [bug] have note change `uuid` to dropbox id when ADD_ACCOUNT_TO_POST
 2. [bug] lingering unsaved modification due to limitation of `saga`
 3. [feature] highlight the note that is currently open in the editor.
-1. [issue] the keystroke response in the editors is a bit slow. Investigate cause and fix it
 3. add infinite scroll to the postList
 4. reminder: deal with the corner cases where `maxLength` has already gone up. 
     ```
@@ -15,11 +20,15 @@
 6. in that modal, link the deletion to dropbox backend with an option.
 7. [feature] add dropbox global results in a separate list in `postList`
 
-## Implementation Plans
+## done
+3. [x] fix file saving to dropbox bug. where post uuid is supplanted by dropbox id
+1. [x] fix create post and upload post bug after working through the process quite a number of times. 
+1. [x] the keystroke response in the editors is a bit slow. Investigate cause and fix it.
 
-## TODOs
-
-## Backlog TODO Items
+    note: turned out that using `@debounce(4)` with the editor change events complete fixed 
+    the problem! The rendering takes about 78 ms. If two of these are triggered in between
+    the onChange handler and the onCursorChange handler of the AceEditor, it blocks the
+    execution of the editor. This 156 ms is enough and quite obvious between keystrokes.
 
 ### Editor Enhancement Ideas
 
@@ -65,7 +74,7 @@ file :
 
     might want to batch the props that are applied to the list view. **not just** `post`.
     `postList` too.
-
+    
 3. [x] fix note saving, make sure final version is always saved.
 4. [x] search bar Chinese input throttling
 1. [x] add search

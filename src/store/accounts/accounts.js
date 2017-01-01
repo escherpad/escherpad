@@ -13,7 +13,7 @@ export function dropboxAccountKey(account) {
 
 export function dropboxDateStringToIntDate(dateString) {
   "use strict";
-  if (typeof dateString === "undefined") throw Error('variable dateString is not defined');
+  if (typeof dateString === "undefined") console.error('variable dateString is not defined');
   return moment(dateString).valueOf();
 }
 
@@ -70,11 +70,11 @@ export function accounts(state = {}, action) {
 
 /* Action Creators */
 //backlog: move this to better place
+import {ADD_ACCOUNT_TO_POST} from "../posts/posts";
 export function addAccountToPost(postId, account, parentFolder) {
   "use strict";
-  //todo: use MERGE_POST type instead?
   return {
-    type: "UPDATE_POST",
+    type: ADD_ACCOUNT_TO_POST,
     post: {
       id: postId,
       accountKey: dropboxAccountKey(account),
@@ -89,6 +89,7 @@ import "regenerator-runtime/runtime";
 import moment from "moment";
 
 export function* getDropboxAccount() {
+  // todo: need to dispatch another action after this.
   "use strict";
   while (true) {
     const {action} = yield take('UPSERT_ACCOUNT');

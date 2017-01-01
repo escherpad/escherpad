@@ -1,4 +1,5 @@
 /** Created by ge on 4/7/16. */
+  import {UPDATE_POST} from "./posts/posts";
 export const SELECT_POST = "SELECT_POST";
 export const UPDATE_EDITOR_OPTIONS = "UPDATE_EDITOR_OPTIONS";
 
@@ -22,6 +23,13 @@ export function editor(state = editorInitialState, action) {
       ...state,
       options: {...state.options, ...action.options}
     };
+  } else if (action.type === UPDATE_POST) {
+    if (action.post.$updatedId && action.post.id === state.postId) {
+      return {
+        ...state, postId: action.post.$updatedId
+      };
+    }
+    return state;
   } else {
     return state;
   }

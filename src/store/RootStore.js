@@ -6,7 +6,7 @@ import {notices, noticeProc, createNotification} from "./notices";
 import {viewMode} from "./viewMode";
 import {session} from "./session";
 import {editor} from "./editor";
-import {posts, pushPost, pullPostFromService} from "./posts/posts";
+import {posts, pushPost, pullPostFromService, addAccountToPostProc} from "./posts/posts";
 import {postList, onSetCurrentFolder} from "./postList";
 import {accounts, getDropboxAccount, dropboxAccountKey} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
@@ -72,6 +72,7 @@ sagaConnect(rootStore, pushPost(), true);
 sagaConnect(rootStore, noticeProc(), true);
 sagaConnect(rootStore, onSetCurrentFolder(), true);
 sagaConnect(rootStore, pullPostFromService(), true);
+sagaConnect(rootStore, addAccountToPostProc(), true);
 
 window.onstorage = () => {
   "use strict";
@@ -84,32 +85,35 @@ window.onstorage = () => {
 // for debug purpose
 window.dispatch = rootStore.dispatch.bind(rootStore);
 
-rootStore.update$.debounceTime(500).subscribe(({state, action}) => {
-  console.log("state is", state, "action is", action);
-  if (action.type === "STORAGE_UPDATE") return;
-  const serialized = JSON.stringify(state);
-  // var compressed = lz.compress(serialized);
-  // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
-  // console.log(serialized);
-  window.localStorage.setItem(GITTOR_STORE, serialized);
-  return;
+rootStore
+  .update$
+  // .debounceTime(500)
+  .subscribe(({state, action}) => {
+    console.log("state is", state, "action is", action);
+    if (action.type === "STORAGE_UPDATE") return;
+    const serialized = JSON.stringify(state);
+    // var compressed = lz.compress(serialized);
+    // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
+    // console.log(serialized);
+    window.localStorage.setItem(GITTOR_STORE, serialized);
+    return;
 
 
-  //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
-  //update: this worked well. Will try to test out more.
-  let posts = state.posts;
-  Object.keys(posts).map(k=>posts[k]).map(post=>{
-    "use strict";
-    if (post.account) {
-      let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
-      delete newPost['account'];
-      setTimeout(()=>{
-        rootStore.dispatch({
-          type: "OVERWRITE_POST",
-          post: newPost
-        })
-      }, 1000);
-    }
-  })
-});
+    //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
+    //update: this worked well. Will try to test out more.
+    let posts = state.posts;
+    Object.keys(posts).map(k => posts[k]).map(post => {
+      "use strict";
+      if (post.account) {
+        let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
+        delete newPost['account'];
+        setTimeout(() => {
+          rootStore.dispatch({
+            type: "OVERWRITE_POST",
+            post: newPost
+          })
+        }, 1000);
+      }
+    })
+  });
 

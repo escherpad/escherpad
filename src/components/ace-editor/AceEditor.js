@@ -166,12 +166,6 @@ export default class ReactAce extends Component {
     }
   }
 
-  shouldComponentUpdate(newProps) {
-    return newProps.width !== this.props.width ||
-      newProps.height !== this.props.height ||
-      newProps.lineHeight !== this.props.lineHeight;
-  };
-
   componentWillUnmount() {
     this.editor.off('focus', this.onFocus);
     this.editor.off('blur', this.onBlur);
@@ -269,7 +263,11 @@ export default class ReactAce extends Component {
   }
 
   onChange(e) {
-    var cursor;
+    //notice: relative order of change and changeCursor event changes depending on the edit action.
+    // when inserting, changeCursor event fires after change event.
+    // when removing, changeCursor event fires first.
+    if (!this.props.onChange || this._silent) return;
+    let cursor;
     if (e.action === "insert") {
       cursor = e.end;
     } else if (e.action === "remove") {
@@ -277,16 +275,16 @@ export default class ReactAce extends Component {
     } else {
       cursor = this.editor.selection.getCursor();
     }
-    if (!this.props.onChange || this._silent) return;
     const value = this.editor.getValue();
     this.setVersion(this.version + 1);
     this.props.onChange(value, cursor, this.version);
+    this._silent = false;
   }
 
   onChangeCursor(e) {
     if (!this.props.onChange || this._silent) return;
-    var value = this.editor.getValue();
-    var cursor = this.editor.selection.getCursor();
+    let value = this.editor.getValue();
+    let cursor = this.editor.selection.getCursor();
     this.setVersion(this.version + 1);
     this.props.onChange(value, cursor, this.version);
   }
@@ -302,10 +300,16 @@ export default class ReactAce extends Component {
     this.props.onChangeScrollTop(scrollTop);
   }
 
+  shouldComponentUpdate(newProps) {
+    return newProps.width !== this.props.width ||
+      newProps.height !== this.props.height ||
+      newProps.lineHeight !== this.props.lineHeight;
+  }
+
   render() {
+    //note: this should only execute when the size of the container changes. ref shouldComponentUpdate for detail
     const {name, className, width, height, lineHeight} = this.props;
     const divStyle = {width, height, lineHeight};
-    console.warn('rendering AceEditor');
     return (
       <div
         id={name}
@@ -317,7 +321,7 @@ export default class ReactAce extends Component {
   }
 }
 
-var {string, number, bool, func, array, object, any, oneOfType} = PropTypes;
+const {string, number, bool, func, array, object, any, oneOfType} = PropTypes;
 ReactAce
   .propTypes = {
   mode: string,

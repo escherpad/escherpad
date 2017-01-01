@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import TitleBar from "./TitleBar";
 import CodeEditor from "./CodeEditor";
 import {Flex, FlexItem} from "layout-components";
+import {autobind, debounce} from "core-decorators";
 
 require('./ace-gutter.scss');
 const styles = {
@@ -28,7 +29,6 @@ export default class EditorView extends React.Component {
     if (typeof source !== 'string') source = JSON.stringify(source);
     let presence = post.presence ? post.presence[agent] : null;
     let cursorPosition = presence ? presence.cursor : undefined;
-    let onChange = this.onChange.bind(this);
     return (
       <Flex column fill style={style}>
         <FlexItem fixed>
@@ -43,7 +43,7 @@ export default class EditorView extends React.Component {
                       cursorPosition={cursorPosition}
                       version={_v}
                       mimeType={type}
-                      onChange={onChange}
+                      onChange={this.onChange}
                       onChangeScrollTop={onScroll} {...options}
           />
         </FlexItem>
@@ -77,6 +77,9 @@ export default class EditorView extends React.Component {
   componentWillUnmount() {
   }
 
+  //notice: this is amazing! the debounce completely solved the slow UX on change.
+  @autobind
+  @debounce(4)
   onChange(source, cursor, version) {
     let {user, post, agent, dispatch} = this.props;
     //todo: use MERGE_POST type instead?
