@@ -1,5 +1,10 @@
 ## Todos
 
+1. [ ] fix the desktop shortcut mode. Add address bar
+1. [ ] make inking activtion force much, much less. (change threshold function)
+2. [ ] save width, instead of force.
+3. [ ] fix TitleBar inside Bristol component
+4. [ ] make the canvas occupy the entire editor body.
 1. [ ] show list of folders from dropbox in search view.
     - Gittor
     - interview preps
