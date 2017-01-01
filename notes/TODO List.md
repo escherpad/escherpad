@@ -6,6 +6,7 @@
 3. fast-click messes up all scroll events:
     1. save to backend folder view is not scrollable at all
     2. posts focus on EditorView upon touch start, which then changes the focus
+4. AceEditor does not work on mobile
     
 ### done
 
