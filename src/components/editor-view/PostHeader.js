@@ -3,10 +3,9 @@ import React, {Component, PropTypes} from 'react';
 import {autobind} from 'core-decorators';
 import {Flex, FlexItem, Responsive} from 'layout-components';
 import FullScreenToggleButton from "./FullScreenToggleButton";
-import Button from "../form/Button";
 import SaveToBackEndBadge from "./SaveToBackEndBadge";
-
-import {createPost} from "../../store/posts/posts";
+import {CreateNewNote} from "./CreateNewNote";
+import Button from "../form/Button";
 
 const containerStyle = {
   position: "relative",
@@ -22,15 +21,6 @@ export default class PostHeader extends Component {
     dispatch: func.isRequired
   };
 
-  @autobind
-  createNewNote() {
-    const {dispatch} = this.props;
-    const action = createPost();
-    dispatch(action);
-    const postId = action.post.id;
-    dispatch({type: "SELECT_POST", postId: postId});
-  }
-
   render() {
     let {viewMode, dispatch, ..._props} = this.props;
     let post = _props.post;
@@ -43,19 +33,7 @@ export default class PostHeader extends Component {
           </FlexItem>
         </Responsive>
         <FlexItem fixed style={{"padding": "0 5px"}}>
-          <Button
-            className="add-new-post"
-            color="rgb(240, 173, 50)"
-            backgroundColor="rgba(240, 173, 50, 0)"
-            hoverColor="white"
-            hoverBackground="rgb(240, 173, 50)"
-            activeBackground="rgba(240, 173, 50, 0.5)"
-            onClick={this.createNewNote}
-            padding="0 28px 0 12px"
-          >New Note<
-            i className="material-icons"
-              style={{fontSize: "18px", lineHeight: "32px", position: "absolute", marginRight: "-23px", width: "24px"}}>add</i
-          ></Button>
+          <CreateNewNote dispatch={dispatch} {..._props}/>
         </FlexItem>
         {post ?
           <FlexItem>

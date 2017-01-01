@@ -1,13 +1,23 @@
 ## Mobile (iPad) Ready Preparation: Use Flow
 
-1. [in progress] create new note with the same extension, accountKey and path as current note
+1. [work in progress] create new note with the same extension, accountKey and path as current note
+    1. [x] add `mimeType` field to posts
+    2. [ ] add `mimeType` update to `UPDATE_POST` hook.
+    3. [ ] add `mimeType` handling to editor dropdown
+    4. [ ] add popup to notify the change of `mimeType`.
+        1. 'MIMETYPE_UPDATE_INQUIRE'
+        2. 'MIMETYPE_UPDATE_CONFIRM'
+    5. [ ] make `TitleBar` title change dispatch **only** on entry and blur.
+    
 2. make it easy to switch to a different note in profile view.
     - [ ] profile view `<ListPanel/>` vs `<Editor/>` dual view (save in viewMode object?)
 3. fast-click messes up all scroll events:
     1. save to backend folder view is not scrollable at all
     2. posts focus on EditorView upon touch start, which then changes the focus
 4. AceEditor does not work on mobile
-    
+    1. arrow key does not move cursor around 【switch to textarea instead?]
+5. dropbox preview for Office docs does not work on mobile.
+
 ### done
 
 0. [x] create post => add account to post, update post key

@@ -82,17 +82,21 @@ export function posts(state = {}, action) {
 }
 
 import {$uuid} from  '../../lib/$uuid';
-export function createPost() {
-  return {
+export function createPost(mimeType, accountKey, parentFolder) {
+  let action = {
     type: ADD_POST,
     post: {
       id: $uuid(),
-      // parentFolder, //'in dropbox',
-      // accountKey,
       createdAt: Date.now(),
       modifiedAt: Date.now(),
     }
+  };
+  if (mimeType) action.post.mimeType = mimeType;
+  if (accountKey && typeof parentFolder !== "undefined") {
+    action.post.accountKey = accountKey;
+    action.post.parentFolder = parentFolder;
   }
+  return action;
 }
 
 import {accountKeyIsService, isDropboxId, unixEpochToDropboxDateString} from "../accounts/accounts";
