@@ -44,10 +44,7 @@ export default class SizeContainer extends Component {
   render() {
     const {container: Container, children, ..._props} = this.props;
     const Child = cloneElement(children, {width: this.state.width, height: this.state.height});
-    console.log(Child);
-    return <Container ref='container' {..._props}>
-      {Child}
-    </Container>
+    return <Container ref='container' {..._props}>{Child}</Container>
   }
 
 }
