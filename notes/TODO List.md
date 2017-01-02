@@ -1,14 +1,17 @@
 ## Todos
 
-1. [x] fix the desktop shortcut mode. Add address bar
-2. [x] fix ink file upload by adding it to the white list
+1. [ ] ink file upload is till not working.
+3. [ ] scroll is still messed up in the AccountBrowser
 1. [ ] make inking activation force much, much less. (change threshold function)
 2. [ ] save width, instead of force.
 3. [ ] fix TitleBar inside Bristol component
-4. [ ] make the canvas occupy the entire editor body.
+4. [ ] **Full Span** make the canvas occupy the entire editor body.
 1. [ ] show list of folders from dropbox in search view.
     - Gittor
     - interview preps
+    
+1. [x] fix the desktop shortcut mode. Add address bar
+2. [x] fix ink file upload by adding it to the white list
 0. [x] do NOT download search result in root folder.
 1. [work in progress] create new note with the same extension, accountKey and path as current note
     1. [x] add `mimeType` field to posts
