@@ -7,7 +7,7 @@
 3. [ ] fix TitleBar inside Bristol component
 1. [ ] ink file upload is till not working.
 3. [x] scroll is still messed up in the AccountBrowser
-1. [ ] make inking activation force much, much less. (change threshold function)
+1. [x] make inking activation force much, much less. (change threshold function)
 2. [ ] save width, instead of force.
 4. [ ] **Full Span** make the canvas occupy the entire editor body.
 1. [ ] show list of folders from dropbox in search view.
