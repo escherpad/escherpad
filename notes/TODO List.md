@@ -1,22 +1,17 @@
 ## Todos
 
-1. [ ] fix iframe redirect
-2. [x] fix iframe blob error on mobile (iOS) safari
 3. [ ] fix TitleBar inside Bristol component
-2. [todo] standardize the architecture of text editor, make it pluggable and standardized
+2. [ ] standardize the architecture of text editor, make it pluggable and standardized
 3. [ ] add back button to Bristol.
-1. [x] ink file upload is till not working.
-3. [x] scroll is still messed up in the AccountBrowser
-1. [x] make inking activation force much, much less. (change threshold function)
-2. [ ] save width, instead of force.
-4. [in progress] **Full Span** make the canvas occupy the entire editor body.
+4. AceEditor does not work on mobile
+    1. arrow key does not move cursor around 【switch to textarea instead?]
+    2. [ ] switch to textarea on mobile.
 1. [ ] show list of folders from dropbox in search view.
     - Gittor
     - interview preps
+1. [ ] fix iframe redirect
+2. [ ] save width, instead of force.
     
-1. [x] fix the desktop shortcut mode. Add address bar
-2. [x] fix ink file upload by adding it to the white list
-0. [x] do NOT download search result in root folder.
 1. [work in progress] create new note with the same extension, accountKey and path as current note
     1. [bug] fix editor modal selection
     1. [x] add `mimeType` field to posts
@@ -32,13 +27,20 @@
 3. fast-click messes up all scroll events:
     1. save to backend folder view is not scrollable at all
     2. posts focus on EditorView upon touch start, which then changes the focus
-4. AceEditor does not work on mobile
-    1. arrow key does not move cursor around 【switch to textarea instead?]
-5. dropbox preview for Office docs does not work on mobile.
 
 ### done
 
+2. [x] fix iframe blob error on mobile (iOS) safari (can not have #view=fit at the end of blob.)
+1. [x] ink file upload is till not working.
+3. [x] scroll is still messed up in the AccountBrowser
+4. [x] fix BristolBoard resize flashing bug
+1. [x] make inking activation force much, much less. (change threshold function)
+4. [x] **Full Span** make the canvas occupy the entire editor body.
+1. [x] fix the desktop shortcut mode. Add address bar (reverted, added `content="yes"` back to allow full-screen stand alone webapp on home screen).
+2. [x] fix ink file upload by adding it to the white list
+0. [x] do NOT download search result in root folder.
 0. [x] create post => add account to post, update post key
+5. [x] dropbox preview for Office docs does not work on mobile. [fixed]
 
 ## TODOs
 1. [bug] have note change `uuid` to dropbox id when ADD_ACCOUNT_TO_POST

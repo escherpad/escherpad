@@ -12,7 +12,7 @@ const styles = {
   boxSizing: "border-box"
 };
 
-var {any, func} = React.PropTypes;
+const {any, func} = React.PropTypes;
 export default class EditorView extends React.Component {
   static propTypes = {
     agent: any.isRequired,

@@ -152,10 +152,10 @@ import dapi from "../../modules/dropbox";
 export const PUSH_POST_TO_SERVICE = "PUSH_POST_TO_SERVICE";
 export function* pushPost() {
   "use strict";
+  let oldPosts = yield select('posts');
   while (true) {
     //todo: use MERGE_POST type instead?
     //reminder: race condition when switching between different posts, updates gets ignored.
-    let oldPosts = yield select('posts');
     const {state, action} = yield take(UPDATE_POST);
     const {accounts} = state;
     let postFromState = state.posts[action.post.id];
@@ -171,6 +171,10 @@ export function* pushPost() {
           // take on more "UPDATE_POST" events.
           let metadata;
           let oldPost = oldPosts[action.post.id];
+          // note: it is really important that this take happens **right** before the async request, to save snapshot.
+          // todo: need error handling in case upload/move fails.
+          // todo: add progress bar to editor.
+          oldPosts = yield select('posts');
           if (!oldPost) {
             metadata = yield dapi.upload(postFromState.parentFolder + '/' + postFromState.title, dehydrateForUpload(postFromState.source), "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
           } else {
@@ -270,7 +274,7 @@ export function* pullPostFromService() {
               post: {
                 id: postId,
                 title: response.metadata.name,
-                source:  hydrateAfterDownload(response.content)
+                source: hydrateAfterDownload(response.content)
               }
             };
             console.log(newAction);
