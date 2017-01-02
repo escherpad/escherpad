@@ -128,6 +128,24 @@ function extensionSupportPreview(title = "") {
   return (title.match(/\.(docx?)$/));
 }
 
+function dehydrateForUpload(source) {
+  "use strict";
+  if (typeof source === "string") {
+    return source
+  } else {
+    return JSON.stringify(source);
+  }
+}
+
+function hydrateAfterDownload(source) {
+  "use strict";
+  try {
+    return JSON.parse(source);
+  } catch (e) {
+    return source;
+  }
+}
+
 import dapi from "../../modules/dropbox";
 //done: move `postPost` to proper place
 //resolved: can NOT push (upload) post by post.id. Post.id are only used in pulling.
@@ -154,7 +172,7 @@ export function* pushPost() {
           let metadata;
           let oldPost = oldPosts[action.post.id];
           if (!oldPost) {
-            metadata = yield dapi.upload(postFromState.parentFolder + '/' + postFromState.title, postFromState.source, "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
+            metadata = yield dapi.upload(postFromState.parentFolder + '/' + postFromState.title, dehydrateForUpload(postFromState.source), "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
           } else {
             //fixed: somehow, exception thrown here from the api call promise is 1. not properly caught. 2. stops further
             //done: use id:<file_id> as the parentFolder, make sure `post.id` is dropbox id.
@@ -170,7 +188,10 @@ export function* pushPost() {
               (typeof oldPost.accountKey === "undefined" && typeof action.post.accountKey === "defined")
             ) {
               console.log('=====> Now upload');
-              metadata = yield dapi.upload(postFromState.parentFolder + "/" + postFromState.title, postFromState.source, "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
+              metadata = yield dapi
+                .upload(postFromState.parentFolder + "/" + postFromState.title,
+                  dehydrateForUpload(postFromState.source),
+                  "overwrite", false, false, unixEpochToDropboxDateString(postFromState.modifiedAt));
             }
           }
           //done: only dispatch new one if the info above is different.
@@ -204,7 +225,8 @@ export function* pullPostFromService() {
     const _post = state.posts[postId];
     let account = state.accounts[_post.accountKey];
     if (!account || !_post.accountKey || !isDropboxId(postId)) {
-      console.warn('post does not have accountKey or postId is not dropbox form');
+      console.warn('post does not have accountKey or postId is not dropbox form. This might be occur ' +
+        'because the post has not been uploaded to dropbox yet.');
     } else {
       let accessToken = account.accessToken;
       if (fileIsBlackListed(_post.title)) {
@@ -248,9 +270,10 @@ export function* pullPostFromService() {
               post: {
                 id: postId,
                 title: response.metadata.name,
-                source: response.content
+                source:  hydrateAfterDownload(response.content)
               }
             };
+            console.log(newAction);
             if (response.metadata.id !== postId) newAction.post.$updatedId = response.metadata.id;
             yield dispatch(newAction);
           } catch (e) {

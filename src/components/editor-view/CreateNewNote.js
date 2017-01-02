@@ -12,8 +12,13 @@ export class CreateNewNote extends Component {
 
   @autobind
   createNewNote() {
-    const {post, dispatch} = this.props;
-    const action = createPost(post.mimeType || "text/markdown", post.accountKey, post.parentFolder);
+    //note: might want to use postList as a backup when no post is selected.
+    const {post = {}, dispatch} = this.props;
+    const action = createPost(
+      post.mimeType || "text/markdown",
+      post.accountKey,// || postList.accountKey,
+      post.parentFolder,// || postList.currentFolder
+    );
     dispatch(action);
     const postId = action.post.id;
     dispatch({type: "SELECT_POST", postId: postId});
