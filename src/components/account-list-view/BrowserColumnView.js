@@ -68,7 +68,6 @@ class BrowserColumns extends Component {
             } else {
               return <File key={key}
                            title={item.name}
-                           onClick={this.selectPath(item.path_display)}
               />;
             }
           })}
