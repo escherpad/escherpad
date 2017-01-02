@@ -1,10 +1,14 @@
 ## Todos
 
+1. [ ] fix iframe redirect
+2. [ ] fix iframe blob error on mobile (iOS) safari
+3. [ ] add back button to Bristol.
+2. [todo] standardize the architecture of text editor, make it pluggable and standardized
+3. [ ] fix TitleBar inside Bristol component
 1. [ ] ink file upload is till not working.
 3. [ ] scroll is still messed up in the AccountBrowser
 1. [ ] make inking activation force much, much less. (change threshold function)
 2. [ ] save width, instead of force.
-3. [ ] fix TitleBar inside Bristol component
 4. [ ] **Full Span** make the canvas occupy the entire editor body.
 1. [ ] show list of folders from dropbox in search view.
     - Gittor
@@ -14,6 +18,7 @@
 2. [x] fix ink file upload by adding it to the white list
 0. [x] do NOT download search result in root folder.
 1. [work in progress] create new note with the same extension, accountKey and path as current note
+    1. [bug] fix editor modal selection
     1. [x] add `mimeType` field to posts
     2. [ ] add `mimeType` update to `UPDATE_POST` hook.
     3. [ ] add `mimeType` handling to editor dropdown
@@ -36,8 +41,6 @@
 0. [x] create post => add account to post, update post key
 
 ## TODOs
-2. [todo] standardize the architecture of text editor, make it pluggable and standardized
-1. [bug] fix editor modal selection
 1. [bug] have note change `uuid` to dropbox id when ADD_ACCOUNT_TO_POST
 2. [bug] lingering unsaved modification due to limitation of `saga`
 3. [feature] highlight the note that is currently open in the editor.
