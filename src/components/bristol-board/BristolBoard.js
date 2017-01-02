@@ -9,9 +9,6 @@ import Eraser from './react-bristol/src/extensions/Eraser';
 import TitleBar from "../editor-view/TitleBar";
 import PostHeader from "../editor-view/PostHeader";
 
-// import debounce from "lodash.debounce";
-// import throttle from "lodash.throttle";
-
 let {any, string} = PropTypes;
 class BristolBoard extends Component {
   static propTypes = {

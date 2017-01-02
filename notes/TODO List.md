@@ -6,7 +6,7 @@
 2. [todo] standardize the architecture of text editor, make it pluggable and standardized
 3. [ ] fix TitleBar inside Bristol component
 1. [ ] ink file upload is till not working.
-3. [ ] scroll is still messed up in the AccountBrowser
+3. [x] scroll is still messed up in the AccountBrowser
 1. [ ] make inking activation force much, much less. (change threshold function)
 2. [ ] save width, instead of force.
 4. [ ] **Full Span** make the canvas occupy the entire editor body.
