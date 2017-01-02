@@ -8,6 +8,7 @@ import SimplePen from './react-bristol/src/extensions/SimplePen';
 import Eraser from './react-bristol/src/extensions/Eraser';
 import TitleBar from "../editor-view/TitleBar";
 import PostHeader from "../editor-view/PostHeader";
+import SizeContainer from "../SizeContainer";
 
 let {any, string} = PropTypes;
 class BristolBoard extends Component {
@@ -18,7 +19,7 @@ class BristolBoard extends Component {
     dispatch: any.isRequired
   };
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({pen: {type: "SimplePen", color: '#003BFF', strokeWidth: 2}});
   }
 
@@ -37,7 +38,7 @@ class BristolBoard extends Component {
   }
 
   select(tool) {
-    return ()=>{
+    return () => {
       this.setState({pen: tool})
     }
   }
@@ -46,7 +47,6 @@ class BristolBoard extends Component {
     //DONE: this will be removed after we add a post type selector as a parent.
     //TODO: add content insert for what to do when source does not exist.
     let {post, ...props} = this.props;
-    const width = 800, height = 1000;
     return <Flex column fill align="stretch">
       <FlexItem fixed>
         <PostHeader {...props}/>
@@ -66,17 +66,16 @@ class BristolBoard extends Component {
               <i className="material-icons">radio_button_unchecked</i>
             </button>
           </FlexItem>
-          <FlexItem fluid>
+          <SizeContainer container={FlexItem} fluid>
             <Bristol ref="bristol"
                      style={{borderRight: "1px solid rgba(125, 125, 125, 0.5)"}}
-                     width={width} height={height}
                      renderRatio={3}
                      data={post.source}
                      pen={this.state.pen}
                      palette={{SimplePen, Eraser}}
                      onChange={this.onChange}
             />
-          </FlexItem>
+          </SizeContainer>
         </Flex>
       </FlexItem>
     </Flex>
