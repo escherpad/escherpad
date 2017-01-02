@@ -1,8 +1,11 @@
 ## Todos
 
 3. [ ] fix TitleBar inside Bristol component
+4. [ ] add modal for deleting notes
+5. [ ] allow choice for weather remove on backend.
 2. [ ] standardize the architecture of text editor, make it pluggable and standardized
 3. [ ] add back button to Bristol.
+4. [ ] fix 
 4. AceEditor does not work on mobile
     1. arrow key does not move cursor around 【switch to textarea instead?]
     2. [ ] switch to textarea on mobile.
