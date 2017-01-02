@@ -192,7 +192,7 @@ export default class ReactAce extends Component {
     // moveCursor... is also a synchronous call. Change event is emitted before it returns.
     this.setCursor(cursorPosition);
     if (typeof version !== "undefined") this.setVersion(version);
-    this.editor.focus();
+    // this.editor.focus();
     this._silent = old;
   }
 
