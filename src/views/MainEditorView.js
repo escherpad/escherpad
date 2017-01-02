@@ -77,7 +77,7 @@ class MainEditorView extends React.Component {
                     options={{} /*options*/} {..._props}/>
         </FlexItem>
         <FlexItem fluid component="iframe" style={{width: "100%", height: "100%", border: "0px solid transparent"}}
-                  src={post.previewURL + "#view=fit"}/>
+                  src={post.previewURL}/>
       </Flex>;
       // <PDF file={post.previewURL.replace('blob:', '')} onDocumentComplete={() => null} onPageComplete={() => null}
       //      page={0}/>;
