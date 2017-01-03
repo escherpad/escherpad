@@ -1,5 +1,6 @@
 ## Todos
 
+1. [ ] **Bristol** make Bristol drawing faster. Much much faster.
 3. [ ] fix TitleBar inside Bristol component
 4. [ ] add modal for deleting notes
 5. [ ] allow choice for weather remove on backend.
