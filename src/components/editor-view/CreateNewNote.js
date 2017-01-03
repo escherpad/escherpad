@@ -29,7 +29,7 @@ export class CreateNewNote extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return <Button
       className="add-new-post"
       color="rgb(240, 173, 50)"

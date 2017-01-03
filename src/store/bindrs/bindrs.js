@@ -12,7 +12,6 @@ function key(bindr) {
 }
 
 export function bindrs(state = [], action) {
-  "use strict";
   if (action.type === "UPSERT_BINDR") {
     let {bindr} = action;
     if (!validateBindr(bindr)) return state;

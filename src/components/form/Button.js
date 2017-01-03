@@ -16,7 +16,6 @@ function getStyle({
   height = "32px",
   fontSize = "14px"
 }={}) {
-  "use strict";
   var defaultStyle = {
     color: color,
     backgroundColor: backgroundColor,

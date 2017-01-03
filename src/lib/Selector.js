@@ -9,7 +9,6 @@ import {autobind} from "core-decorators";
 var {func, any} = PropTypes;
 
 export default function Selector(selector, Component) {
-  "use strict";
 
   return class SelectContainer extends React.Component {
     static propTypes = {

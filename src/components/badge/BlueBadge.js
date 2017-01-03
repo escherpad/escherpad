@@ -4,6 +4,5 @@ import Badge from "./Badge";
 
 require('./blue-badge.scss');
 export default function BlueBadge({className, ..._props}) {
-  "use strict";
   return <Badge className={`small-blue-badge ${className}`} {..._props}/>
 }

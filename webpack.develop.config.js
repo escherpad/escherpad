@@ -3,12 +3,13 @@ var path = require('path');
 var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
-const host = '0.0.0.0';
-const port = 4000;
+// const clientHost = '0.tcp.ngrok.io';
+const localHost = "0.0.0.0";
+const port = 4000;// 4000;
 
 const build_entry = {
   app: [
-    `webpack-dev-server/client?http://${host}:${port}`,
+    // `webpack-dev-server/client?https://${clientHost}:${port}/`,
     'webpack/hot/only-dev-server',
     'react-hot-loader/patch',
     'babel-polyfill',
@@ -98,7 +99,10 @@ module.exports = {
     return [precss, autoprefixer];
   },
   devServer: {
-    host: host,
+    https: true,
+    ws: true,
+    secure: true, //ssl
+    host: localHost,
     port: port,
     stats: {colors: true},
     contentBase: "./src",
@@ -111,8 +115,8 @@ module.exports = {
     proxy: {
       "/gittor/*": {
         target: {
-          host: host,
-          protocol: 'http:',
+          host: localHost,
+          protocol: 'https:',
           port: 4000
         },
         rewrite: function (req) {

@@ -6,7 +6,6 @@ export default function ModalReducer(key, dataReducer) {
   let MODAL_CLOSE = MODAL + "_CLOSE";
   let MODAL_TOGGLE = MODAL + "_TOGGLE";
   return function reducer(state = {open: false}, action) {
-    "use strict";
     let _state = state;
     switch (action.type) {
       case MODAL_OPEN:

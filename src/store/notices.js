@@ -18,7 +18,6 @@ export function createNotification(type, message, timeout) {
 }
 
 export function notices(state = {}, action) {
-  "use strict";
   if (action.type === "NOTICE_ADD") {
     return {
       ...state,
@@ -39,7 +38,6 @@ export function notices(state = {}, action) {
 }
 
 function* noticeTimeout(id, timeout) {
-  "use strict";
   yield call(delay, timeout);
   return dispatch({
     type: "NOTICE_DELETE",

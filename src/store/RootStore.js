@@ -103,7 +103,6 @@ rootStore
     //update: this worked well. Will try to test out more.
     let posts = state.posts;
     Object.keys(posts).map(k => posts[k]).map(post => {
-      "use strict";
       if (post.account) {
         let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
         delete newPost['account'];
