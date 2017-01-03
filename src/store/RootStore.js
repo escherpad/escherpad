@@ -89,8 +89,8 @@ rootStore
   .update$
   // .debounceTime(500)
   .subscribe(({state, action}) => {
-    console.log("state is", state, "action is", action);
     if (action.type === "STORAGE_UPDATE") return;
+    console.log("state is", state, "action is", action);
     const serialized = JSON.stringify(state);
     // var compressed = lz.compress(serialized);
     // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
