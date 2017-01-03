@@ -92,6 +92,7 @@ rootStore
     if (action.type === "STORAGE_UPDATE") return;
     console.log("state is", state, "action is", action);
     const serialized = JSON.stringify(state);
+    console.log("stringification has succeeded");
     // var compressed = lz.compress(serialized);
     // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
     // console.log(serialized);
