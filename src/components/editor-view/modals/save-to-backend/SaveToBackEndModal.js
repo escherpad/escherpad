@@ -7,6 +7,7 @@ import SimpleModal from "../../../modal/SimpleModal";
 import ConnectToService from "./ConnectToService";
 import ChooseAService from "./ChooseAService";
 import PostServiceInfoView from "./PostServiceInfoView";
+
 require('./../modal-form.scss');
 
 const {any, func, array} = PropTypes;

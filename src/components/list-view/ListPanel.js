@@ -13,7 +13,6 @@ import {SET_CURRENT_FOLDER, setCurrentFolder} from "../../store/postList";
 import PostListView from "./PostListView";
 
 function throttle(time = 300, options = {}) {
-  "use strict";
   return function (target, name, descriptor) {
     descriptor.value = _throttle(descriptor.value, time, options);
     return descriptor;

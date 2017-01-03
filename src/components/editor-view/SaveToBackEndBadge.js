@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {autobind} from 'core-decorators';
 import {FlexItem} from "layout-components";
 import BlueBadge from "../badge/BlueBadge";
-import SaveToBackendModal from "./modals/SaveToBackendModal/SaveToBackendModal";
+import SaveToBackendModal from "./modals/save-to-backend/SaveToBackEndModal";
 import {getServiceFromAccountKey} from "../../store/accounts/accounts";
 
 require('./save-to-backend-badge.scss');
