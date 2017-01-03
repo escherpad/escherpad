@@ -96,6 +96,7 @@ rootStore
     // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
     // console.log(serialized);
     window.localStorage.setItem(GITTOR_STORE, serialized);
+    console.log('state is precipitated to localStorage');
     return;
 
 
