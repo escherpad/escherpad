@@ -96,8 +96,12 @@ rootStore
     // var compressed = lz.compress(serialized);
     // console.log(`compression size reduction ${serialized.length} => ${compressed.length}`);
     // console.log(serialized);
-    window.localStorage.setItem(GITTOR_STORE, serialized);
-    console.log('state is precipitated to localStorage');
+    try {
+      window.localStorage.setItem(GITTOR_STORE, serialized);
+      console.log('state is precipitated to localStorage');
+    } catch (e) {
+      console.warn(e);
+    }
     return;
 
 
