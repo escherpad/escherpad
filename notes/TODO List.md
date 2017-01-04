@@ -3,6 +3,15 @@
 1. [important] Fix the fucking mobile upload bug **important**
     - turned out that mobile safari ran out of space T_T
 1. [ ] **Bristol** make Bristol drawing faster. Much much faster.
+3. [ ] **color** add color palettes
+4. [ ] **stroke** add stroke sizing bar
+5. [ ] **spline** improve rendering algorithm to make the strokes more smooth.
+6. [ ] save width instead of force (call the pen._getWidth function during drawing)
+4. [ ] add pages
+5. [ ] add zoom
+2. [ ] add polygons in drawing
+3. [ ] add default background
+5. [ ] keep excessive precision for the force.
 3. [ ] fix TitleBar inside Bristol component
 4. [ ] add modal for deleting notes
 5. [ ] allow choice for weather remove on backend.
