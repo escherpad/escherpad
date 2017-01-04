@@ -6,6 +6,7 @@
 3. [ ] **color** add color palettes
 4. [ ] **stroke** add stroke sizing bar
 5. [ ] **spline** improve rendering algorithm to make the strokes more smooth.
+    - temporarily using `round` end cap to 
 6. [ ] save width instead of force (call the pen._getWidth function during drawing)
 4. [ ] add pages
 5. [ ] add zoom
