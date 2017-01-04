@@ -43,6 +43,29 @@ class BristolBoard extends Component {
     }
   }
 
+  @autobind
+  clearPage() {
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: this.props.post.id,
+        source: []
+      }
+    })
+  }
+
+  @autobind
+  undoStroke() {
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: this.props.post.id,
+        source: this.props.post.source.slice(0, -1)
+      }
+    })
+  }
+
+
   render() {
     //DONE: this will be removed after we add a post type selector as a parent.
     //TODO: add content insert for what to do when source does not exist.
@@ -58,12 +81,18 @@ class BristolBoard extends Component {
                       options={post.options} {...props}/>
           </FlexItem>
           <FlexItem fixed className="bristol-toolbar">
+            <button className="undo-stroke" onClick={this.undoStroke}>
+              <i className="material-icons">settings_backup_restore</i>
+            </button>
             <button className="select-pen"
                     onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 2})}>
               <i className="material-icons">edit</i>
             </button>
             <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 20})}>
               <i className="material-icons">radio_button_unchecked</i>
+            </button>
+            <button className="clear-page" onClick={this.clearPage}>
+              <i className="material-icons">clear</i>
             </button>
           </FlexItem>
           <SizeContainer container={FlexItem} fluid>

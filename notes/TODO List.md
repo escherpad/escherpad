@@ -1,6 +1,7 @@
 ## Todos
 
 1. [important] Fix the fucking mobile upload bug **important**
+    - turned out that mobile safari ran out of space T_T
 1. [ ] **Bristol** make Bristol drawing faster. Much much faster.
 3. [ ] fix TitleBar inside Bristol component
 4. [ ] add modal for deleting notes
