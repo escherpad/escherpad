@@ -21,6 +21,9 @@ class BristolBoard extends Component {
     post: any.isRequired,
     dispatch: any.isRequired
   };
+  static defaultProps = {
+    post: {source: []}
+  };
 
   componentWillMount() {
     this.setState({pen: {type: "SimplePen", color: '#255082', strokeWidth: 1}});
@@ -79,12 +82,80 @@ class BristolBoard extends Component {
     })
   }
 
+  @autobind
+  previousPage() {
+    const {agent, post} = this.props;
+    let currentPageNumber = this.getCurrentPage();
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: post.id,
+        presence: {[agent]: {page: currentPageNumber ? currentPageNumber - 1 : 0}}
+      }
+    })
+  }
+
+  @autobind
+  getCurrentPage() {
+    try {
+      return this.props.post.presence[this.props.agent].page
+    } catch (e) {
+      return 0
+    }
+  }
+
+  @autobind
+  nextPage() {
+    const {post, agent} = this.props;
+    let currentPageNumber = this.getCurrentPage();
+    if (currentPageNumber < post.source.length - 1) {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          presence: {[agent]: {page: currentPageNumber + 1}}
+        }
+      })
+    } else {
+      this.insertPage();
+    }
+  }
+
+  @autobind
+  insertPage() {
+    let {agent, source} = this.props.post;
+    let currentPageNumber = this.getCurrentPage();
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: this.props.post.id,
+        source: [...source.slice(0, currentPageNumber + 1), [], ...source.slice(currentPageNumber + 1)],
+        presence: {[agent]: {page: currentPageNumber + 1}}
+      }
+    })
+  }
+
+  @autobind
+  duplicatePage() {
+    let {agent, source} = this.props.post;
+    let currentPageNumber = this.getCurrentPage();
+    let currentPage = source[currentPageNumber];
+    this.props.dispatch({
+      type: "UPDATE_POST",
+      post: {
+        id: this.props.post.id,
+        source: [...source.slice(0, currentPageNumber + 1), currentPage, ...source.slice(currentPageNumber + 1)],
+        presence: {[agent]: {page: currentPageNumber + 1}}
+      }
+    })
+  }
+
 
   render() {
     //DONE: this will be removed after we add a post type selector as a parent.
     //TODO: add content insert for what to do when source does not exist.
-    let {post, ...props} = this.props;
-    console.log(this.state.pen);
+    let {post, agent, ...props} = this.props;
+    let pageNumber = this.getCurrentPage();
     return <Flex column fill align="stretch">
       <FlexItem fixed>
         <PostHeader {...props}/>
@@ -115,24 +186,33 @@ class BristolBoard extends Component {
               <circle cx={10 + this.state.pen.strokeWidth * 3 / 2} cy="10" r={this.state.pen.strokeWidth * 3 / 2}
                       style={this.state.pen.color ?
                         {fill: this.state.pen.color} :
-                        {fill: "#ececec", stroke: "#555", strokeWidth: "2", strokeDasharray:"3,2"}}/>
+                        {fill: "#ececec", stroke: "#555", strokeWidth: "2", strokeDasharray: "3,2"}}/>
             </svg>
             <svg width="30" height="20">
               <text x="2" y="15" fontSize="15">{this.state.pen.strokeWidth}</text>
             </svg>
-            <button className="clear-page" onClick={this.clearPage}>
-              <i className="material-icons">clear</i>
+            <button className="insert-page" onClick={this.insertPage}>
+              <i className="material-icons">add</i>
+            </button>
+            <button className="previous-page" onClick={this.previousPage}>
+              <i className="material-icons">keyboard_arrow_left</i>
+            </button>
+            <span>{pageNumber}</span>
+            <button className="next-page" onClick={this.nextPage}>
+              <i className="material-icons">keyboard_arrow_right</i>
+            </button>
+            <button className="duplicate-page" onClick={this.duplicatePage}>
+              <i className="material-icons">content_copy</i>
             </button>
           </FlexItem>
           <SizeContainer container={FlexItem} fluid>
             <Bristol ref="bristol"
                      style={{borderRight: "1px solid rgba(125, 125, 125, 0.5)"}}
                      renderRatio={3}
-                     data={post.source}
+                     data={(post.source || [])[pageNumber]}
                      pen={this.state.pen}
                      palette={{SimplePen, Eraser}}
-                     onChange={this.onChange}
-            />
+                     onChange={this.onChange}/>
           </SizeContainer>
         </Flex>
       </FlexItem>
