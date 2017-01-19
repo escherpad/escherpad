@@ -4,6 +4,7 @@ import {autobind} from 'core-decorators';
 import MouseOver from "../mouseover/MouseOver";
 import If from "../If";
 import {FlexItem} from 'layout-components';
+import {isMobileSafari} from "../../lib/isMobileSafari";
 
 const style = {
   color: "#cfcfcf",
@@ -43,18 +44,24 @@ export default class FullScreenToggleButton extends React.Component {
   render() {
     const {viewMode} = this.props;
     return (
-      <FlexItem fixed style={{"padding": "0 4px", "cursor":"pointer", "height":"40px"}} onClick={this.onClick}>{
-        (viewMode === 'zen-mode') ?
-          <MouseOver>
-            <i data-mouseDefault className="material-icons select-zen-mode" style={style}>fullscreen</i>
-            <i data-mouseOver className="material-icons select-full-view" style={hover}
-               onClick={this.setFullView}>fullscreen_exit</i>
-          </MouseOver> :
-          <MouseOver>
-            <i data-mouseDefault className="material-icons select-full-view" style={style}>fullscreen_exit</i>
-            <i data-mouseOver className="material-icons select-zen-mode" style={hover}
-               onClick={this.setZenMode}>fullscreen</i>
-          </MouseOver>
+      <FlexItem fixed style={{"padding": "0 4px", "cursor": "pointer", "height": "40px"}} onClick={this.onClick}>{
+        isMobileSafari() ?
+            (viewMode === 'zen-mode') ?
+              <i data-mouseOver className="material-icons select-full-view" style={hover}
+                 onClick={this.setFullView}>fullscreen_exit</i> :
+              <i data-mouseOver className="material-icons select-zen-mode" style={hover}
+                 onClick={this.setZenMode}>fullscreen</i> :
+            (viewMode === 'zen-mode') ?
+              <MouseOver>
+                <i data-mouseDefault className="material-icons select-zen-mode" style={style}>fullscreen</i>
+                <i data-mouseOver className="material-icons select-full-view" style={hover}
+                   onClick={this.setFullView}>fullscreen_exit</i>
+              </MouseOver> :
+              <MouseOver>
+                <i data-mouseDefault className="material-icons select-full-view" style={style}>fullscreen_exit</i>
+                <i data-mouseOver className="material-icons select-zen-mode" style={hover}
+                   onClick={this.setZenMode}>fullscreen</i>
+              </MouseOver>
       }</FlexItem>
     )
   }
