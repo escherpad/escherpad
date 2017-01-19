@@ -34,11 +34,14 @@ class BristolBoard extends Component {
   onChange(inkData) {
     // slow store update is the bottle neck!
     //todo: use MERGE_POST type instead?
+
+    const {post, agent} = this.props;
+    let currentPageNumber = this.getCurrentPage();
     this.props.dispatch({
       type: "UPDATE_POST",
       post: {
         id: this.props.post.id,
-        source: inkData
+        source: [...post.source.slice(0, currentPageNumber), inkData, ...post.source.slice(currentPageNumber + 1)]
       }
     })
   }
