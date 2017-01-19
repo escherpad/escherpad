@@ -242,7 +242,7 @@ class BristolBoard extends Component {
             <button className="previous-page" onClick={this.previousPage}>
               <i className="material-icons">keyboard_arrow_left</i>
             </button>
-            <span>{pageNumber}</span>
+            <span>{pageNumber + 1}</span>
             <button className="next-page" onClick={this.nextPage}>
               <i className="material-icons">keyboard_arrow_right</i>
             </button>
