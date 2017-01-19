@@ -4,15 +4,18 @@ import Selector from "../../lib/Selector";
 import {autobind, debounce} from "core-decorators";
 import {Flex, FlexItem} from "layout-components";
 import Bristol from "./react-bristol/src/Bristol";
-import SimplePen from './react-bristol/src/extensions/SimplePen';
-import Eraser from './react-bristol/src/extensions/Eraser';
+import SimplePen, {STROKE_WIDTHS as PEN_WIDTHS} from './react-bristol/src/extensions/SimplePen';
+import Eraser, {STROKE_WIDTHS as ERASER_WIDTHS} from './react-bristol/src/extensions/Eraser';
+import StrokeWidthSelector from "./react-bristol/src/controls/StrokeWidthSelector";
 import TitleBar from "../editor-view/TitleBar";
 import PostHeader from "../editor-view/PostHeader";
 import SizeContainer from "../SizeContainer";
+import Range from "../form/Range";
 
 let {any, string} = PropTypes;
 class BristolBoard extends Component {
   static propTypes = {
+    editor: any,
     agent: any.isRequired,
     user: any.isRequired,
     post: any.isRequired,
@@ -20,7 +23,7 @@ class BristolBoard extends Component {
   };
 
   componentWillMount() {
-    this.setState({pen: {type: "SimplePen", color: '#003BFF', strokeWidth: 2}});
+    this.setState({pen: {type: "SimplePen", color: '#255082', strokeWidth: 1}});
   }
 
   @autobind
@@ -65,11 +68,23 @@ class BristolBoard extends Component {
     })
   }
 
+  @autobind
+  onChangeStrokeWidth(width) {
+    // this.select({strokeWidth: width})();
+    this.setState({
+      pen: {
+        ...(this.state || {}).pen,
+        strokeWidth: width
+      }
+    })
+  }
+
 
   render() {
     //DONE: this will be removed after we add a post type selector as a parent.
     //TODO: add content insert for what to do when source does not exist.
     let {post, ...props} = this.props;
+    console.log(this.state.pen);
     return <Flex column fill align="stretch">
       <FlexItem fixed>
         <PostHeader {...props}/>
@@ -85,7 +100,7 @@ class BristolBoard extends Component {
               <i className="material-icons">settings_backup_restore</i>
             </button>
             <button className="select-pen"
-                    onClick={this.select({type: "SimplePen", color: '#003BFF', strokeWidth: 2})}>
+                    onClick={this.select({type: "SimplePen", color: '#255082', strokeWidth: 1})}>
               <i className="material-icons">edit</i>
             </button>
             <button className="select-eraser" onClick={this.select({type: "Eraser", alpha: 0.5, strokeWidth: 20})}>
@@ -94,6 +109,17 @@ class BristolBoard extends Component {
             <button className="clear-page" onClick={this.clearPage}>
               <i className="material-icons">clear</i>
             </button>
+            <StrokeWidthSelector value={this.state.pen.strokeWidth} strokeWidthList={PEN_WIDTHS}
+                                 onChange={this.onChangeStrokeWidth}/>
+            <svg width="20" height="20">
+              <circle cx={10 + this.state.pen.strokeWidth * 3 / 2} cy="10" r={this.state.pen.strokeWidth * 3 / 2}
+                      style={this.state.pen.color ?
+                        {fill: this.state.pen.color} :
+                        {fill: "#ececec", stroke: "#555", strokeWidth: "2", strokeDasharray:"3,2"}}/>
+            </svg>
+            <svg width="30" height="20">
+              <text x="2" y="15" fontSize="15">{this.state.pen.strokeWidth}</text>
+            </svg>
           </FlexItem>
           <SizeContainer container={FlexItem} fluid>
             <Bristol ref="bristol"

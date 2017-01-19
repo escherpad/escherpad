@@ -1,12 +1,32 @@
+## Doing
+
+5. [ ] save width instead of force **important**
+1. [need review] add background to `BristolBoard`
+4. [ ] add pages to `BristolBoard`
+5. [ ] make pen tools configuration saved separat
+6. [ ] show side bar in vertical layout, allow post selection in vertical view 
+7. [ ] allow files inside child folder to show 
+8. [ ] fix editor dropdown
+9. [ ] fix editor component
+10. [ ] improve search experience, compare with Escherpad.
+11. [ ] fix saving.
+
+
+## Done
+
+4. [x] **stroke** finish stroke sizing bar
+
+
+
 ## Todos
 
-4. [ ] add pages
+2. create folder in dropbox
+3. show folder
 5. [ ] add zoom
 5. [ ] **spline** improve rendering algorithm to make the strokes more smooth.
     - temporarily using `round` end cap to make stroke look smoother. 
 1. [ ] **Bristol** make Bristol drawing faster. Much much faster.
 3. [ ] **color** add color palettes
-4. [ ] **stroke** add stroke sizing bar
 6. [ ] save width instead of force (call the pen._getWidth function during drawing)
 1. [important] Fix the fucking mobile upload bug **important**
     - turned out that mobile safari ran out of space T_T
