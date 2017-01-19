@@ -108,7 +108,7 @@ rootStore
 //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
 //update: this worked well. Will try to test out more.
 let postCollection = rootStore.getValue().posts;
-Object.keys(postCollection).map(k => postCollection[k]).map(upgradeInkFile);
+// Object.keys(postCollection).map(k => postCollection[k]).map(upgradeInkFile);
 
 /* upgrade functions */
 function upgradeDropboxAccount(post) {
