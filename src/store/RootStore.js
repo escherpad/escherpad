@@ -108,17 +108,34 @@ rootStore
     //reminder: this should be removed after all of my devices have been updated. Somehow lots of these local storage feel fragile.
     //update: this worked well. Will try to test out more.
     let posts = state.posts;
-    Object.keys(posts).map(k => posts[k]).map(post => {
-      if (post.account) {
-        let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
-        delete newPost['account'];
-        setTimeout(() => {
-          rootStore.dispatch({
-            type: "OVERWRITE_POST",
-            post: newPost
-          })
-        }, 1000);
-      }
-    })
+    Object.keys(posts).map(k => posts[k]).map(upgradeDropboxAccount)
   });
 
+// upgrade functions
+function upgradeDropboxAccount(post) {
+  "use strict";
+  if (post.account) {
+    let newPost = {...post, accountKey: dropboxAccountKey(post.account)};
+    delete newPost['account'];
+    setTimeout(() => {
+      rootStore.dispatch({
+        type: "OVERWRITE_POST",
+        post: newPost
+      })
+    }, 1000);
+  }
+}
+
+function upgradeInkFile(post) {
+  "use strict";
+  if (!post.title.match(/\.ink$/i)) return;
+  let newSource = arrayEncode(post.source);
+  let newPost = {...post, source: newSource};
+  setTimeout(() => {
+    rootStore.dispatch({
+      type: "OVERWRITE_POST",
+      post: newPost
+    })
+  }, 1000);
+
+}

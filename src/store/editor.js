@@ -1,10 +1,21 @@
 /** Created by ge on 4/7/16. */
-  import {UPDATE_POST} from "./posts/posts";
+import {UPDATE_POST} from "./posts/posts";
 export const SELECT_POST = "SELECT_POST";
 export const UPDATE_EDITOR_OPTIONS = "UPDATE_EDITOR_OPTIONS";
 
 export const editorInitialState = {
   options: {
+    palattes: {
+      color: "#23aaff",
+      SimplePen: {
+        strokeWidth: 2
+      },
+      Eraser: {
+        minWidth: 2,
+        maxWidth: 100,
+        strokeWidth: 40
+      }
+    },
     keyboardHandler: "",
     theme: "chrome",
     fontSize: 12,
