@@ -120,6 +120,9 @@ class BristolBoard extends Component {
             <svg width="30" height="20">
               <text x="2" y="15" fontSize="15">{this.state.pen.strokeWidth}</text>
             </svg>
+            <button className="clear-page" onClick={this.clearPage}>
+              <i className="material-icons">clear</i>
+            </button>
           </FlexItem>
           <SizeContainer container={FlexItem} fluid>
             <Bristol ref="bristol"
