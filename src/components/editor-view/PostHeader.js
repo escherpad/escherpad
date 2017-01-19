@@ -26,12 +26,7 @@ export default class PostHeader extends Component {
     let post = _props.post;
     return (
       <Flex row fill style={containerStyle} align="center">
-        <Responsive breakPoints={{sm: 979}}>
-          <FullScreenToggleButton data-default viewMode={viewMode} dispatch={dispatch}/>
-          <FlexItem fixed data-sm style={{"padding": "0 8px", height: "25px", width: "40px", textAlign: "center"}}>
-            <i className="material-icons" style={{color: "#cfcfcf", fontSize: "25px", cursor: "pointer"}}>menu</i>
-          </FlexItem>
-        </Responsive>
+        <FullScreenToggleButton data-default viewMode={viewMode} dispatch={dispatch}/>
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <CreateNewNote dispatch={dispatch} {..._props}/>
         </FlexItem>
