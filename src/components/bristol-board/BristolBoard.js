@@ -166,7 +166,8 @@ class BristolBoard extends Component {
 
   @autobind
   insertPage() {
-    let {agent, source} = this.props.post;
+    const {agent, post} = this.props;
+    let {source} = post;
     let currentPageNumber = this.getCurrentPage();
     this.props.dispatch({
       type: "UPDATE_POST",
