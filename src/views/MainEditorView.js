@@ -101,7 +101,12 @@ class MainEditorView extends React.Component {
       <div className="page-getContainer">
         <Notifications maxNumber={5} data={Object.keys(notices).map(k => notices[k])} dispatch={dispatch}/>
         <Responsive breakPoints={{sm: 979, lg: Infinity}} onBreakChange={() => true}>
-          <div data-sm style={style}>{SmallEditor}</div>
+          <Flex data-sm row fill align="stretch" style={style}>
+            <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
+              <ListPanel {..._props}/>
+            </FlexHide>
+            <FlexItem fluid style={{flex: "8 8 auto"}}>{Editor}</FlexItem>
+          </Flex>
           <Flex data-lg row fill align="stretch" style={style}>
             <FlexHide fluid width={"300px"} hide={(viewMode === 'zen-mode')}>
               <ListPanel {..._props}/>
