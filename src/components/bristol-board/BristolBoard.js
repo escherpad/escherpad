@@ -149,7 +149,7 @@ class BristolBoard extends Component {
 
   @autobind
   nextPage() {
-    const {post, agent} = this.props;
+    const {agent, post} = this.props;
     let currentPageNumber = this.getCurrentPage();
     if (currentPageNumber < post.source.length - 1) {
       this.props.dispatch({
@@ -167,7 +167,7 @@ class BristolBoard extends Component {
   @autobind
   insertPage() {
     const {agent, post} = this.props;
-    let {source} = post;
+    const {source} = post;
     let currentPageNumber = this.getCurrentPage();
     this.props.dispatch({
       type: "UPDATE_POST",
@@ -181,7 +181,8 @@ class BristolBoard extends Component {
 
   @autobind
   duplicatePage() {
-    let {agent, source} = this.props.post;
+    const {agent, post} = this.props;
+    const {source} = post;
     let currentPageNumber = this.getCurrentPage();
     let currentPage = source[currentPageNumber];
     this.props.dispatch({
@@ -199,8 +200,7 @@ class BristolBoard extends Component {
     //TODO: add content insert for what to do when source does not exist.
     let {post, agent, ...props} = this.props;
     let pageNumber = this.getCurrentPage();
-    if (typeof post.source == "string") return <div>malfored post content</div>;
-    // if (post.source[0].config) post.source = [post.source];
+    if (typeof post.source == "string") return <div>post content is string</div>;
     return <Flex column fill align="stretch">
       <FlexItem fixed>
         <PostHeader {...props}/>
