@@ -47,9 +47,9 @@ export default class FullScreenToggleButton extends React.Component {
       <FlexItem fixed style={{"padding": "0 4px", "cursor": "pointer", "height": "40px"}} onClick={this.onClick}>{
         isMobileSafari() ?
             (viewMode === 'zen-mode') ?
-              <i data-mouseOver className="material-icons select-full-view" style={hover}
+              <i data-mouseOver className="material-icons select-full-view" style={style}
                  onClick={this.setFullView}>fullscreen_exit</i> :
-              <i data-mouseOver className="material-icons select-zen-mode" style={hover}
+              <i data-mouseOver className="material-icons select-zen-mode" style={style}
                  onClick={this.setZenMode}>fullscreen</i> :
             (viewMode === 'zen-mode') ?
               <MouseOver>
