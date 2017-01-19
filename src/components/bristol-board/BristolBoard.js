@@ -156,6 +156,7 @@ class BristolBoard extends Component {
     //TODO: add content insert for what to do when source does not exist.
     let {post, agent, ...props} = this.props;
     let pageNumber = this.getCurrentPage();
+    if (typeof post.source == "string")
     return <Flex column fill align="stretch">
       <FlexItem fixed>
         <PostHeader {...props}/>
