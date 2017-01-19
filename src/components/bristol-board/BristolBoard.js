@@ -37,13 +37,27 @@ class BristolBoard extends Component {
 
     const {post, agent} = this.props;
     let currentPageNumber = this.getCurrentPage();
-    this.props.dispatch({
-      type: "UPDATE_POST",
-      post: {
-        id: this.props.post.id,
-        source: [...post.source.slice(0, currentPageNumber), inkData, ...post.source.slice(currentPageNumber + 1)]
-      }
-    })
+    if (!post.source || !post.source.slice) {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          source: [inkData]
+        }
+      })
+    } else {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          source: [
+            ...post.source.slice(0, currentPageNumber),
+            inkData,
+            ...post.source.slice(currentPageNumber + 1)
+          ]
+        }
+      });
+    }
   }
 
   select(tool) {
