@@ -68,24 +68,50 @@ class BristolBoard extends Component {
 
   @autobind
   clearPage() {
-    this.props.dispatch({
-      type: "UPDATE_POST",
-      post: {
-        id: this.props.post.id,
-        source: []
-      }
-    })
+    const {post, agent} = this.props;
+    let currentPageNumber = this.getCurrentPage();
+    if (!post.source || !post.source.slice) {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          source: [[]]
+        }
+      })
+    } else {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          source: [
+            ...post.source.slice(0, currentPageNumber),
+            [],
+            ...post.source.slice(currentPageNumber + 1)
+          ]
+        }
+      });
+    }
   }
 
   @autobind
   undoStroke() {
-    this.props.dispatch({
-      type: "UPDATE_POST",
-      post: {
-        id: this.props.post.id,
-        source: this.props.post.source.slice(0, -1)
-      }
-    })
+    const {post, agent} = this.props;
+    let currentPageNumber = this.getCurrentPage();
+    if (!post.source || !post.source.slice) {
+      console.warn("source does not have slice method or doesn't exist");
+    } else {
+      this.props.dispatch({
+        type: "UPDATE_POST",
+        post: {
+          id: this.props.post.id,
+          source: [
+            ...post.source.slice(0, currentPageNumber),
+            ...post.source[currentPageNumber].slice(0, -1),
+            ...post.source.slice(currentPageNumber + 1)
+          ]
+        }
+      });
+    }
   }
 
   @autobind
@@ -166,7 +192,6 @@ class BristolBoard extends Component {
       }
     })
   }
-
 
   render() {
     //DONE: this will be removed after we add a post type selector as a parent.

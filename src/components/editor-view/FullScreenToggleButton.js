@@ -26,10 +26,6 @@ export default class FullScreenToggleButton extends React.Component {
   };
 
   @autobind
-  onClick() {
-  }
-
-  @autobind
   setZenMode() {
     var {dispatch} = this.props;
     dispatch({type: "SET_ZEN_MODE"})
