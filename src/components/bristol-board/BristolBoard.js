@@ -97,6 +97,7 @@ class BristolBoard extends Component {
   undoStroke() {
     const {post, agent} = this.props;
     let currentPageNumber = this.getCurrentPage();
+    const currentPage = post.source[currentPageNumber] || [];
     if (!post.source || !post.source.slice) {
       console.warn("source does not have slice method or doesn't exist");
     } else {
@@ -106,7 +107,7 @@ class BristolBoard extends Component {
           id: this.props.post.id,
           source: [
             ...post.source.slice(0, currentPageNumber),
-            ...post.source[currentPageNumber].slice(0, -1),
+            currentPage.slice(0, -1),
             ...post.source.slice(currentPageNumber + 1)
           ]
         }
