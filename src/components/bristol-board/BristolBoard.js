@@ -26,7 +26,7 @@ class BristolBoard extends Component {
   };
 
   componentWillMount() {
-    this.setState({pen: {type: "SimplePen", color: '#255082', strokeWidth: 1}});
+    this.setState({pen: {type: "SimplePen", color: '#255082', strokeWidth: 2}});
   }
 
   @autobind
