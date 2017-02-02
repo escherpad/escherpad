@@ -18,6 +18,7 @@ let MarkdownItAbbr = require('markdown-it-abbr');
 let MarkdownItHighlightjs = require('markdown-it-highlightjs');
 let MarkdownItToc = require('markdown-it-toc');
 let MarkdownItDeflist = require('markdown-it-deflist');
+let MarkdownItFrontMatter = require('markdown-it-front-matter');
 
 require('highlight.js/styles/github.css');
 let highlight = require("highlight.js");
@@ -40,7 +41,9 @@ marked
   .use(MarkdownItMark)
   //.use(MarkdownItInsDel)
   .use(MarkdownItFootnote)
-  .use(MarkdownItHighlightjs);
+  .use(MarkdownItHighlightjs)
+  // todo: move this marked definition into the react component, to allow interception of `frontmatter`.
+  .use(MarkdownItFrontMatter, (fm) => console.log(fm));
 // .use(MarkdownItMath, {
 //   inlineOpen: '$',//'\\(',
 //   inlineClose: '$',//'\\)',
