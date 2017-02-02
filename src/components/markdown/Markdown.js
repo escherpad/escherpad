@@ -26,12 +26,7 @@ const katex = require('katex');
 
 const marked = new MarkdownIt({
   html: true,// avoid xxs attacks
-  langPrefix: 'language-',
-  linkify: true,
-  // Enable some language-neutral replacement + quotes beautification
-  typographer: false,
-  // and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
-  quotes: '“”‘’'
+  linkify: true
 });
 
 marked
@@ -106,6 +101,12 @@ export default class Markdown extends React.Component {
     let html;
     try {
       html = marked.render(source);
+      // todo: make this component truly react, use ast and a react renderer instead.
+      // let env = {};
+      // let ast = marked.parse(source, env);
+      // console.log(ast);
+      // ast.forEach((token, ind)=>{
+      // })
     } catch (e) {
       console.warn("markdown error: ", e);
       html = source;
