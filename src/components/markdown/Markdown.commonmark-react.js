@@ -5,47 +5,47 @@ import Radium from 'radium';
 
 require("github-markdown-css/github-markdown.css");
 
-let MarkdownIt = require('markdown-it');
-let MarkdownItTaskLists = require('markdown-it-task-lists');
-//let MarkdownItCheckbox = require('markdown-it-checkbox');
-let MarkdownItFlowdock = require('markdown-it-flowdock');
-let MarkdownItFootnote = require('markdown-it-footnote');
-let MarkdownItMark = require('markdown-it-mark');
-//let MarkdownItInsDel = require('markdown-it-ins-del');
-let MarkdownItEmoji = require('markdown-it-emoji');
-let MarkdownItAbbr = require('markdown-it-abbr');
-// let MarkdownItMath = require('markdown-it-math');
-let MarkdownItHighlightjs = require('markdown-it-highlightjs');
-let MarkdownItToc = require('markdown-it-toc');
-let MarkdownItDeflist = require('markdown-it-deflist');
+const CommonMark = require('commonmark');
+const CommonMarkReactRenderer = require('commonmark-react-renderer');
 
-require('highlight.js/styles/github.css');
-let highlight = require("highlight.js");
+const parser = new CommonMark.Parser();
+const renderer = new CommonMarkReactRenderer();
 
-const katex = require('katex');
+// let MarkdownIt = require('markdown-it');
+// let MarkdownItTaskLists = require('markdown-it-task-lists');
+// //let MarkdownItCheckbox = require('markdown-it-checkbox');
+// let MarkdownItFlowdock = require('markdown-it-flowdock');
+// let MarkdownItFootnote = require('markdown-it-footnote');
+// let MarkdownItMark = require('markdown-it-mark');
+// //let MarkdownItInsDel = require('markdown-it-ins-del');
+// let MarkdownItEmoji = require('markdown-it-emoji');
+// let MarkdownItAbbr = require('markdown-it-abbr');
+// // let MarkdownItMath = require('markdown-it-math');
+// let MarkdownItHighlightjs = require('markdown-it-highlightjs');
+// let MarkdownItToc = require('markdown-it-toc');
+// let MarkdownItDeflist = require('markdown-it-deflist');
+//
+// require('highlight.js/styles/github.css');
+// let highlight = require("highlight.js");
+//
+// const katex = require('katex');
+//
+// const marked = new MarkdownIt({
+//   html: true// avoid xxs attacks
+// });
 
-const marked = new MarkdownIt({
-  html: true,// avoid xxs attacks
-  langPrefix: 'language-',
-  linkify: true,
-  // Enable some language-neutral replacement + quotes beautification
-  typographer: false,
-  // and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
-  quotes: '“”‘’'
-});
-
-marked
-  .use(MarkdownItAbbr)
-  .use(MarkdownItToc)
-  .use(MarkdownItDeflist)
-  .use(MarkdownItTaskLists)
-  .use(MarkdownItEmoji)
-  //.use(MarkdownItCheckbox)
-  //.use(MarkdownItFlowdock) // bug with nested image/link
-  .use(MarkdownItMark)
-  //.use(MarkdownItInsDel)
-  .use(MarkdownItFootnote)
-  .use(MarkdownItHighlightjs);
+// marked
+//   .use(MarkdownItAbbr)
+//   .use(MarkdownItToc)
+//   .use(MarkdownItDeflist)
+//   .use(MarkdownItTaskLists)
+//   .use(MarkdownItEmoji)
+//   //.use(MarkdownItCheckbox)
+//   //.use(MarkdownItFlowdock) // bug with nested image/link
+//   .use(MarkdownItMark)
+//   //.use(MarkdownItInsDel)
+//   .use(MarkdownItFootnote)
+//   .use(MarkdownItHighlightjs);
 // .use(MarkdownItMath, {
 //   inlineOpen: '$',//'\\(',
 //   inlineClose: '$',//'\\)',
@@ -103,14 +103,13 @@ export default class Markdown extends React.Component {
     let {src, placeholder, isEmpty} = this.props;
     let source = src;
     if (isEmpty || this.isEmpty(src)) source = placeholder || "";
-    let html;
     try {
-      html = marked.render(source);
+      let ast = parser.parse(source);
+      ReactDOM.render(<div>{renderer.render(ast)}</div>, this.nativeElement);
     } catch (e) {
       console.warn("markdown error: ", e);
-      html = source;
+      this.nativeElement.innerHTML = source || "";
     }
-    this.nativeElement.innerHTML = html || "";
     if (this.props.afterRender) this.props.afterRender(this.nativeElement);
   };
 
@@ -125,13 +124,14 @@ export default class Markdown extends React.Component {
     let source = this.props.src || this.props.placeholder || "";
     let html;
     try {
-      html = marked.render(source);
+      // html = marked.render(source);
+      let ast = parser.parse(source);
+      html = renderer.render(ast);
     } catch (e) {
       console.warn("markdown error: ", e);
       html = source;
     }
     let style = this.props.style;
-    return <article className="markdown-view markdown-body" style={style}
-                    dangerouslySetInnerHTML={{__html: html}}/>;
+    return <article className="markdown-view markdown-body" style={style}>{html}</article>;
   }
 }

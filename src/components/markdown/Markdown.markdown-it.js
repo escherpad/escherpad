@@ -25,13 +25,7 @@ let highlight = require("highlight.js");
 const katex = require('katex');
 
 const marked = new MarkdownIt({
-  html: true,// avoid xxs attacks
-  langPrefix: 'language-',
-  linkify: true,
-  // Enable some language-neutral replacement + quotes beautification
-  typographer: false,
-  // and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
-  quotes: '“”‘’'
+  html: true// avoid xxs attacks
 });
 
 marked

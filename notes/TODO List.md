@@ -1,22 +1,19 @@
 ## Doing
-
+1. [ ] fix mobile safari reload bug. 
 5. [ ] save width instead of force **important**
 1. [need review] add background to `BristolBoard`
-4. [ ] add pages to `BristolBoard`
-5. [ ] make pen tools configuration saved separat
-6. [ ] show side bar in vertical layout, allow post selection in vertical view 
+4. [x] add pages to `BristolBoard`
+5. [ ] make pen tools configuration saved separately
+6. [x] show side bar in vertical layout, allow post selection in vertical view 
 7. [ ] allow files inside child folder to show 
 8. [ ] fix editor dropdown
 9. [ ] fix editor component
-10. [ ] improve search experience, compare with Escherpad.
-11. [ ] fix saving.
-
+10. [ ] improve search experience, make on parity with Escherpad.
+11. [x] fix saving.
 
 ## Done
 
 4. [x] **stroke** finish stroke sizing bar
-
-
 
 ## Todos
 

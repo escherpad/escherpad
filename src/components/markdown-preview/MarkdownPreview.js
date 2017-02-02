@@ -65,7 +65,7 @@ export default class MarkdownPreview extends Component {
                     async={true}
                     afterRender={this.afterRender.bind(this)}
                     onMouseUp={this.onMouseUp.bind(this)}
-          ></Markdown>
+          />
           <Cursor className="blinking" {...displayCursor}></Cursor>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default class MarkdownPreview extends Component {
     return this.scrollContainer.scrollTop;
   }
 
-  forceMarkdownRerender = ()=> {
+  forceMarkdownRerender = () => {
     this.refs["Markdown"].forceUpdate();
   };
 
@@ -132,7 +132,7 @@ export default class MarkdownPreview extends Component {
     var content = anchorNode.textContent;
     var source = this.props.post.source; //post is required so this is fine.
     var lines = source.split("\n");
-    lines.forEach((text, index)=> {
+    lines.forEach((text, index) => {
       var row = index;
       var textStart = text.indexOf(content);
       if (textStart !== -1) return onSelect({row, column: textStart + anchorOffset});
