@@ -50,9 +50,8 @@ export default class PostListItem extends React.Component {
     let highlightedTitle = (searchQuery && title && title.match(searchQueryRegex)) ?
       title.replace(searchQueryRegex, "<mark>$&</mark>") : title;
 
-    let breadCrumbPath = parentFolder.match(listParentFolder) ?
-      './' + parentFolder.slice(listParentFolder.length) :
-      parentFolder;
+    let displayPath = parentFolder.match(listParentFolder) ?
+      '.' + (parentFolder.slice(listParentFolder.length) || '/') : parentFolder;
 
     return (
       <div className="post-list-item"
@@ -72,7 +71,10 @@ export default class PostListItem extends React.Component {
         <Flex row style={{justifyContent: "right"}} className="modified-at">
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
-              <BreadCrumBadges accountKey={accountKey} path={breadCrumbPath} dispatch={dispatch}/> :
+              <BreadCrumBadges accountKey={accountKey}
+                               currentFolder={listParentFolder}
+                               displayPath={displayPath}
+                               dispatch={dispatch}/> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>

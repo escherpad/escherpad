@@ -5,9 +5,11 @@ import SmallBlueBadge from "../badge/SmallBlueBadge";
 const {string, func} = PropTypes;
 
 export class BreadCrumBadges extends Component {
+  // notice: I broke this...
   static propTypes = {
     accountKey: string,
-    path: string,
+    currentFolder: string,
+    displayPath: string,
     dispatch: func.isRequired
   };
 
@@ -20,31 +22,37 @@ export class BreadCrumBadges extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.path !== this.props.path);
+    return (
+      nextProps.currentFolder !== this.props.currentFolder ||
+      nextProps.displayPath !== this.props.displayPath
+    );
   }
 
   render() {
     "use strict";
-    const {path} = this.props;
-    // logic for cutting up:
-    const paths = path.split('/');
-    const pathAndFolders = paths.map((folder, ind) => {
-      return {
-        path: '/' + paths.slice(0, ind + 1).join('/'),
-        folder
-      };
-    });
-    return <span>
-      {pathAndFolders.map(({path, folder}, ind) =>
-        folder ? [
-            ind ? // hide the first one
-              <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>
-              : null,
-            folder == "." ?
-              <SmallBlueBadge onClick={this.goToPath(path)}>./</SmallBlueBadge>
-              : <SmallBlueBadge onClick={this.goToPath(path)}>{folder}</SmallBlueBadge>
-          ] : null
-      )}
-    </span>
+    const {currentFolder, displayPath} = this.props;
+    console.log(currentFolder, displayPath);
+    // is relative
+    if (displayPath === "./") return <SmallBlueBadge onClick={this.goToPath(currentFolder)}>./</SmallBlueBadge>;
+    if (displayPath.match(/^\.\//)) {
+      let paths = displayPath.slice(2).split('/');
+      return <span>
+        <SmallBlueBadge onClick={this.goToPath(currentFolder)}>./</SmallBlueBadge>
+        {paths.map((folder, ind) => [
+          <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>,
+          <SmallBlueBadge
+            onClick={this.goToPath(currentFolder + '/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
+        ])}</span>
+    } else if (displayPath.match(/^\//)) {
+      let paths = displayPath.slice(1).split('/');
+      return <span>{paths.map((folder, ind) => [
+        ind ? // hide the first one
+          <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>
+          : null,
+        <SmallBlueBadge onClick={this.goToPath('/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
+      ])}</span>
+    } else {
+      return <warning>path is malformed</warning>
+    }
   }
 }
