@@ -16,6 +16,7 @@ const {string, any, number, func} = React.PropTypes;
 export default class PostListItem extends React.Component {
   static propTypes = {
     searchQuery: string,
+    listParentFolder: string,
     id: string,
     title: string,
     source: any,
@@ -28,6 +29,7 @@ export default class PostListItem extends React.Component {
   render() {
     const {
       searchQuery,
+      listParentFolder,
       id,
       title,
       source,
@@ -48,6 +50,10 @@ export default class PostListItem extends React.Component {
     let highlightedTitle = (searchQuery && title && title.match(searchQueryRegex)) ?
       title.replace(searchQueryRegex, "<mark>$&</mark>") : title;
 
+    let breadCrumbPath = parentFolder.match(listParentFolder) ?
+      './' + parentFolder.slice(listParentFolder.length) :
+      parentFolder;
+
     return (
       <div className="post-list-item"
            onTouchStart={this.selectPost}
@@ -66,7 +72,7 @@ export default class PostListItem extends React.Component {
         <Flex row style={{justifyContent: "right"}} className="modified-at">
           <FlexItem fluid style={{overflowX: "hidden"}}>
             {accountKey ?
-              <BreadCrumBadges accountKey={accountKey} path={parentFolder} dispatch={dispatch}/> :
+              <BreadCrumBadges accountKey={accountKey} path={breadCrumbPath} dispatch={dispatch}/> :
               <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
             }
           </FlexItem>

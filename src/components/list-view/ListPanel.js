@@ -55,7 +55,7 @@ class ListPanel extends React.Component {
   }
 
   //done: throttling is working perfectly.
-  @throttle(400)
+  @throttle(50)
   updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder, maxLength = 15}={}) {
     let ascending = 1, _orderBy = orderBy;
     if (orderBy.match(/^-/)) {
@@ -124,7 +124,7 @@ class ListPanel extends React.Component {
                         className="header"
                         style={{textAlign: "center", fontSize: "30px", fontWeight: "500"}}
               >{postList.currentFolder ?
-                <span style={{color: "#23aaff"}}>{"" + postList.currentFolder}</span>
+                <span style={{color: "#23aaff"}}>{"../" + postList.currentFolder.split('/').slice(-1)[0].slice(-15)}</span>
                 : "Notes"
               }</FlexItem>
               <FlexItem fixed>
@@ -141,7 +141,8 @@ class ListPanel extends React.Component {
             <OrderBySelection orderBy={postList.orderBy} dispatch={dispatch}/>
           </Flex>
         </FlexItem>
-        <PostListView key="list-view" posts={orderedPosts} searchQuery={currentSearchQuery} dispatch={dispatch}/>
+        <PostListView key="list-view" posts={orderedPosts} currentFolder={postList.currentFolder} searchQuery={currentSearchQuery}
+                      dispatch={dispatch}/>
       </Flex>
     )
   }

@@ -8,6 +8,7 @@ const {any, string, func} = React.PropTypes;
 export default class PostListView extends React.Component {
   static propTypes = {
     posts: any,
+    currentFolder: any,
     searchQuery: string,
     dispatch: func
   };
@@ -20,12 +21,12 @@ export default class PostListView extends React.Component {
   }
 
   render() {
-    const {posts, searchQuery, dispatch} = this.props;
+    const {posts, currentFolder, searchQuery, dispatch} = this.props;
     return (
       <FlexItem fluid style={{overflowY: "auto"}}>
         {/*<FlipMove duration={150} enterAnimation="fade" easing="ease-out">*/}
           {posts.map((post, index) => (
-            <PostListItem searchQuery={searchQuery} key={post.id || index} {...post}
+            <PostListItem searchQuery={searchQuery} listParentFolder={currentFolder} key={post.id || index} {...post}
                           dispatch={dispatch}
             />
           ))}

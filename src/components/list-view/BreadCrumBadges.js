@@ -27,7 +27,7 @@ export class BreadCrumBadges extends Component {
     "use strict";
     const {path} = this.props;
     // logic for cutting up:
-    const paths = path.split('/').slice(1);
+    const paths = path.split('/');
     const pathAndFolders = paths.map((folder, ind) => {
       return {
         path: '/' + paths.slice(0, ind + 1).join('/'),
@@ -35,9 +35,15 @@ export class BreadCrumBadges extends Component {
       };
     });
     return <span>
-      {pathAndFolders.map(({path, folder}) => [
-        <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>,
-        <SmallBlueBadge onClick={this.goToPath(path)}>{folder}</SmallBlueBadge>]
+      {pathAndFolders.map(({path, folder}, ind) =>
+        folder ? [
+            ind ? // hide the first one
+              <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>
+              : null,
+            folder == "." ?
+              <SmallBlueBadge onClick={this.goToPath(path)}>./</SmallBlueBadge>
+              : <SmallBlueBadge onClick={this.goToPath(path)}>{folder}</SmallBlueBadge>
+          ] : null
       )}
     </span>
   }
