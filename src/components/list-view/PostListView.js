@@ -4,7 +4,7 @@ import {Flex, FlexItem} from 'layout-components';
 import PostListItem from "./PostListItem";
 // import FlipMove from "react-flip-move";
 
-var {any, string, func} = React.PropTypes;
+const {any, string, func} = React.PropTypes;
 export default class PostListView extends React.Component {
   static propTypes = {
     posts: any,
