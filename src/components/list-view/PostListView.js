@@ -2,7 +2,7 @@
 import React from "react";
 import {Flex, FlexItem} from 'layout-components';
 import PostListItem from "./PostListItem";
-import FlipMove from "react-flip-move";
+// import FlipMove from "react-flip-move";
 
 var {any, string, func} = React.PropTypes;
 export default class PostListView extends React.Component {
@@ -23,13 +23,13 @@ export default class PostListView extends React.Component {
     const {posts, searchQuery, dispatch} = this.props;
     return (
       <FlexItem fluid style={{overflowY: "auto"}}>
-        <FlipMove duration={150} enterAnimation="fade" easing="ease-out">
+        {/*<FlipMove duration={150} enterAnimation="fade" easing="ease-out">*/}
           {posts.map((post, index) => (
             <PostListItem searchQuery={searchQuery} key={post.id || index} {...post}
                           dispatch={dispatch}
             />
           ))}
-        </FlipMove>
+        {/*</FlipMove>*/}
       </FlexItem>
     )
   }
