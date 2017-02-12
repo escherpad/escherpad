@@ -5,7 +5,6 @@ import SmallBlueBadge from "../badge/SmallBlueBadge";
 const {string, func} = PropTypes;
 
 export class BreadCrumBadges extends Component {
-  // notice: I broke this...
   static propTypes = {
     accountKey: string,
     currentFolder: string,
@@ -47,7 +46,7 @@ export class BreadCrumBadges extends Component {
       let paths = displayPath.slice(1).split('/');
       return <span>{paths.map((folder, ind) => [
         ind ? // hide the first one
-          <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>
+          <span style={{color: "#23aaff", fontWeight: 900, margin: "10px 0 2px", lineHeight: "16px"}}>›</span>
           : null,
         <SmallBlueBadge onClick={this.goToPath('/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
       ])}</span>

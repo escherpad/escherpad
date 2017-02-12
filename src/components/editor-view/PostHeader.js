@@ -6,6 +6,7 @@ import FullScreenToggleButton from "./FullScreenToggleButton";
 import SaveToBackEndBadge from "./SaveToBackEndBadge";
 import {CreateNewNote} from "./CreateNewNote";
 import Button from "../form/Button";
+import {BreadCrumBadges} from "../list-view/BreadCrumBadges.js";
 
 const containerStyle = {
   position: "relative",
@@ -34,6 +35,12 @@ export default class PostHeader extends Component {
           <FlexItem>
             <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
           </FlexItem> : null}
+        {(post && post.parentFolder) ?
+          <div><BreadCrumBadges accountKey={post.accountKey}
+                             urrentFolder={""}
+                             displayPath={post.parentFolder}
+                             dispatch={dispatch}/></div>
+          : null}
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button className="add-new-post"
                   height="25px"
