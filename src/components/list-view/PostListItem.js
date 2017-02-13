@@ -27,6 +27,7 @@ export default class PostListItem extends React.Component {
   };
 
   static defaultProps = {
+    parentFolder: "",
     listParentFolder: ""
   };
 
