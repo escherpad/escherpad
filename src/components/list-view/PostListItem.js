@@ -56,10 +56,11 @@ export default class PostListItem extends React.Component {
       title.replace(searchQueryRegex, "<mark>$&</mark>") : title;
 
     // notice: add console.log here.
-    console.log(parentFolder, listParentFolder);
-    console.log(id);
-    let displayPath = parentFolder.toLowerCase().match(listParentFolder.toLowerCase()) ?
-      '.' + (parentFolder.slice(listParentFolder.length) || '/') : parentFolder;
+    let displayPath =
+      (parentFolder && parentFolder
+        .toLowerCase().match(listParentFolder.toLowerCase())) ?
+        '.' + (parentFolder.slice(listParentFolder.length) || '/')
+        : parentFolder;
 
     return (
       <div className="post-list-item"
