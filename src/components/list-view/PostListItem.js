@@ -50,7 +50,7 @@ export default class PostListItem extends React.Component {
     let highlightedTitle = (searchQuery && title && title.match(searchQueryRegex)) ?
       title.replace(searchQueryRegex, "<mark>$&</mark>") : title;
 
-    let displayPath = parentFolder.match(listParentFolder) ?
+    let displayPath = parentFolder.toLowerCase().match(listParentFolder.toLowerCase()) ?
       '.' + (parentFolder.slice(listParentFolder.length) || '/') : parentFolder;
 
     return (

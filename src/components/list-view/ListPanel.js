@@ -72,8 +72,9 @@ class ListPanel extends React.Component {
           return JSON.stringify(post).toLowerCase().match(searchQuery.toLowerCase())
         } else return (
           (typeof post.accountKey === "undefined" && accountKey === "localstorage") ||
-          (typeof accountKey === "undefined" ? true :
-              (post.accountKey === accountKey && (post.path || post.parentFolder).match(currentFolder))
+          (typeof accountKey === "undefined" ?
+              true :
+              post.accountKey === accountKey && post.parentFolder.toLowerCase().match(currentFolder.toLowerCase())
           )
         );
       })
