@@ -31,16 +31,15 @@ export default class PostHeader extends Component {
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <CreateNewNote dispatch={dispatch} {..._props}/>
         </FlexItem>
-        {post ?
-          <FlexItem>
-            <SaveToBackEndBadge dispatch={dispatch} {..._props}/>
-          </FlexItem> : null}
-        {(post && post.parentFolder) ?
-          <div><BreadCrumBadges accountKey={post.accountKey}
+        <FlexItem fixed component="span" style={{maxWidth: "900px", display: "inline-block", overflowX: "auto"}}>
+          {post ? <SaveToBackEndBadge dispatch={dispatch} {..._props}/> : null}
+          {(post && post.parentFolder) ?
+            <BreadCrumBadges accountKey={post.accountKey}
                              urrentFolder={""}
                              displayPath={post.parentFolder}
-                             dispatch={dispatch}/></div>
-          : null}
+                             dispatch={dispatch}/>
+            : null}
+        </FlexItem>
         <FlexItem fixed style={{"padding": "0 5px"}}>
           <Button className="add-new-post"
                   height="25px"

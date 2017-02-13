@@ -45,8 +45,8 @@ export default class SimpleModal extends Component {
   }
 
   render() {
-    var {children, value, component, ..._props} = this.props;
-    var _component, _children;
+    let {children, value, component, ..._props} = this.props;
+    let _component, _children;
     if (component) {
       _children = [...component.props.children];
       _children.concat([(
@@ -73,31 +73,29 @@ export default class SimpleModal extends Component {
       return _component
     } else {
       return (
-        <div className="modal-component">
+        <span className="modal-component">
           <Transition transitionName="backdrop-fade"
                       transitionEnterTimeout={300}
-                      transitionLeaveTimeout={500}
-          >
+                      transitionLeaveTimeout={500}>
             {this.state.isOpen ?
-              (<ModalBackdrop key="modal-backdrop"></ModalBackdrop>)
+              (<ModalBackdrop key="modal-backdrop"/>)
               : null
             }
           </Transition>
           <Transition transitionName="modal-fade-and-slide-down"
                       transitionEnterTimeout={500}
-                      transitionLeaveTimeout={300}
-          >
+                      transitionLeaveTimeout={300}>
             {this.state.isOpen ?
               (<ModalContainer key="modal-container"
                                onClick={this.close.bind(this)}
                 ><Modal>
-                  <CloseButton onClick={this.close.bind(this)}></CloseButton>
+                  <CloseButton onClick={this.close.bind(this)}/>
                   {children}
                 </Modal>
                 </ModalContainer>
               ) : null}
           </Transition>
-        </div>
+        </span>
       );
     }
   }

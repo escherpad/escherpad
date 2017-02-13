@@ -38,7 +38,7 @@ export class BreadCrumBadges extends Component {
       return <span>
         <SmallBlueBadge onClick={this.goToPath(currentFolder)}>./</SmallBlueBadge>
         {paths.map((folder, ind) => [
-          <span style={{color: "#23aaff", fontWeight: 900, margin: "0 2px", lineHeight: "24px"}}>›</span>,
+          <span style={{color: "#23aaff", fontWeight: 900, margin: "10px 2px 0px", lineHeight: "24px"}}>›</span>,
           <SmallBlueBadge
             onClick={this.goToPath(currentFolder + '/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
         ])}</span>
@@ -46,7 +46,7 @@ export class BreadCrumBadges extends Component {
       let paths = displayPath.slice(1).split('/');
       return <span>{paths.map((folder, ind) => [
         ind ? // hide the first one
-          <span style={{color: "#23aaff", fontWeight: 900, margin: "10px 0 2px", lineHeight: "16px"}}>›</span>
+          <span style={{color: "#23aaff", fontWeight: 900, margin: "10px 2px 0px", lineHeight: "16px"}}>›</span>
           : null,
         <SmallBlueBadge onClick={this.goToPath('/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
       ])}</span>

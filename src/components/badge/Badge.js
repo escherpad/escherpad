@@ -7,8 +7,8 @@ export default function BadgeWithControl({className="", children, text, ..._prop
   else className = "badge";
   if (_props.onClick) className += " clickable";
   return (
-    <div className={className} {..._props}>
+    <span className={className} {..._props}>
       {(text || children)}
-    </div>
+    </span>
   )
 }
