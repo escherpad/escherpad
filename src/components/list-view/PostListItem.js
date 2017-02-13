@@ -57,6 +57,7 @@ export default class PostListItem extends React.Component {
 
     // notice: add console.log here.
     console.log(parentFolder, listParentFolder);
+    console.log(id);
     let displayPath = parentFolder.toLowerCase().match(listParentFolder.toLowerCase()) ?
       '.' + (parentFolder.slice(listParentFolder.length) || '/') : parentFolder;
 
