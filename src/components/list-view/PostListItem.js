@@ -26,6 +26,10 @@ export default class PostListItem extends React.Component {
     dispatch: func.isRequired
   };
 
+  static defaultProps = {
+    listParentFolder: ""
+  };
+
   render() {
     const {
       searchQuery,
