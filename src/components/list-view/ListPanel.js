@@ -56,14 +56,14 @@ class ListPanel extends React.Component {
 
   //done: throttling is working perfectly.
   @throttle(50)
-  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder, maxLength = 15}={}) {
+  updatePosts(posts, {orderBy = "modifiedAt", searchQuery = "", accountKey, currentFolder, maxLength = 50}={}) {
     let ascending = 1, _orderBy = orderBy;
     if (orderBy.match(/^-/)) {
       ascending = 0;
       _orderBy = orderBy.slice(1);
     }
 
-    console.log('accountKey', accountKey);
+    // console.log('accountKey', accountKey);
     let orderedPosts = Object.keys(posts)
       .map((_) => posts[_])
       .filter(function (post, index, posts) {
