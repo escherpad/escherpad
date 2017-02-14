@@ -11,7 +11,7 @@ export function insertCursor(source, {row, column}) {
   if (line.length !== 0) {
     lines[row] = line.slice(0, column) + cursorString + line.slice(column);
   } else {
-    lines.splice(row, 0, cursorString + "\n");
+    lines.splice(row, 0, cursorString);
   }
   return lines.join('\n');
 }
