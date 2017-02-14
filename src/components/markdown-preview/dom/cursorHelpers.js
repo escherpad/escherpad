@@ -8,11 +8,7 @@ export function insertCursor(source, {row, column}) {
   if (!column) column = 0; // set all null value besides undefined as 0
   let lines = source.split('\n');
   let line = lines[row];
-  if (line.length !== 0) {
-    lines[row] = line.slice(0, column) + cursorString + line.slice(column);
-  } else {
-    lines.splice(row, 0, cursorString);
-  }
+  lines[row] = line.slice(0, column) + cursorString + line.slice(column);
   return lines.join('\n');
 }
 
