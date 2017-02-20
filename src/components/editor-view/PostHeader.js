@@ -51,6 +51,8 @@ export default class PostHeader extends Component {
                   activeBackground="#23aaff"
                   padding="0 8px 0 8px">tag with bindr...</Button>
         </FlexItem>
+        {window.location.href.match('episdoeyang.com') ? null :
+          <FlexItem fixed style={{color: "#3b3b3b"}}>Newest Version - <a href="https://episodeyang.com/gittor/">episodeyang.com/gittor/</a></FlexItem>}
         <FlexItem fluid/>
       </Flex>
     )
