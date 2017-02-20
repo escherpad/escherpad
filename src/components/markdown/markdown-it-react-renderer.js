@@ -1,5 +1,5 @@
 /** Created by ge on 2/19/17. */
-import React from 'react';
+import React, {Component} from 'react';
 import Mathjax from './Mathjax';
 
 function current(s) {
@@ -32,7 +32,8 @@ export function attr2props(attrs) {
   "use strict";
   let props = {};
   attrs.forEach((attr, ind) => {
-    props[attr[0]] = attr[1]
+    if (attr[0] === "class") props.className = attr[1];
+    else props[attr[0]] = attr[1];
   });
   return props;
 }
@@ -42,7 +43,7 @@ const inline = {
   image: (token, ind) => <img key={token.map || ind} alt={token.content} {...attr2props(token.attrs)}/>,
   emoji: ({tag: Tag, content}, ind) => (<span key={ind}>{content}</span>),
   code_inline: ({tag:Tag, content}, ind) => (<Tag key={ind}>{content}</Tag>),
-  math_inline: ({tag:Tag, content, equation_index}, ind) => (<Mathjax key={ind} alt={content} number={equation_index} />)//todo:
+  math_inline: ({tag:Tag, content, equation_index}, ind) => (<Mathjax key={ind} alt={content} number={equation_index}/>)//todo:
 };
 
 const inlineBlock = {
@@ -51,7 +52,7 @@ const inlineBlock = {
   em: [],
   s: [],
   mark: [],
-  a: []
+  a: [],
 };
 export function Inline2React(s) {
   let context = {};
@@ -81,7 +82,7 @@ export function Inline2React(s) {
       let props = children[0].attrs ?
         {key: ind, ...attr2props(children[0].attrs)} :
         {key: ind};
-      current(s).push(React.createElement(token.tag, props, children.length > 1 ? children.slice(1) : null))
+      current(s).push(React.createElement(token.tag, props, children.length >= 1 ? children.slice(1) : null))
     }
   }
 }
@@ -90,7 +91,8 @@ const blocks = {
   hr: (token, ind) => <hr key={ind}/>,
   fence: (token, ind) => <pre key={token.map || ind}><code
     className={"lang-" + token.info}>{token.content}</code></pre>,
-  image: {}
+  image: {},
+  footnote_anchor: {tag: "span"}
 };
 const blockContainers = {
   heading: {},
@@ -104,7 +106,10 @@ const blockContainers = {
   tbody: {},
   tr: {},
   th: {},
-  td: {}
+  td: {},
+  toc: {},
+  footnote: {tag: "span"},
+  footnote_block: {tag: "span"},
 };
 
 
@@ -140,7 +145,7 @@ export function Block2React(s) {
             ...props,
             key: token.map || ind, ...config.props
           },
-          children.length > 1 ? children.slice(1) : null
+          children.length >= 1 ? children.slice(1) : null
         ));
     } else if (blocks[token.type]) {
       let config = blocks[token.type];
@@ -157,6 +162,9 @@ export function Block2React(s) {
         ));
     } else if (token.type == "inline") {
       let children = token.children;
+      // if (children.length > 0 && !Component.prototype.isPrototypeOf(children[0].prototype)) {
+      //   children = children.slice(1)
+      // }
       children.forEach(Inline2React(s));
     }
   };
