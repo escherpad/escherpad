@@ -124,6 +124,7 @@ function defaultBlockComponent(token, children, ind) {
 const blockContainers = {
   heading: defaultBlockComponent,
   paragraph: (token, children, ind) => <p key={token.map || ind}{...{className: "paragraph"}}>{children}</p>,
+  blockquote: defaultBlockComponent,
   bullet_list: defaultBlockComponent,
   ordered_list: defaultBlockComponent,
   definition_list: defaultBlockComponent,
