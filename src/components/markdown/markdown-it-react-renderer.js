@@ -105,6 +105,7 @@ export function Inline2React(s) {
 
 const blocks = {
   hr: (token, children, ind) => <hr key={ind}/>,
+  code_block: defaultBlockComponent,
   fence: (token, children, ind) => <pre key={token.map || ind}><code
     className={"lang-" + token.info}>{token.content}</code></pre>,
   image: defaultBlockComponent,
