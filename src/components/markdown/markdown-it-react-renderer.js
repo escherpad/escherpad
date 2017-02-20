@@ -28,25 +28,40 @@ const html = {
   closing: (s) => s.match(/^<\/(.*)/)
 };
 
+const tag = {
+  self_close: (s) => s.match(/^(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)/)
+};
+
 export function attr2props(attrs) {
   "use strict";
   let props = {};
   attrs.forEach((attr, ind) => {
     if (attr[0] === "class") props.className = attr[1];
+    else if (attr[0] === "ref") props.name = attr[1];
     else props[attr[0]] = attr[1];
   });
   return props;
 }
 
+const defaultInlineComponent = ({tag:Tag, type, content}, ind) => {
+  if (!Tag) Tag = "span";
+  let key = type + ind;
+  if (tag.self_close(Tag)) return <Tag key={key}/>;
+  else return <Tag key={key}>{content}</Tag>;
+};
 const inline = {
-  text: ({tag:Tag, content}, ind) => (<span key={ind}>{content}</span>),
+  text: defaultInlineComponent,
   image: (token, ind) => <img key={token.map || ind} alt={token.content} {...attr2props(token.attrs)}/>,
   emoji: ({tag: Tag, content}, ind) => (<span key={ind}>{content}</span>),
   code_inline: ({tag:Tag, content}, ind) => (<Tag key={ind}>{content}</Tag>),
-  math_inline: ({tag:Tag, content, equation_index}, ind) => (<Mathjax key={ind} alt={content} number={equation_index}/>)//todo:
+  // todo: add math_display component
+  math_inline: ({tag:Tag, content, equation_index}, ind) => (
+    <Mathjax key={ind} alt={content} number={equation_index}/>),
+  softbreak: defaultInlineComponent,
+  hardbreak: defaultInlineComponent
 };
 
-const inlineBlock = {
+const inlineContainer = {
   link: [],
   strong: [],
   em: [],
@@ -54,6 +69,7 @@ const inlineBlock = {
   mark: [],
   a: [],
 };
+
 export function Inline2React(s) {
   let context = {};
   return function inline2React(token, ind) {
@@ -77,7 +93,7 @@ export function Inline2React(s) {
       current(s).push(inline[token.type](token, ind))
     } else if (token.type.match(/_open$/)) {
       down(s, token);
-    } else if (token.type.match(/_close$/) && inlineBlock[token.type.slice(0, -6)]) {
+    } else if (token.type.match(/_close$/) && inlineContainer[token.type.slice(0, -6)]) {
       let children = up(s);
       let props = children[0].attrs ?
         {key: ind, ...attr2props(children[0].attrs)} :
@@ -88,28 +104,39 @@ export function Inline2React(s) {
 }
 
 const blocks = {
-  hr: (token, ind) => <hr key={ind}/>,
-  fence: (token, ind) => <pre key={token.map || ind}><code
+  hr: (token, children, ind) => <hr key={ind}/>,
+  fence: (token, children, ind) => <pre key={token.map || ind}><code
     className={"lang-" + token.info}>{token.content}</code></pre>,
-  image: {},
-  footnote_anchor: {tag: "span"}
+  image: defaultBlockComponent,
+  footnote_anchor: defaultBlockComponent
 };
+
+let keys = {};
+function defaultBlockComponent(token, children, ind) {
+  "use strict";
+  let {tag: Tag, type, attrs, map, content} = token;
+  let props = attrs ? attr2props(attrs) : {};
+  if (!Tag) Tag = "span";
+  let key = type + ind + map;
+  if (tag.self_close(Tag)) return <Tag key={key} {...props}/>;
+  return <Tag key={key} alt={content} {...props}>{children}</Tag>;
+}
 const blockContainers = {
-  heading: {},
+  heading: defaultBlockComponent,
   paragraph: (token, children, ind) => <p key={token.map || ind}{...{className: "paragraph"}}>{children}</p>,
-  bullet_list: {},
-  ordered_list: {},
-  definition_list: {},
-  list_item: {},
-  table: {},
-  thead: {},
-  tbody: {},
-  tr: {},
-  th: {},
-  td: {},
-  toc: {},
-  footnote: {tag: "span"},
-  footnote_block: {tag: "span"},
+  bullet_list: defaultBlockComponent,
+  ordered_list: defaultBlockComponent,
+  definition_list: defaultBlockComponent,
+  list_item: defaultBlockComponent,
+  table: defaultBlockComponent,
+  thead: defaultBlockComponent,
+  tbody: defaultBlockComponent,
+  tr: defaultBlockComponent,
+  th: defaultBlockComponent,
+  td: defaultBlockComponent,
+  toc: defaultBlockComponent,
+  footnote: defaultBlockComponent,
+  footnote_block: defaultBlockComponent,
 };
 
 
@@ -134,37 +161,14 @@ export function Block2React(s) {
     } else if (token.type.match(/_open$/)) {
       down(s, token);
     } else if (token.type.match(/_close/) && blockContainers[token.type.slice(0, -6)]) {
-      let config = blockContainers[token.type.slice(0, -6)];
+      let component = blockContainers[token.type.slice(0, -6)];
       let children = up(s);
-      let props = children[0].attrs ? attr2props(children[0].attrs) : {};
-      current(s).push(typeof config === "function" ?
-        config(children[0], children.slice(1), ind)
-        : React.createElement(
-          config.tag || token.tag,
-          {
-            ...props,
-            key: token.map || ind, ...config.props
-          },
-          children.length >= 1 ? children.slice(1) : null
-        ));
+      current(s).push(component(children[0], children.slice(1), ind));
     } else if (blocks[token.type]) {
-      let config = blocks[token.type];
-      let props = token.attrs ? attr2props(token.attrs) : {};
-      current(s).push(typeof config === "function" ?
-        config(token, ind)
-        : React.createElement(
-          config.tag || token.tag,
-          {
-            ...props,
-            key: token.map || ind, ...config.props
-          },
-          token.content
-        ));
+      let component = blocks[token.type];
+      current(s).push(component(token, null, ind));
     } else if (token.type == "inline") {
       let children = token.children;
-      // if (children.length > 0 && !Component.prototype.isPrototypeOf(children[0].prototype)) {
-      //   children = children.slice(1)
-      // }
       children.forEach(Inline2React(s));
     }
   };
