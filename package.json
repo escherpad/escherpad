@@ -116,7 +116,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress --profile --colors --config webpack.production.config.js",
     "gh-deploy": "git subtree push --prefix gittor origin gh-pages",
-    "build-and-deploy": "git push && npm run build && git add . && git ci -m \"BUILD update\" && npm run gh-deploy",
+    "build-and-deploy": "npm run build && git add . && git ci -m \"BUILD update\" && npm run gh-deploy",
+    "push-build-and-deploy": "git push && npm run build && git add . && git ci -m \"BUILD update\" && npm run gh-deploy",
     "start": "env UV_THREADPOOL_SIZE=128 webpack-dev-server --progress --profile --colors --hot --config webpack.develop.config.js --display-reasons --display-chunks --watch --loglevel verbose"
   },
   "repository": {
