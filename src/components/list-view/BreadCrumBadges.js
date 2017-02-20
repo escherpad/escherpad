@@ -30,7 +30,7 @@ export class BreadCrumBadges extends Component {
   render() {
     "use strict";
     const {currentFolder, displayPath} = this.props;
-    console.log(currentFolder, displayPath);
+    // console.log(currentFolder, displayPath);
     // is relative
     if (displayPath === "./") return <SmallBlueBadge onClick={this.goToPath(currentFolder)}>./</SmallBlueBadge>;
     if (displayPath.match(/^\.\//)) {

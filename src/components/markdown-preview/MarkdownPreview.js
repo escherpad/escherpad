@@ -161,8 +161,10 @@ export default class MarkdownPreview extends Component {
 
 
   findCursorString(markdownElement) {
-    var rect = getCursorStringPosition(markdownElement);
-    var scrollTop = this.scrollContainer.scrollTop;
+    let rect = getCursorStringPosition(markdownElement);
+    /* note: the scrollContainer for the code editor (CodeMirror) might not be ready. */
+    if (!this.scrollContainer) return;
+    let scrollTop = this.scrollContainer.scrollTop;
     if (typeof rect === "undefined") return;
     this.setState({
       cursor: {
@@ -173,6 +175,7 @@ export default class MarkdownPreview extends Component {
       }
     });
     let cursorScrollOffset = scrollTop + (rect.top + rect.bottom) / 2;
+    // todo: avoid using state in this case.
     this.setState({cursorScrollOffset});
   }
 

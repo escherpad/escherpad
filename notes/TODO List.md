@@ -1,4 +1,6 @@
 ## Doing
+
+0. [ ] add github integration [4hr]
 1. [ ] fix mobile safari reload bug. 
 5. [ ] save width instead of force **important**
 1. [need review] add background to `BristolBoard`

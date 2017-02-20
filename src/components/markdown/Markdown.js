@@ -1,9 +1,10 @@
 /** Created by ge on 3/30/16. */
 import React from 'react';
 import ReactDOM from "react-dom";
-import Radium from 'radium';
 
 require("github-markdown-css/github-markdown.css");
+
+import ast2React  from './markdown-it-react-renderer';
 
 let MarkdownIt = require('markdown-it');
 let MarkdownItTaskLists = require('markdown-it-task-lists');
@@ -14,7 +15,7 @@ let MarkdownItMark = require('markdown-it-mark');
 //let MarkdownItInsDel = require('markdown-it-ins-del');
 let MarkdownItEmoji = require('markdown-it-emoji');
 let MarkdownItAbbr = require('markdown-it-abbr');
-// let MarkdownItMath = require('markdown-it-math');
+import MarkdownItMath from './markdown-it-mathjax';
 let MarkdownItHighlightjs = require('markdown-it-highlightjs');
 let MarkdownItToc = require('markdown-it-toc');
 let MarkdownItDeflist = require('markdown-it-deflist');
@@ -22,8 +23,6 @@ let MarkdownItFrontMatter = require('markdown-it-front-matter');
 
 require('highlight.js/styles/github.css');
 let highlight = require("highlight.js");
-
-const katex = require('katex');
 
 const marked = new MarkdownIt({
   html: true,// avoid xxs attacks
@@ -40,6 +39,8 @@ marked
   //.use(MarkdownItFlowdock) // bug with nested image/link
   .use(MarkdownItMark)
   //.use(MarkdownItInsDel)
+  .use(MarkdownItMath)
+  // .use(MarkdownItMathjax)
   .use(MarkdownItFootnote)
   .use(MarkdownItHighlightjs)
   // todo: move this marked definition into the react component, to allow interception of `frontmatter`.
@@ -60,10 +61,7 @@ marked
 //   }
 // });
 
-import throttle from "lodash.throttle";
-
 let {string, bool, func, any} = React.PropTypes;
-@Radium
 export default class Markdown extends React.Component {
   static propTypes = {
     src: string,
@@ -71,23 +69,28 @@ export default class Markdown extends React.Component {
     isEmpty: bool, // if `isEmpty` is `true`, then the markdown shows the placeholder regardless of the string passed in.
     style: any,
     onMouseUp: func,
-    async: any,
     afterRender: func
   };
+
+
+  componentDidMount() {
+    this.nativeElement = ReactDOM.findDOMNode(this);
+    this.nativeElement.addEventListener('mouseup', this.onMouseUp);
+    if (typeof this.props.afterRender === "function") this.props.afterRender(this.nativeElement);
+  }
 
   shouldComponentUpdate(newProps) {
     return (this.props.src !== newProps.src);
   }
 
-  componentDidMount() {
-    this.nativeElement = ReactDOM.findDOMNode(this);
-    this.nativeElement.addEventListener('mouseup', this.onMouseUp);
-    this.asyncMarkdown = throttle(this.asyncMarkdown, 100);
+  componentDidUpdate() {
+    if (typeof this.props.afterRender === "function") this.props.afterRender(this.nativeElement);
   }
 
   componentWillUnmount() {
     this.nativeElement.removeEventListener('mouseup', this.onMouseUp);
   }
+
 
   onMouseUp = (e) => {
     if (this.props && this.props.onMouseUp) this.props.onMouseUp(e);
@@ -97,45 +100,17 @@ export default class Markdown extends React.Component {
     return (src.trim() === "");
   }
 
-  asyncMarkdown = () => {
-    let {src, placeholder, isEmpty} = this.props;
-    let source = src;
-    if (isEmpty || this.isEmpty(src)) source = placeholder || "";
-    let html;
-    try {
-      html = marked.render(source);
-      // todo: make this component truly react, use ast and a react renderer instead.
-      // let env = {};
-      // let ast = marked.parse(source, env);
-      // console.log(ast);
-      // ast.forEach((token, ind)=>{
-      // })
-    } catch (e) {
-      console.warn("markdown error: ", e);
-      html = source;
-    }
-    this.nativeElement.innerHTML = html || "";
-    if (this.props.afterRender) this.props.afterRender(this.nativeElement);
-  };
-
-  renderAsync() {
-    setImmediate(this.asyncMarkdown);
-    let style = this.props.style;
-    return <article className="markdown-view markdown-body" style={style}/>;
-  }
-
   render() {
-    if (this.props.async) return this.renderAsync();
-    let source = this.props.src || this.props.placeholder || "";
-    let html;
+    const {src, style} = this.props;
+    let ast, env = {global_equation_index: 0}, children;
     try {
-      html = marked.render(source);
+      // in progress: make this component truly react, use ast and a react renderer instead.
+      ast = marked.parse(src, env);
+      children = ast2React(ast);
+      // console.log(ast, children);
     } catch (e) {
       console.warn("markdown error: ", e);
-      html = source;
     }
-    let style = this.props.style;
-    return <article className="markdown-view markdown-body" style={style}
-                    dangerouslySetInnerHTML={{__html: html}}/>;
+    return <article className="markdown-view markdown-body" style={style}>{children}</article>;
   }
 }
