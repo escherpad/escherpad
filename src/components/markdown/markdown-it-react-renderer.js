@@ -45,18 +45,18 @@ export function attr2props(attrs) {
 
 const defaultInlineComponent = ({tag:Tag, type, content}, ind) => {
   if (!Tag) Tag = "span";
-  let key = type + ind;
+  let key = type + "$" + ind;
   if (tag.self_close(Tag)) return <Tag key={key}/>;
   else return <Tag key={key}>{content}</Tag>;
 };
 const inline = {
   text: defaultInlineComponent,
-  image: (token, ind) => <img key={token.map || ind} alt={token.content} {...attr2props(token.attrs)}/>,
-  emoji: ({tag: Tag, content}, ind) => (<span key={ind}>{content}</span>),
-  code_inline: ({tag:Tag, content}, ind) => (<Tag key={ind}>{content}</Tag>),
+  image: (token, ind) => <img key={token.type + "$" + ind} alt={token.content} {...attr2props(token.attrs)}/>,
+  emoji: ({tag: Tag, type, content}, ind) => (<span key={type + "$" + ind}>{content}</span>),
+  code_inline: ({tag:Tag, type, content}, ind) => (<Tag key={type + "$" + ind}>{content}</Tag>),
   // todo: add math_display component
-  math_inline: ({tag:Tag, content, equation_index}, ind) => (
-    <Mathjax key={ind} alt={content} number={equation_index}/>),
+  math_inline: ({tag:Tag, type, content, equation_index}, ind) => (
+    <Mathjax key={type + "$" + ind} alt={content} number={equation_index}/>),
   softbreak: defaultInlineComponent,
   hardbreak: defaultInlineComponent
 };
@@ -79,12 +79,12 @@ export function Inline2React(s) {
       current(s).push(token.content);
       if (html.closing(token.content)) {
         let html = up(s);
-        current(s).push(<span key={ind} dangerouslySetInnerHTML={{__html: html.join('')}}/>);
+        current(s).push(<span key={token.type + "$" + ind} dangerouslySetInnerHTML={{__html: html.join('')}}/>);
         context.htmlBlock = false
       }
     } else if (token.type.match('html_inline')) {
       if (html.self_close(token.content)) {
-        current(s).push(<span key={ind} dangerouslySetInnerHTML={{__html: token.content}}/>);
+        current(s).push(<span key={token.type + "$" + ind} dangerouslySetInnerHTML={{__html: token.content}}/>);
       } else if (!html.closing(token.content)) {
         down(s, token.content);
         context.htmlBlock = true
@@ -104,27 +104,30 @@ export function Inline2React(s) {
 }
 
 const blocks = {
-  hr: (token, children, ind) => <hr key={ind}/>,
+  hr: (token, children, ind) => <hr key={token.type + "$" + ind}/>,
   code_block: defaultBlockComponent,
-  fence: (token, children, ind) => <pre key={token.map || ind}><code
-    className={"lang-" + token.info}>{token.content}</code></pre>,
+  fence: ({tag:Tag, type, attrs, info, map, content}, children, ind) => {
+    "use strict";
+    let key = type + "$" + ind + (map ? "L" + map[0] : "");
+    return <pre key={key}><code className={"lang-" + info}>{content}</code></pre>
+  },
   image: defaultBlockComponent,
   footnote_anchor: defaultBlockComponent
 };
 
-let keys = {};
 function defaultBlockComponent(token, children, ind) {
   "use strict";
   let {tag: Tag, type, attrs, map, content} = token;
   let props = attrs ? attr2props(attrs) : {};
   if (!Tag) Tag = "span";
-  let key = type + ind + map;
+  let key = type + "$" + ind + (map ? "L" + map[0] : "");
   if (tag.self_close(Tag)) return <Tag key={key} {...props}/>;
   return <Tag key={key} alt={content} {...props}>{children}</Tag>;
 }
 const blockContainers = {
   heading: defaultBlockComponent,
-  paragraph: (token, children, ind) => <p key={token.map || ind}{...{className: "paragraph"}}>{children}</p>,
+  paragraph: (token, children, ind) => <p
+    key={token.type + "$" + ind + (token.map ? "L" + token.map[0] : "")}{...{className: "paragraph"}}>{children}</p>,
   blockquote: defaultBlockComponent,
   bullet_list: defaultBlockComponent,
   ordered_list: defaultBlockComponent,
@@ -150,12 +153,14 @@ export function Block2React(s) {
       current(s).push(token.content);
       if (html.closing(token.content)) {
         let htmls = up(s);
-        current(s).push(<span key={ind} dangerouslySetInnerHTML={{__html: htmls.join('')}}/>);
+        current(s).push(<span key={token.type + "$" + ind + (token.map ? "L" + token.map[0] : "")}
+                              dangerouslySetInnerHTML={{__html: htmls.join('')}}/>);
         context.htmlBlock = false
       }
     } else if (token.type.match('html_block')) {
       if (html.self_close(token.content)) {
-        current(s).push(<span key={ind} dangerouslySetInnerHTML={{__html: token.content}}/>);
+        current(s).push(<span key={token.type + "$" + ind + (token.map ? "L" + token.map[0] : "")}
+                              dangerouslySetInnerHTML={{__html: token.content}}/>);
       } else if (!html.closing(token.content)) {
         down(s, token.content);
         context.htmlBlock = true
