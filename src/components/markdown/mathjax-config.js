@@ -72,6 +72,8 @@ function configureMathjax() {
 export function resetNumbering(start = 1) {
   "use strict";
   /* see this link: https://github.com/benweet/stackedit/issues/180 */
+  /* note: to change format of equation labeling, take a look at this link
+  * http://tex.stackexchange.com/questions/63138/how-do-i-number-equations-with-roman-numbers */
   window.MathJax.Extension["TeX/AMSmath"].startNumber = start - 1;
   window.MathJax.Extension["TeX/AMSmath"].labels = {};
 }
