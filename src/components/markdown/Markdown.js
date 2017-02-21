@@ -106,8 +106,9 @@ export default class Markdown extends React.Component {
     try {
       // in progress: make this component truly react, use ast and a react renderer instead.
       ast = marked.parse(src, env);
+      console.log(ast.slice(-80));
       children = ast2React(ast);
-      console.log(ast.slice(-80), children);
+      console.log(children);
     } catch (e) {
       console.warn("markdown error: ", e);
     }
