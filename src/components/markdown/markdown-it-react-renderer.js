@@ -149,7 +149,7 @@ const blockContainers = {
     <ol className="footnote-list">{children}</ol>
   </section>,
   footnote: (token, children, ind) => <li id={"fn" + token.meta.id} className="footnote-item"
-                                          key={ind}>{children}&nbsp;</li>,
+                                          key={ind}>{children}</li>,
 };
 
 
