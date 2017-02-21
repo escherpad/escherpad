@@ -54,13 +54,14 @@ const inline = {
   image: (token, ind) => <img key={token.type + "$" + ind} alt={token.content} {...attr2props(token.attrs)}/>,
   emoji: ({tag: Tag, type, content}, ind) => (<span key={type + "$" + ind}>{content}</span>),
   code_inline: ({tag:Tag, type, content}, ind) => (<Tag key={type + "$" + ind}>{content}</Tag>),
-  // todo: add math_display component
+  softbreak: (t, ind) => <span key={"softbreak$" + ind}/>, // or () => `null`
+  hardbreak: defaultInlineComponent,
+  // done: add math_display component
   math_inline: ({tag:Tag, type, content, equation_index}, ind) => (
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index}/>),
   math_display: ({tag:Tag, type, content, equation_index}, ind) => (
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index} mode="display"/>),
-  softbreak: (t, ind) => <span key={"softbreak$" + ind}/>, // or () => `null`
-  hardbreak: defaultInlineComponent
+  footnote_ref: defaultInlineComponent
 };
 
 const inlineContainer = {
