@@ -61,7 +61,7 @@ const inline = {
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index}/>),
   math_display: ({tag:Tag, type, content, equation_index}, ind) => (
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index} mode="display"/>),
-  footnote_ref: defaultInlineComponent
+  footnote_ref: ()=>
 };
 
 const inlineContainer = {
