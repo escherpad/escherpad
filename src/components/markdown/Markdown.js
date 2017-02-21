@@ -15,7 +15,7 @@ let MarkdownItMark = require('markdown-it-mark');
 //let MarkdownItInsDel = require('markdown-it-ins-del');
 let MarkdownItEmoji = require('markdown-it-emoji');
 let MarkdownItAbbr = require('markdown-it-abbr');
-import MarkdownItMath from './markdown-it-mathjax';
+import MarkdownItMath from './markdown-it-math';
 let MarkdownItHighlightjs = require('markdown-it-highlightjs');
 let MarkdownItToc = require('markdown-it-toc');
 let MarkdownItDeflist = require('markdown-it-deflist');
@@ -107,7 +107,7 @@ export default class Markdown extends React.Component {
       // in progress: make this component truly react, use ast and a react renderer instead.
       ast = marked.parse(src, env);
       children = ast2React(ast);
-      // console.log(ast.slice(-80), children);
+      console.log(ast.slice(-80), children);
     } catch (e) {
       console.warn("markdown error: ", e);
     }
