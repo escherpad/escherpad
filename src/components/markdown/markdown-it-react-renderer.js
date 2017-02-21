@@ -61,7 +61,7 @@ const inline = {
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index}/>),
   math_display: ({tag:Tag, type, content, equation_index}, ind) => (
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index} mode="display"/>),
-  footnote_ref: ({meta}, ind) => <sup className="footnote-ref" key={ind}><a id={meta.subId}
+  footnote_ref: ({meta}, ind) => <sup className="footnote-ref" key={ind}><a id={"fnref" + meta.subId}
                                                                             href={"#fn" + meta.id}>{"[" + (meta.id + 1) + "]"}</a></sup>
 };
 
@@ -145,8 +145,11 @@ const blockContainers = {
   th: defaultBlockComponent,
   td: defaultBlockComponent,
   toc: defaultBlockComponent,
-  footnote_block: defaultBlockComponent,
-  footnote: (token, children, ind) => <span id={token.meta.id} key={ind}>{children}</span>,
+  footnote_block: (token, children, ind) => <section className="footnotes">
+    <ol className="footnote-list">{children}</ol>
+  </section>,
+  footnote: (token, children, ind) => <li id={"fn" + token.meta.id} className="footnote-item"
+                                          key={ind}>{children}&nbsp;</li>,
 };
 
 
