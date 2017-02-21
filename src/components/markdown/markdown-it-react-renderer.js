@@ -59,7 +59,7 @@ const inline = {
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index}/>),
   math_display: ({tag:Tag, type, content, equation_index}, ind) => (
     <Mathjax key={type + "$" + ind} alt={content} number={equation_index} mode="display"/>),
-  softbreak: defaultInlineComponent,
+  softbreak: (t, ind) => <span key={"softbreak$" + ind}/>, // or () => `null`
   hardbreak: defaultInlineComponent
 };
 
