@@ -8,7 +8,7 @@ function scanInlineDelims(state, start, delimLength, allowLineBreaks) {
     isWhiteSpace = state.md.utils.isWhiteSpace;
 
   lastChar = allowLineBreaks ?
-    state.src.charCodeAt(start - 1)
+    start > 0 ? state.src.charCodeAt(start - 1) : 0x20
     : // treat beginning of the line as a whitespace
     start > 0 ? state.src.charCodeAt(start - 1) : 0x20;
 
@@ -21,7 +21,7 @@ function scanInlineDelims(state, start, delimLength, allowLineBreaks) {
   count = pos - start;
 
   nextChar = allowLineBreaks ?
-    state.src.charCodeAt(pos)
+    pos < max ? state.src.charCodeAt(pos) : 0x20
     : // treat end of the line as a whitespace
     pos < max ? state.src.charCodeAt(pos) : 0x20;
 
@@ -54,13 +54,12 @@ function makeMath(open, close, mode) {
       closeDelim,
       max = state.posMax,
       start = state.pos,
-      openDelimMatch = state.src.slice(start).match(open);
+      openDelimMatch = state.src.slice(start, max).match(open);
 
     if (!openDelimMatch) return false;
     let openDelim = openDelimMatch[0];
     if (silent) return false; // Don’t run any pairs in validation mode
 
-    console.log(openDelim);
     res = scanInlineDelims(state, start, openDelim.length, (mode === 'display'));
     startCount = res.delims;
 
@@ -76,6 +75,7 @@ function makeMath(open, close, mode) {
     while (state.pos < max) {
       let match = state.src.slice(state.pos).match(close(openDelim));
       if (match) {
+        // console.log(openDelim, close(openDelim), match);
         closeDelim = match[0];
         res = scanInlineDelims(state, state.pos, closeDelim.length, (mode === 'display'));
         if (res.can_close) {
@@ -94,7 +94,7 @@ function makeMath(open, close, mode) {
 
     // Found!
     state.posMax = state.pos;
-    state.pos = start + closeDelim.length;
+    state.pos = start + openDelim.length;
 
     // Earlier we checked !silent, but this implementation does not need it
     token = state.push('math_' + mode, 'math', 0);
@@ -124,11 +124,15 @@ export default function markdownItMathjax(md, options) {
   options = typeof options === 'object' ? options : {};
   const inlineOpen = /^(\$|\\\()/,
     inlineClose = (o) => ({$: /^\$/, '\\(': /^\\\)/}[o]),
-    displayOpen = /^(\$\$|\\\[|\\begin\{(\s*)(.*)(\s*)\})/,
+    displayOpen = /^(\$\$|\\\[|\\begin\{(\s*)([A-z0-9]*)(\s*)})/,
     displayClose = (o) => (
-    {'$$': /^\$\$/, '^\\[': /^\\\]/}[o]
-      // todo: need to allow space in closing bracket.
-    || o.replace('begin', 'end'));
+    {'$$': /^\$\$/, '\\[': /^\\\]/}[o]
+    // todo: need to allow space in closing bracket.
+    || new RegExp('^' + o.replace('begin', 'end')
+      .replace(/\\/g, '\\\\')
+      .replace(/\s/g, '')
+      .replace('{', '\\{(\\s*)')
+      .replace('}', '(\\s*)}')));
 
 
   function renderer(tokens, idx) {
@@ -139,8 +143,8 @@ export default function markdownItMathjax(md, options) {
   let math_display = makeMath(displayOpen, displayClose, 'display');
 
   /* configure the global parser */
-  md.inline.ruler.before('escape', 'math_display', math_display);
   md.inline.ruler.before('escape', 'math_inline', math_inline);
+  md.inline.ruler.before('math_inline', 'math_display', math_display);
   md.renderer.rules.math_inline = renderer;
   md.renderer.rules.math_display = renderer;
 }

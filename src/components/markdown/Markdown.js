@@ -30,6 +30,7 @@ const marked = new MarkdownIt({
 });
 
 marked
+  .use(MarkdownItMath)
   .use(MarkdownItAbbr)
   .use(MarkdownItToc)
   .use(MarkdownItDeflist)
@@ -39,7 +40,6 @@ marked
   //.use(MarkdownItFlowdock) // bug with nested image/link
   .use(MarkdownItMark)
   //.use(MarkdownItInsDel)
-  .use(MarkdownItMath)
   // .use(MarkdownItMathjax)
   .use(MarkdownItFootnote)
   .use(MarkdownItHighlightjs)
