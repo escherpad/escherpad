@@ -54,7 +54,8 @@ const inline = {
   image: (token, ind) => <img key={token.type + "$" + ind} alt={token.content} {...attr2props(token.attrs)}/>,
   emoji: ({tag: Tag, type, content}, ind) => (<span key={type + "$" + ind}>{content}</span>),
   code_inline: ({tag:Tag, type, content}, ind) => (<Tag key={type + "$" + ind}>{content}</Tag>),
-  softbreak: (t, ind) => <span key={"softbreak$" + ind}/>, // or () => `null`
+  // always use space. CJK users can just avoid softbreaks for consistent behavior.
+  softbreak: (t, ind) =><span key={t.type + "$" + ind} className={`softbreak softbreak-${ind}`}> </span>,
   hardbreak: defaultInlineComponent,
   // done: add math_display component
   math_inline: ({tag:Tag, type, content, equation_index}, ind) => (

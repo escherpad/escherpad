@@ -26,7 +26,8 @@ let highlight = require("highlight.js");
 
 const marked = new MarkdownIt({
   html: true,// avoid xxs attacks
-  linkify: true
+  linkify: true,
+  newline: false
 });
 
 marked
