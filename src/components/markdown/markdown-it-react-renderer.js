@@ -55,7 +55,7 @@ const inline = {
   emoji: ({tag: Tag, type, content}, ind) => (<span key={type + "$" + ind}>{content}</span>),
   code_inline: ({tag:Tag, type, content}, ind) => (<Tag key={type + "$" + ind}>{content}</Tag>),
   // always use space. CJK users can just avoid softbreaks for consistent behavior.
-  softbreak: (t, ind) =><span key={t.type + "$" + ind} className={`softbreak softbreak-${ind}`}> </span>,
+  softbreak: (t, ind) => <span key={t.type + "$" + ind} className={`softbreak softbreak-${ind}`}> </span>,
   hardbreak: defaultInlineComponent,
   // done: add math_display component
   math_inline: ({tag:Tag, type, content, equation_index}, ind) => (
@@ -75,14 +75,14 @@ const inlineContainer = {
   a: [],
 };
 
-export function Inline2React(s) {
+export function Inline2React(s, child_ast) {
   let context = {};
   return function inline2React(token, ind) {
     "use strict";
     if (token.type.match('strike')) console.log(token);
     if (context.htmlBlock) {
       current(s).push(token.content);
-      if (html.closing(token.content)) {
+      if (html.closing(token.content) || ind == (child_ast.length - 1)) {
         let html = up(s);
         current(s).push(<span key={token.type + "$" + ind} dangerouslySetInnerHTML={{__html: html.join('')}}/>);
         context.htmlBlock = false
@@ -156,7 +156,7 @@ const blockContainers = {
 };
 
 
-export function Block2React(s) {
+export function Block2React(s, ast) {
   let context = {};
   return function block2React(token, ind) {
     "use strict";
@@ -187,7 +187,7 @@ export function Block2React(s) {
       current(s).push(component(token, null, ind));
     } else if (token.type == "inline") {
       let children = token.children;
-      children.forEach(Inline2React(s));
+      children.forEach(Inline2React(s, children));
     }
   };
 }
@@ -195,6 +195,6 @@ export function Block2React(s) {
 
 export default function ast2React(ast) {
   let s = [[]];
-  ast.forEach(Block2React(s));
+  ast.forEach(Block2React(s, ast));
   return s[0];
 }
