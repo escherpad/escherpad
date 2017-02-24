@@ -28,9 +28,15 @@ export default class Mathjax extends Component {
   componentWillReceiveProps({alt, mode}) {
     if (alt !== this.props.alt) {
       this.script.innerHTML = alt;
-      if (mode !== this.props.mode) return;
-      this.renderMathJax()
+      if (mode === this.props.mode) this.renderMathJax()
     }
+  }
+
+  shouldComponentUpdate({mode}) {
+    // notice: avoid component flashing when waiting for math to render so *never* update the view.
+    // manually set the content of the script and the attribute of the script.
+    // Only rerender when display mode has changed.
+    return (mode !== this.props.mode);
   }
 
   componentDidUpdate() {
@@ -60,12 +66,6 @@ export default class Mathjax extends Component {
     });
   }
 
-  shouldComponentUpdate({mode}) {
-    // notice: avoid component flashing when waiting for math to render so *never* update the view.
-    // manually set the content of the script and the attribute of the script.
-    // Only rerender when display mode has changed.
-    return (mode !== this.props.mode);
-  }
 
   render() {
     // todo: might not need display and inline b/c some LaTeX code is automatically display.

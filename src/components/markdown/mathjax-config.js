@@ -66,10 +66,6 @@ function configureMathjax() {
       disabled: true
     }
   });
-  MathJax.Hub.Register.MessageHook("Error", function (message) {
-    //  do something with the error.  message[2] is the Error object that records the problem.
-    console.log(message);
-  });
   MathJax.Hub.Configured();
 }
 
@@ -97,7 +93,11 @@ export function resetNumbering(start = 1) {
   // link: https://github.com/mathjax/MathJax/issues/1705
   // notice: assume only one equation occurs in each render.
   console.log(start, JSON.stringify(ams.labels));
-  // the label number is defined my the TeX script. It can not be calculated without running the TeX macro.
-  // normal equation numbers are not saved in the labels object. so the k==(start-1) is not effective.
-  removeKey(ams.labels, (v, k) => (v.tag == start || k == (start - 1)), true);
+  /* the label number is defined my the TeX script. It can not be calculated without running the TeX macro.
+   normal equation numbers are not saved in the labels object. so the k==(start-1) is not effective. */
+  removeKey(ams.labels,
+    (v, k) => (v.tag == start || k == (start - 1) ||
+    /* this is called double tap */
+    v.tag === "???")
+    , true);
 }
