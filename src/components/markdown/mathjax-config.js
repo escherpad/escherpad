@@ -96,9 +96,11 @@ export function resetNumbering(start = 1) {
   /* see this link: https://github.com/benweet/stackedit/issues/180 */
   /* note: to change format of equation labeling, take a look at this link
    * http://tex.stackexchange.com/questions/63138/how-do-i-number-equations-with-roman-numbers */
-  window.MathJax.Extension["TeX/AMSmath"].startNumber = start - 1;
+  const ams = MathJax.Extension["TeX/AMSmath"];
+  ams.startNumber = start - 1;
   // done: scan through the tags, figure out what tag this corresponds to, remove the key that tag correspond to.
   // link: https://github.com/mathjax/MathJax/issues/1705
   // notice: assume only one equation occurs in each render.
-  removeKey(window.MathJax.Extension["TeX/AMSmath"].labels, (v, k) => (v.tag == start || k == (start - 1)), true);
+  console.log(ams.labels);
+  removeKey(ams.labels, (v, k) => (v.tag == start || k == (start - 1)), true);
 }
