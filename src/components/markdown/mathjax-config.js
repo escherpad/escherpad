@@ -85,7 +85,7 @@ function removeKey(obj, f, once = false) {
   const ks = Object.keys(obj);
   for (let i in ks) {
     let key = ks[i];
-    if (f(obj[key])) {
+    if (f(obj[key], key)) {
       delete obj[key];
       if (once) return;
     }
@@ -100,5 +100,5 @@ export function resetNumbering(start = 1) {
   // done: scan through the tags, figure out what tag this corresponds to, remove the key that tag correspond to.
   // link: https://github.com/mathjax/MathJax/issues/1705
   // notice: assume only one equation occurs in each render.
-  removeKey(window.MathJax.Extension["TeX/AMSmath"].labels, (v) => (Number(v.tag) === start), true);
+  removeKey(window.MathJax.Extension["TeX/AMSmath"].labels, (v, k) => (v.tag == start || k == (start - 1)), true);
 }
