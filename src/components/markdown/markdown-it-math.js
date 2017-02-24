@@ -1,47 +1,22 @@
 /** Created by ge on 2/19/17. */
 function scanInlineDelims(state, start, delimLength, allowLineBreaks) {
-  var pos = start, lastChar, nextChar, count, can_open, can_close,
-    isLastWhiteSpace, isNextWhiteSpace,
-    left_flanking = true,
-    right_flanking = true,
+  let pos = start, lastChar, nextChar, count,
+    overflown,
     max = state.posMax,
+    isSpace = state.md.utils.isSpace,
     isWhiteSpace = state.md.utils.isWhiteSpace;
 
-  lastChar = allowLineBreaks ?
-    start > 0 ? state.src.charCodeAt(start - 1) : 0x20
-    : // treat beginning of the line as a whitespace
-    start > 0 ? state.src.charCodeAt(start - 1) : 0x20;
+  const is_flanking = allowLineBreaks ? isSpace : isWhiteSpace;
 
-  if (pos >= max) {
-    can_open = false;
-  }
-
+  lastChar = start > 0 ? state.src.charCodeAt(start - 1) : 0x20;
+  if (pos >= max) overflown = true;
   pos += delimLength;
-
   count = pos - start;
-
-  nextChar = allowLineBreaks ?
-    pos < max ? state.src.charCodeAt(pos) : 0x20
-    : // treat end of the line as a whitespace
-    pos < max ? state.src.charCodeAt(pos) : 0x20;
-
-  isLastWhiteSpace = isWhiteSpace(lastChar);
-  isNextWhiteSpace = isWhiteSpace(nextChar);
-
-  if (isNextWhiteSpace) {
-    left_flanking = false;
-  }
-
-  if (isLastWhiteSpace) {
-    right_flanking = false;
-  }
-
-  can_open = left_flanking;
-  can_close = right_flanking;
+  nextChar = pos < max ? state.src.charCodeAt(pos) : 0x20;
 
   return {
-    can_open: can_open,
-    can_close: can_close,
+    can_open: !overflown && !is_flanking(nextChar),
+    can_close: !is_flanking(lastChar),
     delims: count
   };
 }
@@ -61,6 +36,7 @@ function makeMath(open, close, mode) {
     if (silent) return false; // Don’t run any pairs in validation mode
 
     res = scanInlineDelims(state, start, openDelim.length, (mode === 'display'));
+    console.log(res);
     startCount = res.delims;
 
     if (!res.can_open) {
@@ -129,10 +105,10 @@ export default function markdownItMathjax(md, options) {
     {'$$': /^\$\$/, '\\[': /^\\\]/}[o]
     // done: need to allow space in closing bracket.
     || new RegExp('^' + o.replace('begin', 'end')
-      .replace(/\\/g, '\\\\')
-      .replace(/\s/g, '')
-      .replace('{', '\\{(\\s*)')
-      .replace('}', '(\\s*)}')));
+        .replace(/\\/g, '\\\\')
+        .replace(/\s/g, '')
+        .replace('{', '\\{(\\s*)')
+        .replace('}', '(\\s*)}')));
 
 
   function renderer(tokens, idx) {
