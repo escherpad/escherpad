@@ -70,12 +70,6 @@ function configureMathjax() {
     //  do something with the error.  message[2] is the Error object that records the problem.
     console.log(message);
   });
-  MathJax.Hub.Register.MessageHook("Begin Math Input", function () {
-    MathJax.Extension["TeX/AMSmath"].refs = [];
-    MathJax.Extension["TeX/AMSmath"].refUpdate = false
-  });
-  // todo: add end math input, compare what label has changed, save label to global via the index.
-  // label number is stil the same. tag is start
   MathJax.Hub.Configured();
 }
 
@@ -97,10 +91,13 @@ export function resetNumbering(start = 1) {
   /* note: to change format of equation labeling, take a look at this link
    * http://tex.stackexchange.com/questions/63138/how-do-i-number-equations-with-roman-numbers */
   const ams = MathJax.Extension["TeX/AMSmath"];
+  // done: add end math input, compare what label has changed, save label to global via the index. label number is stil the same. tag is start
   ams.startNumber = start - 1;
   // done: scan through the tags, figure out what tag this corresponds to, remove the key that tag correspond to.
   // link: https://github.com/mathjax/MathJax/issues/1705
   // notice: assume only one equation occurs in each render.
-  console.log(ams.labels);
+  console.log(start, JSON.stringify(ams.labels));
+  // the label number is defined my the TeX script. It can not be calculated without running the TeX macro.
+  // normal equation numbers are not saved in the labels object. so the k==(start-1) is not effective.
   removeKey(ams.labels, (v, k) => (v.tag == start || k == (start - 1)), true);
 }

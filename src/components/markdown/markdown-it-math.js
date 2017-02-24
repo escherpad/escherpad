@@ -1,22 +1,24 @@
 /** Created by ge on 2/19/17. */
-function scanInlineDelims(state, start, delimLength, allowLineBreaks) {
-  let pos = start, lastChar, nextChar, count,
-    overflown,
+function scanInlineDelims(state, start, delimLength, blockMode) {
+  let pos = start, lastChar, lastLastChar, nextChar, count, overflown,
     max = state.posMax,
     isSpace = state.md.utils.isSpace,
     isWhiteSpace = state.md.utils.isWhiteSpace;
 
-  const is_flanking = allowLineBreaks ? isSpace : isWhiteSpace;
 
-  lastChar = start > 0 ? state.src.charCodeAt(start - 1) : 0x20;
+  lastChar = start > 0 ? state.src.charCodeAt(start - 1) : 0x0d;
+  lastLastChar = start > 1 ? state.src.charCodeAt(start - 2) : 0x0d;
+
   if (pos >= max) overflown = true;
   pos += delimLength;
   count = pos - start;
-  nextChar = pos < max ? state.src.charCodeAt(pos) : 0x20;
+  nextChar = pos < max ? state.src.charCodeAt(pos) : 0x0d;
 
+  const is_flanking = blockMode ? isSpace : isWhiteSpace;
   return {
-    can_open: !overflown && !is_flanking(nextChar),
-    can_close: !is_flanking(lastChar),
+    can_open: !overflown && (blockMode || !isWhiteSpace(nextChar)),
+    /* if two empty lines are detected, the segment is one one that can be closed properly. */
+    can_close: !is_flanking(lastChar) && (!blockMode || !is_flanking(lastLastChar)),
     delims: count
   };
 }
@@ -36,7 +38,6 @@ function makeMath(open, close, mode) {
     if (silent) return false; // Don’t run any pairs in validation mode
 
     res = scanInlineDelims(state, start, openDelim.length, (mode === 'display'));
-    console.log(res);
     startCount = res.delims;
 
     if (!res.can_open) {
