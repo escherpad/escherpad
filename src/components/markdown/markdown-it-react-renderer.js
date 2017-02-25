@@ -32,23 +32,39 @@ const tag = {
   self_close: (s) => s.match(/^(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)/)
 };
 
+function lisp2Camel(s) {
+  let a = s.split('');
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "-") a[i + 1] = a[i + 1].toUpperCase()
+  }
+  return a.join('').replace('-', '');
+}
+
+function style2React(s) {
+  "use strict";
+  let styleString = lisp2Camel('{"' + s.replace(";", '","').replace(":", '":"') + '"}');
+  return JSON.parse(styleString);
+}
+
 export function attrs2props(attrs) {
   "use strict";
   let props = {};
   attrs.forEach((attr, ind) => {
     if (attr[0] === "class") props.className = attr[1];
     else if (attr[0] === "ref") props.name = attr[1];
-    else if (attr[0] === "style") props.style = JSON.parse('{' + attr[1].replace(";", ",").replace('=', ':') + '}');
+    else if (attr[0] === "style") props.style = style2React(attr[1]);
     else props[attr[0]] = attr[1];
   });
   return props;
 }
 
-const defaultInlineComponent = ({tag:Tag, type, content}, ind) => {
+const defaultInlineComponent = ({tag:Tag, type, content, attrs}, ind) => {
   if (!Tag) Tag = "span";
   let key = type + "$" + ind;
-  if (tag.self_close(Tag)) return <Tag key={key}/>;
-  else return <Tag key={key}>{content}</Tag>;
+  let props;
+  if (attrs) props = attrs2props(attrs);
+  if (tag.self_close(Tag)) return <Tag key={key} {...props}/>;
+  else return <Tag key={key} {...props}>{content}</Tag>;
 };
 const inline = {
   text: defaultInlineComponent,
@@ -113,7 +129,6 @@ const blocks = {
   hr: (token, children, ind) => <hr key={token.type + "$" + ind}/>,
   code_block: defaultBlockComponent,
   fence: ({tag:Tag, type, attrs, info, map, content}, children, ind) => {
-    "use strict";
     let key = type + "$" + ind + (map ? "L" + map[0] : "");
     return <pre key={key}><code className={"lang-" + info}>{content}</code></pre>
   },
@@ -149,11 +164,10 @@ const blockContainers = {
   th: defaultBlockComponent,
   td: defaultBlockComponent,
   toc: defaultBlockComponent,
-  footnote_block: (token, children, ind) => <section className="footnotes">
+  footnote_block: (token, children, ind) => <section key={ind} className="footnotes">
     <ol className="footnote-list">{children}</ol>
   </section>,
-  footnote: (token, children, ind) => <li id={"fn" + token.meta.id} className="footnote-item"
-                                          key={ind}>{children}</li>,
+  footnote: (token, children, ind) => <li key={ind} id={"fn" + token.meta.id} className="footnote-item">{children}</li>,
 };
 
 
