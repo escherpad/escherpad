@@ -5,6 +5,12 @@ import {resetNumbering} from "./mathjax-config";
 import {autobind, throttle} from "core-decorators";
 const {string, number, oneOf} = PropTypes;
 
+function deQueue(hub, item) {
+  "use strict";
+  if (!hub || !hub.queue || !hub.queue.queue || !hub.queue.queue.indexOf) return;
+  delete hub.queue.queue[hub.queue.queue.indexOf(item)];
+}
+
 const delims = {
   inline: ['\\\(', '\\\)'],
   display: ['\\\[', '\\\]'],
@@ -44,6 +50,12 @@ export default class Mathjax extends Component {
   }
 
   @autobind
+  deQueueStanding() {
+    deQueue(window.MathJax.Hub, this.lastReset);
+    deQueue(window.MathJax.Hub, this.lastRender);
+  }
+
+  @autobind
   @throttle(200, {rising: true, trailing: true})
   renderMathJax() {
     // done: infinite retry waiting for MathJax
@@ -51,14 +63,17 @@ export default class Mathjax extends Component {
       this.retry += 1;
       return setTimeout(this.renderMathJax, 3000);
     }
-    // done: add placeholder and remove when rendering starts
-    window.MathJax.Hub.Queue(() => {
+    if (this.isRendering) this.deQueueStanding();
+    this.lastReset = () => {
       // todo: implement dynamic throttling.
       this.isRendering = new Date();
       if (typeof this.props.number !== "undefined") resetNumbering(this.props.number);
+      // done: add placeholder and remove when rendering starts
       this.placeholder.innerHTML = "";
-    });
-    window.MathJax.Hub.Queue(['Reprocess', MathJax.Hub, this.script]);
+    };
+    this.lastRender = ['Reprocess', MathJax.Hub, this.script];
+    window.MathJax.Hub.Queue(this.lastReset);
+    window.MathJax.Hub.Queue(this.lastRender);
     /** put inside the callback after the processing to ensure proper reflow */
     window.MathJax.Hub.Queue(() => {
       this.renderTime = Date.now() - this.isRendering;
@@ -66,12 +81,13 @@ export default class Mathjax extends Component {
     });
   }
 
-
   render() {
     // todo: might not need display and inline b/c some LaTeX code is automatically display.
-    const mathMode = this.props.mode || "inline";
-    return <span className={"math-jax-" + mathMode}><span ref='placeholder'>{this.props.alt}</span>
-      <script ref="mathScript" type={"math/tex; mode=" + mathMode}
-              alt={this.props.alt}>{this.props.alt}</script></span>
+    const mode = this.props.mode || "inline";
+    return <span className={`math math-${mode}`}>
+      <span ref='placeholder'>{this.props.alt}</span>;
+      <script ref="mathScript" type={"math/tex; mode=" + mode}
+              alt={this.props.alt}>{this.props.alt}</script>
+    </span>
   }
 }
