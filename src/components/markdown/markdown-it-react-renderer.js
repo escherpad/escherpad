@@ -32,12 +32,13 @@ const tag = {
   self_close: (s) => s.match(/^(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)/)
 };
 
-export function attr2props(attrs) {
+export function attrs2props(attrs) {
   "use strict";
   let props = {};
   attrs.forEach((attr, ind) => {
     if (attr[0] === "class") props.className = attr[1];
     else if (attr[0] === "ref") props.name = attr[1];
+    else if (attr[0] === "style") props.style = JSON.parse('{' + attr[1].replace(";", ",").replace('=', ':') + '}');
     else props[attr[0]] = attr[1];
   });
   return props;
@@ -51,7 +52,7 @@ const defaultInlineComponent = ({tag:Tag, type, content}, ind) => {
 };
 const inline = {
   text: defaultInlineComponent,
-  image: (token, ind) => <img key={token.type + "$" + ind} alt={token.content} {...attr2props(token.attrs)}/>,
+  image: (token, ind) => <img key={token.type + "$" + ind} alt={token.content} {...attrs2props(token.attrs)}/>,
   emoji: ({tag: Tag, type, content}, ind) => (<span key={type + "$" + ind}>{content}</span>),
   code_inline: ({tag:Tag, type, content}, ind) => (<Tag key={type + "$" + ind}>{content}</Tag>),
   // always use space. CJK users can just avoid softbreaks for consistent behavior.
@@ -101,7 +102,7 @@ export function Inline2React(s, child_ast) {
     } else if (token.type.match(/_close$/) && inlineContainer[token.type.slice(0, -6)]) {
       let children = up(s);
       let props = children[0].attrs ?
-        {key: ind, ...attr2props(children[0].attrs)} :
+        {key: ind, ...attrs2props(children[0].attrs)} :
         {key: ind};
       current(s).push(React.createElement(token.tag, props, children.length >= 1 ? children.slice(1) : null))
     }
@@ -124,7 +125,7 @@ const blocks = {
 function defaultBlockComponent(token, children, ind) {
   "use strict";
   let {tag: Tag, type, attrs, map, content} = token;
-  let props = attrs ? attr2props(attrs) : {};
+  let props = attrs ? attrs2props(attrs) : {};
   if (!Tag) Tag = "span";
   let key = type + "$" + ind + (map ? "L" + map[0] : "");
   if (tag.self_close(Tag)) return <Tag key={key} {...props}/>;
