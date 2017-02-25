@@ -85,7 +85,7 @@ export default class Mathjax extends Component {
     // todo: might not need display and inline b/c some LaTeX code is automatically display.
     const mode = this.props.mode || "inline";
     return <span className={`math math-${mode}`}>
-      <span ref='placeholder'>{this.props.alt}</span>;
+      <span ref='placeholder'>{this.props.alt}</span>
       <script ref="mathScript" type={"math/tex; mode=" + mode}
               alt={this.props.alt}>{this.props.alt}</script>
     </span>
