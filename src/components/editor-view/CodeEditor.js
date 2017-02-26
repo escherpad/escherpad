@@ -44,7 +44,7 @@ export default class CodeEditor extends React.Component {
       <div className="editor-container" style={_style}>
         <AceEditor
           key={this.key}
-          ref={(_)=>this.Editor=_}
+          ref={(_) => this.Editor = _}
           value={value}
           cursorPosition={cursorPosition}
           version={version}
@@ -59,6 +59,8 @@ export default class CodeEditor extends React.Component {
           scrollMargin={{bottom: "900"}}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
+          enableSnippets={true}
+          showInvisibles={true}
           onChange={onChange}
           onChangeScrollTop={onChangeScrollTop}
           name="UNIQUE_ID_OF_DIV"

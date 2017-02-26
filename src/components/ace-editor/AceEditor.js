@@ -16,7 +16,8 @@ const editorOptions = [
   'tabSize',
   'enableBasicAutocompletion',
   'enableLiveAutocompletion',
-  'enableSnippets '
+  'enableSnippets',
+  'showInvisibles'
 ];
 
 export default class ReactAce extends Component {
@@ -385,5 +386,7 @@ ReactAce
   wrapEnabled: false,
   enableBasicAutocompletion: false,
   enableLiveAutocompletion: false,
+  enableSnippets: false,
+  showInvisibles: false
 };
 
