@@ -148,8 +148,11 @@ function defaultBlockComponent(token, children, ind) {
 }
 const blockContainers = {
   heading: defaultBlockComponent,
-  paragraph: (token, children, ind) => <p
-    key={token.type + "$" + ind + (token.map ? "L" + token.map[0] : "")}{...{className: "paragraph"}}>{children}</p>,
+  paragraph: (token, children, ind) => {
+    let Tag = token.hidden ? 'span' : 'p';
+    return <Tag key={token.type + "$" + ind + (token.map ? "L" + token.map[0] : "")}
+                {...{className: "paragraph"}}>{children}</Tag>
+  },
   blockquote: defaultBlockComponent,
   bullet_list: defaultBlockComponent,
   ordered_list: defaultBlockComponent,
