@@ -25,9 +25,10 @@ function configureMathjax() {
     processUpdateDelay: 0,
     extensions: ["tex2jax.js"],
     //jax: ["input/TeX", "output/SVG"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    //showMathMenu: false,
-    //showMathMenuMSIE: false,
+    // jax: ["input/TeX", "output/HTML-CSS"],
+    jax: ["input/TeX", "output/CommonHTML"],
+    showMathMenu: false,
+    showMathMenuMSIE: false,
     tex2jax: {
       inlineMath: [
         epMathUtil.inlineMath,
@@ -42,6 +43,14 @@ function configureMathjax() {
     TeX: {
       equationNumbers: {autoNumber: "AMS"},
       extensions: ['AMSmath.js', 'AMSsymbols.js']
+    },
+    "CommonHTML": {
+      scale: 100,
+      minScaleAdjust: 50,
+      linebreaks: {
+        automatic: true,
+        width: '90% container'
+      },
     },
     "HTML-CSS": {
       preferredFont: "STIX",
@@ -92,7 +101,7 @@ export function resetNumbering(start = 1) {
   // done: scan through the tags, figure out what tag this corresponds to, remove the key that tag correspond to.
   // link: https://github.com/mathjax/MathJax/issues/1705
   // notice: assume only one equation occurs in each render.
-  console.log(start, JSON.stringify(ams.labels));
+  // console.log(start, JSON.stringify(ams.labels));
   /* the label number is defined my the TeX script. It can not be calculated without running the TeX macro.
    normal equation numbers are not saved in the labels object. so the k==(start-1) is not effective. */
   removeKey(ams.labels,
