@@ -101,13 +101,14 @@ export default function markdownItMathjax(md, options) {
   options = typeof options === 'object' ? options : {};
   const inlineOpen = /^(\$|\\\()/,
     inlineClose = (o) => ({$: /^\$/, '\\(': /^\\\)/}[o]),
-    displayOpen = /^(\$\$|\\\[|\\begin\{(\s*)([A-z0-9]*)(\s*)})/,
+    displayOpen = /^(\$\$|\\\[|\\begin\{(\s*)([A-z0-9\*]*)(\s*)})/,
     displayClose = (o) => (
     {'$$': /^\$\$/, '\\[': /^\\\]/}[o]
     // done: need to allow space in closing bracket.
     || new RegExp('^' + o.replace('begin', 'end')
         .replace(/\\/g, '\\\\')
         .replace(/\s/g, '')
+        .replace(/\*/g, '\\\*')
         .replace('{', '\\{(\\s*)')
         .replace('}', '(\\s*)}')));
 
