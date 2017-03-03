@@ -10,6 +10,7 @@ import BristolBoard from "../components/bristol-board/BristolBoard";
 // import PDF from "react-pdf-js";
 
 import ListPanel from "../components/list-view/ListPanel";
+import {extensionSupportPreview} from "../store/posts/posts";
 
 const style = {
   fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
@@ -67,7 +68,7 @@ class MainEditorView extends React.Component {
       // <PDF file={post.previewURL.replace('blob:', '')} onDocumentComplete={() => null} onPageComplete={() => null}
       //      page={0}/>;
       SmallEditor = Editor;
-    } else if (title.match(/\.(docx?|png)$/)) {
+    } else if (extensionSupportPreview(title)) {
       Editor = <Flex column fill align="stretch">
         <FlexItem fixed>
           <PostHeader {..._props}/>
@@ -79,8 +80,19 @@ class MainEditorView extends React.Component {
         <FlexItem fluid component="iframe" style={{width: "100%", height: "100%", border: "0px solid transparent"}}
                   src={post.previewURL}/>
       </Flex>;
-      // <PDF file={post.previewURL.replace('blob:', '')} onDocumentComplete={() => null} onPageComplete={() => null}
-      //      page={0}/>;
+      SmallEditor = Editor;
+    } else if (title.match(/(\.pdf)$/i)) {
+      Editor = <Flex column fill align="stretch">
+        <FlexItem fixed>
+          <PostHeader {..._props}/>
+        </FlexItem>
+        <FlexItem fixed>
+          <TitleBar post={post}
+                    options={{} /*options*/} {..._props}/>
+        </FlexItem>
+        <FlexItem fluid component="iframe" style={{width: "100%", height: "100%", border: "0px solid transparent"}}
+                  src={post.previewURL}/>
+      </Flex>;
       SmallEditor = Editor;
     } else if (title.match(/\.((r|py)?)md$/)) {
       // console.log('view mode is', viewMode);

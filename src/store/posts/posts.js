@@ -112,20 +112,20 @@ export function* addAccountToPostProc() {
   }
 }
 
-function fileIsBlackListed(title = "") {
-  return (title.match(/\.(docx?|png)$/));
+export function fileIsBlackListed(title = "") {
+  return (title.match(/\.(docx?|png|pdf)$/i));
 }
 
-function fileIsWhiteListedForUpload(title = "") {
+export function fileIsWhiteListedForUpload(title = "") {
   //todo: add url to this list *after* adding editor view with built-in iframe preview.
   return (title.match(/\.(md|txt|ink)$/));
 }
 
-function extensionSupportPreview(title = "") {
-  return (title.match(/\.(docx?|pdf)$/));
+export function extensionSupportPreview(title = "") {
+  return (title.match(/\.(docx?)$/));
 }
 
-function dehydrateForUpload(source) {
+export function dehydrateForUpload(source) {
   "use strict";
   if (typeof source === "string") {
     return source
@@ -134,7 +134,7 @@ function dehydrateForUpload(source) {
   }
 }
 
-function hydrateAfterDownload(source) {
+export function hydrateAfterDownload(source) {
   "use strict";
   try {
     return JSON.parse(source);
@@ -239,19 +239,18 @@ export function* pullPostFromService() {
               response = yield dapi.getPreview(_post.id || _post.parentFolder + "/" + _post.title);
             } else {
               response = yield dapi.downloadBlob(_post.id || _post.parentFolder + "/" + _post.title);
+              response.blob = new Blob([response.blob], {type: "application/pdf"});
+              console.log(response.blob);
             }
-            const {id, name: title, path_display: parentFolder} = response.metadata || {};
             let newAction = {
               type: UPDATE_POST,
               [$NO_PUST_TO_SERVICE]: true,
               post: {
                 id: postId,
-                title,
-                parentFolder: parentFolder.split('/').slice(0, -1).join('/'),
                 previewURL: URL.createObjectURL(response.blob)//note: this is a PDF string.
               }
             };
-            if (response.metadata.id !== postId) newAction.post.$updatedId = response.metadata.id;
+            if (response.metadata && response.metadata.id !== postId) newAction.post.$updatedId = response.metadata.id;
             yield dispatch(newAction);
           } catch (e) {
             console.warn("download preview failed", e);
