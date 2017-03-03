@@ -240,13 +240,14 @@ export function* pullPostFromService() {
             } else {
               response = yield dapi.downloadBlob(_post.id || _post.parentFolder + "/" + _post.title);
             }
+            const {id, name: title, path_display: parentFolder} = response.metadata || {};
             let newAction = {
               type: UPDATE_POST,
               [$NO_PUST_TO_SERVICE]: true,
               post: {
                 id: postId,
-                title: response.metadata.name,
-                parentFolder: response.metadata.path_display.split('/').slice(0, -1).join('/'),
+                title,
+                parentFolder: parentFolder.split('/').slice(0, -1).join('/'),
                 previewURL: URL.createObjectURL(response.blob)//note: this is a PDF string.
               }
             };
@@ -266,17 +267,17 @@ export function* pullPostFromService() {
             );
             let metadata = response.metadata;
             console.log("pulling request: metadata is:", metadata);
+            const {id, name: title, path_display: parentFolder} = metadata;
             let newAction = {
               type: UPDATE_POST,
               [$NO_PUST_TO_SERVICE]: true,
               post: {
                 id: postId,
-                title: response.metadata.name,
-                parentFolder: response.metadata.path_display.split('/').slice(0, -1).join('/'),
+                title,
+                parentFolder: parentFolder.split('/').slice(0, -1).join('/'),
                 source: hydrateAfterDownload(response.content)
               }
             };
-            console.log(newAction);
             if (response.metadata.id !== postId) newAction.post.$updatedId = response.metadata.id;
             yield dispatch(newAction);
           } catch (e) {

@@ -51,6 +51,7 @@ export class BreadCrumBadges extends Component {
         <SmallBlueBadge onClick={this.goToPath('/' + paths.slice(0, ind + 1).join('/'))}>{folder}</SmallBlueBadge>
       ])}</span>
     } else {
+      console.warn(displayPath);
       return <warning>path is malformed</warning>
     }
   }

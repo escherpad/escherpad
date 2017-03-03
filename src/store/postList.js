@@ -39,7 +39,7 @@ import {getParentFolder} from "../components/account-list-view/BrowserColumnView
 let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc", "*.pdf"];
 
 function* listFilesByExtension(accessToken, accountKey, extension, parentFolder) {
-  console.warn(`searchQuery ${extension} and parentFolder ${parentFolder}`);
+  console.warn(`searchQuery ${extension}; parentFolder ${parentFolder}`);
   dapi.updateAccessToken(accessToken);
   let searchResponse = yield dapi.search(extension, parentFolder, 0, 100, "filename");
 
