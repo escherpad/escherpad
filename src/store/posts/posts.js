@@ -122,7 +122,7 @@ function fileIsWhiteListedForUpload(title = "") {
 }
 
 function extensionSupportPreview(title = "") {
-  return (title.match(/\.(docx?)$/));
+  return (title.match(/\.(docx?|pdf)$/));
 }
 
 function dehydrateForUpload(source) {
