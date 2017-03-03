@@ -246,7 +246,7 @@ export function* pullPostFromService() {
               post: {
                 id: postId,
                 title: response.metadata.name,
-                parentFolder: response.metadata.path_display,
+                parentFolder: response.metadata.path_display.split('/').slice(0, -1).join('/'),
                 previewURL: URL.createObjectURL(response.blob)//note: this is a PDF string.
               }
             };
@@ -272,7 +272,7 @@ export function* pullPostFromService() {
               post: {
                 id: postId,
                 title: response.metadata.name,
-                parentFolder: response.metadata.path_display,
+                parentFolder: response.metadata.path_display.split('/').slice(0, -1).join('/'),
                 source: hydrateAfterDownload(response.content)
               }
             };
