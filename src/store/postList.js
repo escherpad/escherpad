@@ -36,7 +36,7 @@ import {createPost, PULL_POST_FROM_SERVICE} from "./posts/posts";
 import {take, dispatch, call} from "luna-saga";
 import {getParentFolder} from "../components/account-list-view/BrowserColumnView";
 
-let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc"];
+let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc", "*.pdf"];
 
 function* listFilesByExtension(accessToken, accountKey, extension, parentFolder) {
   console.warn(`searchQuery ${extension} and parentFolder ${parentFolder}`);

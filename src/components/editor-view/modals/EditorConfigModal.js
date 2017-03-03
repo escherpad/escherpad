@@ -6,7 +6,6 @@ import Input from "../../form/Input";
 import Select from "../../form/Select";
 
 var ace = require('brace');
-require('brace/mode/snippets');
 require('brace/ext/themelist');
 require('brace/ext/modelist');
 const {themes} = ace.acequire("ace/ext/themelist");

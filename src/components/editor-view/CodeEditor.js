@@ -4,12 +4,13 @@ import ReactDOM from "react-dom";
 import Radium from 'radium';
 
 import brace from "brace";
-import AceEditor from "../ace-editor/AceEditor";
-
-import '../../../node_modules/brace/mode/markdown';
+import 'brace/mode/markdown';
 import 'brace/keybinding/vim';
 import 'brace/theme/github';
 import 'brace/theme/chrome';
+import 'brace/mode/snippets';
+import AceEditor from "../ace-editor/AceEditor";
+
 
 const styles = {
   position: "absolute",
