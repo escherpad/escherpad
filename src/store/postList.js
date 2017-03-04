@@ -12,9 +12,11 @@ export function postList(state = {orderBy: "modifiedAt", searchQuery: ""}, actio
   } else if (action.type === SET_CURRENT_FOLDER) {
     return {
       ...state,
-      accountKey: action.accountKey,
+      /* enforce the clearing of searchQuery. */
+      searchQuery: "",
+      accountKey: (typeof action.accountKey !== "undefined") ? action.accountKey : state.accountKey,
       //reminder: [Call this `currentFolder`, because it is easier to change by *replace*] should this be called `currentFolder`, or parentFolder?
-      currentFolder: action.folder
+      currentFolder: (typeof action.folder !== "undefined") ? action.folder : state.folder
     };
   } else {
     return state;
