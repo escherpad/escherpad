@@ -39,7 +39,6 @@ import {getParentFolder} from "../components/account-list-view/BrowserColumnView
 let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc", "*.pdf"];
 
 function* listFilesByExtension(accessToken, accountKey, extension, parentFolder) {
-  console.warn(`searchQuery ${extension}; parentFolder ${parentFolder}`);
   dapi.updateAccessToken(accessToken);
   let searchResponse = yield dapi.search(extension, parentFolder, 0, 100, "filename");
 
@@ -58,7 +57,7 @@ function* listFilesByExtension(accessToken, accountKey, extension, parentFolder)
         type,
         post: {
           ...post,
-          //reminder: local post id is inconsistent with dropbox id.
+          // done: local post id is inconsistent with dropbox id.
           id,
           title,
           parentFolder: parentFolder.split('/').slice(0, -1).join('/'),
@@ -66,7 +65,6 @@ function* listFilesByExtension(accessToken, accountKey, extension, parentFolder)
           accountKey: accountKey
         }
       });
-      // yield dispatch({type: PULL_POST_FROM_SERVICE, parentFolder, postId: id})
     }
   }
 }
@@ -92,6 +90,44 @@ export function* onSetCurrentFolder() {
           }
         }
       }
+    }
+  }
+}
+
+import {select, delay} from "luna-saga";
+export function* watchFolder() {
+  "use strict";
+  while (true) {
+    const postList = yield select('postList');
+    const accounts = yield select('accounts');
+    const editor = yield select('editor');
+    let account = accounts[postList.accountKey];
+    try {
+      let list_response = {};
+      try {
+        dapi.updateAccessToken(account.accessToken);
+        list_response = yield dapi.list(postList.currentFolder, true);
+      } catch (e) {
+        console.log(e);
+      }
+      if (list_response.cursor) {
+        let res = yield dapi.listFeed(list_response.cursor, 480);
+        console.log(res);
+        if (res.changes) {
+          res = yield dapi.listContinue(list_response.cursor);
+          for (let i = 0; i < res.entities.length; i++) {
+            yield dispatch({type: "SELECT_POST", postId: res.entities[i].id});
+          }
+        }
+        if (res.backoff) {
+          yield call(delay, res.backoff);
+        } else {
+          yield call(delay, 10000);
+        }
+      }
+    } catch (e) {
+      console.warn(e);
+      yield call(delay, 10000);
     }
   }
 }

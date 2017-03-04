@@ -7,7 +7,7 @@ import {viewMode} from "./viewMode";
 import {session} from "./session";
 import {editor} from "./editor";
 import {posts, pushPost, pullPostFromService, addAccountToPostProc} from "./posts/posts";
-import {postList, onSetCurrentFolder} from "./postList";
+import {postList, onSetCurrentFolder, watchFolder} from "./postList";
 import {accounts, getDropboxAccount, dropboxAccountKey} from "./accounts/accounts";
 import {demoInitialState} from "./demoInitialState";
 import ModalReducer from "../lib/ModalReducer";
@@ -73,6 +73,7 @@ sagaConnect(rootStore, noticeProc(), true);
 sagaConnect(rootStore, onSetCurrentFolder(), true);
 sagaConnect(rootStore, pullPostFromService(), true);
 sagaConnect(rootStore, addAccountToPostProc(), true);
+// sagaConnect(rootStore, watchFolder(), true);
 
 window.onstorage = () => {
   "use strict";

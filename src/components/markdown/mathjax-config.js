@@ -7,10 +7,10 @@ const epMathUtil = {
   displayMath: ["\\[", "\\]"],
 };
 
-const timerId = setInterval(checkAndConfig, 500);
+const timerId = setInterval(checkAndConfig, 1000);
 function checkAndConfig() {
   "use strict";
-  if (MathJax) {
+  if (window.MathJax) {
     configureMathjax();
     clearInterval(timerId);
   }
