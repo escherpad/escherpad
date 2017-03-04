@@ -49,6 +49,11 @@ export function* accountBrowserListFiles() {
       } else {
         if (account.service === "dropbox") {
           dapi.updateAccessToken(account.accessToken);
+          yield dispatch({
+            type: "ACCOUNT_BROWSER",
+            currentFolder: folder,
+            entries: []
+          });
           let listResponse = yield dapi.list(folder);
           if (listResponse.entries) yield dispatch({
             type: "ACCOUNT_BROWSER",
