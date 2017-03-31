@@ -1,0 +1,26 @@
+{
+  "name": "escherpad",
+  "version": "0.0.1",
+  "description": "escherpad desktop client",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echerpad/escherpad.git"
+  },
+  "keywords": [
+    "escherpad",
+    "jupyter",
+    "mathematica",
+    "evernote",
+    "electron"
+  ],
+  "author": "Ge Yang",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/echerpad/escherpad/issues"
+  },
+  "homepage": "https://github.com/echerpad/escherpad#readme"
+}
