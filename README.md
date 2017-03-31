@@ -13,4 +13,6 @@ It all starts here.
 Please refer to README files in each project folder. There are detailed instructions on what to do.
 
 - [desktop-app](desktop-app): repo contains code for the electron-based desktop app.
-- []
+- [ios-app](ios-app): repo contains code for escherpad iOS app
+- [client-common](client-common): repo contains common js code for the client apps.
+- [browser-plugin](browser-plugin): repo contains the react-native code for browser plugins
