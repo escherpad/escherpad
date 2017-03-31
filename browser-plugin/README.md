@@ -1,0 +1,1 @@
+# Escherpad Browser Plugins
