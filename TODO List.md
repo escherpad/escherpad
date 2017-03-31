@@ -1,6 +1,13 @@
 # Escherpad TODO List
 
 Here is a list of todo items for each project
+
+## [web-app](web-app)
+repo contains code for the web-app.
+
+- [ ] setup application scaffold
+- [ ] **Share Code**: get desktop-app and web-app to work together.
+
 ## [desktop-app](desktop-app)
 repo contains code for the electron-based desktop app.
 
@@ -9,7 +16,7 @@ repo contains code for the electron-based desktop app.
 - [ ] visual design doc (layout)
 
 ### Done
-- [ ] setup electron and react app
+- [x] setup electron and react app
 
 ## [ios-app](ios-app)
 repo contains code for escherpad iOS app
