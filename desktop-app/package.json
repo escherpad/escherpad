@@ -1,0 +1,43 @@
+{
+  "name": "escherpad",
+  "version": "0.0.1",
+  "description": "escherpad desktop client",
+  "homepage": "./",
+  "main": "electron-starter.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echerpad/escherpad.git"
+  },
+  "keywords": [
+    "escherpad",
+    "jupyter",
+    "mathematica",
+    "evernote",
+    "electron"
+  ],
+  "author": "Ge Yang",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/echerpad/escherpad/issues"
+  },
+  "private": true,
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0",
+    "react-scripts": "0.9.5",
+    "wait-on": "^2.0.2"
+  },
+  "scripts": {
+    "react-start": "react-scripts start",
+    "electron-start": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+    "start-windows": "echo \"Warning: TODO: script is not implemented\" && exit 1",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "echo 'Warning: not reversible!! execute: \"react-scripts eject\"'",
+    "electron": "electron ."
+  }
+}
