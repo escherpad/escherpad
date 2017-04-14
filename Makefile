@@ -9,7 +9,7 @@ pull:
 	git pull
 	make pull-client-common
 push:
-	git push
+	git push origin
 	make push-desktop-client-common
 push-desktop-client-common:
 	git subtree push --prefix desktop-app/src/client-common $(CLIENT_COMMON) desktop-app
