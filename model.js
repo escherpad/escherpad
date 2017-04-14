@@ -1,4 +1,2 @@
-// exports.store$ = () => {};
-
-// ES6 export is not working
+// ES6 export is working now.
 export const store$ = ()=>{};
