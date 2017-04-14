@@ -1,0 +1,84 @@
+// Created by ge on 5/5/16.
+$border-color: #cfcfcf;
+$background-color: white;
+$arrow-size: 10px;
+$left-offset: 10px;
+.popover {
+    .popover-container {
+        position: absolute;
+        z-index: 1;
+        padding: 0;
+        border: 1px solid $border-color;
+        box-shadow: 0 1px 4px $border-color;
+        border-radius: 7px;
+        background-color: white;
+        &:before {
+            content: "";
+            position: absolute;
+            top: -$arrow-size;
+            left: $left-offset;
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: $arrow-size solid rgba(0, 0, 0, 0);
+            border-right: $arrow-size solid rgba(0, 0, 0, 0);
+            border-bottom: $arrow-size solid $border-color;
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            top: -($arrow-size - 2px);
+            left: ($left-offset + 2px);
+            width: 0;
+            height: 0;
+            border: none;
+            border-left: ($arrow-size - 2px) solid rgba(0, 0, 0, 0);
+            border-right: ($arrow-size - 2px) solid rgba(0, 0, 0, 0);
+            border-bottom: ($arrow-size - 2px) solid $background-color;
+        }
+    }
+}
+
+$height: 35px;
+$line-height: 20px;
+$text-left-offset: -2px;
+.popover-menu-item {
+    box-sizing: border-box;
+    position: relative;
+    user-select: none;
+    &:first-child {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+    &:last-child {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+    user-select: none;
+    height: $height;
+    line-height: $line-height;
+    font-size: 16px;
+    cursor: pointer;
+    padding: ($height - $line-height)/2 20px ($height - $line-height)/2 ($height + $text-left-offset);
+    white-space: nowrap;
+
+    color: #5d5d5d;
+    &:hover {
+        color: #313131;
+        background-color: rgba(#23aaff, 0.1);
+    }
+    &:active {
+        background-color: rgba(#23aaff, 0.3);
+    }
+    i.material-icons {
+        display: inline;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $height;
+        height: $height;
+        line-height: $height;
+        font-size: 20px;
+        text-align: center;
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "presets": [
+        "es2015-loose",
+        "stage-2",
+        "react"
+    ],
+    "plugins": [
+        "react-hot-loader/babel",
+        "transform-decorators-legacy",
+        "transform-class-properties"
+    ]
+}
+
