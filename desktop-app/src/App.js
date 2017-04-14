@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-// import './App.css';
-// import {store$} from "./client-common/model";
-// console.log(store$);
 
 class App extends Component {
   render() {

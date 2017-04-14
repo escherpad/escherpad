@@ -9,6 +9,10 @@ A CS student's wet dream, and a designer's best friend.
 It all starts here.
 
 ## To Develop
+### Commit Logs
+
+We use convention commit log standard. Please take a look here: [conventional-changelog-standard](https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md)
+
 **Important**: 
 
 Use `make pull` and `make push` instead of `git pull` and `git push` for now. We use `git subtree` to 
