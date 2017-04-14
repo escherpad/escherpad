@@ -1,4 +1,4 @@
-CLIENT_COMMON=$(https://github.com/escherpad/client-common.git master)
+CLIENT_COMMON=https://github.com/escherpad/client-common.git
 
 default:
 	make install
