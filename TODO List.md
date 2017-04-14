@@ -14,6 +14,7 @@ repo contains code for the electron-based desktop app.
 - [ ] application framework design doc
 - [ ] feature set doc
 - [ ] visual design doc (layout)
+- [ ] file association on Windows and OSX.
 
 ### Done
 - [x] setup electron and react app
