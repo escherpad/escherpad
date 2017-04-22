@@ -79,8 +79,8 @@ function configureMathjax() {
 }
 
 
+"use strict";
 function removeKey(obj, f, once = false) {
-  "use strict";
   const ks = Object.keys(obj);
   for (let i in ks) {
     let key = ks[i];
@@ -90,8 +90,8 @@ function removeKey(obj, f, once = false) {
     }
   }
 }
+"use strict";
 export function resetNumbering(start = 1) {
-  "use strict";
   /* see this link: https://github.com/benweet/stackedit/issues/180 */
   /* note: to change format of equation labeling, take a look at this link
    * http://tex.stackexchange.com/questions/63138/how-do-i-number-equations-with-roman-numbers */
