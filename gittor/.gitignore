@@ -1,0 +1,10 @@
+# webStorm files
+.idea
+
+# node files
+npm-debug.log*
+*.log*
+*.logs*
+*~
+node_modules
+.DS_Store

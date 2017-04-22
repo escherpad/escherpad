@@ -1,0 +1,52 @@
+// Created by ge on 12/27/16.
+
+$height: 34px;
+.notification-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    .notification-success {
+        color: white;
+        background-color: #55d600;
+    }
+    .notification-warning {
+        color: #3f1605;
+        background-color: #ffd855;
+    }
+    .notification-info {
+        color: white;
+        background-color: #1b90ff;
+    }
+    .notification-error {
+        color: white;
+        font-weight: 800;
+        background-color: #ff3300;
+    }
+
+    .notification-item {
+        border: 0 solid transparent;
+        border-radius: 7px;
+        display: inline-block;
+        height: $height;
+
+        left: 0;
+        line-height: $height - (7px * 2);
+        margin: 20px auto;
+        padding: 7px 14px;
+        position: fixed;
+        right: 0;
+        width: 500px;
+        .remove-button {
+            cursor: pointer;
+            bottom: 0;
+            height: $height;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: $height;
+        }
+    }
+}

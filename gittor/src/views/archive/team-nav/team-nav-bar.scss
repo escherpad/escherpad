@@ -1,0 +1,32 @@
+// Created by ge on 4/18/16.
+.team-navbar {
+    box-sizing: border-box;
+    width: 70px;
+    padding: 10px;
+    .team-button:first-child{
+        margin-top: 0;
+    }
+    .team-button {
+        box-sizing: border-box;
+        height: 50px;
+        width: 50px;
+        border-radius: 12px;
+        margin: 10px 0;
+        text-align: center;
+        vertical-align: middle;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .text {
+            flex: 1 1 auto;
+        }
+    }
+    .team-button {
+        cursor: hand;
+        cursor: pointer;
+    }
+    .team-button {
+        background-color: #cccccc;
+    }
+}

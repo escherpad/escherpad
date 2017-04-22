@@ -1,0 +1,41 @@
+// Created by ge on 5/8/16.
+.backdrop-fade-enter {
+    opacity: 0.01;
+}
+
+.backdrop-fade-enter.backdrop-fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-out;
+}
+
+.backdrop-fade-leave {
+    opacity: 1;
+}
+
+.backdrop-fade-leave.backdrop-fade-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-out 200ms;
+}
+
+
+.modal-fade-and-slide-down-enter {
+    opacity: 0.01;
+    transform: translateY(-200px);
+}
+
+.modal-fade-and-slide-down-enter.modal-fade-and-slide-down-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 300ms ease-out 200ms;
+}
+
+.modal-fade-and-slide-down-leave {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.modal-fade-and-slide-down-leave.modal-fade-and-slide-down-leave-active {
+    opacity: 0.01;
+    transform: translateY(-200px);
+    transition: all 300ms ease-out;
+}

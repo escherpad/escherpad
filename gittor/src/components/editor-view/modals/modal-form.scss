@@ -1,0 +1,29 @@
+// Created by ge on 5/8/16.
+.modal {
+    width: 90% !important;
+    max-width: 600px;
+}
+
+.modal {
+    background-color: white;
+    box-shadow: 0 0 100px white;
+    .modal-header {
+        h2 {
+            font-weight: 500;
+            margin-top: 65px;
+            font-size: 30px;
+        }
+        .hint {
+            font-style: italic;
+            color: #cccccc;
+            font-size: 20px;
+        }
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .modal-body {
+        overflow-y: auto;
+    }
+    .modal-footer {
+    }
+}
+
