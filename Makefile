@@ -23,6 +23,3 @@ gittor-clone:
 	git subtree add --prefix gittor https://github.com/episodeyang/gittor.git master
 gittor-pull:
 	git subtree pull --prefix gittor https://github.com/episodeyang/gittor.git master
-gittor-fetch:
-	git subtree fetch --prefix gittor https://github.com/episodeyang/gittor.git master
-
