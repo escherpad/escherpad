@@ -1,5 +1,5 @@
 // escherpad has all these insertion points
-NAME_SPACE = "example-plugin";
+const NAME_SPACE = "example-plugin";
 export const module = {
     commands: {
         [NAME_SPACE + ":lint-code"]: {
