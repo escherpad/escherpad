@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 import {Store} from "luna";
 import {sagaConnect} from "luna-saga";
-export default class App {
+export default class Ra_ {
     constructor() {
         // self-binding
         this.reducer = this._reducer.bind(this);
@@ -43,8 +43,13 @@ export default class App {
         this._keymap[namespace] = keymap;
         this._sagas[namespace] = saga;
         this._commands[namespace] = commands;
+        // todo: need to rethink
         this._selectors = selectors;
-        this._views = views;
+        // todo: need to rethink
+        this._views = {
+            ...(this._views || {}),
+            ...views
+        };
         this._configs[namespace] = config;
         for (let i in saga) {
             let s = saga[i];
@@ -56,12 +61,11 @@ export default class App {
     }
 
     bootstrap(element) {
-        console.log(element);
         const Comp = this._views['_bootstrap'];
-        if (typeof Comp == "undefined") {
-            console.warn('bootstrap component is undefined')
+        if (typeof Comp === "function") {
+            ReactDOM.render(Comp(), element);
         } else {
-            ReactDOM.render(Comp, element)
+            console.warn('bootstrap component is undefined');
         }
     }
 }

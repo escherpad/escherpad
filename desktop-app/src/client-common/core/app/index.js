@@ -1,14 +1,19 @@
 // escherpad has all these insertion points
-const NAME_SPACE = "example-plugin";
+const NAMESPACE = "core-app";
+import React from "react";
 
 // this is almost DI.
-const module = {
+export default {
+    namespace: NAMESPACE,
     requireReload: true,
     commands: {},
     reducer: {}, // or a function (s, a)=>s
-    views: {},
+    views: {
+        _bootstrap: function () {
+            return <div>hahaha</div>
+        }
+    },
     viewAnchors: {},
     saga: {},
     config: (c) => c
-};
-export default module
+}
