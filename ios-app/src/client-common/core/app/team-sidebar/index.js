@@ -9,6 +9,8 @@ export default class TeamSidebar extends React.Component {
     };
 
     render() {
-        return <div className="team-sidebar" {...this.props}>team-sidebar</div>
+        const {raViews, ..._props} = this.props;
+        const {FileViewer, _raViews} = raViews;
+        return <div className="team-sidebar" {..._props}>team-sidebar</div>
     }
 }
