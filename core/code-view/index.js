@@ -1,6 +1,7 @@
 // escherpad has all these insertion points
 const NAMESPACE = "code-view";
 
+import CodeView from "./code-view";
 // this is almost DI.
 export default {
     /** Module Parameters*/
@@ -13,6 +14,6 @@ export default {
     sagas: {},
 
     /** View Code */
-    views: {},
+    views: {CodeView},
     config: (c) => c
 }
