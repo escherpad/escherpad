@@ -1,6 +1,5 @@
 // escherpad has all these insertion points
-const NAMESPACE = "core-app";
-import App from "./App"
+const NAMESPACE = "code-view";
 
 // this is almost DI.
 export default {
@@ -14,8 +13,8 @@ export default {
     sagas: {},
 
     /** View Code */
-    views: {
-        _bootstrap: App
-    },
+    // publish a list of view anchors
+    viewAnchors: [],
+    views: {},
     config: (c) => c
 }
