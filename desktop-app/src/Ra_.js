@@ -40,11 +40,11 @@ export default class Ra_ {
     }
 
     loadModule(m) {
-        const {namespace, commands, keymap, reducer, views, viewAnchors, saga, config} = m;
+        const {namespace, commands, keymap, reducers, views, viewAnchors, sagas, config} = m;
         /** Model and Controller Code */
-        this._reducers[namespace] = reducer;
+        this._reducers[namespace] = reducers;
         this._keymap[namespace] = keymap;
-        this._sagas[namespace] = saga;
+        this._sagas[namespace] = sagas;
         this._commands[namespace] = commands;
 
         /** View Code */
