@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "concurrently": "^3.4.0",
-    "flow-bin": "^0.45.0",
     "react-scripts": "0.9.5",
     "wait-on": "^2.0.2"
   },
