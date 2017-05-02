@@ -30,6 +30,11 @@ Then to start the app locally, run
 npm start
 ```
 
+To type check your code, add `// @flow` to the top of your code, and then run
+```bash
+npm rum flow
+```
+
 **Note**: windows users might require a slightly different script. Please refer to [link](https://medium.freecodecamp.com/building-an-electron-application-with-create-react-app-97945861647c)
 
 ## Create-React-App
