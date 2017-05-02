@@ -40,7 +40,10 @@ export default class Ra_ {
     }
 
     loadModule(m) {
-        const {namespace, commands, keymap, reducers, views, viewAnchors, sagas, config} = m;
+        const {
+            namespace, commands, keymap, reducers,
+            views, viewAnchors, sagas, config
+        } = m;
         /** Model and Controller Code */
         this._reducers[namespace] = reducers;
         this._keymap[namespace] = keymap;
@@ -79,7 +82,7 @@ export default class Ra_ {
 
         const Comp = this._views['_bootstrap'];
         if (typeof Comp === "function") {
-            ReactDOM.render(<Comp ra={this}/>, element);
+            ReactDOM.render(<Comp raViews={this._views}/>, element);
         } else {
             console.warn('bootstrap component is undefined');
         }
