@@ -13,11 +13,9 @@ export default class MainContainer extends React.Component {
     render() {
         const {raViews, ..._props} = this.props;
         const {FileViewer, ..._raViews} = raViews;
-        return <div className="main-container" {..._props}>main-container
-            <Flex row>
-                <FlexItem fixed height="80px">FileView Header Bar</FlexItem>
-            </Flex>
-            <FileViewer raViews={_raViews}/>
-        </div>
+        return <Flex column className="main-container" {..._props}>main-container
+            <FlexItem fixed height="80px">FileView Header Bar</FlexItem>
+            <FlexItem fluid component={FileViewer} raViews={_raViews}/>
+        </Flex>
     }
 }

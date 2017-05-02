@@ -10,7 +10,6 @@ export default class FileViewer extends React.Component {
 
     render() {
         const {style, raViews} = this.props;
-        console.log(style);
         const {FileHeaderBar, FileTitleBar, CodeView, ..._raViews} = raViews;
         return <Flex column className="context-view" style={style}>file view
             <FlexItem fixed height="120px">FileView Title Bar</FlexItem>
