@@ -34,6 +34,7 @@
     "wait-on": "^2.0.2"
   },
   "scripts": {
+    "flow": "flow",
     "react-start": "react-scripts start",
     "electron-start": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
