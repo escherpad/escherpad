@@ -6,9 +6,9 @@ export default {
     namespace: NAMESPACE,
     requireReload: true,
     commands: {},
-    reducer: {}, // or a function (s, a)=>s
+    reducers: {}, // or a function (s, a)=>s
     views: {},
     viewAnchors: {},
-    saga: {},
+    sagas: {},
     config: (c) => c
 }

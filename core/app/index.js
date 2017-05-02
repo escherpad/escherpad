@@ -7,11 +7,11 @@ export default {
     namespace: NAMESPACE,
     requireReload: true,
     commands: {},
-    reducer: {}, // or a function (s, a)=>s
+    reducers: {}, // or a function (s, a)=>s
     views: {
         _bootstrap: Bootstrap
     },
     viewAnchors: {},
-    saga: {},
+    sagas: {},
     config: (c) => c
 }
