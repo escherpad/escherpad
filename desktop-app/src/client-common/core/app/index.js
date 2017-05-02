@@ -4,14 +4,19 @@ import Bootstrap from "./bootstrap"
 
 // this is almost DI.
 export default {
+    /** Module Parameters*/
     namespace: NAMESPACE,
     requireReload: true,
+
+    /** Model and Controller Code */
     commands: {},
     reducers: {}, // or a function (s, a)=>s
+    sagas: {},
+
+    /** View Code */
+    viewAnchors: [],
     views: {
         _bootstrap: Bootstrap
     },
-    viewAnchors: {},
-    sagas: {},
     config: (c) => c
 }
