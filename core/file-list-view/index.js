@@ -9,7 +9,7 @@ export default {
     reducers: {}, // or a function (s, a)=>s
 
     // publish a list of view anchors
-    viewAnchors: {},
+    viewAnchors: [],
     views: {},
     sagas: {},
     config: (c) => c
