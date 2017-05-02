@@ -1,6 +1,8 @@
 // escherpad has all these insertion points
 const NAMESPACE = "file-list-view";
 
+
+import FileListView from './file-list-view';
 // this is almost DI.
 export default {
     /** Module Parameters*/
@@ -13,8 +15,6 @@ export default {
     sagas: {},
 
     /** View Code */
-    // publish a list of view anchors
-    viewAnchors: [],
-    views: {},
+    views: {FileListView},
     config: (c) => c
 }

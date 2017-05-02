@@ -1,6 +1,7 @@
 // escherpad has all these insertion points
-const NAMESPACE = "code-view";
+const NAMESPACE = "context-view";
 
+import ContextView from "./context-view";
 // this is almost DI.
 export default {
     /** Module Parameters*/
@@ -13,6 +14,6 @@ export default {
     sagas: {},
 
     /** View Code */
-    views: {},
+    views: {ContextView},
     config: (c) => c
 }
