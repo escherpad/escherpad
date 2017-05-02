@@ -15,9 +15,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 To find some information on how to perform common tasks, refer to the guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## To Develop
-first install electron globally
+first install `electron`, `flow-typed` and `flow-bin` globally
 ```sh
-npm install -g electron
+npm install -g electron flow-typed flow-bin
 ```
 
 Then install dependencies
