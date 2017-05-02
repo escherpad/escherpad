@@ -27,6 +27,7 @@ export default class App extends React.Component {
         return <Flex row className="app-layout-container">
             <FlexItem fixed component={TeamSidebar} raViews={raViews}/>
             <FlexItem fixed component={ChannelView} raViews={raViews}/>
+            <FlexItem fixed component={raViews.ContextView} raViews={raViews}/>
             <FlexItem fluid component={MainContainer} raViews={raViews}/>
         </Flex>
     }
