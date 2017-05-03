@@ -81,7 +81,7 @@ export default class Ra_ {
 
         const Comp = this._views['_bootstrap'];
         if (typeof Comp === "function") {
-            ReactDOM.render(<Comp raViews={this._views}/>, element);
+            return Comp;
         } else {
             console.warn('bootstrap component is undefined');
         }

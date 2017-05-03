@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Flex, FlexItem} from 'layout-components';
 
-/* import "normalize.css";*/
+import "normalize.css";
+import "./app-layout-debug.css"
 
 import TeamSidebar from './team-sidebar';
 import ChannelView from './channel-view';
 import MainContainer from './main-container';
 
-/* import "./app-layout.css";*/
+import "./app-layout.css";
 const {any} = PropTypes;
 export default class App extends React.Component {
     static propTypes = {
@@ -24,7 +25,7 @@ export default class App extends React.Component {
 
     render() {
         const {raViews} = this.props;
-        return <Flex row className="app-layout-container">
+        return <Flex row className="app-layout-container debug">
             <FlexItem fixed component={TeamSidebar} raViews={raViews}/>
             <FlexItem fixed component={ChannelView} raViews={raViews}/>
             <FlexItem fixed component={raViews.ContextView} raViews={raViews}/>
