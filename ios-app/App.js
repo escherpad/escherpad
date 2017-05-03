@@ -15,7 +15,7 @@ export default class App extends React.Component {
 }
 
 const ra_ = new Ra_();
-ra_.loadModule(require('./src/client-common/core/app').default);
+/* ra_.loadModule(require('./src/client-common/core/app').default);*/
 /* ra_.loadModule(require('./src/client-common/core/context-view').default);*/
 /* ra_.loadModule(require('./src/client-common/core/file-list-view').default);*/
 
