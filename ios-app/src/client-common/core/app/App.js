@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Flex, FlexItem} from 'layout-components';
 
-import "normalize.css";
+/* import "normalize.css";*/
 
 import TeamSidebar from './team-sidebar';
 import ChannelView from './channel-view';
 import MainContainer from './main-container';
 
-import "./app-layout.css";
+/* import "./app-layout.css";*/
 const {any} = PropTypes;
 export default class App extends React.Component {
     static propTypes = {

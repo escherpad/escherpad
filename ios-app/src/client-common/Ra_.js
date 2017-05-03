@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import {Store} from "luna";
 import {sagaConnect} from "luna-saga";
