@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import {Store} from "luna";
 import {sagaConnect} from "luna-saga";
@@ -82,7 +81,7 @@ export default class Ra_ {
 
         const Comp = this._views['_bootstrap'];
         if (typeof Comp === "function") {
-            ReactDOM.render(<Comp raViews={this._views}/>, element);
+            return Comp;
         } else {
             console.warn('bootstrap component is undefined');
         }

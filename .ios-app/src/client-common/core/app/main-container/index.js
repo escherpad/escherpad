@@ -9,6 +9,10 @@ export default class MainContainer extends React.Component {
     };
 
     render() {
-        return <div className="main-container" {...this.props}>main-container</div>
+        const {raViews, ..._props} = this.props;
+        const {FileViewer, ..._raViews} = raViews;
+        return <div className="main-container" {..._props}>main-container
+            <FileViewer raViews={_raViews}/>
+        </div>
     }
 }
