@@ -6,8 +6,9 @@ import ContextHeader from "./components/ContextHeader";
 import ListTab from "./components/ListTab";
 import ListView from "./components/ListView";
 import GenericFileItem from "./components/GenericFileItem";
+import SelectContainer from "./packages/selector-container/SelectContainer";
 
-export default class Meta extends React.Component {
+class Meta extends React.Component {
     static propTypes = {
         store$: PropTypes.any
     };
@@ -22,3 +23,8 @@ export default class Meta extends React.Component {
             </Flex>)
     }
 }
+
+const selector = (state) => {
+    return {title: state.title};
+};
+export default SelectContainer(selector, Meta)

@@ -5,6 +5,6 @@ import React from 'react';
 export default class SearchInput extends React.Component {
     render() {
         const props = this.props;
-        return (<div style={props.style}>SearchInput</div>)
+        return (<div style={props.style}>SearchInputs</div>)
     }
 }
