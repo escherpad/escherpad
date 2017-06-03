@@ -1,12 +1,6 @@
-# Escherpad Desktop Client
+# Escherpad Search Tool
 
-## Design
-
-view, reducers, sagas. 
-
-### module reload
-- [ ] best way to prevent multiple copies of sagas
-- [ ] best way to load modules (url: /src/package.json blah blah)
+Search and view files across services
 
 ## Usage
 
