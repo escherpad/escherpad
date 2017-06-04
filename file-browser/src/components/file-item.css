@@ -1,0 +1,13 @@
+.hero {
+    text-align: center;
+    color: #333;
+}
+
+.hero.hero-highlight {
+    color: #23aaff;
+}
+
+.context-header > .gutter {
+    text-align: center;
+    background-color: pink;
+}
