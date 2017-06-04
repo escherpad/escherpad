@@ -5,6 +5,8 @@ const CLEAR_SEARCH_QUERY = 'CLEAR_SEARCH_QUERY';
 const DEFAULT_QUERY = "";
 const DEFAULT_VIEW_STATE = {
     searchQuery: DEFAULT_QUERY,
+    hero: "Notes", // the large text in the middle of the view
+    heroActive: true, // highlights the hero text
     scrollY: 0,
     tabKey: "yours",
     orderBy: "recent",
