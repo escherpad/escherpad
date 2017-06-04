@@ -10,16 +10,18 @@ import SelectContainer from "./packages/selector-container/SelectContainer";
 
 class Meta extends React.Component {
     static propTypes = {
-        store$: PropTypes.any
+        store$: PropTypes.any,
+        dispatch: PropTypes.func.isRequired
     };
 
     render() {
+        const {width, height, ..._props} = this.props;
         return (
             <Flex column fill justify="stretch">
-                <FlexItem fixed component={SearchInput}/>
-                <FlexItem fixed component={ContextHeader}/>
-                <FlexItem fixed component={ListTab}/>
-                <FlexItem fluid component={ListView} itemComponent={GenericFileItem}/>
+                <FlexItem fixed component={SearchInput} {..._props}/>
+                <FlexItem fixed component={ContextHeader} {..._props}/>
+                <FlexItem fixed component={ListTab} {..._props}/>
+                <FlexItem fluid component={ListView} itemComponent={GenericFileItem} {..._props}/>
             </Flex>)
     }
 }
