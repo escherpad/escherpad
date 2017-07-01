@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "concurrently": "^3.4.0",
+    "eywa": "git://github.com/escherpad/eywa.git",
     "normalize.css": "^6.0.0",
     "prop-types": "^15.5.8",
     "react-scripts": "0.9.5",
