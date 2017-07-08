@@ -2,24 +2,20 @@
 import {Store} from 'luna';
 import {sagaConnect} from "luna-saga";
 import view from './view';
-import {dropboxMainProc} from "../services/dropbox";
-import {githubMainProc} from "../services/github";
+import {dropboxMainProc, accountHelper as dropboxAccountHelper} from "../services/dropbox";
+import {githubMainProc, accountHelper as githubAccountHelper} from "../services/github";
 import {updateFileList} from "./search";
 
 // todo: generate fake data so that we can write the view
 // todo: setup reducer and sagas to provide scaffold for client-side model.
 
 // hard code this.
-const dropbox_client_id = "";
-const github_client_id = "";
+// const dropbox_client_id = "";
+// const github_client_id = "";
 
 const DEFAULT_ACCOUNTS_STATE = {
-    "dropbox:yangge1987@gmail.com": {
-        access_token: "fill in"
-    },
-    "github:jam-world": {
-        access_token: "fill in here"
-    }
+    "dropbox:yangge1987@gmail.com": dropboxAccountHelper(),
+    "github:jam-world": githubAccountHelper()
 };
 
 function accounts(state = DEFAULT_ACCOUNTS_STATE, action) {
@@ -34,9 +30,9 @@ const DEFAULT_FILE_STATE = {
 };
 
 function files(state = DEFAULT_FILE_STATE, action) {
-    // if (action.type == "UPDATE_FILES") {
-    //     return {...state, ...action.data};
-    // }
+    if (action.type == "UPDATE_FILES") {
+        return {...state, ...action.data};
+    }
     return state;
 }
 
