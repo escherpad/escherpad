@@ -9,8 +9,19 @@ import {updateFileList} from "./search";
 // todo: generate fake data so that we can write the view
 // todo: setup reducer and sagas to provide scaffold for client-side model.
 
+// hard code this.
+const dropbox_client_id = "";
+const github_client_id = "";
 
-const DEFAULT_ACCOUNTS_STATE = {};
+const DEFAULT_ACCOUNTS_STATE = {
+    "dropbox:yangge1987@gmail.com": {
+        access_token: "fill in"
+    },
+    "github:jam-world": {
+        access_token: "fill in here"
+    }
+};
+
 function accounts(state = DEFAULT_ACCOUNTS_STATE, action) {
     return state;
 }

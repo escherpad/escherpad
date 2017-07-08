@@ -1,6 +1,6 @@
 import {
     GitHubAPI
-} from "../eywa/src/index";
+} from "eywa";
 
 /* test only code*/
 // all of the tests below require OAuth to work.

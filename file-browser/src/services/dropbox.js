@@ -1,12 +1,13 @@
 import {
     DropboxAPI
-} from "../eywa/src/index";
+} from "eywa";
 
 // test only code
-import {
-    dropboxClientId as clientId,
-    dropboxAccessToken as token
-} from "../test.config.js"
+// import {
+//     dropboxClientId as clientId,
+//     dropboxAccessToken as token
+// } from "../test.config"
+const clientId = 'xx';
 // end
 
 let dp = new DropboxAPI(clientId);
