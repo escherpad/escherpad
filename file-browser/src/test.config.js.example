@@ -1,0 +1,27 @@
+// All the private test configuration goes here
+
+// -------------------- GITHUB --------------------
+export const githubClientId = "you app id";
+export const githubClientSecret = "you client secret";
+
+// this is the only token you need to run the tests.
+// To get this token, go to your github personal access tokens page via this link:
+// https://github.com/settings/tokens
+export const githubAccessToken = "your access token";
+
+// username for the test
+export const testGithubUsername = "your github username";
+
+// Make Sure the test repo exists under the given username
+export const testPublicRepo = "public repo to test";
+export const testPrivateRepo = "private repo to test";
+
+
+// -------------------- DROPBOX --------------------
+export const dropboxClientId = "you app id";
+export const dropboxAccessToken = "your access token";
+
+
+
+
+

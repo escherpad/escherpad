@@ -17,4 +17,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # private configuration
-test.config.js
+src/test.config.js
