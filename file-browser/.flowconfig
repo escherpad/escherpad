@@ -1,5 +1,5 @@
 [ignore]
-node_modules/**/*.flow
+.*/node_modules/.*\.flow
 
 [include]
 

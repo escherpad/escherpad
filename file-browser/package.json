@@ -22,15 +22,17 @@
   },
   "private": true,
   "dependencies": {
+    "layout-components": "^2.7.1",
     "luna": "^1.5.0",
-    "luna-saga": "^3.0.1",
+    "luna-saga": "^3.1.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "rxjs": "^5.3.0"
+    "rxjs": "^5.3.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "concurrently": "^3.4.0",
-    "layout-components": "^2.6.3",
+    "eywa": "git://github.com/escherpad/eywa.git",
     "normalize.css": "^6.0.0",
     "prop-types": "^15.5.8",
     "react-scripts": "0.9.5",
@@ -41,7 +43,7 @@
     "react-start": "react-scripts start",
     "electron-start": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
-    "start-windows": "echo \"Warning: TODO: script is not implemented\" && exit 1",
+    "start-windows": "npm run react-start set ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "echo 'Warning: not reversible!! execute: \"react-scripts eject\"'",
