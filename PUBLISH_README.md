@@ -3,6 +3,10 @@
 ``` sh
 yarn electron-pack
 ```
+## Issues
+### Code sign
+electron-builder automatically sign your code with the default certificate on your machine. However, in some situation the default certificate is invalid or you just don't want to use it. You can specify a certificate by setting the environment variable CSC_NAME to the certificate name. In case, you don't even want a code sign, set the environment variable CSC_IDENTITY_AUTO_DISCOVERY to false.
+
 ---
 ## Tools
 - [electron-builder](https://github.com/electron-userland/electron-builder)
