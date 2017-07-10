@@ -4,6 +4,7 @@ declare type AccountT = {
     $key: string, // locally generated uuid, used internally in our app
     client_id: string, // OAuth client_id
     access_token: string, // OAuth token
+    service_type: string,
     /** view, read-only fields.
      * design of schema of this field is given by what the components require. */
         view: {

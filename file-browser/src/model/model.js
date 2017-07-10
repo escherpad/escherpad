@@ -5,21 +5,28 @@ import view from './view';
 import {dropboxMainProc} from "../services/dropbox";
 import {githubMainProc} from "../services/github";
 import {updateFileList} from "./search";
+import {accountKey} from "./utility";
 
 // todo: generate fake data so that we can write the view
 // todo: setup reducer and sagas to provide scaffold for client-side model.
 
 // hard code this.
-const dropbox_client_id = "";
-const github_client_id = "";
+// github
+const test_github_client_id : string = "b4666a3b2ac86229f0c7";
+const test_github_access_token : string = "f7ccfee5aa99defa67b713dea00f739d0be5939c";
+
+// dropbox
+const test_dropbox_client_id : string = "uhpeu63dv1pqgor";
+const test_dropbox_access_token : string = "p5mHBr4rHvYAAAAAAAAANpuR45x2fOWdBSQqs5rtKeFD8GMF7uH8emUZTy_F53zT";
+
 
 const DEFAULT_ACCOUNTS_STATE = {
-    "dropbox:yangge1987@gmail.com": {
-        access_token: "fill in"
-    },
-    "github:jam-world": {
-        access_token: "fill in here"
-    }
+    "dropbox:yangge1987@gmail.com": accountKey(test_dropbox_client_id,
+                                               test_dropbox_access_token,
+                                               'dropbox'),
+    "github:jam-world": accountKey(test_github_client_id,
+                                   test_github_access_token,
+                                   'github')
 };
 
 function accounts(state = DEFAULT_ACCOUNTS_STATE, action) {
@@ -34,9 +41,9 @@ const DEFAULT_FILE_STATE = {
 };
 
 function files(state = DEFAULT_FILE_STATE, action) {
-    // if (action.type == "UPDATE_FILES") {
-    //     return {...state, ...action.data};
-    // }
+    if (action.type === "UPDATE_FILES") {
+        return {...state, ...action.data};
+    }
     return state;
 }
 
@@ -48,7 +55,7 @@ const DEFAULT_FILE_LIST = [
 function fileList(state = DEFAULT_FILE_LIST, action) {
     console.log("filelist")
     console.log(action)
-    if (action.type == "DISPLAY_FILES") {
+    if (action.type === "DISPLAY_FILES") {
         console.log("display files");
         console.log(action);
         return action.data;

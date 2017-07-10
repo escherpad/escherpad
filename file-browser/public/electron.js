@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
+const isDev = require('electron-is-dev');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -9,14 +10,8 @@ function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({width: 800, height: 600});
 
-    // and load the index.html of the app.
-    // from https://medium.freecodecamp.com/building-an-electron-application-with-create-react-app-97945861647c
-    const startUrl = process.env.ELECTRON_START_URL || url.format({
-            pathname: path.join(__dirname, 'build/index.html'),
-            protocol: 'file:',
-            slashes: true
-        });
-    win.loadURL(startUrl);
+    // load the url
+    win.loadURL(isDev ? process.env.ELECTRON_START_URL : `file://${path.join(__dirname, '../build/index.html')}`);
 
     // Open the DevTools.
     win.webContents.openDevTools();

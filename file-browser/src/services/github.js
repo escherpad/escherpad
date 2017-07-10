@@ -1,26 +1,7 @@
+// @flow
 import {
     GitHubAPI
 } from "eywa";
-
-/* test only code*/
-// all of the tests below require OAuth to work.
-import {
-    githubClientId as clientId,
-    githubClientSecret,
-    githubAccessToken as accessToken,
-    testRepoName,
-    testGithubUsername as testUsername,
-    testPublickRepo,
-    testPrivateRepo
-} from "../test.config.js";
-/* end*/
-
-
-let gh = new GitHubAPI(clientId);
-gh.updateAccessToken(accessToken);
-
-console.log("Init github")
-console.log(gh);
 
 const COMMANDS = [
     "GITHUB::LIST_FILES",
@@ -39,16 +20,35 @@ import {
 export function* githubMainProc() {
     while (true) {
         let action = yield take("GITHUB::LIST_FILES");
-        console.log("github main process");
+
+        console.log("GITHUB::LIST_FILES");
         console.log(action);
-        const data = yield gh.listRepos(testUsername);
-        console.log("list repos from the github");
-        console.log(data);
-        let repoNames = data.map((metaInfo) => {
-            return {id: metaInfo.id, full_name: metaInfo.full_name};
-        });
-        console.log("get the repo names");
-        console.log(repoNames);
-        yield dispatch({type: "DISPLAY_FILES", data: repoNames});
+        for (let account in action.state.accounts) {
+            let info = account.split(":");
+            if (info[0] == "github") {
+                let username = info[1];
+                let account_info = action.state.accounts[account];
+                let client_id = account_info.client_id;
+                let access_token = account_info.access_token;
+
+
+                let gh = new GitHubAPI(client_id);
+                gh.updateAccessToken(access_token);
+
+                console.log("github main process");
+                console.log(action, gh);
+                const data = yield gh.listRepos(username);
+                console.log("list repos from the github");
+                console.log(data);
+                let repoNames = data.map((metaInfo) => {
+                    return {id: metaInfo.id, full_name: metaInfo.full_name};
+                });
+                console.log("get the repo names");
+                console.log(repoNames);
+                yield dispatch({type: "DISPLAY_FILES", data: repoNames});
+            }
+        }
     }
 }
+
+
