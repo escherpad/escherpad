@@ -43,6 +43,7 @@ const DEFAULT_FILE_STATE = {
 function files(state = DEFAULT_FILE_STATE, action) {
     if (action.type === "UPDATE_FILES") {
         return {...state, ...action.data};
+    }
     return state;
 }
 
