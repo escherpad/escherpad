@@ -16,6 +16,7 @@
     "nextjs": "0.0.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-fade": "^1.1.1",
     "react-markdownit": "^2.5.0",
     "react-primitives": "^0.4.3",
     "react-router": "^4.1.1",
