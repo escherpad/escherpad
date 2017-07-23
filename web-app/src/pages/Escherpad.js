@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 // dev only
 import JSONPretty from 'react-json-pretty';
+import EditorLayout from "../components/editor-layout/EditorLayout";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -12,7 +13,7 @@ const Styled = styled(Flex)`
 export default function Escherpad(props) {
     return (
         <Styled fill column>
-            <JSONPretty json={props}/>
+            <EditorLayout />
         </Styled>
     );
 }
