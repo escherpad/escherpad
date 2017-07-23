@@ -9,7 +9,7 @@ export default function Root() {
             <Route exact path="/github/:username/:repo?:path" component={() => <div>path is /github/:username/:repo/:path</div>}/>
             <Route exact path="/dropbox/:path" component={() => <div>root page</div>}/>
             <Route exact path="/jupyter/:path" component={() => <div>root page</div>}/>
-            <Route exact path="/escherpad/:bindr_id/:note_id" component={() => <div>root page</div>}/>
+            <Route exact path="/bindrs/:bindr_id/:note_id" component={() => <div>root page</div>}/>
         </div>
     );
 }
