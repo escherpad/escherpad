@@ -61,6 +61,7 @@
     "cra:eject": "react-scripts eject",
     "deploy:setup-gh-pages": "git remote add gh-pages https://github.com/escherpad/escherpad.github.io.git",
     "gh-deploy": "git subtree push --prefix build gh-pages master",
-    "build-and-deploy": "npm run build:src && git add build -f && git ci -m \"BUILD update\" && npm run gh-deploy"
+    "build-and-deploy": "npm run build:src && git add build -f && git ci -m \"BUILD update\" && npm run gh-deploy",
+    "deploy:heroku-dev": "git subtree push --prefix web-app origin heroku-web-app-dev"
   }
 }
