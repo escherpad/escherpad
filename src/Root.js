@@ -2,11 +2,14 @@ import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Escherpad from "./pages/Escherpad";
 import NoMatch from "./pages/404.js";
+import FrontPage from "./pages/FrontPage";
+import Todo from "./pages/Todo";
 
 export default function Root() {
     return (
         <Switch>
-            <Route exact path="/" component={() => <div>path is /</div>}/>
+            <Route exact path="/" component={() => <FrontPage/>}/>
+            <Route exact path="/todo" component={Todo}/>
             <Route exact path="/github/:account/gists/:path*" component={Escherpad}/>
             <Route exact path="/github/:account/:repo/:path*" component={Escherpad}/>
             <Route exact path="/dropbox/:account/:path*" component={Escherpad}/>
