@@ -1,1 +1,1 @@
-web: npm run start:server-dev
+web: npm install --only=dev && npm run start:server-dev
