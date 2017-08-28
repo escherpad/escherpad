@@ -59,6 +59,8 @@
     "cra:build": "react-scripts build",
     "cra:test": "react-scripts test --env=jsdom",
     "cra:eject": "react-scripts eject",
-    "deploy:setup-gh-pages": "git remote add gh-pages https://github.com/escherpad/escherpad.github.io.git"
+    "deploy:setup-gh-pages": "git remote add gh-pages https://github.com/escherpad/escherpad.github.io.git",
+    "gh-deploy": "git subtree push --prefix build origin gh-pages",
+    "build-and-deploy": "npm run build:src && git add build -f && git ci -m \"BUILD update\" && npm run gh-deploy"
   }
 }
