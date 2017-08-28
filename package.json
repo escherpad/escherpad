@@ -43,6 +43,7 @@
     "sass-loader": "^6.0.6"
   },
   "scripts": {
+    "postinstall":"npm install --only=dev",
     "start:browser-dev": "react-scripts start",
     "start:server-dev": "babel-watch ./server/index.js",
     "start:production": "NODE_ENV=production node ./server-build/index.js",
