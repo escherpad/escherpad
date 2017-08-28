@@ -41,7 +41,7 @@ export default function Escherpad(props) {
                     backgroundColor: "transparent",
                     width: "100%"
                 }}
-                       placeholder="What needs to be done?"></input>
+                       placeholder="What needs to be done?"/>
                 <Flex row style={{fontSize: "1.25em", fontWeight: "300", marginBottom: "25px"}}>
                     <FlexItem>All</FlexItem>
                     <Separator/>
