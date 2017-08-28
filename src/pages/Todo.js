@@ -37,7 +37,7 @@ export default function Escherpad(props) {
                     marginTop: '250px',
                     marginBottom: '25px',
                     border: "none",
-                    borderBottom: "dashed 1px white",
+                    borderBottom: "dotted 1px rgba(255, 255, 255, 0.8)",
                     backgroundColor: "transparent",
                     width: "100%"
                 }}
