@@ -25,7 +25,7 @@ export default function EditorLayout(props) {
         <Styled fill row {...props}>
             <FlexItem fixed component={teamNavBar}/>
             <FlexItem fixed component={bindrBar}/>
-            <FlexItem fixed component={Flex} column>
+            <FlexItem fixed component={Flex} column className="list-panel" style={{width: "400px"}}>
                 <FlexItem fixed component={listHeader}/>
                 <FlexItem fixed component={Flex} row>
                     <FlexItem fixed component={listLeftButton}/>
