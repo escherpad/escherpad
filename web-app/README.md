@@ -11,8 +11,11 @@ npm run buld:server
 ```
 Then when you launch, you can run
 ```
-sudo PORT=80 npm run start:production
+npm run start:production
 ```
+This launches a production server at port 3001 by default[^1]. The `nginx` server is configured to proxy this to port `80`.
+
+[^1]: You can't really run `sudo PORT=80 npm run start:production` on linux b/c the npm and node might not exist in super user.
 
 ## Usage
 
