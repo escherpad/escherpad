@@ -11,7 +11,7 @@ npm run buld:server
 ```
 Then when you launch, you can run
 ```
-npm run start:production
+sudo PORT=80 npm run start:production
 ```
 
 ## Usage

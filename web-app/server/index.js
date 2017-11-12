@@ -13,7 +13,8 @@ app.use(morgan('combined'));
 app.use('/', ReactLoader);
 
 const env = process.env.NODE_ENV || 'dev';
-const PORT = process.env.PORT || (env === "production" ? 80 : 3001);
+// const PORT = process.env.PORT || (env === "production" ? 80 : 3001);
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
 app.on('error', function onError(error) {
         if (error.syscall !== 'listen') throw error;
