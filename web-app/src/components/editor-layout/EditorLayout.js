@@ -19,10 +19,11 @@ export default function EditorLayout(props) {
         editorHeader,
         editorTitleBar,
         editorBody,
-        editorFooter
+        editorFooter,
+        ..._props
     } = props;
     return (
-        <Styled fill row {...props}>
+        <Styled fill row {..._props}>
             <FlexItem fixed component={teamNavBar}/>
             <FlexItem fixed component={bindrBar}/>
             <FlexItem fixed component={Flex} column className="list-panel" style={{width: "400px"}}>
