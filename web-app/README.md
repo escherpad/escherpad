@@ -2,6 +2,19 @@
 
 This app is hosted at `https://escherpad.com/`
 
+## Development
+
+First compile the code 
+```
+npm run buld:src
+npm run buld:server
+```
+Then when you launch, you can run
+```
+npm run start:server-dev
+```
+This launches a production server at [http://localhost:3001](http://localhost:3001) by default[^1].
+
 ## Deployment
 
 First compile the code 
@@ -13,7 +26,7 @@ Then when you launch, you can run
 ```
 npm run start:production
 ```
-This launches a production server at port 3001 by default[^1]. The `nginx` server is configured to proxy this to port `80`.
+This launches a production server at [http://localhost:3001](http://localhost:3001) by default[^1]. The `nginx` server is configured to proxy this to port `80`.
 
 [^1]: You can't really run `sudo PORT=80 npm run start:production` on linux b/c the npm and node might not exist in super user.
 
