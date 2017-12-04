@@ -105,17 +105,22 @@ function Escherpad(props) {
                 _react2.default.createElement(
                     'p',
                     null,
-                    '[ ] Finish redux file system @Cha before August 24th.'
+                    '[ ] @cha redux file system'
                 ),
                 _react2.default.createElement(
                     'p',
                     null,
-                    '[ ] @Ge finish deployment setup'
+                    '[ ] @cha add `https` support'
                 ),
                 _react2.default.createElement(
                     'p',
                     null,
-                    '[ ] @Ge finish messenger'
+                    '[x] @ge fix page title (use helmet)'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '[x] @ge add dynamic layout to editor'
                 )
             )
         )
