@@ -5,6 +5,7 @@ import {StaticRouter} from "react-router-dom";
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 import fs from 'fs';
 import {StyleSheet} from 'react-primitives';
+import {Helmet} from 'react-helmet';
 
 console.log(process.env.NODE_ENV);
 
@@ -28,6 +29,7 @@ export default function ReactLoader(req, res, next) {
             <Root/>
         </StaticRouter>
     ));
+    const helmet = Helmet.renderStatic(); // use renderStatic to prevent memory leak
     const styledComponentCSS = sheet.getStyleTags();
     const reactPrimitiveCSS = StyleSheet
         .getStyleSheets()
@@ -35,6 +37,7 @@ export default function ReactLoader(req, res, next) {
         .join('');
     res.status(200).send(
         HTML
+            .replace(/<!-- SSR:title -->/, helmet.title.toString())
             .replace(/<!-- SSR:CSS -->/, styledComponentCSS + reactPrimitiveCSS)
             .replace(/<!-- SSR:HTML -->/, html)
     );

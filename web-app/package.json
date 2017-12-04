@@ -17,10 +17,12 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-fade": "^1.1.1",
+    "react-helmet": "^5.2.0",
     "react-markdownit": "^2.5.0",
     "react-primitives": "^0.4.3",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "save-dev": "^2.0.0",
     "styled-components": "^2.1.1"
   },
   "devDependencies": {

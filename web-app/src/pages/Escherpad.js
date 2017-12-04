@@ -2,6 +2,7 @@ import React from "react";
 import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
+import {Helmet} from "react-helmet";
 
 // dev only
 import JSONPretty from 'react-json-pretty';
@@ -26,6 +27,9 @@ export default function Escherpad(props) {
     const listSections = [];
     return (
         <Styled fill column>
+            <Helmet>
+                <title>hahaha</title>
+            </Helmet>
             <EditorLayout teamNavBar={TeamNavBar}
                           bindrBar={BindrBar}
                           listHeader={ListHeader}
