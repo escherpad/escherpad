@@ -2,6 +2,7 @@ import React from "react";
 import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
+import {Helmet} from "react-helmet";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -28,6 +29,9 @@ export default function FrontPage(props) {
     const listSections = [];
     return (
         <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}}>
+            <Helmet>
+                <title>Welcome to Escherpad</title>
+            </Helmet>
             <FlexItem fixed component={Flex} row align="stretch" height={70}
                       style={{backgroundColor: 'transparent', padding: "0 400px"}}>
                 <HeaderButton style={{fontSize: "19px"}}>Escherpad</HeaderButton>
