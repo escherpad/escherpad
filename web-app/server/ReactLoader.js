@@ -7,8 +7,6 @@ import fs from 'fs';
 import {StyleSheet} from 'react-primitives';
 import {Helmet} from 'react-helmet';
 
-console.log(process.env.NODE_ENV);
-
 let rootComponentPath;
 if (process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() === "production") {
     rootComponentPath = "../build/Root";

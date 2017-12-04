@@ -2,6 +2,7 @@ import React from "react";
 import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
+import {Helmet} from "react-helmet";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -25,6 +26,7 @@ const Styled = styled(Flex)`
 export default function NoMatch(props) {
     return (
         <Styled fill column {...props}>
+            <Helmet><title>Page Not Found</title></Helmet>
             <FlexSpacer/>
             <FlexItem fixed component={Fade} duration={1.5}>
                 <h1>404</h1>

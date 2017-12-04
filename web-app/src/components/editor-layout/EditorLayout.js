@@ -22,26 +22,37 @@ export default function EditorLayout(props) {
         editorFooter,
         ..._props
     } = props;
+    const layout = {
+        teamNavBar: false,
+        bindrBar: false,
+        listPanel: true,
+        editorPanel: true,
+    };
     return (
         <Styled fill row {..._props}>
-            <FlexItem fixed component={teamNavBar}/>
-            <FlexItem fixed component={bindrBar}/>
-            <FlexItem fixed component={Flex} column className="list-panel" style={{width: "400px"}}>
-                <FlexItem fixed component={listHeader}/>
-                <FlexItem fixed component={Flex} row>
-                    <FlexItem fixed component={listLeftButton}/>
-                    <FlexItem fluid component={listHero}/>
-                    <FlexItem fixed component={listRightButton}/>
+            {layout.teamNavBar && teamNavBar ? <FlexItem fixed component={teamNavBar}/> : null}
+            {layout.bindrBar && bindrBar ? <FlexItem fixed component={bindrBar} style={{background: "grey"}}/> : null}
+            {layout.listPanel
+                ? <FlexItem fixed component={Flex} column className="list-panel" width="400px"
+                            style={{background: "green"}}>
+                    <FlexItem fixed component={listHeader}/>
+                    <FlexItem fixed component={Flex} row>
+                        <FlexItem fixed component={listLeftButton}/>
+                        <FlexItem fluid component={listHero}/>
+                        <FlexItem fixed component={listRightButton}/>
+                    </FlexItem>
+                    <FlexItem fixed component={listTabs}/>
+                    {listSections.map((section, i) => <FlexItem key={i} fixed component={section}/>)}
                 </FlexItem>
-                <FlexItem fixed component={listTabs}/>
-                {listSections.map((section, i) => <FlexItem key={i} fixed component={section}/>)}
-            </FlexItem>
-            <FlexItem fixed component={Flex} column>
-                <FlexItem fixed component={editorHeader}/>
-                <FlexItem fixed component={editorTitleBar}/>
-                <FlexItem fixed component={editorBody}/>
-                <FlexItem fixed component={editorFooter}/>
-            </FlexItem>
+                : null}
+            {layout.editorPanel
+                ? <FlexItem fixed component={Flex} column>
+                    <FlexItem fixed component={editorHeader}/>
+                    <FlexItem fixed component={editorTitleBar}/>
+                    <FlexItem fixed component={editorBody}/>
+                    <FlexItem fixed component={editorFooter}/>
+                </FlexItem>
+                : null}
         </Styled>
     );
 }

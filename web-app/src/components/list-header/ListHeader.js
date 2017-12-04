@@ -8,7 +8,7 @@ const Styled = styled(Flex)`
 export default function ListHeader(props) {
     return (
         <Styled fill row {...props}>
-            <FlexItem fixed/>
+            <FlexItem fixed>list header</FlexItem>
         </Styled>
     );
 }

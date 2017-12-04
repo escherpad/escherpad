@@ -4,12 +4,7 @@ This app is hosted at `https://escherpad.com/`
 
 ## Development
 
-First compile the code 
-```
-npm run buld:src
-npm run buld:server
-```
-Then when you launch, you can run
+To launch dev server, just run
 ```
 npm run start:server-dev
 ```

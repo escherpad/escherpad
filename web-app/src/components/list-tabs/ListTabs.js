@@ -8,7 +8,7 @@ const Styled = styled(Flex)`
 export default function ListTabs(props) {
     return (
         <Styled fill row {...props}>
-            <FlexItem fixed/>
+            <FlexItem fixed>list tabs</FlexItem>
         </Styled>
     );
 }

@@ -2,9 +2,9 @@ import React from "react";
 import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
+import {Helmet} from "react-helmet";
 
 // dev only
-
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
     color: white;
@@ -22,13 +22,16 @@ const Styled = styled(Flex)`
         outline: none
     }
 `;
-function Separator (){
+
+function Separator() {
     return <FlexItem style={{margin: "0 15px"}}>/</FlexItem>
 }
+
 export default function Escherpad(props) {
     const listSections = [];
     return (
         <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #9710D5, #FF6A1A)"}}>
+            <Helmet><title>Todo List</title></Helmet>
             {/*full width input element*/}
             <div style={{width: "700px", margin: "0 auto"}}>
                 <input style={{

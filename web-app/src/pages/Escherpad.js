@@ -25,10 +25,11 @@ const Styled = styled(Flex)`
 `;
 export default function Escherpad(props) {
     const listSections = [];
+    const noteName = "E-MAML";
     return (
         <Styled fill column>
             <Helmet>
-                <title>hahaha</title>
+                <title>Escherpad | {noteName}</title>
             </Helmet>
             <EditorLayout teamNavBar={TeamNavBar}
                           bindrBar={BindrBar}

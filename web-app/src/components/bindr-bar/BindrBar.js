@@ -9,7 +9,7 @@ const Styled = styled(Flex)`
 export default function BindrBar(props) {
     return (
         <Styled fill row {...props}>
-            <FlexItem fixed/>
+            <FlexItem fixed>bindr bar</FlexItem>
         </Styled>
     );
 }

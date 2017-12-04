@@ -8,7 +8,9 @@ const Styled = styled(Flex)`
 export default function EditorTitleBar(props) {
     return (
         <Styled fill row {...props}>
-            <FlexItem fixed/>
+            <FlexItem fixed>
+                Editor Title Bar
+            </FlexItem>
         </Styled>
     );
 }
