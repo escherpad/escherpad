@@ -38,7 +38,7 @@ export default function FrontPage(props) {
                       style={{backgroundColor: 'transparent', padding: "0 100px", maxWidth: "1000px"}}>
                 <HeaderButton component="a" style={{fontSize: "19px"}}>Escherpad</HeaderButton>
                 <FlexSpacer/>
-                <HeaderButton component="a" href="/editor"><span>Editor</span></HeaderButton>
+                <HeaderButton component="a" href="/notes/"><span>Notes</span></HeaderButton>
                 <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
             </FlexItem>
         </Styled>

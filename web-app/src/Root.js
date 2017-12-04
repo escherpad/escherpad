@@ -14,6 +14,7 @@ export default function Root() {
             <Route exact path="/github/:account/:repo/:path*" component={Escherpad}/>
             <Route exact path="/dropbox/:account/:path*" component={Escherpad}/>
             <Route exact path="/:username/" component={Escherpad}/>
+            <Route exact path="/:username/notes:/:note_id" component={Escherpad}/>
             <Route exact path="/:username/:bindr_id/" component={Escherpad}/>
             <Route exact path="/:username/:bindr_id*/:note_id" component={Escherpad}/>
             <Route component={NoMatch}/>
