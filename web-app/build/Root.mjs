@@ -41,7 +41,6 @@ function Root() {
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/:repo/:path*", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/dropbox/:account/:path*", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/:username/", component: _Escherpad2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/:username/notes:/:note_id", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/:username/:bindr_id/", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/:username/:bindr_id*/:note_id", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })
