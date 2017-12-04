@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _templateObject = _taggedTemplateLiteral(["\n    background-color: purple;\n    font-family: 'Lato', sans-serif;\n    width: 80px;\n"], ["\n    background-color: purple;\n    font-family: 'Lato', sans-serif;\n    width: 80px;\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    width: 80px;\n    background-image: linear-gradient(-40deg, #FF008C, #E1FF00);\n"], ["\n    font-family: 'Lato', sans-serif;\n    width: 80px;\n    background-image: linear-gradient(-40deg, #FF008C, #E1FF00);\n"]);
 
 exports.default = TeamNavBar;
 

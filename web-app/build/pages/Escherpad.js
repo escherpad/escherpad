@@ -22,6 +22,8 @@ var _styledComponents = require('styled-components');
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+var _reactHelmet = require('react-helmet');
+
 var _reactJsonPretty = require('react-json-pretty');
 
 var _reactJsonPretty2 = _interopRequireDefault(_reactJsonPretty);
@@ -88,9 +90,20 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateObject);
 function Escherpad(props) {
     var listSections = [];
+    var noteName = "E-MAML";
     return _react2.default.createElement(
         Styled,
         { fill: true, column: true },
+        _react2.default.createElement(
+            _reactHelmet.Helmet,
+            null,
+            _react2.default.createElement(
+                'title',
+                null,
+                'Escherpad | ',
+                noteName
+            )
+        ),
         _react2.default.createElement(_EditorLayout2.default, { teamNavBar: _TeamNavBar2.default,
             bindrBar: _BindrBar2.default,
             listHeader: _ListHeader2.default,

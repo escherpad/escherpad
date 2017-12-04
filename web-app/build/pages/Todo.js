@@ -22,13 +22,15 @@ var _styledComponents = require('styled-components');
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+var _reactHelmet = require('react-helmet');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 // dev only
-
 var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateObject);
+
 function Separator() {
     return _react2.default.createElement(
         _layoutComponents.FlexItem,
@@ -36,11 +38,21 @@ function Separator() {
         '/'
     );
 }
+
 function Escherpad(props) {
     var listSections = [];
     return _react2.default.createElement(
         Styled,
         { fill: true, column: true, style: { backgroundImage: "linear-gradient(-40deg, #9710D5, #FF6A1A)" } },
+        _react2.default.createElement(
+            _reactHelmet.Helmet,
+            null,
+            _react2.default.createElement(
+                'title',
+                null,
+                'Todo List'
+            )
+        ),
         _react2.default.createElement(
             'div',
             { style: { width: "700px", margin: "0 auto" } },

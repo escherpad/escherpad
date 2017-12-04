@@ -29,7 +29,11 @@ function EditorHeader(props) {
     return _react2.default.createElement(
         Styled,
         _extends({ fill: true, row: true }, props),
-        _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true })
+        _react2.default.createElement(
+            _layoutComponents.FlexItem,
+            { fixed: true },
+            "editor header"
+        )
     );
 }
 //# sourceMappingURL=EditorHeader.js.map

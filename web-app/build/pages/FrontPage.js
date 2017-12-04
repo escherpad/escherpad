@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _templateObject = _taggedTemplateLiteral(['\n    font-family: \'Lato\', sans-serif;\n    background-color: #efefef\n'], ['\n    font-family: \'Lato\', sans-serif;\n    background-color: #efefef\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    cursor: pointer;\n    > span {\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2;\n        border-top: solid 3px transparent;\n        border-bottom: solid 3px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 3px #23aaff\n    }\n'], ['\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    cursor: pointer;\n    > span {\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2;\n        border-top: solid 3px transparent;\n        border-bottom: solid 3px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 3px #23aaff\n    }\n']);
+    _templateObject2 = _taggedTemplateLiteral(['\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    cursor: pointer;\n    text-decoration: none;\n    > span {\n        color: black;\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px black;\n    }\n'], ['\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    cursor: pointer;\n    text-decoration: none;\n    > span {\n        color: black;\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px black;\n    }\n']);
 
 exports.default = FrontPage;
 
@@ -23,6 +23,8 @@ var _styledComponents = require('styled-components');
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
+var _reactHelmet = require('react-helmet');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -35,40 +37,40 @@ function FrontPage(props) {
         Styled,
         { fill: true, column: true, style: { backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)" } },
         _react2.default.createElement(
+            _reactHelmet.Helmet,
+            null,
+            _react2.default.createElement(
+                'title',
+                null,
+                'Welcome to Escherpad'
+            )
+        ),
+        _react2.default.createElement(
             _layoutComponents.FlexItem,
             { fixed: true, component: _layoutComponents.Flex, row: true, align: 'stretch', height: 70,
                 style: { backgroundColor: 'transparent', padding: "0 400px" } },
             _react2.default.createElement(
                 HeaderButton,
-                { style: { fontSize: "19px" } },
+                { component: 'a', style: { fontSize: "19px" } },
                 'Escherpad'
             ),
             _react2.default.createElement(_layoutComponents.FlexSpacer, null),
             _react2.default.createElement(
                 HeaderButton,
-                null,
+                { component: 'a', href: '/editor' },
                 _react2.default.createElement(
                     'span',
                     null,
-                    'Beta'
+                    'Editor'
                 )
             ),
             _react2.default.createElement(
                 HeaderButton,
-                null,
+                { component: 'a', href: '/todo' },
                 _react2.default.createElement(
                     'span',
                     null,
-                    'Sign In'
-                )
-            ),
-            _react2.default.createElement(
-                HeaderButton,
-                null,
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    'Your Teams'
+                    'Todo List'
                 )
             )
         )
