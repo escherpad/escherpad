@@ -51,7 +51,7 @@
     "start:styleguide": "styleguidist server",
     "build:src": "babel -d ./build ./src -s",
     "build:server": "babel -d ./server-build ./server -s",
-    "build:all": "npm run build:src build:server && git reset . && git add build server-build && git ci -m \"BUILD\" && git push",
+    "build-and-push": "npm run build:src build:server && git reset . && git add build server-build -f && git ci -m \"BUILD:web-server\" && git push",
     "build:styleguide": "styleguidist build",
     "test:web-server": "curl localhost:3001",
     "watch:build-server": "fswatch -o ./server | xargs -n1 -I{} npm run build:server",
