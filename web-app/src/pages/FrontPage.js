@@ -13,16 +13,18 @@ const HeaderButton = styled(FlexItem)`
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    text-decoration: none;
     > span {
+        color: black;
         flex: 0 0 auto;
         margin: 0 13px;
         font-size: 15px;
-        padding: 4px 2;
-        border-top: solid 3px transparent;
-        border-bottom: solid 3px transparent;
+        padding: 4px 2px;
+        border-top: solid 4px transparent;
+        border-bottom: solid 4px transparent;
     }
     :hover > span {
-        border-bottom: solid 3px #23aaff
+        border-bottom: solid 4px black;
     }
 `;
 export default function FrontPage(props) {
@@ -34,11 +36,10 @@ export default function FrontPage(props) {
             </Helmet>
             <FlexItem fixed component={Flex} row align="stretch" height={70}
                       style={{backgroundColor: 'transparent', padding: "0 400px"}}>
-                <HeaderButton style={{fontSize: "19px"}}>Escherpad</HeaderButton>
+                <HeaderButton component="a" style={{fontSize: "19px"}}>Escherpad</HeaderButton>
                 <FlexSpacer/>
-                <HeaderButton><span>Beta</span></HeaderButton>
-                <HeaderButton><span>Sign In</span></HeaderButton>
-                <HeaderButton><span>Your Teams</span></HeaderButton>
+                <HeaderButton component="a" href="/editor"><span>Editor</span></HeaderButton>
+                <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
             </FlexItem>
         </Styled>
     );
