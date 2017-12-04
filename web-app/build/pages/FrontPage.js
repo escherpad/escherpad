@@ -48,7 +48,7 @@ function FrontPage(props) {
         _react2.default.createElement(
             _layoutComponents.FlexItem,
             { fixed: true, component: _layoutComponents.Flex, row: true, align: 'stretch', height: 70,
-                style: { backgroundColor: 'transparent', padding: "0 400px" } },
+                style: { backgroundColor: 'transparent', padding: "0 100px", maxWidth: "1000px" } },
             _react2.default.createElement(
                 HeaderButton,
                 { component: 'a', style: { fontSize: "19px" } },
