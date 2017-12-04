@@ -58,9 +58,10 @@ export default function Escherpad(props) {
                 {/*list view*/}
                 <div className="list-box">
                     <h3>Escherpad</h3>
-                    <p>[ ] Finish redux file system @Cha before August 24th.</p>
-                    <p>[ ] @Ge finish deployment setup</p>
-                    <p>[ ] @Ge finish messenger</p>
+                    <p>[ ] @cha redux file system</p>
+                    <p>[ ] @cha add `https` support</p>
+                    <p>[x] @ge fix page title (use helmet)</p>
+                    <p>[x] @ge add dynamic layout to editor</p>
                 </div>
             </div>
         </Styled>
