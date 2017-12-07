@@ -47,8 +47,3 @@ export default function FrontPage(props) {
         </Styled>
     );
 }
-// container
-//  row fixed width
-//    item item item
-//  row fixed width
-//    item item item
