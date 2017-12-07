@@ -1,5 +1,4 @@
 import React from "react";
-import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
@@ -30,17 +29,26 @@ const HeaderButton = styled(FlexItem)`
 export default function FrontPage(props) {
     const listSections = [];
     return (
-        <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}}>
+        <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}} align="stretch">
             <Helmet>
                 <title>Welcome to Escherpad</title>
             </Helmet>
-            <FlexItem fixed component={Flex} row align="stretch" height={70}
-                      style={{backgroundColor: 'transparent', padding: "0 100px", maxWidth: "1000px"}}>
-                <HeaderButton component="a" style={{fontSize: "19px"}}>Escherpad</HeaderButton>
-                <FlexSpacer/>
-                <HeaderButton component="a" href="/notes/"><span>Notes</span></HeaderButton>
-                <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
+            <FlexItem fixed align="center">
+                <Flex row style={{
+                    height: "70px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
+                    margin: "0 auto"
+                }}>
+                    <HeaderButton component="a" style={{fontSize: "19px"}}>Escherpad</HeaderButton>
+                    <FlexSpacer/>
+                    <HeaderButton component="a" href="/notes/"><span>Notes</span></HeaderButton>
+                    <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
+                </Flex>
             </FlexItem>
         </Styled>
     );
 }
+// container
+//  row fixed width
+//    item item item
+//  row fixed width
+//    item item item
