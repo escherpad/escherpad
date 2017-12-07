@@ -27,6 +27,10 @@ var _Todo = require("./pages/Todo");
 
 var _Todo2 = _interopRequireDefault(_Todo);
 
+var _Findr = require("./pages/Findr");
+
+var _Findr2 = _interopRequireDefault(_Findr);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Root() {
@@ -36,6 +40,7 @@ function Root() {
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: function component() {
                 return _react2.default.createElement(_FrontPage2.default, null);
             } }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/findr", component: _Findr2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/todo", component: _Todo2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/gists/:path*", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/:repo/:path*", component: _Escherpad2.default }),
