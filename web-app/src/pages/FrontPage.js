@@ -33,14 +33,15 @@ export default function FrontPage(props) {
             <Helmet>
                 <title>Welcome to Escherpad</title>
             </Helmet>
-            <FlexItem fixed align="center">
+            <FlexItem fixed>
                 <Flex row style={{
                     height: "70px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
                     margin: "0 auto"
                 }}>
-                    <HeaderButton component="a" style={{fontSize: "19px"}}>Escherpad</HeaderButton>
+                    <HeaderButton component="a"><span style={{fontSize: "19px"}}>Escherpad</span></HeaderButton>
                     <FlexSpacer/>
-                    <HeaderButton component="a" href="/notes/"><span>Notes</span></HeaderButton>
+                    <HeaderButton component="a" href="/findr"><span>Findr</span></HeaderButton>
+                    <HeaderButton component="a" href="/notes"><span>Notes</span></HeaderButton>
                     <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
                 </Flex>
             </FlexItem>
