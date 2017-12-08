@@ -62,6 +62,11 @@ export default function Escherpad(props) {
                     <p>[ ] @cha add `https` support</p>
                     <p>[x] @ge fix page title (use helmet)</p>
                     <p>[x] @ge add dynamic layout to editor</p>
+                    <h3 style={{marginTop: "2em"}}>Findr</h3>
+                    <p>[x] @ge figure out what source to search for</p>
+                    <p>[x] @ge figure out what add view-model for those</p>
+                    <p>[x] @ge client-side only arxiv search?</p>
+                    <p>[x] @ge figure out a way to save the results (as special markdown type under /Findr/query_name.fnd.md)</p>
                 </div>
             </div>
         </Styled>
