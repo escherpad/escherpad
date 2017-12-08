@@ -1,4 +1,5 @@
 #!/usr/bin/env babel-node
+import {} from "dotenv/config";
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
@@ -15,15 +16,15 @@ app.use('/', ReactLoader);
 const env = process.env.NODE_ENV || 'dev';
 // const PORT = process.env.PORT || (env === "production" ? 80 : 3001);
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
-app.on('error', function onError(error) {
-        if (error.syscall !== 'listen') throw error;
-        const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
-        if (error.code === 'EACCES') {
-            console.error(`${bind} requires elevated privileges`);
-        } else if (error.code === 'EADDRINUSE') {
-            console.error(`${bind} is already in use`);
+app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
+    .on('error', function onError(error) {
+            if (error.syscall !== 'listen') throw error;
+            const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+            if (error.code === 'EACCES') {
+                console.error(`${bind} requires elevated privileges`);
+            } else if (error.code === 'EADDRINUSE') {
+                console.error(`${bind} is already in use`);
+            }
+            throw error;
         }
-        throw error;
-    }
-);
+    );

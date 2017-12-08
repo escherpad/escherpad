@@ -1,6 +1,8 @@
 #!/usr/bin/env babel-node
 'use strict';
 
+require('dotenv/config');
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -35,8 +37,7 @@ var env = process.env.NODE_ENV || 'dev';
 var PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
     return console.log('App listening on port ' + PORT + '!');
-});
-app.on('error', function onError(error) {
+}).on('error', function onError(error) {
     if (error.syscall !== 'listen') throw error;
     var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
     if (error.code === 'EACCES') {

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../src/store.js"],"names":["store"],"mappings":";;;;;AAAO,IAAMA,wBAAQ,EAAd","file":"store.js","sourcesContent":["export const store = {\n};\n\n"]}

@@ -9,7 +9,7 @@ import {Helmet} from 'react-helmet';
 
 let rootComponentPath;
 if (process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() === "production") {
-    rootComponentPath = "../build/Root";
+    rootComponentPath = "../server-src-build/Root";
 } else {
     rootComponentPath = "../src/Root";
 }
