@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    background-color: #efefef\n"], ["\n    font-family: 'Lato', sans-serif;\n    background-color: #efefef\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"], ["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        margin: 0 13px;\n        font-size: 15px;\n        padding: 4px 2px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"]);
+    _templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    padding: 4px 0;\n    &:not(:first-child) {\n      margin-left: 13px;\n      padding-left: 2px;\n    }\n    &:not(:last-child) {\n      margin-right: 13px;\n      padding-right: 2px;\n    }\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        font-size: 15px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"], ["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    padding: 4px 0;\n    &:not(:first-child) {\n      margin-left: 13px;\n      padding-left: 2px;\n    }\n    &:not(:last-child) {\n      margin-right: 13px;\n      padding-right: 2px;\n    }\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        font-size: 15px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"]);
 
 exports.default = Findr;
 
@@ -28,7 +28,13 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateObject);
 var HeaderButton = (0, _styledComponents2.default)(_layoutComponents.FlexItem)(_templateObject2);
 function Findr(props) {
-    var listSections = [];
+    var Results = [{
+        source: "google-scholar",
+        title: "SGAN: An Alternative Training of Generative Adversarial Networks",
+        authors: ["Tatjana Chavdarova", "François Fleuret"],
+        date: "2017-12-06",
+        arxiv_category: ["stat.ML", "cs.LG"]
+    }];
     return _react2.default.createElement(
         Styled,
         { fill: true, column: true, style: { backgroundImage: "linear-gradient(140deg, #006EFF, #00FFD5)" }, align: "stretch" },
@@ -38,7 +44,7 @@ function Findr(props) {
             _react2.default.createElement(
                 "title",
                 null,
-                "Welcome to Escherpad"
+                "Findr | Search For All Your Knowledge"
             )
         ),
         _react2.default.createElement(
@@ -47,7 +53,7 @@ function Findr(props) {
             _react2.default.createElement(
                 _layoutComponents.Flex,
                 { row: true, style: {
-                        height: "70px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
+                        height: "70px", padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
                         margin: "0 auto"
                     } },
                 _react2.default.createElement(
@@ -71,14 +77,36 @@ function Findr(props) {
                 )
             )
         ),
-        _react2.default.createElement(_layoutComponents.FlexSpacer, null),
+        _react2.default.createElement(
+            _layoutComponents.FlexItem,
+            { fixed: true },
+            _react2.default.createElement(
+                _layoutComponents.Flex,
+                { column: true, align: "center", style: {
+                        fontFamily: "Lato",
+                        color: "white",
+                        padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
+                        margin: "0 auto"
+                    } },
+                _react2.default.createElement(
+                    "h1",
+                    { style: { fontWeight: "200", fontSize: "140px", marginBottom: "10px" } },
+                    "Findr"
+                ),
+                _react2.default.createElement(
+                    "h3",
+                    { style: { fontWeight: "200", fontSize: "30px", marginTop: "10px", marginBottom: "60px" } },
+                    "Search your own knowledge"
+                )
+            )
+        ),
         _react2.default.createElement(
             _layoutComponents.FlexItem,
             { fixed: true },
             _react2.default.createElement(
                 _layoutComponents.Flex,
                 { row: true, align: "stretch", style: {
-                        height: "43px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
+                        height: "43px", padding: "0 20px", maxWidth: "700px", left: 0, right: 0,
                         margin: "0 auto"
                     } },
                 _react2.default.createElement(_layoutComponents.FlexItem, { component: "input", fluid: true, type: "Text",
@@ -102,7 +130,6 @@ function Findr(props) {
                 )
             )
         ),
-        _react2.default.createElement(_layoutComponents.FlexSpacer, null),
         _react2.default.createElement(_layoutComponents.FlexSpacer, null)
     );
 }

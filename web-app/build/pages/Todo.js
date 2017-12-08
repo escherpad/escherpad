@@ -121,6 +121,31 @@ function Escherpad(props) {
                     'p',
                     null,
                     '[x] @ge add dynamic layout to editor'
+                ),
+                _react2.default.createElement(
+                    'h3',
+                    { style: { marginTop: "2em" } },
+                    'Findr'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '[x] @ge figure out what source to search for'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '[x] @ge figure out what add view-model for those'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '[x] @ge client-side only arxiv search?'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '[x] @ge figure out a way to save the results (as special markdown type under /Findr/query_name.fnd.md)'
                 )
             )
         )
