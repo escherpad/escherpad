@@ -6350,6 +6350,10 @@ react-async-bootstrapper@^1.1.2:
   dependencies:
     react-tree-walker "^2.1.3"
 
+react-async-component@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-async-component/-/react-async-component-1.0.2.tgz#b041722bf7734a95c51dc9fc2f28ec9e918e9659"
+
 react-codemirror@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-codemirror/-/react-codemirror-1.0.0.tgz#91467b53b1f5d80d916a2fd0b4c7adb85a9001ba"
