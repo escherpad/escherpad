@@ -50,7 +50,7 @@
   "scripts": {
     "start:browser-dev": "react-scripts start",
     "start:server-dev": "babel-watch ./server/index.js",
-    "start:production": "NODE_ENV=production node ./server-build/index.js",
+    "start:production": "NODE_ENV=production PUBLIC_DIR=web-build node ./server-build/index.js",
     "start:styleguide": "styleguidist server",
     "build:web": "react-scripts build && rm -rf web-build && mv build/ web-build",
     "build:server-src": "babel -d ./server-src-build ./src -s",
