@@ -55,7 +55,7 @@
     "build:web": "react-scripts build && rm -rf web-build && mv build/ web-build",
     "build:server-src": "babel -d ./server-src-build ./src -s",
     "build:server": "babel -d ./server-build ./server -s",
-    "build-and-push": "npm run build:src build:server && git reset . && git add build server-build -f && git ci -m \"BUILD:web-server\" && git push &&",
+    "build-and-push": "npm run build:server-src build:server && git reset . && git add server-src-build server-build -f && git ci -m \"BUILD:web-server\" && git push",
     "build:styleguide": "styleguidist build",
     "test:web-server": "curl localhost:3001",
     "watch:build-server": "fswatch -o ./server | xargs -n1 -I{} npm run build:server",
