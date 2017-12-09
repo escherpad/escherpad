@@ -28,7 +28,6 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateObject);
 var HeaderButton = (0, _styledComponents2.default)(_layoutComponents.FlexItem)(_templateObject2);
 function FrontPage(props) {
-    var listSections = [];
     return _react2.default.createElement(
         Styled,
         { fill: true, column: true, style: { backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)" }, align: "stretch" },
