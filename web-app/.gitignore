@@ -6,4 +6,6 @@ yarn-error.log*
 
 # Build Directories
 build
+web-build
+server-src-build
 server-build
