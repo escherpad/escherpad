@@ -45,7 +45,8 @@ export default function ReactLoader(req, res, next) {
             .join('');
         res.status(200).send(
             HTML
-                .replace(/<link class="SSR:async_state"\/>/, serialize(asyncState))
+                .replace(/<link class="SSR:async_state"\/>/,
+                    `<script type="text/javascript">window.ASYNC_COMPONENT_STATE=${serialize(asyncState)}</script>`)
                 .replace(/<link class="SSR:title"\/>/, helmet.title.toString())
                 .replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS)
                 .replace(/<link class="SSR:HTML"\/>/, html)

@@ -76,7 +76,7 @@ function ReactLoader(req, res, next) {
                 textContent = _ref.textContent;
             return "<style id=" + id + ">" + textContent + "</style>";
         }).join('');
-        res.status(200).send(HTML.replace(/<link class="SSR:async_state"\/>/, (0, _serializeJavascript2.default)(asyncState)).replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS).replace(/<link class="SSR:HTML"\/>/, html));
+        res.status(200).send(HTML.replace(/<link class="SSR:async_state"\/>/, "<script type=\"text/javascript\">window.ASYNC_COMPONENT_STATE=" + (0, _serializeJavascript2.default)(asyncState) + "</script>").replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS).replace(/<link class="SSR:HTML"\/>/, html));
     });
 }
 //# sourceMappingURL=ReactLoader.js.map
