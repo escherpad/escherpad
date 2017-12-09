@@ -23,4 +23,5 @@ asyncBootstrapper(app)
         ReactDOM.render(app, document.getElementById('root'));
     });
 
+// todo: might consider putting this inside a timeout to speed up the initial rendering.
 registerServiceWorker();
