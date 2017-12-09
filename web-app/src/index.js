@@ -4,10 +4,10 @@ import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import Root from './Root';
 import registerServiceWorker from './registerServiceWorker';
+import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from 'react-async-bootstrapper';
-import {AsyncComponentProvider} from "react-async-component";
 
-const rehydrateState = window.SERVER_COMPONENTS_STATE || {};
+const rehydrateState = window.ASYNC_COMPONENTS_STATE || createAsyncContext().getState();
 
 const app = (
     <AsyncComponentProvider rehydrateState={rehydrateState}>
@@ -18,8 +18,9 @@ const app = (
 );
 
 // note: This prevents the "flash"  from happening.
-asyncBootstrapper(app).then(function () {
-    ReactDOM.render(app, document.getElementById('root'));
-});
+asyncBootstrapper(app)
+    .then(function () {
+        ReactDOM.render(app, document.getElementById('root'));
+    });
 
 registerServiceWorker();

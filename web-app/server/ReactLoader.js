@@ -10,9 +10,10 @@ import {Helmet} from 'react-helmet';
 import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from "react-async-bootstrapper";
 import {NODE_ENV, PUBLIC_DIR} from "./config";
+import serialize from 'serialize-javascript';
 
 let rootComponentPath;
-if (NODE_ENV  === "production") {
+if (NODE_ENV === "production") {
     rootComponentPath = "../server-src-build/Root";
 } else {
     rootComponentPath = "../src/Root";
@@ -28,20 +29,14 @@ export default function ReactLoader(req, res, next) {
     const routerContext = {};
     const asyncContext = createAsyncContext();
     const app = (
-        <StaticRouter location={location} context={routerContext}>
-            <AsyncComponentProvider asyncContext={asyncContext}>
+        <AsyncComponentProvider asyncContext={asyncContext}>
+            <StaticRouter location={location} context={routerContext}>
                 <Root/>
-            </AsyncComponentProvider>
-        </StaticRouter>);
+            </StaticRouter>
+        </AsyncComponentProvider>);
     asyncBootstrapper(app).then(() => {
         const html = renderToString(sheet.collectStyles(app));
-
-        if (routerContext.url) {
-            // todo: Add next() call here.
-            console.log('-------------------');
-            console.warn(routerContext.url);
-        }
-
+        const asyncState = asyncContext.getState();
         const helmet = Helmet.renderStatic(); // use renderStatic to prevent memory leak
         const styledComponentCSS = sheet.getStyleTags();
         const reactPrimitiveCSS = StyleSheet
@@ -50,6 +45,7 @@ export default function ReactLoader(req, res, next) {
             .join('');
         res.status(200).send(
             HTML
+                .replace(/<link class="SSR:async_state"\/>/, serialize(asyncState))
                 .replace(/<link class="SSR:title"\/>/, helmet.title.toString())
                 .replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS)
                 .replace(/<link class="SSR:HTML"\/>/, html)
