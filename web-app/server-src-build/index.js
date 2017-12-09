@@ -18,14 +18,30 @@ var _registerServiceWorker = require('./registerServiceWorker');
 
 var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
 
+var _reactAsyncBootstrapper = require('react-async-bootstrapper');
+
+var _reactAsyncBootstrapper2 = _interopRequireDefault(_reactAsyncBootstrapper);
+
+var _reactAsyncComponent = require('react-async-component');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(
-    _reactRouterDom.BrowserRouter,
-    null,
-    _react2.default.createElement(_Root2.default, null)
-), document.getElementById('root')); /** All client side bootstrapping happens here, including Browser Router.*/
+var rehydrateState = window.SERVER_COMPONENTS_STATE || {}; /** All client side bootstrapping happens here, including Browser Router.*/
 
+
+var app = _react2.default.createElement(
+    _reactAsyncComponent.AsyncComponentProvider,
+    { rehydrateState: rehydrateState },
+    _react2.default.createElement(
+        _reactRouterDom.BrowserRouter,
+        null,
+        _react2.default.createElement(_Root2.default, null)
+    )
+);
+
+(0, _reactAsyncBootstrapper2.default)(app).then(function () {
+    _reactDom2.default.render(app, document.getElementById('root'));
+});
 
 (0, _registerServiceWorker2.default)();
 //# sourceMappingURL=index.js.map

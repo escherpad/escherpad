@@ -4,10 +4,22 @@ import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import Root from './Root';
 import registerServiceWorker from './registerServiceWorker';
+import asyncBootstrapper from 'react-async-bootstrapper';
+import {AsyncComponentProvider} from "react-async-component";
 
-ReactDOM.render(
-    <BrowserRouter>
-        <Root />
-    </BrowserRouter>, document.getElementById('root'));
+const rehydrateState = window.SERVER_COMPONENTS_STATE || {};
+
+const app = (
+    <AsyncComponentProvider rehydrateState={rehydrateState}>
+        <BrowserRouter>
+            <Root/>
+        </BrowserRouter>
+    </AsyncComponentProvider>
+);
+
+// note: This prevents the "flash"  from happening.
+asyncBootstrapper(app).then(function () {
+    ReactDOM.render(app, document.getElementById('root'));
+});
 
 registerServiceWorker();
