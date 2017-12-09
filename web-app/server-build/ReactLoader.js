@@ -35,10 +35,13 @@ var _reactAsyncBootstrapper2 = _interopRequireDefault(_reactAsyncBootstrapper);
 
 var _config = require("./config");
 
+var _serializeJavascript = require("serialize-javascript");
+
+var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootComponentPath = void 0;
-
 if (_config.NODE_ENV === "production") {
     rootComponentPath = "../server-src-build/Root";
 } else {
@@ -55,23 +58,17 @@ function ReactLoader(req, res, next) {
     var routerContext = {};
     var asyncContext = (0, _reactAsyncComponent.createAsyncContext)();
     var app = _react2.default.createElement(
-        _reactRouterDom.StaticRouter,
-        { location: location, context: routerContext },
+        _reactAsyncComponent.AsyncComponentProvider,
+        { asyncContext: asyncContext },
         _react2.default.createElement(
-            _reactAsyncComponent.AsyncComponentProvider,
-            { asyncContext: asyncContext },
+            _reactRouterDom.StaticRouter,
+            { location: location, context: routerContext },
             _react2.default.createElement(Root, null)
         )
     );
     (0, _reactAsyncBootstrapper2.default)(app).then(function () {
         var html = (0, _server.renderToString)(sheet.collectStyles(app));
-
-        if (routerContext.url) {
-            // todo: Add next() call here.
-            console.log('-------------------');
-            console.warn(routerContext.url);
-        }
-
+        var asyncState = asyncContext.getState();
         var helmet = _reactHelmet.Helmet.renderStatic(); // use renderStatic to prevent memory leak
         var styledComponentCSS = sheet.getStyleTags();
         var reactPrimitiveCSS = _reactPrimitives.StyleSheet.getStyleSheets().map(function (_ref) {
@@ -79,7 +76,7 @@ function ReactLoader(req, res, next) {
                 textContent = _ref.textContent;
             return "<style id=" + id + ">" + textContent + "</style>";
         }).join('');
-        res.status(200).send(HTML.replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS).replace(/<link class="SSR:HTML"\/>/, html));
+        res.status(200).send(HTML.replace(/<link class="SSR:async_state"\/>/, (0, _serializeJavascript2.default)(asyncState)).replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS).replace(/<link class="SSR:HTML"\/>/, html));
     });
 }
 //# sourceMappingURL=ReactLoader.js.map

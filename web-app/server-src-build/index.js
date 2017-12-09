@@ -18,15 +18,15 @@ var _registerServiceWorker = require('./registerServiceWorker');
 
 var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
 
+var _reactAsyncComponent = require('react-async-component');
+
 var _reactAsyncBootstrapper = require('react-async-bootstrapper');
 
 var _reactAsyncBootstrapper2 = _interopRequireDefault(_reactAsyncBootstrapper);
 
-var _reactAsyncComponent = require('react-async-component');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rehydrateState = window.SERVER_COMPONENTS_STATE || {}; /** All client side bootstrapping happens here, including Browser Router.*/
+var rehydrateState = window.ASYNC_COMPONENTS_STATE || (0, _reactAsyncComponent.createAsyncContext)().getState(); /** All client side bootstrapping happens here, including Browser Router.*/
 
 
 var app = _react2.default.createElement(
