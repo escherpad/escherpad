@@ -39,6 +39,7 @@ var app = _react2.default.createElement(
     )
 );
 
+// note: This prevents the "flash"  from happening.
 (0, _reactAsyncBootstrapper2.default)(app).then(function () {
     _reactDom2.default.render(app, document.getElementById('root'));
 });
