@@ -27,7 +27,6 @@ const HeaderButton = styled(FlexItem)`
     }
 `;
 export default function FrontPage(props) {
-    const listSections = [];
     return (
         <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}} align="stretch">
             <Helmet>
