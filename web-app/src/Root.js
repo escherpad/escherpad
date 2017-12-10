@@ -16,6 +16,8 @@ export default function Root() {
             <Route exact path="/" component={() => <FrontPage/>}/>
             <Route exact path="/findr" component={AsyncFindr}/>
             <Route exact path="/todo" component={Todo}/>
+            {/* this one is for debug only */}
+            <Route exact path="/notes" component={Escherpad}/>
             <Route exact path="/github/:account/gists/:path*" component={Escherpad}/>
             <Route exact path="/github/:account/:repo/:path*" component={Escherpad}/>
             <Route exact path="/dropbox/:account/:path*" component={Escherpad}/>

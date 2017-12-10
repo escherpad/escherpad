@@ -2,6 +2,14 @@
 
 This app is hosted at `https://escherpad.com/`
 
+## Known Issues
+
+1. seems doing `yarn add -D luna-saga` causes yarn to error out with "optional dependency fsevents". To prevent this, use 
+    ```bash
+    yarn add -D luna-saga --ignore-optional
+    ```
+    instead.
+
 ## Development
 
 To launch dev server, just run

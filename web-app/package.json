@@ -38,6 +38,7 @@
     "flow-bin": "^0.49.1",
     "flow-typed": "^2.1.2",
     "flow-watch": "^1.1.1",
+    "luna-saga": "^3.1.1",
     "node-sass": "^4.5.3",
     "prop-types": "^15.5.10",
     "react-async-bootstrapper": "^1.1.2",
