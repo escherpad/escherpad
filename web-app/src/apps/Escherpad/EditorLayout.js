@@ -15,7 +15,7 @@ export default function EditorLayout(props) {
         listLeftButton,
         listRightButton,
         listTabs,
-        listSections,
+        listBody,
         editorHeader,
         editorTitleBar,
         editorBody,
@@ -34,7 +34,7 @@ export default function EditorLayout(props) {
             {layout.bindrBar && bindrBar ? <FlexItem fixed component={bindrBar} style={{background: "grey"}}/> : null}
             {layout.listPanel
                 ? <FlexItem fixed component={Flex} column className="list-panel" width="400px"
-                            style={{background: "green"}}>
+                            align="stretch" style={{background: "green"}}>
                     <FlexItem fixed component={listHeader}/>
                     <FlexItem fixed component={Flex} row>
                         <FlexItem fixed component={listLeftButton}/>
@@ -42,7 +42,7 @@ export default function EditorLayout(props) {
                         <FlexItem fixed component={listRightButton}/>
                     </FlexItem>
                     <FlexItem fixed component={listTabs}/>
-                    <FlexItem fixed component={listSections}/>
+                    <FlexItem fluid component={listBody} style={{overflowY: "auto"}}/>
                     {/*{listSections.map((section, i) => <FlexItem key={i} fixed component={section}/>)}*/}
                 </FlexItem>
                 : null}

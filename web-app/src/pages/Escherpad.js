@@ -2,20 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
 
+import {Flex} from "layout-components";
 import EditorLayout from "../apps/Escherpad/EditorLayout";
 import TeamNavBar from "../components/team-nav-bar/TeamNavBar";
 import BindrBar from "../components/bindr-bar/BindrBar";
-import ListHeader from "../components/list-header/ListHeader";
-import ListLeftButton from "../components/list-left-button/ListLeftButton";
-import ListHero from "../components/list-hero/ListHero";
-import ListRightButton from "../components/list-right-button/ListRightButton";
-import ListTabs from "../components/list-tabs/ListTabs";
-import ListSections from "../components/list-sections/ListSections";
-import EditorHeader from "../components/editor-header/EditorHeader";
-import EditorTitleBar from "../components/editor-title-bar/EditorTitleBar";
-import EditorBody from "../components/editor-body/EditorBody";
-import EditorFooter from "../components/editor-footer/EditorFooter";
-import {Flex} from "layout-components";
+import ListHeader from "../components/note-list/ListHeader";
+import ListLeftButton from "../components/note-list/ListLeftButton";
+import ListHero from "../components/note-list/ListHero";
+import ListRightButton from "../components/note-list/ListRightButton";
+import ListTabs from "../components/note-list/ListTabs";
+import ListSections from "../components/note-list/ListSections";
+import EditorHeader from "../components/editor/EditorHeader";
+import EditorTitleBar from "../components/editor/EditorTitleBar";
+import EditorBody from "../components/editor/EditorBody";
+import EditorFooter from "../components/editor/EditorFooter";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -34,7 +34,7 @@ export default function Escherpad(props) {
                           listHero={ListHero}
                           listRightButton={ListRightButton}
                           listTabs={ListTabs}
-                          listSections={ListSections}
+                          listBody={ListSections}
                           editorHeader={EditorHeader}
                           editorTitleBar={EditorTitleBar}
                           editorBody={EditorBody}
