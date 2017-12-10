@@ -3,7 +3,6 @@ import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 
 const Styled = styled(Flex)`
-    font-family: 'Lato', sans-serif;
     width: 80px;
     background-image: linear-gradient(-40deg, #FF008C, #E1FF00);
 `;
