@@ -42,7 +42,8 @@ export default function EditorLayout(props) {
                         <FlexItem fixed component={listRightButton}/>
                     </FlexItem>
                     <FlexItem fixed component={listTabs}/>
-                    {listSections.map((section, i) => <FlexItem key={i} fixed component={section}/>)}
+                    <FlexItem fixed component={listSections}/>
+                    {/*{listSections.map((section, i) => <FlexItem key={i} fixed component={section}/>)}*/}
                 </FlexItem>
                 : null}
             {layout.editorPanel

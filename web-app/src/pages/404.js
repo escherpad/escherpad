@@ -25,7 +25,7 @@ const Styled = styled(Flex)`
 `;
 export default function NoMatch(props) {
     return (
-        <Styled fill column {...props}>
+        <Styled fill column>
             <Helmet><title>Page Not Found</title></Helmet>
             <FlexSpacer/>
             <FlexItem fixed component={Fade} duration={1.5}>

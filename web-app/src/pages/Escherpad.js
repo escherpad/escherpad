@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
 
-import EditorLayout from "../components/editor-layout/EditorLayout";
+import EditorLayout from "../apps/Escherpad/EditorLayout";
 import TeamNavBar from "../components/team-nav-bar/TeamNavBar";
 import BindrBar from "../components/bindr-bar/BindrBar";
 import ListHeader from "../components/list-header/ListHeader";
@@ -21,7 +21,6 @@ const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
 `;
 export default function Escherpad(props) {
-    const listSections = [];
     const noteName = "E-MAML";
     return (
         <Styled fill column>
@@ -35,7 +34,7 @@ export default function Escherpad(props) {
                           listHero={ListHero}
                           listRightButton={ListRightButton}
                           listTabs={ListTabs}
-                          listSections={listSections}
+                          listSections={ListSections}
                           editorHeader={EditorHeader}
                           editorTitleBar={EditorTitleBar}
                           editorBody={EditorBody}

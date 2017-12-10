@@ -26,6 +26,9 @@ var _reactAsyncBootstrapper2 = _interopRequireDefault(_reactAsyncBootstrapper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import {} from "./store/index.js";
+
+// note: Store and app states
 var rehydrateState = window.ASYNC_COMPONENTS_STATE || (0, _reactAsyncComponent.createAsyncContext)().getState(); /** All client side bootstrapping happens here, including Browser Router.*/
 
 
@@ -44,5 +47,7 @@ var app = _react2.default.createElement(
     _reactDom2.default.render(app, document.getElementById('root'));
 });
 
-(0, _registerServiceWorker2.default)();
+// todo: might consider putting this inside a timeout to speed up the initial rendering.
+// registerServiceWorker();
+(0, _registerServiceWorker.unregister)();
 //# sourceMappingURL=index.js.map

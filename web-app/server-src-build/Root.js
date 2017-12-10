@@ -48,6 +48,7 @@ function Root() {
             } }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/findr", component: AsyncFindr }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/todo", component: _Todo2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/notes", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/gists/:path*", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/:repo/:path*", component: _Escherpad2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/dropbox/:account/:path*", component: _Escherpad2.default }),

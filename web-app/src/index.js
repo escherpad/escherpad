@@ -3,10 +3,10 @@ import React from 'react';
 import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import Root from './Root';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker, {unregister} from './registerServiceWorker';
 import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from 'react-async-bootstrapper';
-import {} from "./store/index.js";
+// import {} from "./store/index.js";
 
 // note: Store and app states
 const rehydrateState = window.ASYNC_COMPONENTS_STATE || createAsyncContext().getState();
@@ -26,4 +26,5 @@ asyncBootstrapper(app)
     });
 
 // todo: might consider putting this inside a timeout to speed up the initial rendering.
-registerServiceWorker();
+// registerServiceWorker();
+unregister();
