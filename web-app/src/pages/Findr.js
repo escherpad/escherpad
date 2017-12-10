@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
+import {autobind} from "core-decorators";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -35,8 +36,14 @@ const HeaderButton = styled(FlexItem)`
 `;
 
 class Findr extends Component {
-    onSearch = (query) => {
-        console.log(query)
+    constructor() {
+        super();
+        this.onSearch = this._onSearch.bind(this);
+
+    }
+
+    _onSearch(query) {
+        console.log(query, this.state)
     };
 
     render() {
