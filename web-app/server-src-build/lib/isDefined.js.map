@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/lib/isDefined.js"],"names":["isDefined","obj"],"mappings":";;;;;QACgBA,S,GAAAA,S;AADhB;AACO,SAASA,SAAT,CAAmBC,GAAnB,EAAwB;AAC7B;;AACA,SAAO,OAAOA,GAAP,KAAe,WAAtB;AACD","file":"isDefined.js","sourcesContent":["/** Created by ge on 1/1/17. */\nexport function isDefined(obj) {\n  \"use strict\";\n  return typeof obj !== \"undefined\";\n}\n"]}

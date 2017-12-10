@@ -56,13 +56,16 @@ var Findr = function (_Component) {
     _createClass(Findr, [{
         key: "render",
         value: function render() {
-            var Results = [{
+            var results = [
+            //todo: define flow schema.
+            {
                 source: "google-scholar",
                 title: "SGAN: An Alternative Training of Generative Adversarial Networks",
                 authors: ["Tatjana Chavdarova", "François Fleuret"],
                 date: "2017-12-06",
                 arxiv_category: ["stat.ML", "cs.LG"]
             }];
+            console.log(results);
             return _react2.default.createElement(
                 Styled,
                 { fill: true, column: true, style: { backgroundImage: "linear-gradient(140deg, #006EFF, #00FFD5)" }, align: "stretch" },

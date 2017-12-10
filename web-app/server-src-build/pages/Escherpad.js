@@ -12,19 +12,13 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _layoutComponents = require("layout-components");
-
 var _styledComponents = require("styled-components");
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _reactHelmet = require("react-helmet");
 
-var _reactJsonPretty = require("react-json-pretty");
-
-var _reactJsonPretty2 = _interopRequireDefault(_reactJsonPretty);
-
-var _EditorLayout = require("../components/editor-layout/EditorLayout");
+var _EditorLayout = require("../apps/Escherpad/EditorLayout");
 
 var _EditorLayout2 = _interopRequireDefault(_EditorLayout);
 
@@ -76,16 +70,14 @@ var _EditorFooter = require("../components/editor-footer/EditorFooter");
 
 var _EditorFooter2 = _interopRequireDefault(_EditorFooter);
 
+var _layoutComponents = require("layout-components");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-// dev only
-
-
 var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateObject);
 function Escherpad(props) {
-    var listSections = [];
     var noteName = "E-MAML";
     return _react2.default.createElement(
         Styled,
@@ -107,7 +99,7 @@ function Escherpad(props) {
             listHero: _ListHero2.default,
             listRightButton: _ListRightButton2.default,
             listTabs: _ListTabs2.default,
-            listSections: listSections,
+            listSections: _ListSections2.default,
             editorHeader: _EditorHeader2.default,
             editorTitleBar: _EditorTitleBar2.default,
             editorBody: _EditorBody2.default,

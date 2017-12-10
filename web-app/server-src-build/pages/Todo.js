@@ -1,28 +1,24 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(['\n    font-family: \'Lato\', sans-serif;\n    color: white;\n    // cursor: auto;\n    input {\n        color: white; // this updated the cursor color as well.\n    }\n    *:focus::placeholder, *:hover::placeholder {\n        color: rgba(255, 255, 255, 0.4);\n    }\n    *::placeholder {\n        color: rgba(255, 255, 255, 0.8);\n    }\n    *:active, *:focus {\n        outline: none\n    }\n'], ['\n    font-family: \'Lato\', sans-serif;\n    color: white;\n    // cursor: auto;\n    input {\n        color: white; // this updated the cursor color as well.\n    }\n    *:focus::placeholder, *:hover::placeholder {\n        color: rgba(255, 255, 255, 0.4);\n    }\n    *::placeholder {\n        color: rgba(255, 255, 255, 0.8);\n    }\n    *:active, *:focus {\n        outline: none\n    }\n']);
+var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    color: white;\n    // cursor: auto;\n    input {\n        color: white; // this updated the cursor color as well.\n    }\n    *:focus::placeholder, *:hover::placeholder {\n        color: rgba(255, 255, 255, 0.4);\n    }\n    *::placeholder {\n        color: rgba(255, 255, 255, 0.8);\n    }\n    *:active, *:focus {\n        outline: none\n    }\n"], ["\n    font-family: 'Lato', sans-serif;\n    color: white;\n    // cursor: auto;\n    input {\n        color: white; // this updated the cursor color as well.\n    }\n    *:focus::placeholder, *:hover::placeholder {\n        color: rgba(255, 255, 255, 0.4);\n    }\n    *::placeholder {\n        color: rgba(255, 255, 255, 0.8);\n    }\n    *:active, *:focus {\n        outline: none\n    }\n"]);
 
 exports.default = Escherpad;
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactFade = require('react-fade');
+var _layoutComponents = require("layout-components");
 
-var _reactFade2 = _interopRequireDefault(_reactFade);
-
-var _layoutComponents = require('layout-components');
-
-var _styledComponents = require('styled-components');
+var _styledComponents = require("styled-components");
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-var _reactHelmet = require('react-helmet');
+var _reactHelmet = require("react-helmet");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35,12 +31,11 @@ function Separator() {
     return _react2.default.createElement(
         _layoutComponents.FlexItem,
         { style: { margin: "0 15px" } },
-        '/'
+        "/"
     );
 }
 
 function Escherpad(props) {
-    var listSections = [];
     return _react2.default.createElement(
         Styled,
         { fill: true, column: true, style: { backgroundImage: "linear-gradient(-40deg, #9710D5, #FF6A1A)" } },
@@ -48,15 +43,15 @@ function Escherpad(props) {
             _reactHelmet.Helmet,
             null,
             _react2.default.createElement(
-                'title',
+                "title",
                 null,
-                'Todo List'
+                "Todo List"
             )
         ),
         _react2.default.createElement(
-            'div',
+            "div",
             { style: { width: "700px", margin: "0 auto" } },
-            _react2.default.createElement('input', { style: {
+            _react2.default.createElement("input", { style: {
                     fontSize: '2.5em',
                     fontWeight: '200',
                     marginTop: '250px',
@@ -66,86 +61,86 @@ function Escherpad(props) {
                     backgroundColor: "transparent",
                     width: "100%"
                 },
-                placeholder: 'What needs to be done?' }),
+                placeholder: "What needs to be done?" }),
             _react2.default.createElement(
                 _layoutComponents.Flex,
                 { row: true, style: { fontSize: "1.25em", fontWeight: "300", marginBottom: "25px" } },
                 _react2.default.createElement(
                     _layoutComponents.FlexItem,
                     null,
-                    'All'
+                    "All"
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
                     _layoutComponents.FlexItem,
                     null,
-                    'Active'
+                    "Active"
                 ),
                 _react2.default.createElement(Separator, null),
                 _react2.default.createElement(
                     _layoutComponents.FlexItem,
                     null,
-                    'Completed'
+                    "Completed"
                 ),
                 _react2.default.createElement(_layoutComponents.FlexSpacer, null),
                 _react2.default.createElement(
                     _layoutComponents.FlexItem,
                     null,
-                    'Everyone'
+                    "Everyone"
                 )
             ),
             _react2.default.createElement(
-                'div',
-                { className: 'list-box' },
+                "div",
+                { className: "list-box" },
                 _react2.default.createElement(
-                    'h3',
+                    "h3",
                     null,
-                    'Escherpad'
+                    "Escherpad"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[ ] @cha redux file system'
+                    "[ ] @cha redux file system"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[ ] @cha add `https` support'
+                    "[ ] @cha add `https` support"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge fix page title (use helmet)'
+                    "[x] @ge fix page title (use helmet)"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge add dynamic layout to editor'
+                    "[x] @ge add dynamic layout to editor"
                 ),
                 _react2.default.createElement(
-                    'h3',
+                    "h3",
                     { style: { marginTop: "2em" } },
-                    'Findr'
+                    "Findr"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge figure out what source to search for'
+                    "[x] @ge figure out what source to search for"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge figure out what add view-model for those'
+                    "[x] @ge figure out what add view-model for those"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge client-side only arxiv search?'
+                    "[x] @ge client-side only arxiv search?"
                 ),
                 _react2.default.createElement(
-                    'p',
+                    "p",
                     null,
-                    '[x] @ge figure out a way to save the results (as special markdown type under /Findr/query_name.fnd.md)'
+                    "[x] @ge figure out a way to save the results (as special markdown type under /Findr/query_name.fnd.md)"
                 )
             )
         )

@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _templateObject = _taggedTemplateLiteral(['\n    font-family: \'Lato\', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n'], ['\n    font-family: \'Lato\', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n']);
 
 exports.default = NoMatch;
@@ -34,7 +32,7 @@ var Styled = (0, _styledComponents2.default)(_layoutComponents.Flex)(_templateOb
 function NoMatch(props) {
     return _react2.default.createElement(
         Styled,
-        _extends({ fill: true, column: true }, props),
+        { fill: true, column: true },
         _react2.default.createElement(
             _reactHelmet.Helmet,
             null,
