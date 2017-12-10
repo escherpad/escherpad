@@ -14,7 +14,6 @@ const HeaderButton = styled(FlexItem)`
     align-items: center;
     text-decoration: none;
     cursor: pointer;
-    padding: 0.4px 0;
     &:not(:first-child) {
       margin-left: 1em;
       padding-left: 0.2em;
@@ -24,6 +23,8 @@ const HeaderButton = styled(FlexItem)`
       padding-right: 0.2em;
     }
     > span {
+        height: 2em;
+        line-height: 2em;
         color: white;
         flex: 0 0 auto;
         border-top: solid 0.3em transparent;
@@ -64,7 +65,7 @@ class Findr extends Component {
                 </Helmet>
                 <FlexItem fixed>
                     <Flex row style={{
-                        height: "3em", padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
+                        height: "4em", padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
                         margin: "0 auto"
                     }}>
                         <HeaderButton component="a"><span style={{fontSize: "19px"}}>Findr</span></HeaderButton>
