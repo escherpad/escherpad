@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
+    font-size: 1em;
     background-color: #efefef
 `;
 const HeaderButton = styled(FlexItem)`
@@ -13,24 +14,23 @@ const HeaderButton = styled(FlexItem)`
     align-items: center;
     text-decoration: none;
     cursor: pointer;
-    padding: 4px 0;
+    padding: 0.4px 0;
     &:not(:first-child) {
-      margin-left: 13px;
-      padding-left: 2px;
+      margin-left: 1em;
+      padding-left: 0.2em;
     }
     &:not(:last-child) {
-      margin-right: 13px;
-      padding-right: 2px;
+      margin-right: 1em;
+      padding-right: 0.2em;
     }
     > span {
         color: white;
         flex: 0 0 auto;
-        font-size: 15px;
-        border-top: solid 4px transparent;
-        border-bottom: solid 4px transparent;
+        border-top: solid 0.3em transparent;
+        border-bottom: solid 0.3em transparent;
     }
     :hover > span {
-        border-bottom: solid 4px white;
+        border-bottom: solid 0.3em white;
     }
 `;
 
@@ -64,7 +64,7 @@ class Findr extends Component {
                 </Helmet>
                 <FlexItem fixed>
                     <Flex row style={{
-                        height: "70px", padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
+                        height: "3em", padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
                         margin: "0 auto"
                     }}>
                         <HeaderButton component="a"><span style={{fontSize: "19px"}}>Findr</span></HeaderButton>
@@ -76,34 +76,34 @@ class Findr extends Component {
                     <Flex column align="center" style={{
                         fontFamily: "Lato",
                         color: "white",
-                        padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
+                        padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
                         margin: "0 auto"
                     }}>
-                        <h1 style={{fontWeight: "200", fontSize: "140px", marginBottom: "10px"}}>Findr</h1>
-                        <h3 style={{fontWeight: "200", fontSize: "30px", marginTop: "10px", marginBottom: "60px"}}>
-                            Search your own knowledge
+                        <h1 style={{fontWeight: "200", fontSize: "6em", marginBottom: "0.1em"}}>Findr</h1>
+                        <h3 style={{fontWeight: "200", fontSize: "1.5em", marginTop: "0.1em", marginBottom: "1.3em"}}>
+                            Search your knowledge
                         </h3>
                     </Flex>
                 </FlexItem>
                 <FlexItem fixed>
                     <Flex row align="stretch" style={{
-                        height: "43px", padding: "0 20px", maxWidth: "700px", left: 0, right: 0,
+                        height: "2.2em", padding: "0 1.3em", maxWidth: "700px", left: 0, right: 0,
                         margin: "0 auto"
                     }}>
                         <FlexItem component="input" fluid type="Text"
                                   style={{
-                                      borderRadius: "14px", border: "solid 1px transparent",
-                                      marginRight: "10px",
-                                      padding: "0 14px",
+                                      borderRadius: "1em", border: "solid 1px transparent",
+                                      marginRight: "0.5em",
+                                      padding: "0 0.7em",
                                       color: "#4198ED",
                                       fontSize: "1em"
                                   }}/>
                         <FlexItem component="button" href="settings" onClick={this.onSearch}
                                   style={{
                                       cursor: "pointer",
-                                      backgroundColor: "transparent", fontSize: "1em",
-                                      textDecoration: "none", color: "white", padding: "0 15px", lineHeight: "40px",
-                                      border: "solid 1px white", borderRadius: "10px",
+                                      backgroundColor: "rgba(0, 0, 0, 0.2)", fontSize: "1em",
+                                      textDecoration: "none", color: "white", padding: "0 0.7em", lineHeight: "100%",
+                                      border: "solid 1px transparent", borderRadius: "1em",
                                       marginLeft: "10px"
                                   }}>find</FlexItem>
                     </Flex>

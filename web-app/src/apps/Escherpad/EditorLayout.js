@@ -33,7 +33,7 @@ export default function EditorLayout(props) {
             {layout.bindrBar && bindrBar ? <FlexItem fixed component={bindrBar} style={{background: "grey"}}/> : null}
             {layout.listPanel
                 ? <FlexItem fixed component={Flex} column className="list-panel" width="400px"
-                            align="stretch" style={{background: "green"}}>
+                            align="stretch" style={{borderRight: "solid 1px #eee"}}>
                     <FlexItem fixed component={listHeader}/>
                     <FlexItem fixed component={Flex} row>
                         <FlexItem fixed component={listLeftButton}/>
