@@ -3,7 +3,7 @@ import React from 'react';
 import {BrowserRouter} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import Root from './Root';
-import registerServiceWorker, {unregister} from './registerServiceWorker';
+import {unregister} from './registerServiceWorker';
 import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from 'react-async-bootstrapper';
 // import {} from "./store/index.js";
