@@ -16,8 +16,6 @@ var _Root2 = _interopRequireDefault(_Root);
 
 var _registerServiceWorker = require('./registerServiceWorker');
 
-var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
-
 var _reactAsyncComponent = require('react-async-component');
 
 var _reactAsyncBootstrapper = require('react-async-bootstrapper');

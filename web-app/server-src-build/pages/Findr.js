@@ -21,6 +21,8 @@ var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _reactHelmet = require("react-helmet");
 
+var _coreDecorators = require("core-decorators");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38,22 +40,21 @@ var Findr = function (_Component) {
     _inherits(Findr, _Component);
 
     function Findr() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
         _classCallCheck(this, Findr);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = _possibleConstructorReturn(this, (Findr.__proto__ || Object.getPrototypeOf(Findr)).call(this));
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Findr.__proto__ || Object.getPrototypeOf(Findr)).call.apply(_ref, [this].concat(args))), _this), _this.onSearch = function (query) {
-            console.log(query);
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        _this.onSearch = _this._onSearch.bind(_this);
+
+        return _this;
     }
 
     _createClass(Findr, [{
+        key: "_onSearch",
+        value: function _onSearch(query) {
+            console.log(query, this.state);
+        }
+    }, {
         key: "render",
         value: function render() {
             var results = [
