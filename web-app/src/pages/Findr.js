@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
-import {autobind} from "core-decorators";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
