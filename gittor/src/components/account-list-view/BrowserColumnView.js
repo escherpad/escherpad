@@ -3,17 +3,15 @@ import React, {Component, PropTypes} from "react";
 import {autobind} from "core-decorators";
 import {Row} from "layout-components";
 import Selector from "../../lib/Selector";
-let {func, any, array} = PropTypes;
 import Folder from "./Folder";
 import File from "./File";
 import {dropboxAccountKey} from "../../store/accounts/accounts";
 import {listFiles} from "../../store/accountBrowser";
+import {getParentFolder} from "./pathOps";
+
+let {func, any, array} = PropTypes;
 
 require('./browser-column-view.scss');
-
-export function getParentFolder(currentFolder) {
-  return currentFolder ? currentFolder.split('/').slice(0, -1).join('/') : undefined;
-}
 
 class BrowserColumns extends Component {
   static propTypes = {

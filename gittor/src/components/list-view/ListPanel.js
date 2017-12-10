@@ -7,7 +7,7 @@ import Input from "../input/Input";
 import Selector from "../../lib/Selector";
 
 import OrderBySelection from "./OrderBySelection";
-import {getParentFolder} from "../account-list-view/BrowserColumnView";
+import {getParentFolder} from "../account-list-view/pathOps";
 import {SET_CURRENT_FOLDER, setCurrentFolder} from "../../store/postList";
 
 import PostListView from "./PostListView";

@@ -36,7 +36,7 @@ export function setCurrentFolder(accountKey, folder) {
 import dapi from "../modules/dropbox";
 import {createPost, PULL_POST_FROM_SERVICE} from "./posts/posts";
 import {take, dispatch, call} from "luna-saga";
-import {getParentFolder} from "../components/account-list-view/BrowserColumnView";
+import {getParentFolder} from "../components/account-list-view/pathOps";
 
 let QUERIES = ["*.md", "*.ink", "*.url", "*.txt", "*.doc", "*.pdf"];
 
