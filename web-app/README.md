@@ -4,7 +4,9 @@ This app is hosted at `https://escherpad.com/`
 
 ## Known Issues
 
-1. seems doing `yarn add -D luna-saga` causes yarn to error out with "optional dependency fsevents". To prevent this, use 
+1. **This is wrong. Causes `yarn` to not install fs.realpath, and webpack to fail.** 
+
+    seems doing `yarn add -D luna-saga` causes yarn to error out with "optional dependency fsevents". To prevent this, use 
     ```bash
     yarn add -D luna-saga --ignore-optional
     ```

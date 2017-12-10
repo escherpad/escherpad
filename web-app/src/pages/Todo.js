@@ -1,5 +1,4 @@
 import React from "react";
-import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
@@ -28,7 +27,6 @@ function Separator() {
 }
 
 export default function Escherpad(props) {
-    const listSections = [];
     return (
         <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #9710D5, #FF6A1A)"}}>
             <Helmet><title>Todo List</title></Helmet>

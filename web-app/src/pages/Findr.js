@@ -40,7 +40,8 @@ class Findr extends Component {
     };
 
     render() {
-        const Results = [
+        const results = [
+            //todo: define flow schema.
             {
                 source: "google-scholar",
                 title: "SGAN: An Alternative Training of Generative Adversarial Networks",
@@ -49,6 +50,7 @@ class Findr extends Component {
                 arxiv_category: ["stat.ML", "cs.LG"]
             }
         ];
+        console.log(results);
         return (
             <Styled fill column style={{backgroundImage: "linear-gradient(140deg, #006EFF, #00FFD5)"}} align="stretch">
                 <Helmet>

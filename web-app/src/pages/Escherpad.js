@@ -1,10 +1,7 @@
 import React from "react";
-import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
 
-// dev only
-import JSONPretty from 'react-json-pretty';
 import EditorLayout from "../components/editor-layout/EditorLayout";
 import TeamNavBar from "../components/team-nav-bar/TeamNavBar";
 import BindrBar from "../components/bindr-bar/BindrBar";
@@ -18,6 +15,7 @@ import EditorHeader from "../components/editor-header/EditorHeader";
 import EditorTitleBar from "../components/editor-title-bar/EditorTitleBar";
 import EditorBody from "../components/editor-body/EditorBody";
 import EditorFooter from "../components/editor-footer/EditorFooter";
+import {Flex} from "layout-components";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
