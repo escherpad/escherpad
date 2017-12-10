@@ -10,6 +10,9 @@ const AsyncFindr = asyncComponent({
     resolve: () => import('./pages/Findr')
 });
 
+const AsyncEscherpad = asyncComponent({
+    resolve: () => import('./pages/Escherpad')
+});
 export default function Root() {
     return (
         <Switch>
@@ -17,14 +20,14 @@ export default function Root() {
             <Route exact path="/findr" component={AsyncFindr}/>
             <Route exact path="/todo" component={Todo}/>
             {/* this one is for debug only */}
-            <Route exact path="/notes" component={Escherpad}/>
-            <Route exact path="/github/:account/gists/:path*" component={Escherpad}/>
-            <Route exact path="/github/:account/:repo/:path*" component={Escherpad}/>
-            <Route exact path="/dropbox/:account/:path*" component={Escherpad}/>
-            {/*<Route exact path="/:username/" component={Escherpad}/>*/}
-            {/*<Route exact path="/:username/notes:/:note_id" component={Escherpad}/>*/}
-            {/*<Route exact path="/:username/:bindr_id/" component={Escherpad}/>*/}
-            {//<Route exact path="/:username/:bindr_id*/:note_id" component={Escherpad}/>
+            <Route exact path="/notes" component={AsyncEscherpad}/>
+            <Route exact path="/github/:account/gists/:path*" component={AsyncEscherpad}/>
+            <Route exact path="/github/:account/:repo/:path*" component={AsyncEscherpad}/>
+            <Route exact path="/dropbox/:account/:path*" component={AsyncEscherpad}/>
+            {/*<Route exact path="/:username/" component={AsyncEscherpad}/>*/}
+            {/*<Route exact path="/:username/notes:/:note_id" component={AsyncEscherpad}/>*/}
+            {/*<Route exact path="/:username/:bindr_id/" component={AsyncEscherpad}/>*/}
+            {//<Route exact path="/:username/:bindr_id*/:note_id" component={AsyncEscherpad}/>
             }
             <Route component={NoMatch}/>
         </Switch>
