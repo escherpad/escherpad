@@ -1,6 +1,7 @@
 import React from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
+import NoteItem from "./NoteItem";
 
 const Styled = styled(Flex)``;
 export default function ListSections(props) {

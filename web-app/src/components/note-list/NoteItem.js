@@ -1,13 +1,12 @@
 /** Created by ge on 4/18/16. */
-import React from "react";
+import React, {Component} from "react";
 import SmallBlueBadge from "../badge/SmallBlueBadge";
 import {Flex, FlexItem} from "layout-components";
 import Placeholder from "../Placeholder";
 import moment from "moment";
 import {BreadCrumBadges} from "./BreadCrumBadges";
-import {styled} from "styled-components";
+import styled from "styled-components";
 
-const {string, any, number, func} = React.PropTypes;
 
 const topPadding = "15px";
 const sidePadding = "6px";
@@ -68,18 +67,19 @@ const Styled = styled('div')`
 }
 `;
 
-class NoteItem extends React.Component {
-    static propTypes = {
-        searchQuery: string,
-        listParentFolder: string,
-        id: string,
-        title: string,
-        source: any,
-        presence: any,
-        createdAt: number,
-        modifiedAt: number,
-        dispatch: func.isRequired
-    };
+type Props = {
+    searchQuery?: string,
+    listParentFolder?: string,
+    id?: string,
+    title?: string,
+    source?: any,
+    presence?: any,
+    createdAt?: number,
+    modifiedAt?: number,
+    // change to: is required
+    dispatch?: Function
+}
+class NoteItem extends Component<Props> {
 
     static defaultProps = {
         parentFolder: "",
