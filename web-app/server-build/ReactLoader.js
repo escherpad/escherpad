@@ -23,8 +23,6 @@ var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _reactPrimitives = require("react-primitives");
-
 var _reactHelmet = require("react-helmet");
 
 var _reactAsyncComponent = require("react-async-component");
@@ -71,12 +69,7 @@ function ReactLoader(req, res, next) {
         var asyncState = asyncContext.getState();
         var helmet = _reactHelmet.Helmet.renderStatic(); // use renderStatic to prevent memory leak
         var styledComponentCSS = sheet.getStyleTags();
-        var reactPrimitiveCSS = _reactPrimitives.StyleSheet.getStyleSheets().map(function (_ref) {
-            var id = _ref.id,
-                textContent = _ref.textContent;
-            return "<style id=" + id + ">" + textContent + "</style>";
-        }).join('');
-        res.status(200).send(HTML.replace(/<link class="SSR:async_state"\/>/, "<script type=\"text/javascript\">window.ASYNC_COMPONENT_STATE=" + (0, _serializeJavascript2.default)(asyncState) + "</script>").replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS).replace(/<link class="SSR:HTML"\/>/, html));
+        res.status(200).send(HTML.replace(/<link class="SSR:async_state"\/>/, "<script type=\"text/javascript\">window.ASYNC_COMPONENT_STATE=" + (0, _serializeJavascript2.default)(asyncState) + "</script>").replace(/<link class="SSR:title"\/>/, helmet.title.toString()).replace(/<link class="SSR:CSS"\/>/, styledComponentCSS).replace(/<link class="SSR:HTML"\/>/, html));
     });
 }
 //# sourceMappingURL=ReactLoader.js.map
