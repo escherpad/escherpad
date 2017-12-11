@@ -4,8 +4,9 @@ import SmallBlueBadge from "../badge/SmallBlueBadge";
 import {Flex, FlexItem} from "layout-components";
 import Placeholder from "../Placeholder";
 import moment from "moment";
-import {BreadCrumBadges} from "./BreadCrumBadges";
+// import {BreadCrumBadges} from "./BreadCrumBadges";
 import styled from "styled-components";
+import {BreadCrumBadges} from "./BreadCrumBadges";
 
 
 const topPadding = "15px";
@@ -132,12 +133,13 @@ class NoteItem extends Component<Props> {
             </Placeholder>
             <Flex row style={{justifyContent: "right"}} className="modified-at">
                 <FlexItem fluid style={{overflowX: "hidden"}}>
-                    {accountKey ?
-                        <BreadCrumBadges accountKey={accountKey}
+                    {accountKey
+                        // ? <div>breadcrum bage placeholder</div>
+                        ? <BreadCrumBadges accountKey={accountKey}
                                          currentFolder={listParentFolder}
                                          displayPath={displayPath}
-                                         dispatch={dispatch}/> :
-                        <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
+                                         dispatch={dispatch}/>
+                        : <SmallBlueBadge style={{backgroundColor: "#aaa"}}>LocalStorage</SmallBlueBadge>
                     }
                 </FlexItem>
                 <FlexItem fixed width="5px"/>

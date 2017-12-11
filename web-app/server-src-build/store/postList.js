@@ -13,6 +13,8 @@ exports.setCurrentFolder = setCurrentFolder;
 exports.onSetCurrentFolder = onSetCurrentFolder;
 exports.watchFolder = watchFolder;
 
+require("regenerator-runtime/runtime");
+
 var _accounts = require("./accounts/accounts");
 
 var _dropbox = require("../modules/dropbox");

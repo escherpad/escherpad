@@ -1,4 +1,5 @@
 /** Created by ge on 4/18/16. */
+import "regenerator-runtime/runtime";
 import {dropboxAccountKey, dropboxDateStringToIntDate} from "./accounts/accounts";
 import dapi from "../modules/dropbox";
 import {createPost, PULL_POST_FROM_SERVICE} from "./posts/posts";

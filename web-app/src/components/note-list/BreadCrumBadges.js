@@ -1,6 +1,6 @@
 /** Created by ge on 12/30/16. */
 import React, {Component} from "react";
-import {setCurrentFolder} from "../../store/postList";
+// import {setCurrentFolder} from "../../store/postList";
 import SmallBlueBadge from "../badge/SmallBlueBadge";
 
 type Props = {
@@ -16,7 +16,8 @@ export class BreadCrumBadges extends Component<Props> {
         return (e) => {
             e.stopPropagation();
             e.preventDefault();
-            this.props.dispatch(setCurrentFolder(this.props.accountKey, path))
+            // todo: add back for live version
+            // this.props.dispatch(setCurrentFolder(this.props.accountKey, path))
         }
     }
 

@@ -1,4 +1,3 @@
-// @flow
 import React from "react";
 import path from "path";
 import {renderToString} from 'react-dom/server'
@@ -38,16 +37,12 @@ export default function ReactLoader(req, res, next) {
         const asyncState = asyncContext.getState();
         const helmet = Helmet.renderStatic(); // use renderStatic to prevent memory leak
         const styledComponentCSS = sheet.getStyleTags();
-        const reactPrimitiveCSS = StyleSheet
-            .getStyleSheets()
-            .map(({id, textContent}) => `<style id=${id}>${textContent}</style>`)
-            .join('');
         res.status(200).send(
             HTML
                 .replace(/<link class="SSR:async_state"\/>/,
                     `<script type="text/javascript">window.ASYNC_COMPONENT_STATE=${serialize(asyncState)}</script>`)
                 .replace(/<link class="SSR:title"\/>/, helmet.title.toString())
-                .replace(/<link class="SSR:CSS"\/>/, styledComponentCSS + reactPrimitiveCSS)
+                .replace(/<link class="SSR:CSS"\/>/, styledComponentCSS)
                 .replace(/<link class="SSR:HTML"\/>/, html)
         );
     });

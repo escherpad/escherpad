@@ -15,15 +15,15 @@
     "markdown-it": "^8.4.0",
     "morgan": "^1.8.2",
     "nextjs": "0.0.3",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
     "react-helmet": "^5.2.0",
     "react-markdownit": "^2.5.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.17",
     "save-dev": "^2.0.0",
-    "styled-components": "^2.1.1"
+    "styled-components": "~2.2.4"
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node": "^1.2.0",
