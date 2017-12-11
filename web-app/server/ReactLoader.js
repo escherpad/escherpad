@@ -5,7 +5,6 @@ import {renderToString} from 'react-dom/server'
 import {StaticRouter} from "react-router-dom";
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 import fs from 'fs';
-import {StyleSheet} from 'react-primitives';
 import {Helmet} from 'react-helmet';
 import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from "react-async-bootstrapper";

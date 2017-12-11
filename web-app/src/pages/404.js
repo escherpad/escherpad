@@ -1,5 +1,4 @@
 import React from "react";
-import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
@@ -28,7 +27,7 @@ export default function NoMatch(props) {
         <Styled fill column>
             <Helmet><title>Page Not Found</title></Helmet>
             <FlexSpacer/>
-            <FlexItem fixed component={Fade} duration={1.5}>
+            <FlexItem fixed component={'div'}>
                 <h1>404</h1>
                 <h2>Welcome To The No-man Land!</h2>
                 <p>This address does not exist</p>

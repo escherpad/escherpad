@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    background-color: #efefef\n"], ["\n    font-family: 'Lato', sans-serif;\n    background-color: #efefef\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    padding: 4px 0;\n    &:not(:first-child) {\n      margin-left: 13px;\n      padding-left: 2px;\n    }\n    &:not(:last-child) {\n      margin-right: 13px;\n      padding-right: 2px;\n    }\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        font-size: 15px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"], ["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    padding: 4px 0;\n    &:not(:first-child) {\n      margin-left: 13px;\n      padding-left: 2px;\n    }\n    &:not(:last-child) {\n      margin-right: 13px;\n      padding-right: 2px;\n    }\n    > span {\n        color: white;\n        flex: 0 0 auto;\n        font-size: 15px;\n        border-top: solid 4px transparent;\n        border-bottom: solid 4px transparent;\n    }\n    :hover > span {\n        border-bottom: solid 4px white;\n    }\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    font-size: 1em;\n    background-color: #efefef\n"], ["\n    font-family: 'Lato', sans-serif;\n    font-size: 1em;\n    background-color: #efefef\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    &:not(:first-child) {\n      margin-left: 1em;\n      padding-left: 0.2em;\n    }\n    &:not(:last-child) {\n      margin-right: 1em;\n      padding-right: 0.2em;\n    }\n    > span {\n        height: 2em;\n        line-height: 2em;\n        color: white;\n        flex: 0 0 auto;\n        border-top: solid 0.3em transparent;\n        border-bottom: solid 0.3em transparent;\n    }\n    :hover > span {\n        border-bottom: solid 0.3em white;\n    }\n"], ["\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    text-decoration: none;\n    cursor: pointer;\n    &:not(:first-child) {\n      margin-left: 1em;\n      padding-left: 0.2em;\n    }\n    &:not(:last-child) {\n      margin-right: 1em;\n      padding-right: 0.2em;\n    }\n    > span {\n        height: 2em;\n        line-height: 2em;\n        color: white;\n        flex: 0 0 auto;\n        border-top: solid 0.3em transparent;\n        border-bottom: solid 0.3em transparent;\n    }\n    :hover > span {\n        border-bottom: solid 0.3em white;\n    }\n"]);
 
 var _react = require("react");
 
@@ -83,7 +83,7 @@ var Findr = function (_Component) {
                     _react2.default.createElement(
                         _layoutComponents.Flex,
                         { row: true, style: {
-                                height: "70px", padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
+                                height: "4em", padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
                                 margin: "0 auto"
                             } },
                         _react2.default.createElement(
@@ -115,18 +115,18 @@ var Findr = function (_Component) {
                         { column: true, align: "center", style: {
                                 fontFamily: "Lato",
                                 color: "white",
-                                padding: "0 20px", maxWidth: "1000px", left: 0, right: 0,
+                                padding: "0 1.3em", maxWidth: "1000px", left: 0, right: 0,
                                 margin: "0 auto"
                             } },
                         _react2.default.createElement(
                             "h1",
-                            { style: { fontWeight: "200", fontSize: "140px", marginBottom: "10px" } },
+                            { style: { fontWeight: "200", fontSize: "6em", marginBottom: "0.1em" } },
                             "Findr"
                         ),
                         _react2.default.createElement(
                             "h3",
-                            { style: { fontWeight: "200", fontSize: "30px", marginTop: "10px", marginBottom: "60px" } },
-                            "Search your own knowledge"
+                            { style: { fontWeight: "200", fontSize: "1.5em", marginTop: "0.1em", marginBottom: "1.3em" } },
+                            "Search your knowledge"
                         )
                     )
                 ),
@@ -136,14 +136,14 @@ var Findr = function (_Component) {
                     _react2.default.createElement(
                         _layoutComponents.Flex,
                         { row: true, align: "stretch", style: {
-                                height: "43px", padding: "0 20px", maxWidth: "700px", left: 0, right: 0,
+                                height: "2.2em", padding: "0 1.3em", maxWidth: "700px", left: 0, right: 0,
                                 margin: "0 auto"
                             } },
                         _react2.default.createElement(_layoutComponents.FlexItem, { component: "input", fluid: true, type: "Text",
                             style: {
-                                borderRadius: "14px", border: "solid 1px transparent",
-                                marginRight: "10px",
-                                padding: "0 14px",
+                                borderRadius: "1em", border: "solid 1px transparent",
+                                marginRight: "0.5em",
+                                padding: "0 0.7em",
                                 color: "#4198ED",
                                 fontSize: "1em"
                             } }),
@@ -152,9 +152,9 @@ var Findr = function (_Component) {
                             { component: "button", href: "settings", onClick: this.onSearch,
                                 style: {
                                     cursor: "pointer",
-                                    backgroundColor: "transparent", fontSize: "1em",
-                                    textDecoration: "none", color: "white", padding: "0 15px", lineHeight: "40px",
-                                    border: "solid 1px white", borderRadius: "10px",
+                                    backgroundColor: "rgba(0, 0, 0, 0.2)", fontSize: "1em",
+                                    textDecoration: "none", color: "white", padding: "0 0.7em", lineHeight: "100%",
+                                    border: "solid 1px transparent", borderRadius: "1em",
                                     marginLeft: "10px"
                                 } },
                             "find"

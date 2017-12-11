@@ -1,28 +1,24 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(['\n    font-family: \'Lato\', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n'], ['\n    font-family: \'Lato\', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n']);
+var _templateObject = _taggedTemplateLiteral(["\n    font-family: 'Lato', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n"], ["\n    font-family: 'Lato', sans-serif;\n    background-color: #23aaff;\n    \n    * {\n        color: white;\n        text-align: center;\n    }\n     h1 {\n        font-size: 120px;\n        margin: 0;\n    }\n     h2 {\n        font-size: 24px;\n    }\n     p {\n        font-size: 20px;\n    }\n"]);
 
 exports.default = NoMatch;
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactFade = require('react-fade');
+var _layoutComponents = require("layout-components");
 
-var _reactFade2 = _interopRequireDefault(_reactFade);
-
-var _layoutComponents = require('layout-components');
-
-var _styledComponents = require('styled-components');
+var _styledComponents = require("styled-components");
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
-var _reactHelmet = require('react-helmet');
+var _reactHelmet = require("react-helmet");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,29 +33,29 @@ function NoMatch(props) {
             _reactHelmet.Helmet,
             null,
             _react2.default.createElement(
-                'title',
+                "title",
                 null,
-                'Page Not Found'
+                "Page Not Found"
             )
         ),
         _react2.default.createElement(_layoutComponents.FlexSpacer, null),
         _react2.default.createElement(
             _layoutComponents.FlexItem,
-            { fixed: true, component: _reactFade2.default, duration: 1.5 },
+            { fixed: true, component: 'div' },
             _react2.default.createElement(
-                'h1',
+                "h1",
                 null,
-                '404'
+                "404"
             ),
             _react2.default.createElement(
-                'h2',
+                "h2",
                 null,
-                'Welcome To The No-man Land!'
+                "Welcome To The No-man Land!"
             ),
             _react2.default.createElement(
-                'p',
+                "p",
                 null,
-                'This address does not exist'
+                "This address does not exist"
             )
         ),
         _react2.default.createElement(_layoutComponents.FlexSpacer, null)

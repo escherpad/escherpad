@@ -39,6 +39,13 @@ var AsyncFindr = (0, _reactAsyncComponent.asyncComponent)({
     }
 });
 
+var AsyncEscherpad = (0, _reactAsyncComponent.asyncComponent)({
+    resolve: function resolve() {
+        return Promise.resolve().then(function () {
+            return require('./pages/Escherpad');
+        });
+    }
+});
 function Root() {
     return _react2.default.createElement(
         _reactRouterDom.Switch,
@@ -48,10 +55,10 @@ function Root() {
             } }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/findr", component: AsyncFindr }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/todo", component: _Todo2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/notes", component: _Escherpad2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/gists/:path*", component: _Escherpad2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/:repo/:path*", component: _Escherpad2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/dropbox/:account/:path*", component: _Escherpad2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/notes", component: AsyncEscherpad }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/gists/:path*", component: AsyncEscherpad }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/github/:account/:repo/:path*", component: AsyncEscherpad }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/dropbox/:account/:path*", component: AsyncEscherpad }),
         _react2.default.createElement(_reactRouterDom.Route, { component: _2.default })
     );
 }

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -6,21 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _templateObject = _taggedTemplateLiteral(['\n    font-family: \'Lato\', sans-serif;\n'], ['\n    font-family: \'Lato\', sans-serif;\n']);
+var _templateObject = _taggedTemplateLiteral(["\n"], ["\n"]);
 
 exports.default = EditorLayout;
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactFade = require('react-fade');
+var _layoutComponents = require("layout-components");
 
-var _reactFade2 = _interopRequireDefault(_reactFade);
-
-var _layoutComponents = require('layout-components');
-
-var _styledComponents = require('styled-components');
+var _styledComponents = require("styled-components");
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
@@ -39,12 +35,12 @@ function EditorLayout(props) {
         listLeftButton = props.listLeftButton,
         listRightButton = props.listRightButton,
         listTabs = props.listTabs,
-        listSections = props.listSections,
+        listBody = props.listBody,
         editorHeader = props.editorHeader,
         editorTitleBar = props.editorTitleBar,
         editorBody = props.editorBody,
         editorFooter = props.editorFooter,
-        _props = _objectWithoutProperties(props, ['teamNavBar', 'bindrBar', 'listHeader', 'listHero', 'listLeftButton', 'listRightButton', 'listTabs', 'listSections', 'editorHeader', 'editorTitleBar', 'editorBody', 'editorFooter']);
+        _props = _objectWithoutProperties(props, ["teamNavBar", "bindrBar", "listHeader", "listHero", "listLeftButton", "listRightButton", "listTabs", "listBody", "editorHeader", "editorTitleBar", "editorBody", "editorFooter"]);
 
     var layout = {
         teamNavBar: false,
@@ -59,18 +55,18 @@ function EditorLayout(props) {
         layout.bindrBar && bindrBar ? _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: bindrBar, style: { background: "grey" } }) : null,
         layout.listPanel ? _react2.default.createElement(
             _layoutComponents.FlexItem,
-            { fixed: true, component: _layoutComponents.Flex, column: true, className: 'list-panel', width: '400px',
-                style: { background: "green" } },
+            { fixed: true, component: _layoutComponents.Flex, column: true, className: "list-panel", width: "400px",
+                align: "stretch", style: { borderRight: "solid 1px #eee" } },
             _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: listHeader }),
             _react2.default.createElement(
                 _layoutComponents.FlexItem,
-                { fixed: true, component: _layoutComponents.Flex, row: true },
+                { fixed: true, component: _layoutComponents.Flex, row: true, align: "center", style: { margin: "0.5em 0" } },
                 _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: listLeftButton }),
                 _react2.default.createElement(_layoutComponents.FlexItem, { fluid: true, component: listHero }),
                 _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: listRightButton })
             ),
             _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: listTabs }),
-            _react2.default.createElement(_layoutComponents.FlexItem, { fixed: true, component: listSections })
+            _react2.default.createElement(_layoutComponents.FlexItem, { fluid: true, component: listBody, style: { overflowY: "auto" } })
         ) : null,
         layout.editorPanel ? _react2.default.createElement(
             _layoutComponents.FlexItem,

@@ -1,5 +1,4 @@
 import React from "react";
-import Fade from 'react-fade';
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 
@@ -35,7 +34,7 @@ export default function EditorLayout(props) {
                 ? <FlexItem fixed component={Flex} column className="list-panel" width="400px"
                             align="stretch" style={{borderRight: "solid 1px #eee"}}>
                     <FlexItem fixed component={listHeader}/>
-                    <FlexItem fixed component={Flex} row>
+                    <FlexItem fixed component={Flex} row align="center" style={{margin: "0.5em 0"}}>
                         <FlexItem fixed component={listLeftButton}/>
                         <FlexItem fluid component={listHero}/>
                         <FlexItem fixed component={listRightButton}/>

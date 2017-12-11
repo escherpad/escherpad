@@ -23,8 +23,6 @@ var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _reactPrimitives = require("react-primitives");
-
 var _reactHelmet = require("react-helmet");
 
 var _reactAsyncComponent = require("react-async-component");
@@ -42,6 +40,7 @@ var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootComponentPath = void 0;
+
 if (_config.NODE_ENV === "production") {
     rootComponentPath = "../server-src-build/Root";
 } else {
@@ -71,7 +70,7 @@ function ReactLoader(req, res, next) {
         var asyncState = asyncContext.getState();
         var helmet = _reactHelmet.Helmet.renderStatic(); // use renderStatic to prevent memory leak
         var styledComponentCSS = sheet.getStyleTags();
-        var reactPrimitiveCSS = _reactPrimitives.StyleSheet.getStyleSheets().map(function (_ref) {
+        var reactPrimitiveCSS = StyleSheet.getStyleSheets().map(function (_ref) {
             var id = _ref.id,
                 textContent = _ref.textContent;
             return "<style id=" + id + ">" + textContent + "</style>";

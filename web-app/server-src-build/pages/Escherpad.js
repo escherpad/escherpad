@@ -18,6 +18,8 @@ var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _reactHelmet = require("react-helmet");
 
+var _layoutComponents = require("layout-components");
+
 var _EditorLayout = require("../apps/Escherpad/EditorLayout");
 
 var _EditorLayout2 = _interopRequireDefault(_EditorLayout);
@@ -30,47 +32,35 @@ var _BindrBar = require("../components/bindr-bar/BindrBar");
 
 var _BindrBar2 = _interopRequireDefault(_BindrBar);
 
-var _ListHeader = require("../components/list-header/ListHeader");
+var _ListHeader = require("../components/note-list/ListHeader");
 
 var _ListHeader2 = _interopRequireDefault(_ListHeader);
 
-var _ListLeftButton = require("../components/list-left-button/ListLeftButton");
+var _listHero = require("../components/note-list/list-hero");
 
-var _ListLeftButton2 = _interopRequireDefault(_ListLeftButton);
-
-var _ListHero = require("../components/list-hero/ListHero");
-
-var _ListHero2 = _interopRequireDefault(_ListHero);
-
-var _ListRightButton = require("../components/list-right-button/ListRightButton");
-
-var _ListRightButton2 = _interopRequireDefault(_ListRightButton);
-
-var _ListTabs = require("../components/list-tabs/ListTabs");
+var _ListTabs = require("../components/note-list/ListTabs");
 
 var _ListTabs2 = _interopRequireDefault(_ListTabs);
 
-var _ListSections = require("../components/list-sections/ListSections");
+var _ListSections = require("../components/note-list/ListSections");
 
 var _ListSections2 = _interopRequireDefault(_ListSections);
 
-var _EditorHeader = require("../components/editor-header/EditorHeader");
+var _EditorHeader = require("../components/editor/EditorHeader");
 
 var _EditorHeader2 = _interopRequireDefault(_EditorHeader);
 
-var _EditorTitleBar = require("../components/editor-title-bar/EditorTitleBar");
+var _EditorTitleBar = require("../components/editor/EditorTitleBar");
 
 var _EditorTitleBar2 = _interopRequireDefault(_EditorTitleBar);
 
-var _EditorBody = require("../components/editor-body/EditorBody");
+var _EditorBody = require("../components/editor/EditorBody");
 
 var _EditorBody2 = _interopRequireDefault(_EditorBody);
 
-var _EditorFooter = require("../components/editor-footer/EditorFooter");
+var _EditorFooter = require("../components/editor/EditorFooter");
 
 var _EditorFooter2 = _interopRequireDefault(_EditorFooter);
-
-var _layoutComponents = require("layout-components");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -95,11 +85,11 @@ function Escherpad(props) {
         _react2.default.createElement(_EditorLayout2.default, { teamNavBar: _TeamNavBar2.default,
             bindrBar: _BindrBar2.default,
             listHeader: _ListHeader2.default,
-            listLeftButton: _ListLeftButton2.default,
-            listHero: _ListHero2.default,
-            listRightButton: _ListRightButton2.default,
+            listLeftButton: _listHero.ListLeftButton,
+            listHero: _listHero.ListHero,
+            listRightButton: _listHero.ListRightButton,
             listTabs: _ListTabs2.default,
-            listSections: _ListSections2.default,
+            listBody: _ListSections2.default,
             editorHeader: _EditorHeader2.default,
             editorTitleBar: _EditorTitleBar2.default,
             editorBody: _EditorBody2.default,
