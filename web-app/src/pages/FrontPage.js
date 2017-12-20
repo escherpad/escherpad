@@ -2,6 +2,7 @@ import React from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
+import {Link} from "react-router-dom";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -27,23 +28,21 @@ const HeaderButton = styled(FlexItem)`
     }
 `;
 export default function FrontPage(props) {
-    return (
-        <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}} align="stretch">
-            <Helmet>
-                <title>Welcome to Escherpad</title>
-            </Helmet>
-            <FlexItem fixed>
-                <Flex row style={{
-                    height: "70px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
-                    margin: "0 auto"
-                }}>
-                    <HeaderButton component="a"><span style={{fontSize: "19px"}}>Escherpad</span></HeaderButton>
-                    <FlexSpacer/>
-                    <HeaderButton component="a" href="/findr"><span>Findr</span></HeaderButton>
-                    <HeaderButton component="a" href="/notes"><span>Notes</span></HeaderButton>
-                    <HeaderButton component="a" href="/todo"><span>Todo List</span></HeaderButton>
-                </Flex>
-            </FlexItem>
-        </Styled>
-    );
+    return <Styled fill column style={{backgroundImage: "linear-gradient(-40deg, #FF008C, #E1FF00)"}} align="stretch">
+        <Helmet>
+            <title>Welcome to Escherpad</title>
+        </Helmet>
+        <FlexItem fixed>
+            <Flex row style={{
+                height: "70px", padding: "0 40px", maxWidth: "1000px", left: 0, right: 0,
+                margin: "0 auto"
+            }}>
+                <HeaderButton component="a"><span style={{fontSize: "19px"}}>Escherpad</span></HeaderButton>
+                <FlexSpacer/>
+                <HeaderButton component={Link} to="findr"><span>Findr</span></HeaderButton>
+                <HeaderButton component={Link} to="notes"><span>Notes</span></HeaderButton>
+                <HeaderButton component={Link} to="todo"><span>Todo List</span></HeaderButton>
+            </Flex>
+        </FlexItem>
+    </Styled>;
 }
