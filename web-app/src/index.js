@@ -26,5 +26,5 @@ asyncBootstrapper(app)
     });
 
 // todo: might consider putting this inside a timeout to speed up the initial rendering.
-registerServiceWorker();
-// unregister();
+// registerServiceWorker();
+unregister();

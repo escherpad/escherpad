@@ -1,6 +1,5 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
-import Escherpad from "./pages/Escherpad";
 import NoMatch from "./pages/404.js";
 import FrontPage from "./pages/FrontPage";
 import Todo from "./pages/Todo";
@@ -15,7 +14,7 @@ const EscherpadBundle = asyncComponent({
 export default function Root() {
     return (
         <Switch>
-            <Route exact path="/" component={() => <FrontPage/>}/>
+            <Route exact path="/" component={FrontPage}/>
             <Route exact path="/findr" component={FindrBundle}/>
             <Route exact path="/todo" component={Todo}/>
             {/* this one is for debug only */}

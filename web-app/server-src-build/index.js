@@ -14,13 +14,15 @@ var _Root = require('./Root');
 
 var _Root2 = _interopRequireDefault(_Root);
 
-var _registerServiceWorker = require('./registerServiceWorker');
-
 var _reactAsyncComponent = require('react-async-component');
 
 var _reactAsyncBootstrapper = require('react-async-bootstrapper');
 
 var _reactAsyncBootstrapper2 = _interopRequireDefault(_reactAsyncBootstrapper);
+
+var _registerServiceWorker = require('./registerServiceWorker');
+
+var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

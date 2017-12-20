@@ -21,11 +21,11 @@
     "react-markdownit": "^2.5.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-scripts": "1.0.17",
     "save-dev": "^2.0.0",
-    "styled-components": "~2.2.4"
+    "styled-components": "^2.2.4"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-transform-assets": "^0.2.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -49,6 +49,7 @@
     "react-async-bootstrapper": "^1.1.2",
     "react-async-component": "^1.0.2",
     "react-json-pretty": "^1.6.3",
+    "react-scripts": "^1.0.17",
     "react-styleguidist": "^5.5.4",
     "rimraf": "^2.6.2",
     "rxjs": "^5.5.5",

@@ -21,6 +21,8 @@ var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 var _reactHelmet = require("react-helmet");
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -61,7 +63,7 @@ function FrontPage(props) {
                 _react2.default.createElement(_layoutComponents.FlexSpacer, null),
                 _react2.default.createElement(
                     HeaderButton,
-                    { component: "a", href: "/findr" },
+                    { component: _reactRouterDom.Link, to: "findr" },
                     _react2.default.createElement(
                         "span",
                         null,
@@ -70,7 +72,7 @@ function FrontPage(props) {
                 ),
                 _react2.default.createElement(
                     HeaderButton,
-                    { component: "a", href: "/notes" },
+                    { component: _reactRouterDom.Link, to: "notes" },
                     _react2.default.createElement(
                         "span",
                         null,
@@ -79,7 +81,7 @@ function FrontPage(props) {
                 ),
                 _react2.default.createElement(
                     HeaderButton,
-                    { component: "a", href: "/todo" },
+                    { component: _reactRouterDom.Link, to: "todo" },
                     _react2.default.createElement(
                         "span",
                         null,
