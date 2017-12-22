@@ -3,11 +3,13 @@
     "flow",
     "stage-2",
     "es2015",
-    "react"
+    "react",
+    "env"
   ],
   "plugins": [
     "transform-class-properties",
     "transform-decorators-legacy",
-    "dynamic-import-node"
+    "dynamic-import-node",
+    "transform-runtime"
   ]
 }

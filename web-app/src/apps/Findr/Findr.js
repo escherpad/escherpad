@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {Helmet} from "react-helmet";
+import {search} from "../../lib/arxiv/index";
 
 const Styled = styled(Flex)`
     font-family: 'Lato', sans-serif;
@@ -42,22 +43,15 @@ class Findr extends Component {
 
     }
 
+    _onInput(e){
+        const value = e.target.value;
+        console.log(value)
+    }
     _onSearch(query) {
-        console.log(query, this.state)
+        search();
     };
 
     render() {
-        const results = [
-            //todo: define flow schema.
-            {
-                source: "google-scholar",
-                title: "SGAN: An Alternative Training of Generative Adversarial Networks",
-                authors: ["Tatjana Chavdarova", "François Fleuret"],
-                date: "2017-12-06",
-                arxiv_category: ["stat.ML", "cs.LG"]
-            }
-        ];
-        console.log(results);
         return (
             <Styled fill column style={{backgroundImage: "linear-gradient(140deg, #006EFF, #00FFD5)"}} align="stretch">
                 <Helmet>
@@ -98,7 +92,9 @@ class Findr extends Component {
                                       padding: "0 0.7em",
                                       color: "#4198ED",
                                       fontSize: "1em"
-                                  }}/>
+                                  }}
+                                  onInput={this._onInput.bind(this)}
+                        />
                         <FlexItem component="button" href="settings" onClick={this.onSearch}
                                   style={{
                                       cursor: "pointer",

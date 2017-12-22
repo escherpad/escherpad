@@ -19,9 +19,12 @@ const StyledButton = styled("button")`
       margin-left: 0.2em;
       color: #5d5d5d;
     }
+    &:focus {
+      outline: none;
+    }
     &:hover, &:active {
     color: #23aaff;
-    text-shadow: 0 0 3px #23aaff;
+    text-shadow: 0 0 0.5px #23aaff;
         > svg {
           color: #23aaff;
           filter: drop-shadow(0 0 3px #23aaff);

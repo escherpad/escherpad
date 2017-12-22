@@ -6,7 +6,7 @@ import Todo from "./pages/Todo";
 import {asyncComponent} from "react-async-component";
 
 const FindrBundle = asyncComponent({
-    resolve: () => import('./pages/Findr')
+    resolve: () => import('./apps/Findr/Findr')
 });
 const EscherpadBundle = asyncComponent({
     resolve: () => import('./pages/Escherpad')
