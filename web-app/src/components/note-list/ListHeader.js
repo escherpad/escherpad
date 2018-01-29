@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Flex, FlexItem, FlexSpacer} from 'layout-components';
 import styled from "styled-components";
 import {GoX, GoSearch} from "react-icons/lib/go/index";
+import {connect} from "../../lib/luna-react";
+import * as googleScholar from "../../store/google-scholar";
 
 const Styled = styled('div')`
     color: #cfcfcf;
@@ -45,15 +47,23 @@ const fontSize = "14";
 const padding = "7";
 
 class ListHeader extends Component {
+    onCompositionEnd(e) {
+        console.log(e);
+        const text = e.target.value;
+        this.props.onInput(text);
+    }
+
     onClear() {
-        this.props.dispatch({
-            type: "SEARCH_CLEAR"
-        });
-        console.log('clear search bar')
+        this.props.onClear();
+    }
+
+    onSearch(e) {
+        const text = e.target.value;
+        this.props.onSearch(text);
     }
 
     render() {
-        const {style, dispatch, ..._props} = this.props;
+        const {style, dispatch, onInput, ..._props} = this.props;
         const finalStyle = {
             ...style,
             height: height + "px",
@@ -68,7 +78,8 @@ class ListHeader extends Component {
             <div style={{margin: "10px", position: "relative"}}>
                 <Styled>
                     <GoSearch className="search-icon"/>
-                    <input style={finalStyle} value={value} placeholder={placeholder} {..._props}/>
+                    <input style={finalStyle} value={value} placeholder={placeholder}
+                           onInput={this.onCompositionEnd.bind(this)} {..._props}/>
                     <GoX className="clear-icon" onClick={this.onClear.bind(this)}/>
                 </Styled>
             </div>
@@ -77,4 +88,7 @@ class ListHeader extends Component {
     }
 }
 
-export default ListHeader;
+export default connect(
+    ({search}) => search,
+    {onInput: googleScholar.creators.input}
+)(ListHeader);

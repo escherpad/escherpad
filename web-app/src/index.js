@@ -6,18 +6,19 @@ import Root from './Root';
 import {AsyncComponentProvider, createAsyncContext} from "react-async-component";
 import asyncBootstrapper from 'react-async-bootstrapper';
 import registerServiceWorker, {unregister} from './registerServiceWorker';
-// import {} from "./store/index.js";
+import {store$} from "./store/index.js";
+import {LunaProvider} from "./lib/luna-react";
 
 // note: Store and app states
 const rehydrateState = window.ASYNC_COMPONENTS_STATE || createAsyncContext().getState();
 
-const app = (
-    <AsyncComponentProvider rehydrateState={rehydrateState}>
-        <BrowserRouter>
+const app = <AsyncComponentProvider rehydrateState={rehydrateState}>
+    <BrowserRouter>
+        <LunaProvider store={store$}>
             <Root/>
-        </BrowserRouter>
-    </AsyncComponentProvider>
-);
+        </LunaProvider>
+    </BrowserRouter>
+</AsyncComponentProvider>;
 
 // note: This prevents the "flash"  from happening.
 asyncBootstrapper(app)

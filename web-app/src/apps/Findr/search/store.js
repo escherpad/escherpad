@@ -1,6 +1,6 @@
 //@flow
 import {Store} from "luna";
-import {sagaConnect, call, fork, spawn, take, dispatch, delay, select, SAGA_CONNECT_ACTION} from "luna-saga";
+import {sagaConnect, throttle, dispatch, select, SAGA_CONNECT_ACTION} from "luna-saga";
 import type {TRichResult, TSimpleResult} from "./types";
 import {googleAutoComplete} from "./helpers";
 
@@ -20,10 +20,12 @@ const InitState: TSearchStore = {
     selection: -1,
     results: []
 };
+
 type TAction = { type: string };
 type TSearchCallbackAction = TAction & { items: Array<TSimpleResult | TRichResult> }
 
-const $ = (s) => `SEARCH_${s}`;
+const $SymNameSpace = (namespace) => (key) => `${namespace}_${key}`;
+const $ = $SymNameSpace('SEARCH');
 
 const search = function (state: TSearchStore = InitState, action: TSearchCallbackAction) {
     if (action.type === $("INPUT")) {
@@ -38,35 +40,23 @@ const search = function (state: TSearchStore = InitState, action: TSearchCallbac
     }
 };
 
-export function* Search() {
-    const newState = yield select();
+export function* Search(): Generator<any, any, any> {
+    const newState: any = yield select();
     const {items} = yield googleAutoComplete({text: newState.query});
     yield dispatch({type: $("COMPLETE_CB"), items});
 }
 
-export function* SearchProcess() {
-    let proc;
-    while (true) try {
-        const {state, _} = yield take($("INPUT"));
-        proc = yield spawn(Search);
-        proc.error$.subscribe((err) => console.warn(err));
-        yield call(delay, 300);
-        const newState = yield select(/* selector for the search store. */);
-        if (newState !== state && !proc.isStopped) {
-            proc.complete(); // just terminate that process.
-            proc = yield spawn(Search)
-        }
-    } catch (e) {
-        console.error(e)
-    }
-}
+// todo: make a throttling process
 
+let now = Date.now();
+const asyncFn = (cb?: Function) => {
+    console.log('async started', Date.now() - now);
+    now = Date.now();
+    const p = new Promise((res, rej) => setTimeout(res(10), 10000));
+    if (!!cb) p.then(cb);
+};
+
+let start = Date.now();
 const store$ = new Store(search);
-store$.update$.subscribe(({state, action}) => console.log(state, action), (err) => console.warn(err), () => console.log("*** completed ***"));
-const proc = sagaConnect(store$, SearchProcess());
-proc.error$.subscribe((err) => console.warn(err));
-
-store$.dispatch({type: $("INPUT"), query: "A"});
-store$.dispatch({type: $("INPUT"), query: "An"});
-store$.dispatch({type: $("INPUT"), query: "And"});
-store$.dispatch({type: $("INPUT"), query: "Andr"});
+const throttledAction = throttle(asyncFn, $("INPUT"), 300, true);
+sagaConnect(store$, throttledAction);

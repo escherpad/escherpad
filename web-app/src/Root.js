@@ -9,7 +9,7 @@ const FindrBundle = asyncComponent({
     resolve: () => import('./apps/Findr/Findr')
 });
 const EscherpadBundle = asyncComponent({
-    resolve: () => import('./pages/Escherpad')
+    resolve: () => import('./apps/Escherpad/Escherpad')
 });
 export default function Root() {
     return (
